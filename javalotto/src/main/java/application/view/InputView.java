@@ -1,6 +1,9 @@
 package application.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -13,5 +16,12 @@ public class InputView {
     public static int getPurchaseAmount() {
         OutputView.printEnterPurchaseAmount();
         return scanner.nextInt();
+    }
+
+    public static List<Integer> getWinningNumber() {
+        OutputView.printPleaseEnterYourWinningNumber();
+        return Arrays.stream(scanner.next().split(", "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 }

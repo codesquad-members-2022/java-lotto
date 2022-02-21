@@ -23,4 +23,8 @@ public class OutputView {
     public static void printLottoNumbers(List<Integer> lotto) {
         System.out.println(lotto);
     }
+
+    public static void printPleaseEnterYourWinningNumber() {
+        System.out.println(PLEASE_ENTER_YOUR_WINNING_NUMBER);
+    }
 }

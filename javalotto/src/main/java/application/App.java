@@ -1,5 +1,7 @@
 package application;
 
+import java.util.List;
+
 import application.domain.Lotto;
 import application.view.InputView;
 import application.view.OutputView;
@@ -12,5 +14,6 @@ public class App {
         for (int i = 0; i < userPurchaseQuantity; i++) {
             OutputView.printLottoNumbers(Lotto.createNumbers());
         }
+        List<Integer> userWinningNumber = InputView.getWinningNumber();
     }
 }
