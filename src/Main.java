@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import domains.Lotto;
 import domains.Lottos;
 
 public class Main {
@@ -23,6 +22,11 @@ public class Main {
 		List<List<Integer>> purchasedLottos = lottos.getPurchasedLottos();
 
 		purchaseHistory(purchasedLottos);
+
+		List<Integer> winningNumbers = getWinningNumbers();
+
+		int numberOfWinnings = lottos.compareResult(winningNumbers);
+		System.out.println(numberOfWinnings);
 
 		scanClose();
 	}

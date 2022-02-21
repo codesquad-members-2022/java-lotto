@@ -2,6 +2,7 @@ package domains;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalInt;
 
 public class Lottos {
     private ArrayList<Lotto> lottos = new ArrayList<>();
@@ -22,5 +23,12 @@ public class Lottos {
             purchasedLottos.add(numbers);
         }
         return purchasedLottos;
+    }
+
+    public int compareResult(List<Integer> winningNumbers){
+        OptionalInt max = this.lottos.stream()
+                .mapToInt(lotto -> lotto.numberOfWinnings(winningNumbers))
+                .max();
+        return max.getAsInt();
     }
 }
