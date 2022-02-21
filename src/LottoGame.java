@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LottoGame {
 
     private List<Lotto> lottos;
+    private List<String> luckyNumbers;
 
     public void start() {
         init();
         int inputMoney = Input.getInputMoney("구입금액을 입력해 주세요.");
-
-        //구입금액에 맞춰서 로또를 생성해주는 메서드
         buyLotto(inputMoney);
+        this.luckyNumbers = Arrays.asList(Input.getLuckyNumbers());
     }
 
     private void init() {
