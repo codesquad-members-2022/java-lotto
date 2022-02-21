@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,43 +7,64 @@ import java.util.stream.Collectors;
 
 public class LottoGame {
 
-    private Map<Lotto, Integer> result;
-    private List<Lotto> lottos;
+    private final Lottos lottos = new Lottos();
+
+    private Map<Lotto, Integer> numOfMatchingResult;
     private List<Integer> luckyNumbers;
 
     public void start() {
         init();
         int inputMoney = Input.getInputMoney("구입금액을 입력해 주세요.");
-        buyLotto(inputMoney);
+        List<Lotto> buyedLottos = lottos.buyLotto(inputMoney);
+        Output.printLottoNum(buyedLottos);
         this.luckyNumbers = Arrays.stream(Input.getLuckyNumbers()).boxed()
             .collect(Collectors.toList());
-        getResult();
-        Output.printResult(result);
+        getResult(buyedLottos);
+        printResult();
     }
 
-    private void getResult() {
-        for (Lotto lotto : lottos) {
-            int count = 0;
-            for (int luckyNumber : luckyNumbers) {
-                if (lotto.getNumbers().contains(luckyNumber)) {
-                    count++;
+    private void printResult() {
+        Map<Rank, Integer> rankResult = new HashMap<>();
+        Collection<Integer> values = numOfMatchingResult.values();
+
+        for (int value : values) {
+            for (int i = 0; i < Rank.values().length; i++) {
+                if (value == Rank.values()[i].getCountOfMatch()) {
+                    rankResult.put(Rank.values()[i],
+                        rankResult.getOrDefault(Rank.values()[i], 0) + 1);
                 }
             }
-            result.put(lotto, count);
         }
+
+        int total = 0;
+        total += rankResult.getOrDefault(Rank.FIFTH, 0) * Rank.FIFTH.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
+        Output.printResult(rankResult, total);
+    }
+
+
+    private void getResult(List<Lotto> buyedLottos) {
+        for (Lotto lotto : buyedLottos) {
+            int count = matchWithLuckyNumber(lotto);
+            numOfMatchingResult.put(lotto, count);
+        }
+    }
+
+    private int matchWithLuckyNumber(Lotto lotto) {
+        int count = 0;
+        for (int luckyNumber : luckyNumbers) {
+            if (lotto.getNumbers().contains(luckyNumber)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private void init() {
-        lottos = new ArrayList<>();
-        result = new HashMap<>();
-    }
-
-    private void buyLotto(int inputMoney) {
-        int numOfLotto = inputMoney / 1000;
-        for (int i = 0; i < numOfLotto; i++) {
-            lottos.add(new Lotto());
-        }
-        Output.printLottoNum(numOfLotto, lottos);
+//        lottos = new ArrayList<>();
+        numOfMatchingResult = new HashMap<>();
     }
 
 
