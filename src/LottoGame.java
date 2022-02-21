@@ -13,7 +13,6 @@ public class LottoGame {
     private List<Integer> luckyNumbers;
     private Map<Rank, Integer> rankResult;
 
-
     public void start() {
         init();
         int inputMoney = Input.getInputMoney("구입금액을 입력해 주세요.");
@@ -38,9 +37,7 @@ public class LottoGame {
     }
 
     private double getEarningRate(Collection<Integer> values, int total) {
-        double earningRate =
-            (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
-        return earningRate;
+        return (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
     }
 
     private void matchRank(Map<Rank, Integer> rankResult, int value) {
@@ -76,12 +73,12 @@ public class LottoGame {
     private int matchWithLuckyNumber(Lotto lotto) {
         int count = 0;
         for (int luckyNumber : luckyNumbers) {
-            count += getMatchCount(lotto, count, luckyNumber);
+            count = getNumOfMatch(lotto, count, luckyNumber);
         }
         return count;
     }
 
-    private int getMatchCount(Lotto lotto, int count, int luckyNumber) {
+    private int getNumOfMatch(Lotto lotto, int count, int luckyNumber) {
         if (lotto.getNumbers().contains(luckyNumber)) {
             count++;
         }
