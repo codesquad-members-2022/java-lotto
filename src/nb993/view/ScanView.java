@@ -15,5 +15,13 @@ public class ScanView {
         return sc.nextInt();
     }
 
-
+    public int[] getWinningNumber() {
+        System.out.println("당첨 번호를 입력해 주세요.");
+        String[] strNumbers = sc.nextLine().split(",");
+        int[] winningNumbers = new int[6];
+        for (int i = 0; i < strNumbers.length; i++) {
+            winningNumbers[i] = Integer.parseInt(strNumbers[i].trim());
+        }
+        return winningNumbers;
+    }
 }

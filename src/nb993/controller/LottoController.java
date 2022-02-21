@@ -31,9 +31,16 @@ public class LottoController {
     public void playGame() {
         initLottos();
         printGame();
+        printLottoResult();
+    }
+
+    private void printLottoResult() {
+        int[] winningNumbers = scanView.getWinningNumber();
     }
 
     public void printGame() {
         printView.printLottos(lottos);
     }
+
+
 }
