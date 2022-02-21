@@ -25,8 +25,8 @@ public class LottoGame {
 
     private void printResult() {
         Map<Rank, Integer> rankResult = new HashMap<>();
-        Collection<Integer> values = numOfMatchingResult.values();
 
+        Collection<Integer> values = numOfMatchingResult.values();
         for (int value : values) {
             for (int i = 0; i < Rank.values().length; i++) {
                 if (value == Rank.values()[i].getCountOfMatch()) {
@@ -41,7 +41,8 @@ public class LottoGame {
         total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
         total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
         total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
-        Output.printResult(rankResult, total, values);
+
+        Output.printResult(rankResult, total, numOfMatchingResult);
     }
 
 
@@ -63,7 +64,6 @@ public class LottoGame {
     }
 
     private void init() {
-//        lottos = new ArrayList<>();
         numOfMatchingResult = new HashMap<>();
     }
 

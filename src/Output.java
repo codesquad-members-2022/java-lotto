@@ -16,7 +16,9 @@ public class Output {
     }
 
     public static void printResult(Map<Rank, Integer> rankResult, int total,
-        Collection<Integer> values) {
+        Map<Lotto, Integer> numOfMatchingResult) {
+        Collection<Integer> rankingResultValues = numOfMatchingResult.values();
+        
         System.out.println("당첨 통계");
         System.out.println("--------");
 
@@ -35,7 +37,8 @@ public class Output {
                 Rank.FIRST, 0));
 
         System.out.println(
-            (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100 + "%");
+            (double) ((total - rankingResultValues.size() * 1000) / (rankingResultValues.size()
+                * 1000)) * 100 + "%");
 
     }
 }
