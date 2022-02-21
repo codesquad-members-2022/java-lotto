@@ -6,47 +6,47 @@ import java.util.Collections;
 import java.util.List;
 
 import domains.Lotto;
+import domains.Lottos;
 
 public class Main {
-
-	public static final int PRICE_OF_ONE_LOTTO = 1000;
-	public static final String OUTPUT_ASK_PURCHASE_AMOUNT = "구입금액을 입력해 주세요.";
-	public static final String OUTPUT_NUMBER_OF_PURCHASED = "개를 구매했습니다.";
-	public static final int LOTTO_START_NUMBER = 1;
-	public static final int LOTTO_MAX_LIMITED_NUMBER = 46;
-	public static final int NUMBER_OF_AUTO_MAX = 6;
+	private static final int LOTTO_START_NUMBER = 1;
+	private static final int LOTTO_MAX_LIMITED_NUMBER = 46;
+	private static final int NUMBER_OF_AUTO_MAX = 6;
+	private static Lottos lottos = new Lottos();
 
 	public static void main(String[] args) {
-		println.accept(OUTPUT_ASK_PURCHASE_AMOUNT);
-		int purchaseAmount = nextInt();
+		int purchaseAmount = getPurchaseAmount();
+		int ticketAccount = getTicketAccount(purchaseAmount);
 
-		int ticketAccount = purchaseAmount / PRICE_OF_ONE_LOTTO;
-		println.accept(informPurchasing(ticketAccount));
+		ArrayList<Integer> lottoNumbers = getLottoNumbers();
+		bulidLottos(ticketAccount, lottoNumbers);
+		List<List<Integer>> purchasedLottos = lottos.getPurchasedLottos();
 
+		purchaseHistory(purchasedLottos);
+
+		scanClose();
+	}
+
+	private static void bulidLottos(int ticketAccount, ArrayList<Integer> lottoNumbers) {
+		for (int i = 0; i < ticketAccount; i++) {
+			mixNumber(lottoNumbers);
+			ArrayList<Integer> autoPickedNumber = pickAutoLottoNumber(lottoNumbers);
+			lottos.purchased(autoPickedNumber);
+		}
+	}
+
+	private static void purchaseHistory(List<List<Integer>> purchasedLottos) {
+		for (List<Integer> lotto : purchasedLottos) {
+			prints.accept(lotto);
+		}
+	}
+
+	private static ArrayList<Integer> getLottoNumbers() {
 		ArrayList<Integer> lottoNumbers = new ArrayList<>();
 		for (int i = LOTTO_START_NUMBER; i < LOTTO_MAX_LIMITED_NUMBER; i++) {
 			lottoNumbers.add(i);
 		}
-
-		ArrayList<Lotto> lottos = new ArrayList<>();
-		for (int i = 0; i < ticketAccount; i++) {
-			mixNumber(lottoNumbers);
-			ArrayList<Integer> autoPickedNumber = pickAutoLottoNumber(lottoNumbers);
-			Lotto lotto = new Lotto(autoPickedNumber);
-			lottos.add(lotto);
-		}
-
-		List<List<Integer>> purchasedLottos = new ArrayList<>();
-		for (Lotto lotto : lottos) {
-			List<Integer> numbers = lotto.numbers();
-			purchasedLottos.add(numbers);
-		}
-
-		for (List<Integer> lotto : purchasedLottos) {
-			prints.accept(lotto);
-		}
-
-		scanClose();
+		return lottoNumbers;
 	}
 
 	private static ArrayList<Integer> pickAutoLottoNumber(ArrayList<Integer> lottoNumbers) {
@@ -55,10 +55,6 @@ public class Main {
 			autoPickedNumber.add(lottoNumbers.get(j));
 		}
 		return autoPickedNumber;
-	}
-
-	private static String informPurchasing(int ticketAccount) {
-		return ticketAccount + OUTPUT_NUMBER_OF_PURCHASED;
 	}
 
 	private static void mixNumber(ArrayList<Integer> lottoNumbers) {
