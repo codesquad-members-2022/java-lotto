@@ -8,7 +8,7 @@ import application.domain.Lotto;
 import application.view.InputView;
 import application.view.OutputView;
 
-public class LottoGame {
+public class LottoTicket {
 
     private static final int MIN_LOTTO_NUMBER = 1;
     private static final int MAX_LOTTO_NUMBER = 45;
