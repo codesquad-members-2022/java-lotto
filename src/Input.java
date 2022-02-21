@@ -16,18 +16,19 @@ public class Input {
 		return money;
 	}
 
-	public static String[] getLuckyNumbers() {
+	public static int[] getLuckyNumbers() {
 		System.out.println(LUCKY_NUMBERS_INFO);
 		return trimInputLuckyNumbers();
 	}
 
-	private static String[] trimInputLuckyNumbers() {
+	private static int[] trimInputLuckyNumbers() {
 		String[] split = scanner.nextLine().split(",");
+		int[] result = new int[split.length];
 		for (int i = 0; i < split.length; i++) {
-			split[i] = split[i].trim();
-			System.out.println(split[i]);
+			result[i] = Integer.parseInt(split[i].trim());
 		}
-		return split;
+
+		return result;
 	}
 
 }
