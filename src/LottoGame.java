@@ -18,7 +18,7 @@ public class LottoGame {
         this.luckyNumbers = Arrays.stream(Input.getLuckyNumbers()).boxed()
             .collect(Collectors.toList());
         getResult();
-        System.out.println();
+        Output.printResult(result);
     }
 
     private void getResult() {
