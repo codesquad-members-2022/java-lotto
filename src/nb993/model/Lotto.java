@@ -25,4 +25,14 @@ public class Lotto {
         return numbers.toString();
     }
 
+    public int getResult(int[] winningNumbers) {
+        int correctNum = 0;
+        for (int i = 0; i < numbers.size(); i++) {
+            if (numbers.contains(winningNumbers[i])) {
+                correctNum++;
+            }
+        }
+
+        return correctNum;
+    }
 }

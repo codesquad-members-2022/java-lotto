@@ -16,6 +16,7 @@ public class ScanView {
     }
 
     public int[] getWinningNumber() {
+        sc.nextLine();
         System.out.println("당첨 번호를 입력해 주세요.");
         String[] strNumbers = sc.nextLine().split(",");
         int[] winningNumbers = new int[6];

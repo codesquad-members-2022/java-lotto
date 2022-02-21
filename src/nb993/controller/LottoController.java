@@ -36,6 +36,12 @@ public class LottoController {
 
     private void printLottoResult() {
         int[] winningNumbers = scanView.getWinningNumber();
+        int[] result = new int[7];
+
+        for (int i = 0; i < lottos.size(); i++) {
+            result[lottos.get(i).getResult(winningNumbers)]++;
+        }
+        printView.printResult(result, 1000 * lottos.size());
     }
 
     public void printGame() {
