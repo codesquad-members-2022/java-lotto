@@ -36,17 +36,22 @@ public class LottoGame {
             }
         }
 
-        int total = 0;
-        total += rankResult.getOrDefault(Rank.FIFTH, 0) * Rank.FIFTH.getWinningMoney();
-        total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
-        total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
-        total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
+        int total = getTotalEarning(rankResult);
 
         double earningRate =
             (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
         System.out.println(1 + "%");
 
         Output.printResult(rankResult, total, earningRate);
+    }
+
+    private int getTotalEarning(Map<Rank, Integer> rankResult) {
+        int total = 0;
+        total += rankResult.getOrDefault(Rank.FIFTH, 0) * Rank.FIFTH.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
+        return total;
     }
 
 
