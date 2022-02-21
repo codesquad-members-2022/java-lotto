@@ -18,5 +18,7 @@ public class Lotto {
         return numbers;
     }
 
-
+    public boolean sameNumber(int checkWinNumber) {
+        return numbers.contains(checkWinNumber);
+    }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import view.InputView;
+import view.OutputView;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,6 +13,9 @@ public class LottoController {
     private int count;
     private List<Lotto> lottoList = new ArrayList<>();
     private List<Integer> range = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
+    private Map<Integer, Integer> map = new HashMap<>();
+    // key : 3, 4, 5, 6
+    // value : 3? 4? 5? 6?
 
     public void buildLotto() {
         price = Integer.parseInt(InputView.requestPrice());
@@ -35,14 +39,13 @@ public class LottoController {
                 Collections.sort(lists);
                 lottoList.add(new Lotto(lists));
             }
-
-
         }
-
     }
 
     public void checkWinNumber() {
-        InputView.requestWinNumber();
+        String winNumber = InputView.requestWinNumber();
+        String[] winNumbers = winNumber.split(", "); // 1,2,3,4,5,6
+        // TODO : 당첨 통계 구현 필요
     }
 }
 

@@ -10,7 +10,7 @@ public class InputView {
         return sc.nextLine();
     }
 
-    public static void requestWinNumber() {
+    public static String requestWinNumber() {
         OutputView.requestWinNumber();
         return sc.nextLine();
     }
