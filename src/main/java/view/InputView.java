@@ -27,7 +27,7 @@ public class InputView {
     public List<Integer> getAnswerInput() {
         System.out.println(PROMPT_ANSWER);
         System.out.print(PROMPT);
-        String[] answer = sc.nextLine().split(",\\s+");
+        String[] answer = sc.nextLine().replace(" ", "").split(",");
         // TODO: 입력 예외 처리(숫자인지, 개수 6개인지, 로또번호 범위(1~45) 내인지)
         return Arrays.stream(answer)
             .map(Integer::parseInt)

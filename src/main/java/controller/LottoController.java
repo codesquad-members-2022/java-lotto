@@ -1,9 +1,11 @@
 package controller;
 
 import java.util.List;
+import java.util.Map;
 
 import domain.Lotto;
 import domain.LottoShop;
+import domain.Rank;
 import view.InputView;
 import view.OutputView;
 
@@ -24,5 +26,8 @@ public class LottoController {
         List<Lotto> purchasedLotteries = lottoShop.order(userMoney);
         outputView.printLotteries(purchasedLotteries);
         List<Integer> answers = inputView.getAnswerInput();
+        Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries,answers);
+        outputView.printStatistics(result, userMoney);
+
     }
 }

@@ -31,4 +31,6 @@ public enum Rank {
         }
         return noRank;
     }
+
+
 }
