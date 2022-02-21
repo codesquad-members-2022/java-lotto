@@ -41,4 +41,8 @@ public class Money {
     public long getPurchaseAmount() {
         return purchaseAmount;
     }
+
+    public long numberOfBuyableLottoTickets() {
+        return purchaseAmount / PRICE_OF_LOTTO;
+    }
 }
