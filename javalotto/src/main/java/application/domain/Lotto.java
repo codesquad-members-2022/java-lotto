@@ -1,7 +1,6 @@
 package application.domain;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -10,6 +9,12 @@ public class Lotto {
     private static final int MIN_LOTTO_NUMBER = 1;
     private static final int MAX_LOTTO_NUMBER = 45;
     private static final int AMOUNT_LOTTO_NUMBER = 6;
+
+    private final List<Integer> numbers;
+
+    public Lotto() {
+        this.numbers = createNumbers();
+    }
 
     public static List<Integer> createNumbers() {
         return new Random(System.currentTimeMillis())
@@ -21,7 +26,7 @@ public class Lotto {
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getLotto() {
-        return new ArrayList<>();
+    public List<Integer> getNumbers() {
+        return numbers;
     }
 }
