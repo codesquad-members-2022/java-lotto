@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static void winStatistics(List<List<Integer>> allShuffledNumbers, List<Integer> winningNumbers) {
+    public static void winStatistics(List<List<Integer>> allShuffledNumbers, List<Integer> winningNumbers, int amount) {
         System.out.println("당첨 통계");
         System.out.println("----------");
 
@@ -19,9 +19,15 @@ public class OutputView {
         lottoResults.add(getLottoResult(statistics, 5, 1_500_000));
         lottoResults.add(getLottoResult(statistics, 6, 2_000_000_000));
 
+        long totalWinAmount = 0;
         for (LottoResult lottoResult : lottoResults) {
+            totalWinAmount += lottoResult.getWinAmount();
             System.out.printf("%d개 일치 (%d원) - %d개\n", lottoResult.getCount(), lottoResult.getPrizeMoney(), lottoResult.getWinningCaseCount());
         }
+        double result = (totalWinAmount - amount) / (double) amount * 100.0;
+
+        System.out.printf("총 수익률은 %.2f%%입니다.", result);
+
     }
 
     private static LottoResult getLottoResult(Map<Integer, Integer> statistics, int count, int prizeMoney) {
