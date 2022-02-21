@@ -1,6 +1,7 @@
 package app.lotto;
 
 import app.lotto.view.InputView;
+import app.lotto.view.OutputView;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,8 +14,9 @@ public class Main {
         InputView inputView = new InputView();
         int amount = inputView.readAmount();
         int lottoCount = getLottoCount(amount);
-        getAllShuffledNumbers(lottoCount);
-        inputView.readWinningNumbers();
+        List<List<Integer>> allShuffledNumbers = getAllShuffledNumbers(lottoCount);
+        List<Integer> winningNumbers = inputView.readWinningNumbers();
+        OutputView.winStatistics(allShuffledNumbers, winningNumbers);
     }
 
     private static int getLottoCount(int amount) {
