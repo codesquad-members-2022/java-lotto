@@ -1,7 +1,7 @@
 package application;
 
-import view.InputView;
-import view.OutputView;
+import application.view.InputView;
+import application.view.OutputView;
 
 public class App {
     public static void main(String[] args) {

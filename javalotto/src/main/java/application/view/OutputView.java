@@ -1,4 +1,4 @@
-package view;
+package application.view;
 
 public class OutputView {
 
