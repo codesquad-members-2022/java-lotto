@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static app.lotto.validation.InputViewValidator.*;
+
 public class InputView {
 
     private final Scanner sc = new Scanner(System.in);
@@ -18,12 +20,6 @@ public class InputView {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readAmount();
-        }
-    }
-
-    private void validateAmountUnit(int amount, int unit) {
-        if (amount % unit != 0) {
-            throw new IllegalArgumentException("1000원 단위로 입력해주세요.");
         }
     }
 
@@ -47,28 +43,6 @@ public class InputView {
             // 오류메세지 출력
             System.out.println(e.getMessage());
             return readWinningNumbers();
-        }
-    }
-
-    private void validateNumbersCount(String[] numbers, int count) {
-        for (String num : numbers) {
-            Integer.parseInt(num.trim());
-        }
-
-        if (numbers.length != count) {
-            throw new IllegalArgumentException(String.format("당첨번호는 %d개 입력해 주세요.", count));
-        }
-    }
-
-    private void validateNumbersRange(List<Integer> winningNumbers, int min, int max) {
-        for (int num : winningNumbers) {
-            validateRange(min, max, num);
-        }
-    }
-
-    private void validateRange(int min, int max, int num) {
-        if (num < min || num > max) {
-            throw new IllegalArgumentException("1부터 45까지의 숫자만 입력해주세요.");
         }
     }
 }
