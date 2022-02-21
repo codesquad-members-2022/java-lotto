@@ -14,7 +14,7 @@ public class Main {
         int amount = inputView.readAmount();
         int lottoCount = getLottoCount(amount);
         getAllShuffledNumbers(lottoCount);
-
+        inputView.readWinningNumbers();
     }
 
     private static int getLottoCount(int amount) {
