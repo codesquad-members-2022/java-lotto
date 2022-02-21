@@ -43,7 +43,8 @@ public class LottoGame {
         total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
 
         double earningRate =
-            (double) ((total - rankResult.size() * 1000) / (rankResult.size() * 1000)) * 100;
+            (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
+        System.out.println(1 + "%");
 
         Output.printResult(rankResult, total, earningRate);
     }
