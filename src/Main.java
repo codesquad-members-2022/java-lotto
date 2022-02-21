@@ -21,7 +21,12 @@ public class Main {
 		}
 		mixNumber(lottoNumbers);
 
+		ArrayList<Integer> autoPickedNumber = new ArrayList<>();
+		for (int i = 0; i < 6; i++) {
+			autoPickedNumber.add(lottoNumbers.get(i));
+		}
 
+		Lotto lotto = new Lotto(autoPickedNumber);
 
 		prints.accept(lottoNumbers);
 
