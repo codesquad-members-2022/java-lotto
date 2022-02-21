@@ -13,5 +13,6 @@ class LottoMakerTest {
         Lotto lotto = LottoMaker.make();
         System.out.println(lotto.getLottoNumbers());
         assertThat(lotto.size()).isEqualTo(6);
+
     }
 }

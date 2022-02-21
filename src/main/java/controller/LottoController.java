@@ -1,36 +1,28 @@
 package controller;
 
-import domain.Lotto;
-import domain.LottoMaker;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import domain.Lotto;
+import domain.LottoShop;
 import view.InputView;
+import view.OutputView;
 
 public class LottoController {
 
     private InputView inputView;
+    private OutputView outputView;
+    private LottoShop lottoShop;
 
-    public LottoController(InputView inputView) {
+    public LottoController(InputView inputView, OutputView outputView, LottoShop lottoShop) {
         this.inputView = inputView;
+        this.outputView = outputView;
+        this.lottoShop = lottoShop;
     }
 
     public void runLotto() {
-        try {
-            int balance = inputView.getInput();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        int userMoney = inputView.getMoneyInput();
+        List<Lotto> order = lottoShop.order(userMoney);
+        outputView.printLotteries(order);
+        List<Integer> answers = inputView.getAnswerInput();
     }
-
-    private List<Lotto> order(int balance) {
-        List<Lotto> lotteries = new ArrayList<>();
-        int lottoCount = balance / Lotto.PRICE;
-        for (int i = 0; i < lottoCount; i++) {
-            lotteries.add(LottoMaker.make());
-        }
-        return lotteries;
-    }
-
 }
