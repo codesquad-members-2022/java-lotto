@@ -12,7 +12,7 @@ public class Main {
         ScanView scanView = new ScanView(sc);
         PrintView printView = new PrintView();
         LottoController lottoController = new LottoController(scanView, printView);
-        lottoController.buyLotto();
+        lottoController.playGame();
 
         sc.close();
 

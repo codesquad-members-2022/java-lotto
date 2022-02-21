@@ -14,4 +14,6 @@ public class ScanView {
         System.out.println("구매 금액을 입력해 주세요.");
         return sc.nextInt();
     }
+
+
 }
