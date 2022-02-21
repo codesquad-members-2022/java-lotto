@@ -1,10 +1,10 @@
 import java.util.List;
 
-public class Balls {
+public class Lotto {
 
     private final List<Ball> balls;
 
-    public Balls(List<Ball> balls) {
+    public Lotto(List<Ball> balls) {
         this.balls = balls;
     }
 }
