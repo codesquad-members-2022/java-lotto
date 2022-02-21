@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Ball {
 
     private final int number;
@@ -8,7 +10,20 @@ public class Ball {
         this.number = number;
     }
 
-    public int getNumber() {
-        return number;
+    public boolean isSameBall(Ball ball) {
+        return this.equals(ball);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ball ball = (Ball) o;
+        return number == ball.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
     }
 }
