@@ -1,7 +1,7 @@
 package application.model;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import application.domain.Lotto;
@@ -11,7 +11,7 @@ import application.view.OutputView;
 public class LottoTicket {
 
     private static final int MIN_LOTTO_NUMBER = 1;
-    private static final int MAX_LOTTO_NUMBER = 45;
+    private static final int MAX_LOTTO_NUMBER = 46;
     private static final int AMOUNT_LOTTO_NUMBER = 6;
 
     public void init() {
@@ -26,8 +26,9 @@ public class LottoTicket {
     }
 
     private List<Integer> createNumbers() {
-        return new Random(System.currentTimeMillis())
+        return new SecureRandom()
                 .ints(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER)
+                .parallel()
                 .distinct()
                 .limit(AMOUNT_LOTTO_NUMBER)
                 .boxed()
