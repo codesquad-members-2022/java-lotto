@@ -41,7 +41,7 @@ public class LottoGame {
         total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
         total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
         total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
-        Output.printResult(rankResult, total);
+        Output.printResult(rankResult, total, values);
     }
 
 

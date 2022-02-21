@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,8 @@ public class Output {
         }
     }
 
-    public static void printResult(Map<Rank, Integer> rankResult, int total) {
+    public static void printResult(Map<Rank, Integer> rankResult, int total,
+        Collection<Integer> values) {
         System.out.println("당첨 통계");
         System.out.println("--------");
 
