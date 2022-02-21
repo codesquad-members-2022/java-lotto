@@ -1,9 +1,9 @@
 package application.view;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InputView {
 
@@ -19,9 +19,21 @@ public class InputView {
     }
 
     public static List<Integer> getWinningNumber() {
+        removeNewLine();
         OutputView.printPleaseEnterYourWinningNumber();
-        return Arrays.stream(scanner.next().split(", "))
+        return stringConversion();
+    }
+
+    private static List<Integer> stringConversion() {
+        return Stream.of(scanner.nextLine().split(","))
+                .map(String::trim)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
+    }
+
+    private static void removeNewLine() {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
     }
 }
