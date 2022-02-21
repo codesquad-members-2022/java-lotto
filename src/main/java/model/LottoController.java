@@ -24,22 +24,25 @@ public class LottoController {
                 numbers.add(range.get(0));
             }
             List<Integer> lists = new ArrayList<>(numbers);
+            boolean overLapCheck = false;
             for (Lotto lotto : lottoList) {
-                if (!lotto.sameList(lists)) {
-                    lottoList.add(new Lotto(numbers));
+                if (lotto.sameList(lists)) {
+                    overLapCheck = true;
                     break;
                 }
             }
-        }
-        for (Lotto lotto : lottoList) {
-            List<Integer> numbers = lotto.getNumbers();
-            for (Integer number : numbers) {
-                System.out.print(number + " ");
+            if (!overLapCheck) {
+                Collections.sort(lists);
+                lottoList.add(new Lotto(lists));
             }
-            System.out.println();
+
+
         }
 
     }
 
+    public void checkWinNumber() {
+        InputView.requestWinNumber();
+    }
 }
 

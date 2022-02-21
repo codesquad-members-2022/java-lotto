@@ -9,4 +9,9 @@ public class InputView {
         OutputView.requestPrice();
         return sc.nextLine();
     }
+
+    public static void requestWinNumber() {
+        OutputView.requestWinNumber();
+        return sc.nextLine();
+    }
 }
