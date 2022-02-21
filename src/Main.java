@@ -3,6 +3,7 @@ import static views.Output.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import domains.Lotto;
 
@@ -19,16 +20,28 @@ public class Main {
 		for (int i = 1; i < 46; i++) {
 			lottoNumbers.add(i);
 		}
-		mixNumber(lottoNumbers);
 
-		ArrayList<Integer> autoPickedNumber = new ArrayList<>();
-		for (int i = 0; i < 6; i++) {
-			autoPickedNumber.add(lottoNumbers.get(i));
+		ArrayList<Lotto> lottos = new ArrayList<>();
+		for (int i = 0; i < ticketAccount; i++) {
+			mixNumber(lottoNumbers);
+			ArrayList<Integer> autoPickedNumber = new ArrayList<>();
+			for (int j = 0; j < 6; j++) {
+				autoPickedNumber.add(lottoNumbers.get(j));
+			}
+			Lotto lotto = new Lotto(autoPickedNumber);
+			lottos.add(lotto);
 		}
 
-		Lotto lotto = new Lotto(autoPickedNumber);
+		List<List<Integer>> purchasedLottos = new ArrayList<>();
+		for (int i = 0; i < lottos.size(); i++) {
+			Lotto lotto = lottos.get(i);
+			List<Integer> numbers = lotto.numbers();
+			purchasedLottos.add(numbers);
+		}
 
-		prints.accept(lottoNumbers);
+		for (List<Integer> lotto : purchasedLottos) {
+			prints.accept(lotto);
+		}
 
 		scanClose();
 	}

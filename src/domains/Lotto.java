@@ -15,4 +15,8 @@ public class Lotto {
 		}
 		this.sixNumbers = sixNumbers;
 	}
+
+	public List<Integer> numbers() {
+		return this.sixNumbers;
+	}
 }
