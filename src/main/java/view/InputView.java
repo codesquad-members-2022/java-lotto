@@ -19,7 +19,7 @@ public class InputView {
             System.out.println(PROMPT_NOT_NUMBER);
             System.out.print(PROMPT);
         }
-        return Integer.parseInt(temp) / 1000;
+        return Integer.parseInt(temp);
     }
 
     private boolean isValid(String input) {

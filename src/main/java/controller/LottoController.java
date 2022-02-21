@@ -1,5 +1,10 @@
 package controller;
 
+import domain.Lotto;
+import domain.LottoMaker;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import view.InputView;
 
 public class LottoController {
@@ -11,7 +16,12 @@ public class LottoController {
     }
 
     public void runLotto() {
-        int count = inputView.getInput();
+        try {
+            int balance = inputView.getInput();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private List<Lotto> order(int balance) {
@@ -22,4 +32,5 @@ public class LottoController {
         }
         return lotteries;
     }
+
 }
