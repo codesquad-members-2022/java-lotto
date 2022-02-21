@@ -1,24 +1,29 @@
 package domain.lotto;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class LottoTicket {
-    private LottoNumbers lottoNumbers;
 
-    private LottoTicket() {
+    private static final int LIMIT_LOTTO_NUMBERS = 6;
+
+    private final Set<LottoNumber> lottoNumbers;
+
+    private LottoTicket(Set<LottoNumber> lottoNumbers) {
+        this.lottoNumbers = lottoNumbers;
     }
 
-    public static LottoTicket create() {
-        LottoTicket lottoTicket = new LottoTicket();
-        lottoTicket.lottoNumbers = new LottoNumbers();
+    public static LottoTicket createRandomTicket() {
+        Set<LottoNumber> lottoNumbers = new HashSet<>();
+        while (lottoNumbers.size() != LIMIT_LOTTO_NUMBERS) {
+            lottoNumbers.add(LottoNumber.getLottoRandomLottoNumber());
+        }
 
-        return lottoTicket;
+        return new LottoTicket(lottoNumbers);
     }
 
-    public LottoNumbers getLottoNumbers() {
-        return lottoNumbers;
-    }
-
-    @Override
-    public String toString() {
-        return lottoNumbers.toString();
+    public Set<LottoNumber> getLottoNumbers() {
+        return Collections.unmodifiableSet(lottoNumbers);
     }
 }

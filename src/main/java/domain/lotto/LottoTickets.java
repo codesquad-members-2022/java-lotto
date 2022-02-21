@@ -13,7 +13,7 @@ public class LottoTickets {
     private LottoTickets(Money money) {
         long numberOfLottoTickets = money.numberOfBuyableLottoTickets();
         for (long count = 0; count < numberOfLottoTickets; count++) {
-            lottoTickets.add(LottoTicket.create());
+            lottoTickets.add(LottoTicket.createRandomTicket());
         }
     }
 

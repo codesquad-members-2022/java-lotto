@@ -8,8 +8,8 @@ public class LottoTicketTest {
 
     @Test
     void createLotto() {
-        LottoTicket lottoTicket = LottoTicket.create();
+        LottoTicket lottoTicket = LottoTicket.createRandomTicket();
 
-        assertThat(lottoTicket.getLottoNumbers().getLottoNumbersSize()).isEqualTo(6);
+        assertThat(lottoTicket.getLottoNumbers().size()).isEqualTo(6);
     }
 }
