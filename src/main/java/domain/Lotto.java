@@ -20,4 +20,8 @@ public class Lotto {
     public int size() {
         return lottoNumbers.size();
     }
+
+    public boolean contains(int number){
+        return lottoNumbers.contains(number);
+    }
 }

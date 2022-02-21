@@ -21,8 +21,8 @@ public class LottoController {
 
     public void runLotto() {
         int userMoney = inputView.getMoneyInput();
-        List<Lotto> order = lottoShop.order(userMoney);
-        outputView.printLotteries(order);
+        List<Lotto> purchasedLotteries = lottoShop.order(userMoney);
+        outputView.printLotteries(purchasedLotteries);
         List<Integer> answers = inputView.getAnswerInput();
     }
 }
