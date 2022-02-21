@@ -4,22 +4,20 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Lotto {
-	//todo
-	// 6자리 숫자 랜덤으로 생성
-	// 1, 2, 3, 4, 5, 6
 
-	private static List<Integer> numbers = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
+	private static final List<Integer> allNumbers = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
 
-	private static final int PRICE = 1000;
+	private List<Integer> numbers;
 
 	public Lotto() {
 		create();
 	}
 
 	private void create() {
-		Collections.shuffle(numbers);
-		numbers = numbers.subList(0, 6);
+		Collections.shuffle(allNumbers);
+		numbers = allNumbers.subList(0, 6);
 		Collections.sort(numbers);
+		numbers = List.copyOf(numbers);
 	}
 
 	public List<Integer> getNumbers() {

@@ -1,6 +1,5 @@
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -20,14 +19,6 @@ public class Output {
 	public static void printResult(Map<Lotto, Integer> result) {
 		System.out.println("당첨 통계");
 		System.out.println("--------");
-
-		//todo
-		// 1 -> 꽝
-		// 2 -> 꽝
-		// 3 -> 5000원
-		// 4 -> 50000원
-		// 5 -> 1500000원
-		// 6 -> 20억
 
 		Map<Rank, Integer> map = new HashMap<>();
 
@@ -52,11 +43,12 @@ public class Output {
 		System.out.println(
 			"4개 일치 (" + Rank.THIRD.getWinningMoney() + ")" + "-" + map.getOrDefault(Rank.THIRD, 0));
 		System.out.println(
-			"5개 일치 (" + Rank.SECOND.getWinningMoney() + ")" + "-" + map.getOrDefault(Rank.SECOND, 0));
+			"5개 일치 (" + Rank.SECOND.getWinningMoney() + ")" + "-" + map.getOrDefault(Rank.SECOND,
+				0));
 		System.out.println(
 			"6개 일치 (" + Rank.FIRST.getWinningMoney() + ")" + "-" + map.getOrDefault(Rank.FIRST, 0));
 
-        System.out.println(((total - (values.size() * 1000)) / total) * 100 + "%");
+		System.out.println((double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100 + "%");
 
 	}
 }
