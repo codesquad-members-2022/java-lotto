@@ -1,4 +1,3 @@
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +14,7 @@ public class Output {
         }
     }
 
-    public static void printResult(Map<Rank, Integer> rankResult, int total,
-        Map<Lotto, Integer> numOfMatchingResult) {
-        Collection<Integer> rankingResultValues = numOfMatchingResult.values();
-        
+    public static void printResult(Map<Rank, Integer> rankResult, int total, double earningRate) {
         System.out.println("당첨 통계");
         System.out.println("--------");
 
@@ -36,9 +32,7 @@ public class Output {
             "6개 일치 (" + Rank.FIRST.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
                 Rank.FIRST, 0));
 
-        System.out.println(
-            (double) ((total - rankingResultValues.size() * 1000) / (rankingResultValues.size()
-                * 1000)) * 100 + "%");
+        System.out.println("총 수익률은 " + earningRate + "%입니다.");
 
     }
 }
