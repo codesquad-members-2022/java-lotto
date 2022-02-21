@@ -9,7 +9,8 @@ public class App {
         int userPurchaseAmount = InputView.getPurchaseAmount();
         int userPurchaseQuantity = userPurchaseAmount / 1000;
         OutputView.printPurchaseQuantity(userPurchaseQuantity);
-
-        System.out.println(Lotto.createNumbers());
+        for (int i = 0; i < userPurchaseQuantity; i++) {
+            OutputView.printLottoNumbers(Lotto.createNumbers());
+        }
     }
 }

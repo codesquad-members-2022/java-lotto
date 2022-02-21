@@ -1,5 +1,7 @@
 package application.view;
 
+import java.util.List;
+
 public class OutputView {
 
     private static final String ENTER_PURCHASE_AMOUNT = "구입 금액을 입력해주세요.";
@@ -16,5 +18,9 @@ public class OutputView {
 
     public static void printPurchaseQuantity(int userPurchaseQuantity) {
         System.out.println(userPurchaseQuantity + PURCHASE_QUANTITY);
+    }
+
+    public static void printLottoNumbers(List<Integer> lotto) {
+        System.out.println(lotto);
     }
 }
