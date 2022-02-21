@@ -21,7 +21,6 @@ public class Lotto {
 		Collections.shuffle(numbers);
 		numbers = numbers.subList(0, 6);
 		Collections.sort(numbers);
-		System.out.println(numbers);
 	}
 
 	public List<Integer> getNumbers() {
