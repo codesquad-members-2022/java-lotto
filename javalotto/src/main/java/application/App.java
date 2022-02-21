@@ -1,19 +1,10 @@
 package application;
 
-import java.util.List;
-
-import application.domain.Lotto;
-import application.view.InputView;
-import application.view.OutputView;
+import application.model.LottoGame;
 
 public class App {
     public static void main(String[] args) {
-        int userPurchaseAmount = InputView.getPurchaseAmount();
-        int userPurchaseQuantity = userPurchaseAmount / 1000;
-        OutputView.printPurchaseQuantity(userPurchaseQuantity);
-        for (int i = 0; i < userPurchaseQuantity; i++) {
-            OutputView.printLottoNumbers(Lotto.createNumbers());
-        }
-        List<Integer> userWinningNumber = InputView.getWinningNumber();
+        LottoGame game = new LottoGame();
+        game.init();
     }
 }
