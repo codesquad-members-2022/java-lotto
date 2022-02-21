@@ -5,20 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class Lotto {
-    private int firstNumber;
-    private int secondNumber;
-    private int thirdNumber;
-    private int fourthNumber;
-    private int fifthNumber;
-    private int sixthNumber;
+    private List<Integer> lottoNumbers;
     public Lotto() {
-        List<Integer> numbers = getNumbers();
-        this.firstNumber = numbers.get(0);
-        this.secondNumber = numbers.get(1);
-        this.thirdNumber = numbers.get(2);
-        this.fourthNumber = numbers.get(3);
-        this.fifthNumber = numbers.get(4);
-        this.sixthNumber = numbers.get(5);
+        lottoNumbers = getNumbers();
+    }
+
+    public List<Integer> getLottoNumbers() {
+        return lottoNumbers;
     }
 
     private List<Integer> getNumbers() {
@@ -40,27 +33,4 @@ public class Lotto {
         return sixNumber;
     }
 
-    public int getFirstNumber() {
-        return firstNumber;
-    }
-
-    public int getSecondNumber() {
-        return secondNumber;
-    }
-
-    public int getThirdNumber() {
-        return thirdNumber;
-    }
-
-    public int getFourthNumber() {
-        return fourthNumber;
-    }
-
-    public int getFifthNumber() {
-        return fifthNumber;
-    }
-
-    public int getSixthNumber() {
-        return sixthNumber;
-    }
 }
