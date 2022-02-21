@@ -1,5 +1,7 @@
 package app.lotto.view;
 
+import app.lotto.domain.LottoPrize;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,24 +15,34 @@ public class OutputView {
 
         Map<Integer, Integer> statistics = getStatistics(allShuffledNumbers, winningNumbers);
 
-        List<LottoResult> lottoResults = new ArrayList<>();
-        lottoResults.add(getLottoResult(statistics, 3, 5_000));
-        lottoResults.add(getLottoResult(statistics, 4, 50_000));
-        lottoResults.add(getLottoResult(statistics, 5, 1_500_000));
-        lottoResults.add(getLottoResult(statistics, 6, 2_000_000_000));
+        List<LottoResult> lottoResults = getLottoResults(statistics);
 
-        long totalWinAmount = 0;
-        for (LottoResult lottoResult : lottoResults) {
-            totalWinAmount += lottoResult.getWinAmount();
-            System.out.printf("%d개 일치 (%d원) - %d개\n", lottoResult.getCount(), lottoResult.getPrizeMoney(), lottoResult.getWinningCaseCount());
-        }
+        long totalWinAmount = getTotalWinAmount(lottoResults);
         double result = (totalWinAmount - amount) / (double) amount * 100.0;
 
         System.out.printf("총 수익률은 %.2f%%입니다.", result);
 
     }
 
-    private static LottoResult getLottoResult(Map<Integer, Integer> statistics, int count, int prizeMoney) {
+    private static long getTotalWinAmount(List<LottoResult> lottoResults) {
+        long totalWinAmount = 0;
+        for (LottoResult lottoResult : lottoResults) {
+            totalWinAmount += lottoResult.getWinAmount();
+            System.out.printf("%d개 일치 (%d원) - %d개\n", lottoResult.getCount(), lottoResult.getPrizeMoney(), lottoResult.getWinningCaseCount());
+        }
+        return totalWinAmount;
+    }
+
+    private static List<LottoResult> getLottoResults(Map<Integer, Integer> statistics) {
+        List<LottoResult> lottoResults = new ArrayList<>();
+
+        for (LottoPrize lottoPrize : LottoPrize.values()) {
+            lottoResults.add(getLottoResult(statistics, lottoPrize.getCount(), lottoPrize.getPrizeMoney()));
+        }
+        return lottoResults;
+    }
+
+    private static LottoResult getLottoResult(Map<Integer, Integer> statistics, int count, long prizeMoney) {
         int winningCaseCount = statistics.getOrDefault(count, 0);
 
         return new LottoResult.Builder()

@@ -24,9 +24,7 @@ public class Main {
     }
 
     private static List<Integer> getShuffledNumbers() {
-        List<Integer> lottoNumbers = IntStream.rangeClosed(1,45)
-                .boxed()
-                .collect(Collectors.toList());
+        List<Integer> lottoNumbers = getLottoNumbers();
 
         Collections.shuffle(lottoNumbers);
 
@@ -37,6 +35,12 @@ public class Main {
         }
 
         return shuffledNumbers;
+    }
+
+    private static List<Integer> getLottoNumbers() {
+        return IntStream.rangeClosed(1,45)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     private static List<List<Integer>> getAllShuffledNumbers(int lottoCount) {
