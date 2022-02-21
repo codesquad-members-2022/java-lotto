@@ -28,21 +28,28 @@ public class LottoGame {
 
         Collection<Integer> values = numOfMatchingResult.values();
         for (int value : values) {
-            for (int i = 0; i < Rank.values().length; i++) {
-                if (value == Rank.values()[i].getCountOfMatch()) {
-                    rankResult.put(Rank.values()[i],
-                        rankResult.getOrDefault(Rank.values()[i], 0) + 1);
-                }
-            }
+            matchRank(rankResult, value);
         }
 
         int total = getTotalEarning(rankResult);
-
-        double earningRate =
-            (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
-        System.out.println(1 + "%");
+        double earningRate = getEarningRate(values, total);
 
         Output.printResult(rankResult, total, earningRate);
+    }
+
+    private double getEarningRate(Collection<Integer> values, int total) {
+        double earningRate =
+            (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
+        return earningRate;
+    }
+
+    private void matchRank(Map<Rank, Integer> rankResult, int value) {
+        for (int i = 0; i < Rank.values().length; i++) {
+            if (value == Rank.values()[i].getCountOfMatch()) {
+                rankResult.put(Rank.values()[i],
+                    rankResult.getOrDefault(Rank.values()[i], 0) + 1);
+            }
+        }
     }
 
     private int getTotalEarning(Map<Rank, Integer> rankResult) {
