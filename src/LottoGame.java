@@ -11,6 +11,8 @@ public class LottoGame {
 
     private Map<Lotto, Integer> numOfMatchingResult;
     private List<Integer> luckyNumbers;
+    private Map<Rank, Integer> rankResult;
+
 
     public void start() {
         init();
@@ -24,8 +26,6 @@ public class LottoGame {
     }
 
     private void printResult() {
-        Map<Rank, Integer> rankResult = new HashMap<>();
-
         Collection<Integer> values = numOfMatchingResult.values();
         for (int value : values) {
             matchRank(rankResult, value);
@@ -45,10 +45,14 @@ public class LottoGame {
 
     private void matchRank(Map<Rank, Integer> rankResult, int value) {
         for (int i = 0; i < Rank.values().length; i++) {
-            if (value == Rank.values()[i].getCountOfMatch()) {
-                rankResult.put(Rank.values()[i],
-                    rankResult.getOrDefault(Rank.values()[i], 0) + 1);
-            }
+            checkRankings(rankResult, value, i);
+        }
+    }
+
+    private void checkRankings(Map<Rank, Integer> rankResult, int value, int i) {
+        if (value == Rank.values()[i].getCountOfMatch()) {
+            rankResult.put(Rank.values()[i],
+                rankResult.getOrDefault(Rank.values()[i], 0) + 1);
         }
     }
 
@@ -72,15 +76,21 @@ public class LottoGame {
     private int matchWithLuckyNumber(Lotto lotto) {
         int count = 0;
         for (int luckyNumber : luckyNumbers) {
-            if (lotto.getNumbers().contains(luckyNumber)) {
-                count++;
-            }
+            count += getMatchCount(lotto, count, luckyNumber);
+        }
+        return count;
+    }
+
+    private int getMatchCount(Lotto lotto, int count, int luckyNumber) {
+        if (lotto.getNumbers().contains(luckyNumber)) {
+            count++;
         }
         return count;
     }
 
     private void init() {
         numOfMatchingResult = new HashMap<>();
+        rankResult = new HashMap<>();
     }
 
 
