@@ -46,10 +46,10 @@ class LottoShopTest {
         purchasedLotteries.add(new Lotto(List.of(13, 14, 18, 21, 23, 35)));
         purchasedLotteries.add(new Lotto(List.of(17, 21, 29, 37, 42, 45)));
         purchasedLotteries.add(new Lotto(List.of(3, 8, 27, 30, 35, 44)));
-        
-        List<Integer> answers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));
 
-        Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries, answers);
+        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
+
+        Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries, winningNumbers);
         assertThat(result.get(Rank.rank2)).isEqualTo(0);
         assertThat(result.get(Rank.rank1)).isEqualTo(0);
         assertThat(result.get(Rank.rank3)).isEqualTo(0);

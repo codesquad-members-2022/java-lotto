@@ -17,7 +17,7 @@ public class LottoShop {
     }
 
     public Map<Rank, Integer> getResult(List<Lotto> purchasedLotteries,
-        List<Integer> answers) {
+        WinningNumbers winningNumbers) {
         Map<Rank, Integer> result = new HashMap<>();
         result.put(Rank.rank1, 0);
         result.put(Rank.rank2, 0);
@@ -27,7 +27,7 @@ public class LottoShop {
 
         for (Lotto purchasedLottery : purchasedLotteries) {
             int count = 0;
-            for (Integer number : answers) {
+            for (Integer number : winningNumbers.getWinningNumbersWithoutBonus()) {
                 if (purchasedLottery.contains(number)) {
                     count++;
                 }
