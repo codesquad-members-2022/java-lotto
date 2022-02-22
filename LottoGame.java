@@ -14,7 +14,7 @@ public class LottoGame {
 
         List<Integer> winningNumbers = ui.inputWinningNumber();
         int bonusBall = ui.inputBonusBall(); // TODO
-        WinningStatistic winningStatistic = new WinningStatistic(lottoList, winningNumbers);
+        WinningStatistic winningStatistic = new WinningStatistic(lottoList, winningNumbers, bonusBall);
         OutputView.showWinningStatistic(winningStatistic.getStatistic(), purchaseMoney);
     }
 
