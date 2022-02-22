@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -16,24 +13,9 @@ public class Main {
 
         System.out.println(count + "개를 구매하셨습니다.");
 
-        List<Integer> lottoBalls = new ArrayList<>();
+        LottoGame lottoGame = new LottoGame(count);
 
-        for (int lottoBall = 1; lottoBall <= 45; lottoBall++) {
-            lottoBalls.add(lottoBall);
-        }
-
-        List<Lotto> lottos = new ArrayList<>();
-
-        for (int i = 0; i < count; i++) {
-            Collections.shuffle(lottoBalls);
-            ArrayList<Integer> al = new ArrayList<>(lottoBalls.subList(0,6));
-            lottos.add(new Lotto(al));
-        }
-
-        for (Lotto lotto : lottos) {
-            System.out.println(lotto);
-        }
-
+        lottoGame.start(scanner);
     }
 
 }
