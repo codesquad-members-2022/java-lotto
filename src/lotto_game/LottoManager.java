@@ -30,5 +30,6 @@ public class LottoManager {
 
         // 통계 출력
         outputView.printProfitRate(rate, lottoStatistics.getLottoResult().getResultMap());
+        inputView.close();
     }
 }
