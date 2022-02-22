@@ -23,15 +23,15 @@ public class LottoTicket {
         return lottoNumbers.toString();
     }
 
-    public Rank getResult(int[] winningNumbers, int bonusNumber) {
+    public Rank getResult(WinningNumber winningNumber) {
         int correctNum = 0;
         boolean hasBonus = false;
         for (int i = 0; i < lottoNumbers.size(); i++) {
-            if (lottoNumbers.contains(winningNumbers[i])) {
+            if (lottoNumbers.contains(winningNumber.getNumber(i))) {
                 correctNum++;
             }
 
-            if (lottoNumbers.contains(bonusNumber)) {
+            if (lottoNumbers.contains(winningNumber.getBonusNumber())) {
                 hasBonus = true;
             }
         }

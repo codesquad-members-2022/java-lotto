@@ -1,5 +1,8 @@
 package nb993.view;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ScanView {
@@ -15,13 +18,13 @@ public class ScanView {
         return sc.nextInt();
     }
 
-    public int[] getWinningNumber() {
+    public List<Integer> getWinningNumber() {
         sc.nextLine();
         System.out.println("당첨 번호를 입력해 주세요.");
         String[] strNumbers = sc.nextLine().split(",");
-        int[] winningNumbers = new int[6];
+        List<Integer> winningNumbers = new ArrayList<>();
         for (int i = 0; i < strNumbers.length; i++) {
-            winningNumbers[i] = Integer.parseInt(strNumbers[i].trim());
+            winningNumbers.add(Integer.parseInt(strNumbers[i].trim()));
         }
         return winningNumbers;
     }

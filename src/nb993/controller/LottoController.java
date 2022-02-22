@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import nb993.model.LottoTicket;
 import nb993.model.Rank;
+import nb993.model.WinningNumber;
 import nb993.view.PrintView;
 import nb993.view.ScanView;
 
@@ -39,12 +40,11 @@ public class LottoController {
     }
 
     private void printLottoResult() {
-        int[] winningNumbers = scanView.getWinningNumber();
-        int bonusNumber = scanView.getBonusNumber();
+        WinningNumber winningNumbers = new WinningNumber(scanView.getWinningNumber(), scanView.getBonusNumber());
         Map<Rank, Integer> rankResult = new HashMap<>();
 
         for (int i = 0; i < lottos.size(); i++) {
-            Rank r = lottos.get(i).getResult(winningNumbers, bonusNumber);
+            Rank r = lottos.get(i).getResult(winningNumbers);
             int count = rankResult.getOrDefault(r, 0);
             rankResult.put(r, count + 1);
         }
