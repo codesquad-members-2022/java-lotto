@@ -24,5 +24,7 @@ public class TicketOffice {
         for (int i = 0; i < 6; i++) {
             ticketNumber.add(lottoNumber.get(i));
         }
+        Collections.sort(ticketNumber);
         return new LottoTicket(ticketNumber);
     }
+}
