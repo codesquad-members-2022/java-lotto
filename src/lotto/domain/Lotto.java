@@ -12,18 +12,14 @@ public class Lotto {
 
     private List<Integer> numbers;
 
-    public Lotto() {
-        create();
-    }
-
     private void create() {
         Collections.shuffle(allNumbers);
         numbers = allNumbers.subList(0, 6);
         Collections.sort(numbers);
-        numbers = List.copyOf(numbers);
     }
 
     public List<Integer> getNumbers() {
-        return numbers;
+        create();
+        return List.copyOf(numbers);
     }
 }

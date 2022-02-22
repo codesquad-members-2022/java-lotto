@@ -1,12 +1,11 @@
 package lotto.domain;
 
-import java.util.Arrays;
+import java.math.BigInteger;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import lotto.view.Input;
 import lotto.view.Output;
 
@@ -14,8 +13,8 @@ public class LottoGame {
 
     private final Lottos lottos = new Lottos();
     private final Map<Lotto, Integer> numOfMatchingResult = new HashMap<>();
-    private List<Integer> luckyNumbers;
     private Map<Rank, Integer> rankResult;
+    private LuckyLotto luckyLotto;
 
     public void start() {
         List<Lotto> buyedLottos = lottos.buyLotto(Input.getInputMoney());
@@ -27,9 +26,8 @@ public class LottoGame {
     }
 
     private void setLuckyNumbers() {
-        this.luckyNumbers = Arrays.stream(Input.getLuckyNumbers())
-            .boxed()
-            .collect(Collectors.toList());
+        int[] luckyNumbers = Input.getLuckyNumbers();
+        luckyLotto = new LuckyLotto(luckyNumbers);
     }
 
     private double getEarningRate(int numOfLottos) {
@@ -56,7 +54,7 @@ public class LottoGame {
 
     private int matchWithLuckyNumber(Lotto lotto) {
         int count = 0;
-        for (int luckyNumber : luckyNumbers) {
+        for (int luckyNumber : luckyLotto.getNumbers()) {
             count = getNumOfMatch(lotto, count, luckyNumber);
         }
         return count;
