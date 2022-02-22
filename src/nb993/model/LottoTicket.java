@@ -24,18 +24,25 @@ public class LottoTicket {
     }
 
     public Rank getResult(WinningNumber winningNumber) {
-        int correctNum = 0;
-        boolean hasBonus = false;
-        for (int i = 0; i < lottoNumbers.size(); i++) {
-            if (lottoNumbers.contains(winningNumber.getNumber(i))) {
-                correctNum++;
-            }
-
-            if (lottoNumbers.contains(winningNumber.getBonusNumber())) {
-                hasBonus = true;
-            }
-        }
+        int correctNum = getCorrectNum(winningNumber);
+        boolean hasBonus = hasBonus(winningNumber);
 
         return Rank.valueOf(correctNum, hasBonus);
+    }
+
+    private boolean hasBonus(WinningNumber winningNumber) {
+        if (lottoNumbers.contains(winningNumber.getBonusNumber())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private int getCorrectNum(WinningNumber winningNumber) {
+        int correctNum = 0;
+        for (int i = 0; i < lottoNumbers.size(); i++) {
+            correctNum += lottoNumbers.contains(winningNumber.getNumber(i)) ? 1 : 0;
+        }
+        return correctNum;
     }
 }
