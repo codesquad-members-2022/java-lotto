@@ -71,7 +71,7 @@ public class LottoGame {
     private void matchRank() {
         initRankResult();
         for (Lotto lotto : numOfMatchingResult.keySet()) {
-            boolean isMatchBonusNumber = lotto.getNumbers().contains(luckyLotto.getBounsNumber());
+            boolean isMatchBonusNumber = lotto.getNumbers().contains(luckyLotto.getBonusNumber());
             Rank rank = Rank.create(numOfMatchingResult.get(lotto), isMatchBonusNumber);
             putOnlyWinningLottery(rank);
         }
@@ -86,10 +86,10 @@ public class LottoGame {
 
     private void initRankResult() {
         rankResult = new EnumMap<>(Rank.class);
-        rankResult.put(Rank.FIRST, 0);
-        rankResult.put(Rank.SECOND, 0);
-        rankResult.put(Rank.THIRD, 0);
-        rankResult.put(Rank.FORTH, 0);
+        Rank[] values = Rank.values();
+        for (Rank value : values) {
+            rankResult.put(value, 0);
+        }
     }
 
     private void printResult() {

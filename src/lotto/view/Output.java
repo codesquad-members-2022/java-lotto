@@ -41,6 +41,6 @@ public class Output {
                 .append(map.getOrDefault(rank, 0))
                 .append(lineSeparator());
         }
-        sb.append("수익률은 ").append(earningRate).append("%");
+        sb.append("총 수익률은 ").append(String.format("%.2f", earningRate)).append("%입니다.");
     }
 }
