@@ -9,7 +9,10 @@ public class InputView {
 
     public static int getPurchaseAmount() {
         System.out.println(PURCHASE_AMOUNT_MESSAGE);
-        return sc.nextInt();
+        int purchaseAmount = sc.nextInt();
+        sc.nextLine();
+
+        return purchaseAmount;
     }
 
     public static String getRequiredWinningNumber() {
