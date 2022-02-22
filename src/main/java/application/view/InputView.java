@@ -1,4 +1,4 @@
-package application;
+package application.view;
 
 import java.util.Scanner;
 
@@ -6,7 +6,7 @@ public class InputView {
 
     private static InputView inputView;
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     private InputView() {
         scanner = new Scanner(System.in);
@@ -29,4 +29,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public int getBonusBall() {
+        System.out.println("보너스 볼을 입력해 주세요.");
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

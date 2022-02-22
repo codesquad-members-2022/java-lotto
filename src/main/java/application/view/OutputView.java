@@ -1,5 +1,8 @@
-package application;
+package application.view;
 
+import application.domain.Lottery;
+import application.domain.Prize;
+import application.domain.Statistics;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +41,9 @@ public class OutputView {
         Map<Prize, Integer> counts = statistics.getCounts();
 
         counts.keySet().forEach(key ->
-            sb.append(key.matchCount).append("개 일치(")
-                .append(key.reward).append("원) - ")
+            sb.append(key.getResult().getMatchCount()).append("개 일치")
+                .append(key.getResult().getBonus() ? ", 보너스 볼 일치(" : " (")
+                .append(key.getReward()).append("원) - ")
                 .append(counts.get(key)).append("개")
                 .append(System.lineSeparator()));
 

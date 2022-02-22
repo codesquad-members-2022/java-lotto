@@ -1,4 +1,4 @@
-package application;
+package application.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,8 @@ public class Lottery {
 
     private static final List<Integer> candidates;
     private final List<Integer> numbers;
-    private int matchCount;
+    private Result result;
+
 
     static {
         candidates = new ArrayList<>();
@@ -35,20 +36,36 @@ public class Lottery {
         this.numbers = numbers;
     }
 
-    public static Lottery generate() {
-        return new Lottery();
+    public void compareLottery(WinningLottery winningLottery) {
+        int matchCount = compareNumbers(winningLottery.getNumbers());
+        boolean bonus = compareBonus(winningLottery.getBonusBall());
+
+        result = new Result(matchCount, bonus);
     }
 
-    public void addMatchCount() {
-        matchCount += 1;
+    public int compareNumbers(List<Integer> winningNumbers) {
+        int count = 0;
+
+        for (int idx = 0; idx < Lottery.COUNT; idx++) {
+            Integer number = winningNumbers.get(idx);
+
+            if (numbers.contains(number)) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public boolean compareBonus(int bonusBall) {
+        return numbers.contains(bonusBall);
     }
 
     public List<Integer> getNumbers() {
         return numbers;
     }
 
-    public int getMatchCount() {
-        return matchCount;
+    public Result getResult() {
+        return result;
     }
 
 }
