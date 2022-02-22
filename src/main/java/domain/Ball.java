@@ -7,11 +7,10 @@ public class Ball {
     private final int number;
 
     public Ball(int number) {
+        if (1 > number || number > 45) {
+            throw new IllegalArgumentException("범위를 벗어났습니다.");
+        }
         this.number = number;
-    }
-
-    public boolean isSameBall(Ball ball) {
-        return this.equals(ball);
     }
 
     public int getNumber() {

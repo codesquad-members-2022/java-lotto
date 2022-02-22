@@ -1,3 +1,4 @@
+import domain.Ball;
 import domain.Lotto;
 import domain.User;
 import view.InputView;
@@ -12,5 +13,8 @@ public class Application {
         Lotto winningLotto = InputView.createWinningLotto();
         user.matchWinningLotto(winningLotto);
         OutputView.printResult(user);
+
+        Ball bonusBall = new Ball(13);
+
     }
 }

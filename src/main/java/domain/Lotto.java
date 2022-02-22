@@ -13,14 +13,12 @@ public class Lotto {
 
     public List<Integer> getBallNumbers() {
         return balls.stream()
-                .map(ball -> ball.getNumber())
+                .map(Ball::getNumber)
                 .collect(Collectors.toList());
     }
 
     public int getMatchBallCount(Lotto winningLotto) {
-        List<Integer> lottoBallNumbers = winningLotto.getBallNumbers();
-        return (int) getBallNumbers().stream()
-                .filter(lottoBallNumbers::contains)
-                .count();
+        return (int) winningLotto.balls.stream()
+                .filter(balls::contains).count();
     }
 }
