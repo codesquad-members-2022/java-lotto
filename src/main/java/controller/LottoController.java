@@ -2,12 +2,13 @@ package controller;
 
 import domain.lotto.LottoTickets;
 import domain.lotto.Money;
-import domain.lotto.RewardMachine;
+import domain.lotto.LottoGameResults;
 import domain.lotto.WinningTicket;
 import view.input.InputView;
 import view.output.OutputView;
 
 public class LottoController {
+
 
     public LottoController() {
     }
@@ -18,9 +19,9 @@ public class LottoController {
         OutputView.printLottoTickets(lottoTickets);
 
         WinningTicket winningTicket = InputView.inputWinnigTicket();
-        RewardMachine rewardMachine = new RewardMachine(money, lottoTickets, winningTicket);
+        LottoGameResults lottoGameResults = new LottoGameResults(money, lottoTickets, winningTicket);
 
-        OutputView.printReward(rewardMachine);
+        OutputView.printLottoGameResults(lottoGameResults);
         InputView.close();
     }
 

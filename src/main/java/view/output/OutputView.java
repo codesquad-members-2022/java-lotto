@@ -2,6 +2,7 @@ package view.output;
 
 import domain.lotto.*;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,22 +28,18 @@ public class OutputView {
                 .collect(Collectors.joining(", ", "[", "]"));
     }
 
-    public static void printReward(RewardMachine rewardMachine) {
+    public static void printLottoGameResults(LottoGameResults lottoGameResults) {
         System.out.println("당첨 통계");
         System.out.println("---------");
-        System.out.println(makeRewardsString(rewardMachine));
-        System.out.printf("총 수익률은 %.2f %% 입니다", rewardMachine.getReturnToInvestment());
+        System.out.println(makeRewardsString(lottoGameResults));
+        System.out.printf("총 수익률은 %.2f %% 입니다", lottoGameResults.getReturnToInvestment());
     }
 
-    private static String makeRewardsString(RewardMachine rewardMachine) {
-        return rewardMachine.getRankCounts().entrySet().stream()
-                .filter(entry -> entry.getKey() != Rank.FAILED)
-                .sorted(Comparator.comparing(entry -> entry.getKey().getCountOfMatch()))
-                .map(entry ->
-                        String.format("%d개 일치 (%d원) - %d개",
-                                entry.getKey().getCountOfMatch(),
-                                entry.getKey().getReward(),
-                                entry.getValue()))
-                .collect(Collectors.joining("\n"));
+    private static String makeRewardsString(LottoGameResults lottoGameResults) {
+        return Arrays.stream(Rank.values())
+                    .filter(rank -> rank != Rank.FAILED)
+                    .sorted(Comparator.comparing(Rank::getCountOfMatch))
+                    .map(rank -> String.format("%d개 일치 (%d원) - %d개", rank.getCountOfMatch(), rank.getReward(), lottoGameResults.getRankCountOf(rank)))
+                    .collect(Collectors.joining("\n"));
     }
 }

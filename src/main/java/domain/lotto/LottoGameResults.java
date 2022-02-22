@@ -1,26 +1,21 @@
 package domain.lotto;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RewardMachine {
+public class LottoGameResults {
 
     private final Money money;
     private final LottoTickets lottoTickets;
     private final WinningTicket winningTicket;
     private final Map<Rank, Integer> rankCounts;
 
-    public RewardMachine(Money money, LottoTickets lottoTickets, WinningTicket winningTicket) {
+    public LottoGameResults(Money money, LottoTickets lottoTickets, WinningTicket winningTicket) {
         this.money = money;
         this.lottoTickets = lottoTickets;
         this.winningTicket = winningTicket;
         this.rankCounts = setupRankCounts();
-    }
-
-    public Map<Rank, Integer> getRankCounts() {
-        return Collections.unmodifiableMap(rankCounts);
     }
 
     private Map<Rank, Integer> setupRankCounts() {
@@ -56,5 +51,9 @@ public class RewardMachine {
         return rankCounts.entrySet().stream()
                 .mapToLong(entry -> entry.getKey().getReward() * entry.getValue())
                 .sum();
+    }
+
+    public int getRankCountOf(Rank rank) {
+        return rankCounts.get(rank);
     }
 }
