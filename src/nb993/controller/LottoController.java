@@ -1,7 +1,7 @@
 package nb993.controller;
 
 import java.util.ArrayList;
-import nb993.model.Lotto;
+import nb993.model.LottoTicket;
 import nb993.view.PrintView;
 import nb993.view.ScanView;
 
@@ -11,7 +11,7 @@ public class LottoController {
 
     private final ScanView scanView;
     private final PrintView printView;
-    private List<Lotto> lottos;
+    private List<LottoTicket> lottos;
 
     public LottoController(ScanView scanView, PrintView printView) {
         this.scanView = scanView;
@@ -24,7 +24,7 @@ public class LottoController {
         int purchaseCount = purchaseAmount / 1000;
 
         for (int i = 0; i < purchaseCount; ++i) {
-            lottos.add(new Lotto());
+            lottos.add(new LottoTicket());
         }
     }
 

@@ -1,11 +1,11 @@
 package nb993.view;
 
 import java.util.List;
-import nb993.model.Lotto;
+import nb993.model.LottoTicket;
 
 public class PrintView {
 
-    public void printLottos(List<Lotto> lottos) {
+    public void printLottos(List<LottoTicket> lottos) {
         System.out.println(lottos.size() + "개를 구매했습니다.");
 
         for (int i = 0; i < lottos.size(); i++) {
