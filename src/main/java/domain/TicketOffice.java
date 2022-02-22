@@ -63,12 +63,12 @@ public class TicketOffice {
         int matchedNumber = 0;
         for (LottoTicket ticket : tickets) {
             matchedNumber = checkWinningNumber(ticket.getTicketInfo());
-            statistics.computeIfPresent(matchedNumber, (k, v) -> v++);
+            statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
         }
-        System.out.println();
+        OutputView.showWinningResult(this.statistics);
     }
 
-    public int calculateProfit() {
+    public double calculateProfit() {
         int totalPrize = 0;
         for(Integer matchedNumber: statistics.keySet()){
             totalPrize += (switchPrize(matchedNumber) * statistics.get(matchedNumber));

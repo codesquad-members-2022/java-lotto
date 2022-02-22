@@ -9,7 +9,5 @@ public class Main {
         List<LottoTicket> tickets = to.issueTickets();
         to.setWinningNumber();
         to.getStatistic(tickets);
-        int prize = to.calculateProfit();
-        System.out.println(prize);
     }
 }
