@@ -21,4 +21,8 @@ public class Lotto {
         return (int) winningLotto.balls.stream()
                 .filter(balls::contains).count();
     }
+
+    public boolean isMatchBonusBall(Ball bonusBall) {
+        return balls.contains(bonusBall);
+    }
 }
