@@ -18,17 +18,17 @@ public class OutputView {
         }
     }
 
-    public static void showWinningResult(Map<Integer, Integer> statistics) {
-        System.out.println("당첨 통계");
+    public static void showWinningResult(Map<Integer, Integer> statistics, double profitRate) {
+        System.out.println("\n당첨 통계");
         System.out.println("__________");
         int matchedNumber;
         int prize;
-        double profitRate = 0;
         for (ProfitAmount pa : ProfitAmount.values()) {
             matchedNumber = pa.getMatchedNumber();
             prize = pa.getPrize();
-            System.out.printf("%d개 일치 (%d원) - %d개\n", matchedNumber, prize, statistics.get(matchedNumber));
+            System.out.printf("%d개 일치 (%d원) - %d개", matchedNumber, prize, statistics.get(matchedNumber));
+            System.out.println();
         }
-        System.out.println("총 수익률은 " + profitRate + "%입니다.");
+        System.out.printf("총 수익률은 %.2f%%입니다.", profitRate);
     }
 }

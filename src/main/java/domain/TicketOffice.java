@@ -10,8 +10,10 @@ public class TicketOffice {
     private final int SELECTABLE_NUMBER = 45;
     private final int SELECTED_NUMBER = 6;
     private final int PRICE = 1000;
-    private List<Integer> winningNumbers =new ArrayList<>();
+    private int TOTAL_PRICE;
+    private List<Integer> winningNumbers = new ArrayList<>();
     private Map<Integer, Integer> statistics = new HashMap<>();
+
     {
         statistics.put(3, 0);
         statistics.put(4, 0);
@@ -40,19 +42,20 @@ public class TicketOffice {
         return new LottoTicket(ticketNumber);
     }
 
-    public List<LottoTicket> issueTickets(){
+    public List<LottoTicket> issueTickets() {
         int amount = InputView.getAmount();
         int numberOfTickets = amount / PRICE;
         int change = amount % PRICE;
+        TOTAL_PRICE = PRICE * numberOfTickets;
         List<LottoTicket> tickets = new ArrayList<>();
         for (int i = 0; i < numberOfTickets; i++) {
-              tickets.add(makeNewLottoTicket());
+            tickets.add(makeNewLottoTicket());
         }
         OutputView.completePurchase(numberOfTickets, change, tickets);
         return tickets;
     }
 
-    public void setWinningNumber(){
+    public void setWinningNumber() {
         String[] winning = InputView.getWinningNumber();
         for (int i = 0; i < winning.length; i++) {
             winningNumbers.add(Integer.parseInt(winning[i]));
@@ -65,19 +68,19 @@ public class TicketOffice {
             matchedNumber = checkWinningNumber(ticket.getTicketInfo());
             statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
         }
-        OutputView.showWinningResult(this.statistics);
+        OutputView.showWinningResult(this.statistics, calculateProfit());
     }
 
     public double calculateProfit() {
         int totalPrize = 0;
-        for(Integer matchedNumber: statistics.keySet()){
+        for (Integer matchedNumber : statistics.keySet()) {
             totalPrize += (switchPrize(matchedNumber) * statistics.get(matchedNumber));
         }
-        return totalPrize;
+        return ((double) (totalPrize - TOTAL_PRICE) / TOTAL_PRICE) * 100;
     }
 
-    private int switchPrize(int matchedNumber){
-        switch (matchedNumber){
+    private int switchPrize(int matchedNumber) {
+        switch (matchedNumber) {
             case 3:
                 return ProfitAmount.FORTH.getPrize();
             case 4:
