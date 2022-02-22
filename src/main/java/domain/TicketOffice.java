@@ -54,9 +54,9 @@ public class TicketOffice {
 
     public void setWinningNumber(){
         String[] winning = InputView.getWinningNumber();
-        Arrays.stream(winning)
-            .mapToInt(Integer::parseInt)
-            .forEach(winningNumbers::add);
+        for (int i = 0; i < winning.length; i++) {
+            winningNumbers.add(Integer.parseInt(winning[i]));
+        }
     }
 
     public void getStatistic(List<LottoTicket> tickets) {
