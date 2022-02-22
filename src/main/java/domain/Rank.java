@@ -31,9 +31,10 @@ public enum Rank {
     }
 
     public static Rank getMatchedRank(int match, boolean containsBonus) {
+        // TODO : 리팩토링(depth 줄이기)
         for (Rank rank : values()) {
             if (rank.getMatch() == match) {
-                if(match == 5 ) {
+                if (match == 5) {
                     return (rank.containsBonus() == containsBonus) ? rank2 : rank3;
                 }
                 return rank;

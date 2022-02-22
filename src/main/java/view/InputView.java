@@ -11,9 +11,10 @@ public class InputView {
     private static final String PROMPT_MONEY = "구입금액을 입력해 주세요.";
     private static final String PROMPT_NOT_NUMBER = "숫자를 입력해 주세요.";
     private static final String PROMPT_ANSWER = "당첨 번호를 입력해 주세요.";
+    private static final String PROMPT_BONUS_NUMBER = "보너스 볼을 입력해 주세요.";
     private static final Scanner sc = new Scanner(System.in);
 
-    public int getMoneyInput()  {
+    public int getMoneyInput() {
         System.out.println(PROMPT_MONEY);
         System.out.print(PROMPT);
         String temp;
@@ -32,6 +33,13 @@ public class InputView {
         return Arrays.stream(answer)
             .map(Integer::parseInt)
             .collect(Collectors.toList());
+    }
+
+    public int getBonusNumberInput() {
+        System.out.println(PROMPT_BONUS_NUMBER);
+        System.out.print(PROMPT);
+        // TODO: 입력 예외 처리
+        return Integer.parseInt(sc.nextLine());
     }
 
     private boolean isValid(String input) {

@@ -38,7 +38,8 @@ class LottoShopTest {
         purchasedLotteries.add(new Lotto(List.of(1, 2, 3, 4, 5, 7)));
         purchasedLotteries.add(new Lotto(List.of(1, 2, 3, 4, 5, 6)));
 
-        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6, 7));
+        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6),
+            7);
 
         Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries, winningNumbers);
         assertThat(result.get(Rank.rank1)).isEqualTo(1);
