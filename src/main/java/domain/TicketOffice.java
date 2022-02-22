@@ -1,5 +1,7 @@
 package domain;
 
+import view.InputView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 public class TicketOffice {
     private final List<Integer> lottoNumber = new ArrayList<>();
     private final int MAX_NUMBER = 45;
+    private final int PRICE = 1000;
 
     public TicketOffice() {
         setLottoNumber();
@@ -26,5 +29,15 @@ public class TicketOffice {
         }
         Collections.sort(ticketNumber);
         return new LottoTicket(ticketNumber);
+    }
+
+    public List<LottoTicket> issueTickets(){
+        int amount = InputView.getAmount();
+        int numberOfTickets = amount / PRICE;
+        List<LottoTicket> Tickets = new ArrayList<>();
+        for (int i = 0; i < numberOfTickets; i++) {
+              Tickets.add(getNewLottoTicket());
+        }
+        return Tickets;
     }
 }
