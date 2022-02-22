@@ -10,7 +10,8 @@ import java.util.List;
 
 public class TicketOffice {
     private final List<Integer> lottoNumber = new ArrayList<>();
-    private final int MAX_NUMBER = 45;
+    private final int SELECTABLE_NUMBER = 45;
+    private final int SELECTED_NUMBER = 6;
     private final int PRICE = 1000;
     private List<Integer> winningNumbers =new ArrayList<>();
 
@@ -19,7 +20,7 @@ public class TicketOffice {
     }
 
     private void setLottoNumber() {
-        for (int i = 1; i <= MAX_NUMBER; i++) {
+        for (int i = 1; i <= SELECTABLE_NUMBER; i++) {
             this.lottoNumber.add(i);
         }
     }
@@ -27,7 +28,7 @@ public class TicketOffice {
     private LottoTicket makeNewLottoTicket() {
         List<Integer> ticketNumber = new ArrayList<>();
         Collections.shuffle(lottoNumber);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < SELECTED_NUMBER; i++) {
             ticketNumber.add(lottoNumber.get(i));
         }
         Collections.sort(ticketNumber);
@@ -51,5 +52,28 @@ public class TicketOffice {
         Arrays.stream(winning)
             .mapToInt(Integer::parseInt)
             .forEach(winningNumbers::add);
+    }
+
+    private void getStatistic(List<LottoTicket> tickets) {
+        int matchedNumber = 0;
+        for (LottoTicket ticket : tickets) {
+            matchedNumber = checkWinningNumber(ticket.getTicketInfo());
+            
+        }
+    }
+
+    private int checkWinningNumber(List<Integer> ticketInfo) {
+        int count = 0;
+        for (Integer number : ticketInfo) {
+            count += isWinningNumber(number);
+        }
+        return count;
+    }
+
+    private int isWinningNumber(int number) {
+        if (winningNumbers.contains(number)) {
+            return 1;
+        }
+        return 0;
     }
 }

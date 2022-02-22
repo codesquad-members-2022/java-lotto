@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class LottoTicket {
@@ -9,7 +11,10 @@ public class LottoTicket {
         this.lottoTicket = lottoTicket;
     }
 
-    public String getTicketInfo() {
-        return this.lottoTicket.toString();
+
+
+    public List<Integer> getTicketInfo() {
+        return Collections.unmodifiableList(this.lottoTicket);
     }
+
 }
