@@ -24,13 +24,17 @@ public class LottoNumber {
         this.number = number;
     }
 
-    public static LottoNumber getLottoNumber(int number) {
+    public int getNumber() {
+        return number;
+    }
+
+    public static LottoNumber of(int number) {
         return LOTTO_NUMBER_POOL.get(number);
     }
 
     public static LottoNumber getLottoRandomLottoNumber() {
         int randomNumber = (int) (Math.random() * MAX_RANDOM_NUMBER) + MIN_RANDOM_NUMBER;
-        return getLottoNumber(randomNumber);
+        return of(randomNumber);
     }
 
     @Override
