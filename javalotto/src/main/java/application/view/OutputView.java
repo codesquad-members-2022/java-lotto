@@ -7,10 +7,12 @@ import application.domain.WinningData;
 public class OutputView {
 
     private static final String ENTER_PURCHASE_AMOUNT = "구입 금액을 입력해주세요.";
-    private static final String PLEASE_ENTER_YOUR_WINNING_NUMBER = "당첨 번호를 입력해 주세요.";
+    private static final String PLEASE_ENTER_YOUR_WINNING_NUMBER = "지난 주 당첨 번호를 입력해 주세요.";
     private static final String PURCHASE_QUANTITY = "개를 구매하셨습니다.";
     private static final String WINNING_STATISTICS = "당첨통계";
     private static final String DIVISION = "---------";
+    private static final String ENTER_BONUS_BALL = "보너스 볼을 입력해 주세요.";
+
     private static final int MINIMUM_NUMBER_OF_WINS = 3;
     private static final int MAXIMUM_NUMBER_OF_WINS = 6;
 
@@ -20,6 +22,10 @@ public class OutputView {
 
     private static void printTotalYield(double totalYield) {
         System.out.printf("총 수익율은 %.2f%%입니다.", totalYield);
+    }
+
+    public static void printEnterBonusBall() {
+        System.out.println(ENTER_BONUS_BALL);
     }
 
     public static void printEnterPurchaseAmount() {
