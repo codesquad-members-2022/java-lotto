@@ -81,4 +81,8 @@ public class Person {
         }
         return result;
     }
+
+    public List<LottoTicket> getMyLottoTicketList() {
+        return myLottoTicketList;
+    }
 }
