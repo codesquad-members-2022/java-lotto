@@ -47,13 +47,7 @@ public class LottoController {
                 lottoList.add(new Lotto(lists));
             }
         }
-        //Test
-        for (Lotto lotto : lottoList) {
-            for (Integer number : lotto.getNumbers()) {
-                System.out.print(number + " ");
-            }
-            System.out.println();
-        }
+        OutputView.printPurchaseCount(count, lottoList);
     }
 
     public void checkWinNumber() {
@@ -66,13 +60,6 @@ public class LottoController {
                 map.put(count, map.get(count) + 1);
             }
         }
-        //Test
-        Set<Integer> integers = map.keySet();
-        for (Integer integer : integers) {
-            Integer integer1 = map.get(integer);
-            System.out.println(integer1);
-        }
-
         rateOfReturn();
     }
 
