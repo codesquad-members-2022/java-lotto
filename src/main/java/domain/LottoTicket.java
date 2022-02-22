@@ -40,4 +40,8 @@ public class LottoTicket {
         }
         return 0;
     }
+
+    public void showLottoNumbers() {
+        System.out.println(list);
+    }
 }
