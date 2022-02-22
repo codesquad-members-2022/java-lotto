@@ -1,10 +1,11 @@
 package model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Lotto {
 
-    private List<Integer> numbers;
+    private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
         this.numbers = numbers;
@@ -18,17 +19,9 @@ public class Lotto {
         return numbers;
     }
 
-    public boolean sameNumber(int checkWinNumber) {
-        return numbers.contains(checkWinNumber);
-    }
-
     public int countCollectNumber(String[] winNumbers) {
-        int count = 0;
-        for (String winNumber : winNumbers) {
-            if(numbers.contains(Integer.parseInt(winNumber))){
-                count++;
-            }
-        }
-        return count;
+        return (int) Arrays.stream(winNumbers)
+                .map(Integer::parseInt)
+                .filter(numbers::contains).count();
     }
 }
