@@ -5,22 +5,24 @@ import java.util.stream.IntStream;
 
 public class Lotto {
 
-	private static final List<Integer> allNumbers = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
+    public static final int LOTTO_PRICE = 1000;
+    private static final List<Integer> allNumbers = IntStream.rangeClosed(1, 45).boxed()
+        .collect(Collectors.toList());
 
-	private List<Integer> numbers;
+    private List<Integer> numbers;
 
-	public Lotto() {
-		create();
-	}
+    public Lotto() {
+        create();
+    }
 
-	private void create() {
-		Collections.shuffle(allNumbers);
-		numbers = allNumbers.subList(0, 6);
-		Collections.sort(numbers);
-		numbers = List.copyOf(numbers);
-	}
+    private void create() {
+        Collections.shuffle(allNumbers);
+        numbers = allNumbers.subList(0, 6);
+        Collections.sort(numbers);
+        numbers = List.copyOf(numbers);
+    }
 
-	public List<Integer> getNumbers() {
-		return numbers;
-	}
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
 }

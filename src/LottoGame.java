@@ -1,8 +1,9 @@
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LottoGame {
@@ -25,37 +26,32 @@ public class LottoGame {
     }
 
     private void printResult() {
-        Collection<Integer> values = numOfMatchingResult.values();
-        for (int value : values) {
-            matchRank(rankResult, value);
-        }
+        matchRank();
 
         int total = getTotalEarning(rankResult);
-        double earningRate = getEarningRate(values, total);
+        double earningRate = getEarningRate(numOfMatchingResult.size(), total);
 
         Output.printResult(rankResult, total, earningRate);
     }
 
-    private double getEarningRate(Collection<Integer> values, int total) {
-        return (double) ((total - values.size() * 1000) / (values.size() * 1000)) * 100;
+    private double getEarningRate(int numOfLottos, int total) {
+        return
+            (double) ((total - numOfLottos * Lotto.LOTTO_PRICE) / (numOfLottos * Lotto.LOTTO_PRICE))
+                * 100;
     }
 
-    private void matchRank(Map<Rank, Integer> rankResult, int value) {
-        for (int i = 0; i < Rank.values().length; i++) {
-            checkRankings(rankResult, value, i);
-        }
-    }
-
-    private void checkRankings(Map<Rank, Integer> rankResult, int value, int i) {
-        if (value == Rank.values()[i].getCountOfMatch()) {
-            rankResult.put(Rank.values()[i],
-                rankResult.getOrDefault(Rank.values()[i], 0) + 1);
+    private void matchRank() {
+        for (int numOfMatch : numOfMatchingResult.values()) {
+            Rank rank = Rank.create(numOfMatch);
+            if (!Objects.isNull(rank)) {
+                rankResult.put(rank, rankResult.get(rank) + 1);
+            }
         }
     }
 
     private int getTotalEarning(Map<Rank, Integer> rankResult) {
         int total = 0;
-        total += rankResult.getOrDefault(Rank.FIFTH, 0) * Rank.FIFTH.getWinningMoney();
+        total += rankResult.getOrDefault(Rank.FORTH, 0) * Rank.FORTH.getWinningMoney();
         total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
         total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
         total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
@@ -87,7 +83,12 @@ public class LottoGame {
 
     private void init() {
         numOfMatchingResult = new HashMap<>();
-        rankResult = new HashMap<>();
+        rankResult = new EnumMap<>(Rank.class);
+
+        rankResult.put(Rank.FIRST, 0);
+        rankResult.put(Rank.SECOND, 0);
+        rankResult.put(Rank.THIRD, 0);
+        rankResult.put(Rank.FORTH, 0);
     }
 
 

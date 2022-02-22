@@ -19,8 +19,8 @@ public class Output {
         System.out.println("--------");
 
         System.out.println(
-            "3개 일치 (" + Rank.FIFTH.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
-                Rank.FIFTH, 0));
+            "3개 일치 (" + Rank.FORTH.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
+                Rank.FORTH, 0));
         System.out.println(
             "4개 일치 (" + Rank.THIRD.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
                 Rank.THIRD, 0));
