@@ -12,6 +12,9 @@ public class LottoGame {
         List<Lotto> lottoList = createLottoList(lottoCount);
         OutputView.showLottoList(lottoList);
 
+        List<Integer> winningNumbers = ui.inputWinningNumber();
+        WinningStatistic winningStatistic = new WinningStatistic(lottoList, winningNumbers);
+        OutputView.showWinningStatistic(winningStatistic.getStatistic(), purchaseMoney);
     }
 
     private List<Lotto> createLottoList(int lottoCount) {
