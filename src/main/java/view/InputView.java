@@ -1,18 +1,17 @@
 package view;
 
-import domain.Lotto;
-import domain.LottoMachine;
+import domain.User;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    public static List<Lotto> askHowMuchMoney() {
+    public static User askHowManyLottos() {
+        System.out.println("구입금액을 입력해 주세요.");
         int money = sc.nextInt();
-        return LottoMachine.createLottos(money);
+        return new User(money);
     }
 
 }
