@@ -39,7 +39,7 @@ public class LottoTicket {
     private double calculateYield(int[] counts) {
         int userPurchaseAmount = Arrays.stream(counts).sum() * LOTTO_TICKET_PRICE;
         double currentYield = 0;
-        for (int winningCount = 3; winningCount <= 6; winningCount++) {
+        for (int winningCount = 3; winningCount <= 7; winningCount++) {
             currentYield += WinningData.getWinningData(winningCount) * counts[winningCount];
         }
         return (currentYield - userPurchaseAmount) / userPurchaseAmount * 100;
@@ -55,7 +55,9 @@ public class LottoTicket {
             lottoSet.addAll(new HashSet<>(userWinningNumberSet));
             count = TWO_LOTTO_LENGTH_SUM - lottoSet.size();
             if (count == 5) {
-                counts[INDEX_OF_BONUS_BALL] += lotto.getNumbers().contains(bonusBallNumber) ? 1 : 0;
+                int tmp = lotto.getNumbers().contains(bonusBallNumber) ? 1 : 0;
+                counts[INDEX_OF_BONUS_BALL] += tmp;
+                counts[5] -= tmp;
             }
             counts[count] += 1;
         }
