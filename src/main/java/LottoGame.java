@@ -1,7 +1,8 @@
+import view.InputView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 public class LottoGame {
 
@@ -17,11 +18,10 @@ public class LottoGame {
         createLotto(count, createLottoBalls());
     }
 
-    public void start(Scanner scanner) {
+    public void start() {
         print();
-        System.out.println("당첨 번호를 입력해 주세요.");
-        scanner.nextLine();
-        String[] split = scanner.nextLine().split(", ");
+
+        String[] split = InputView.winningNumber().split(", ");
 
         int[] winingNumber = new int[6];
 
@@ -86,11 +86,3 @@ public class LottoGame {
     }
 
 }
-
-//    당첨 통계
-//---------
-//        3개 일치 (5000원)- 1개
-//        4개 일치 (50000원)- 0개
-//        5개 일치 (1500000원)- 0개
-//        6개 일치 (2000000000원)- 0개
-//        총 수익률은 -64.28%입니다.

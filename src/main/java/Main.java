@@ -1,17 +1,10 @@
-import java.util.Scanner;
+import view.InputView;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("구입금액을 입력해 주세요.");
-
-        int money = scanner.nextInt();
-
-        LottoGame lottoGame = new LottoGame(money);
-
-        lottoGame.start(scanner);
+        LottoGame lottoGame = new LottoGame(InputView.purchaseAmount());
+        lottoGame.start();
     }
 
 }
