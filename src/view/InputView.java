@@ -10,7 +10,7 @@ public class InputView {
 	private static final String REQUEST_WINNING_NUMBERS_MESSAGE = "당첨 번호를 입력해 주세요.";
 	private static final Scanner scanner = new Scanner(System.in);
 
-	public int getUserAmount () {
+	public int getPurchaseAmount() {
 		System.out.println(REQUEST_AMOUNT_MESSAGE);
 		return Integer.parseInt(scanner.nextLine());
 	}
