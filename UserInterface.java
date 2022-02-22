@@ -21,4 +21,10 @@ public class UserInterface {
         }
         return winningNumbers;
     }
+
+    public int inputBonusBall() {
+        InputView.guideInputBonusBall();
+        return Integer.parseInt(scanner.nextLine());
+    }
+
 }

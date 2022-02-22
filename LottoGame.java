@@ -13,6 +13,7 @@ public class LottoGame {
         int purchaseMoney = buyLotto();
 
         List<Integer> winningNumbers = ui.inputWinningNumber();
+        int bonusBall = ui.inputBonusBall(); // TODO
         WinningStatistic winningStatistic = new WinningStatistic(lottoList, winningNumbers);
         OutputView.showWinningStatistic(winningStatistic.getStatistic(), purchaseMoney);
     }

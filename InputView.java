@@ -5,6 +5,10 @@ public class InputView {
     }
 
     public static void guideInputWinningNumber() {
-        System.out.println("당첨 번호를 입력해 주세요.");
+        System.out.printf("%n당첨 번호를 입력해 주세요.%n");
+    }
+
+    public static void guideInputBonusBall() {
+        System.out.printf("%n보너스 볼을 입력해 주세요.%n");
     }
 }
