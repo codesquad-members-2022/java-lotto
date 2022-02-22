@@ -10,7 +10,7 @@ public class LottoMachine {
 
     private static final int BALL_COUNT = 6;
     private static final int LOTTO_PRICE = 1000;
-    private static final List<Integer> lottoNumbers = IntStream.rangeClosed(1,45).boxed().collect(Collectors.toList());
+    private static final List<Integer> lottoNumbers = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
 
     private static Lotto createRandomLotto() {
         Collections.shuffle(lottoNumbers);
