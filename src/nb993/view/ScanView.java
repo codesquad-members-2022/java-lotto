@@ -25,4 +25,9 @@ public class ScanView {
         }
         return winningNumbers;
     }
+
+    public int getBonusNumber() {
+        System.out.println("보너스 볼을 입력해 주세요.");
+        return sc.nextInt();
+    }
 }
