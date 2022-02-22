@@ -61,22 +61,22 @@ public class LottoGame {
     }
 
     private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber) {
-        if (matchNumber == WinningStrategy.ZERO_MATCHES.getCorrectNumber()) {
+        if (matchNumber == 0) {
             return WinningStrategy.ZERO_MATCHES;
         }
-        if (matchNumber == WinningStrategy.ONE_MATCHES.getCorrectNumber()) {
+        if (matchNumber == 1) {
             return WinningStrategy.ONE_MATCHES;
         }
-        if (matchNumber == WinningStrategy.TWO_MATCHES.getCorrectNumber()) {
+        if (matchNumber == 2) {
             return WinningStrategy.TWO_MATCHES;
         }
-        if (matchNumber == WinningStrategy.THREE_MATCHES.getCorrectNumber()) {
+        if (matchNumber == 3) {
             return WinningStrategy.THREE_MATCHES;
         }
-        if (matchNumber == WinningStrategy.FOUR_MATCHES.getCorrectNumber()) {
+        if (matchNumber == 4) {
             return WinningStrategy.FOUR_MATCHES;
         }
-        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber()) {
+        if (matchNumber == 5) {
             return WinningStrategy.FIVE_MATCHES;
         }
         return WinningStrategy.SIX_MATCHES;

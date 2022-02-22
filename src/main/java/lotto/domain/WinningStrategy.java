@@ -20,9 +20,4 @@ public enum WinningStrategy {
     public int getWinningPrice() {
         return this.winningPrice;
     }
-
-    public int getCorrectNumber() {
-        return this.correctNumber;
-    }
-
 }
