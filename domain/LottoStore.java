@@ -1,6 +1,7 @@
 package PACKAGE_NAME.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -19,6 +20,9 @@ public class LottoStore {
     }
 
 
+    private void shuffle(){
+        Collections.shuffle(lottoNumbers);
+    }
 
 
     public LottoStore(List<Integer> lottoNumbers) {
