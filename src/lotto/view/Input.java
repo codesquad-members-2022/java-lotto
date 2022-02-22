@@ -1,3 +1,5 @@
+package lotto.view;
+
 import java.util.Scanner;
 
 public class Input {
@@ -26,7 +28,6 @@ public class Input {
         for (int i = 0; i < split.length; i++) {
             result[i] = Integer.parseInt(split[i].trim());
         }
-
         return result;
     }
 }

@@ -1,7 +1,11 @@
+package lotto.view;
+
 import static java.lang.System.lineSeparator;
 
 import java.util.List;
 import java.util.Map;
+import lotto.domain.Lotto;
+import lotto.domain.Rank;
 
 public class Output {
 
@@ -23,14 +27,12 @@ public class Output {
             .append(lineSeparator())
             .append("----------")
             .append(lineSeparator());
-
         appendMatchedInfo(map, earningRate);
         System.out.println(sb);
         sb.setLength(0);
     }
 
     private static void appendMatchedInfo(Map<Rank, Integer> map, double earningRate) {
-
         for (Rank rank : map.keySet()) {
             sb.append(rank.getCountOfMatch())
                 .append("개 일치 (")
@@ -41,5 +43,4 @@ public class Output {
         }
         sb.append("수익률은 ").append(earningRate).append("%");
     }
-
 }

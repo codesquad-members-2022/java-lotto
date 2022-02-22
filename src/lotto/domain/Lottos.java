@@ -1,3 +1,5 @@
+package lotto.domain;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,6 @@ public class Lottos {
 
     public List<Lotto> buyLotto(int inputMoney) {
         lottos = new ArrayList<>();
-
         int numOfLotto = inputMoney / Lotto.LOTTO_PRICE;
         for (int i = 0; i < numOfLotto; i++) {
             lottos.add(new Lotto());

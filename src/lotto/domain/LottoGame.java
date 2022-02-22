@@ -1,3 +1,5 @@
+package lotto.domain;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -5,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lotto.view.Input;
+import lotto.view.Output;
 
 public class LottoGame {
 
@@ -70,9 +74,13 @@ public class LottoGame {
 
         for (int numOfMatch : numOfMatchingResult.values()) {
             Rank rank = Rank.create(numOfMatch);
-            if (!Objects.isNull(rank)) {
-                rankResult.put(rank, rankResult.get(rank) + 1);
-            }
+            putOnlyWinningLottery(rank);
+        }
+    }
+
+    private void putOnlyWinningLottery(Rank rank) {
+        if (!Objects.isNull(rank)) {
+            rankResult.put(rank, rankResult.get(rank) + 1);
         }
     }
 

@@ -1,3 +1,5 @@
+package lotto.domain;
+
 public enum Rank {
     FIRST(6, 2000000000),
     SECOND(5, 1500000),
