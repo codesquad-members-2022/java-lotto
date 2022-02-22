@@ -65,6 +65,7 @@ public class TicketOffice {
             matchedNumber = checkWinningNumber(ticket.getTicketInfo());
             statistics.computeIfPresent(matchedNumber, (k, v) -> v++);
         }
+        System.out.println();
     }
 
     public int calculateProfit() {
