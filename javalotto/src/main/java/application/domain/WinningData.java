@@ -23,7 +23,6 @@ public enum WinningData {
         throw new IllegalArgumentException();
     }
 
-
     public boolean isSameWinningCount(int winningCount) {
         return this.winningCount == winningCount;
     }
