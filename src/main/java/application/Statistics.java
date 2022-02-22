@@ -25,16 +25,16 @@ public class Statistics {
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        counts.keySet().forEach(key -> {
-            sb.append(key.matchCount).append("개 일치(")
-                .append(key.reward).append("원) - ")
-                .append(counts.get(key)).append("개")
-                .append(System.lineSeparator());
-        });
-        return sb.toString();
+    public double getEarningsRate(int money) {
+        int reward = counts.keySet().stream()
+            .mapToInt(key -> key.reward * counts.get(key))
+            .sum();
+
+        return (double) (reward - money) / money;
+    }
+
+    public Map<Prize, Integer> getCounts() {
+        return counts;
     }
 
     public static void main(String[] args) {

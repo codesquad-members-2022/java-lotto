@@ -9,8 +9,6 @@ public class LotteryGenerator {
     private final List<Lottery> userLotteries = new ArrayList<>();
     private Lottery winLottery;
 
-    private Statistics stat;
-
     public Lottery create() {
         return Lottery.generate();
     }
