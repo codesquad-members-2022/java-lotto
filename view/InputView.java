@@ -3,17 +3,17 @@ package PACKAGE_NAME.view;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 public class InputView {
     private int money;
-    private List<Integer> winningNumber = new ArrayList<>();
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private StringTokenizer st;
 
     private static final String INPUTMONEY_MESSAGE = "구입금액을 입력해 주세요.";
+    private static final String INVALID_NUMBERS = "올바른 번호를 입력해 주세요.";
 
     public int inputMoney() {
         try {
@@ -29,12 +29,11 @@ public class InputView {
         return money;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         InputView inputView = new InputView();
-        System.out.println(inputView.inputMoney());
+        inputView.inputWinningNumber().forEach(System.out::println);
 
     }
-
 
 
     private void validateMoney(int money) {
@@ -44,15 +43,32 @@ public class InputView {
     }
 
     public List<Integer> inputWinningNumber() {
+        List<Integer> winningNumber = new ArrayList<>();
         try {
-            st = new StringTokenizer(br.readLine(), ",");
-            while (st.hasMoreTokens()) {
-                winningNumber.add(Integer.parseInt(st.nextToken()));
-            }
+            String inputWinningNumber = br.readLine();
+            winningNumber = Arrays.stream(inputWinningNumber.split(","))
+                    .map(String::trim)
+                    .map(Integer::parseInt)
+                    .collect(toList());
+            validateNumbers(winningNumber);
+            return winningNumber;
+        } catch (IllegalArgumentException e) {
+            System.out.println(INVALID_NUMBERS);
+            return inputWinningNumber();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return winningNumber;
     }
 
+    private void validateNumbers(List<Integer> winningNumber) {
+        if (winningNumber.size() != 6) {
+            throw new IllegalArgumentException();
+        }
+
+        Set<Integer> set = new HashSet<>(winningNumber);
+        if (set.size() != winningNumber.size()) {
+            throw new IllegalArgumentException();
+        }
+    }
 }
