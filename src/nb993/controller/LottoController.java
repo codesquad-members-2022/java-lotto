@@ -49,8 +49,19 @@ public class LottoController {
             rankResult.put(r, count + 1);
         }
 
-        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO);
+        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO, getAmountOfWinningMoney(rankResult));
     }
+
+    private int getAmountOfWinningMoney(Map<Rank, Integer> rankResult) {
+        int winningMoney = 0;
+        for (Map.Entry<Rank, Integer> entry : rankResult.entrySet()) {
+            Rank rank = entry.getKey();
+            int count = entry.getValue();
+            winningMoney += rank.getWinningMoney() * count;
+        }
+        return winningMoney;
+    }
+
 
     public void printGame() {
         printView.printLottos(lottos);
