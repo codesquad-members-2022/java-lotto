@@ -16,4 +16,11 @@ public class Lotto {
                 .map(ball -> ball.getNumber())
                 .collect(Collectors.toList());
     }
+
+    public int getMatchBallCount(Lotto winningLotto) {
+        List<Integer> lottoBallNumbers = winningLotto.getBallNumbers();
+        return (int) getBallNumbers().stream()
+                .filter(lottoBallNumbers::contains)
+                .count();
+    }
 }

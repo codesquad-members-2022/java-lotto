@@ -20,7 +20,7 @@ public class User {
 
     public void matchWinningLotto(Lotto winningLotto) {
         for (Lotto lotto : lottos) {
-//            int count = lotto.getMatchBallCount(winningLotto);
+            int count = lotto.getMatchBallCount(winningLotto);
         }
     }
 }
