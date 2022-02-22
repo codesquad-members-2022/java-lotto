@@ -34,22 +34,28 @@ public enum LottoPrize {
     public static Optional<LottoPrize> findLottoPrize(int count, boolean isBonus) {
         // 찾는 로직
         for (LottoPrize lottoPrize : values()) {
-            if (isLottoPrize(lottoPrize, count, isBonus)) return Optional.of(lottoPrize);
+            if (isLottoPrize(lottoPrize, count)){
+
+                if (count == 5 && isBonus) {
+                    return Optional.of(LottoPrize.SECOND);
+                }
+                return Optional.of(lottoPrize);
+            }
         }
 
         return Optional.empty();
     }
 
-    public static boolean isLottoPrize(int count, boolean isBonus) {
+    public static boolean isLottoPrize(int count) {
         // 찾는 로직
         for (LottoPrize lottoPrize : values()) {
-            if (isLottoPrize(lottoPrize, count, isBonus)) return true;
+            if (isLottoPrize(lottoPrize, count)) return true;
         }
 
         return false;
     }
 
-    private static boolean isLottoPrize(LottoPrize lottoPrize, int count, boolean isBonus) {
-        return count == lottoPrize.count && lottoPrize.isBonus == isBonus;
+    private static boolean isLottoPrize(LottoPrize lottoPrize, int count) {
+        return count == lottoPrize.count;
     }
 }

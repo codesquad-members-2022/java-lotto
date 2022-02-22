@@ -1,5 +1,7 @@
 package app.lotto.view;
 
+import app.lotto.domain.LottoPrize;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -21,8 +23,16 @@ public class OutputView {
         System.out.println("----------");
 
         for (LottoResult lottoResult : lottoResults) {
-            System.out.printf("%d개 일치 (%d원) - %d개\n", lottoResult.getLottoPrize().getCount(), lottoResult.getLottoPrize().getPrizeMoney(), lottoResult.getWinningCaseCount());
+            printLottoResult(lottoResult);
         }
+    }
+
+    private static void printLottoResult(LottoResult lottoResult) {
+        if (lottoResult.getLottoPrize().equals(LottoPrize.SECOND)) {
+            System.out.printf("%d개 일치, 보너스 볼 일치(%d원) - %d개\n", lottoResult.getLottoPrize().getCount(), lottoResult.getLottoPrize().getPrizeMoney(), lottoResult.getWinningCaseCount());
+            return ;
+        }
+        System.out.printf("%d개 일치 (%d원) - %d개\n", lottoResult.getLottoPrize().getCount(), lottoResult.getLottoPrize().getPrizeMoney(), lottoResult.getWinningCaseCount());
     }
 
     public static void printTotalProfit(double totalProfit) {

@@ -43,7 +43,8 @@ public class LottoGame {
         for (List<Integer> shuffledNumber : allShuffledNumbers) {
             int sameNumberCount = getSameNumberCount(shuffledNumber, winningNumbers);
             boolean isBonus = shuffledNumber.contains(bonusNumber);
-            if (!LottoPrize.isLottoPrize(sameNumberCount, isBonus)) continue;
+
+            if (!LottoPrize.isLottoPrize(sameNumberCount)) continue;
             LottoPrize lottoPrize = LottoPrize.findLottoPrize(sameNumberCount, isBonus)
                     .orElseThrow(() -> new IllegalStateException("당첨 여부 확인 중 오류가 발생하였습니다."));
             int value = statistics.getOrDefault(lottoPrize, 0);
