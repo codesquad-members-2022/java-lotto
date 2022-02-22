@@ -9,10 +9,6 @@ import view.output.OutputView;
 
 public class LottoController {
 
-
-    public LottoController() {
-    }
-
     public void run() {
         Money money = InputView.inputMoney();
         LottoTickets lottoTickets = LottoTickets.createRandomTickets(money);
