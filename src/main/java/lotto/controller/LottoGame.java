@@ -92,6 +92,6 @@ public class LottoGame {
     }
 
     private double calculateProfit(int purchaseAmount, long winningPrices) {
-        return (((double)winningPrices / (double)purchaseAmount) * 100) - 100;
+        return (((double) winningPrices / (double) purchaseAmount) * 100) - 100;
     }
 }

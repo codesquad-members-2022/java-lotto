@@ -30,19 +30,12 @@ public class Lotto {
         int correctCount = 0;
 
         for (int number : winningNumbers) {
-             correctCount += correctNumber(number);
+            correctCount += correctNumber(number);
         }
 
         return correctCount;
     }
 
-    /**
-     * 현재 숫자가 리스트에 있는지 판단하는 메소드
-     * number가 현재 numbers에 있으면 1 리턴
-     *                       없으면 0 리턴
-     * @param number
-     * @return
-     */
     private int correctNumber(int number) {
         if (numbers.contains(number)) {
             return 1;

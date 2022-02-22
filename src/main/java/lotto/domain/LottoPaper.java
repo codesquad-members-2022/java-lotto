@@ -19,7 +19,7 @@ public class LottoPaper {
         StringBuilder sb = new StringBuilder();
 
         for (Lotto lotto : lottos) {
-            sb.append(lotto.showLottoNumbers()).append("\r\n");
+            sb.append(lotto.showLottoNumbers()).append(System.lineSeparator());
         }
 
         return sb.toString();

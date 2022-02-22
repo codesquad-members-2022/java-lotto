@@ -34,9 +34,9 @@ public class OutputView {
     }
 
     private static int getRank(List<WinningStrategy> winningStrategies, WinningStrategy rank) {
-        return (int)winningStrategies.stream()
+        return (int) winningStrategies.stream()
                 .filter(value -> value.equals(rank))
                 .count();
-        }
+    }
 }
 
