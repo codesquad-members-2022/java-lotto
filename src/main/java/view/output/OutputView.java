@@ -12,6 +12,7 @@ public class OutputView {
         List<LottoTicket> tickets = lottoTickets.getLottoTickets();
         System.out.printf("%d개를 구매했습니다.\n", tickets.size());
         System.out.println(makeLottoTicketsString(tickets));
+        System.out.println();
     }
 
     private static String makeLottoTicketsString(List<LottoTicket> tickets) {
