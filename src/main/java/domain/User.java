@@ -17,4 +17,10 @@ public class User {
     public List<Lotto> getLottos() {
         return lottos;
     }
+
+    public void matchWinningLotto(Lotto winningLotto) {
+        for (Lotto lotto : lottos) {
+//            int count = lotto.getMatchBallCount(winningLotto);
+        }
+    }
 }
