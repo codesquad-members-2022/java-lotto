@@ -1,6 +1,7 @@
 package domain;
 
 import view.InputView;
+import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,10 +35,12 @@ public class TicketOffice {
     public List<LottoTicket> issueTickets(){
         int amount = InputView.getAmount();
         int numberOfTickets = amount / PRICE;
-        List<LottoTicket> Tickets = new ArrayList<>();
+        int change = amount % PRICE;
+        List<LottoTicket> tickets = new ArrayList<>();
         for (int i = 0; i < numberOfTickets; i++) {
-              Tickets.add(getNewLottoTicket());
+              tickets.add(getNewLottoTicket());
         }
-        return Tickets;
+        OutputView.completePurchase(numberOfTickets, change, tickets);
+        return tickets;
     }
 }
