@@ -49,6 +49,7 @@ public class Main {
         for (int i = 0; i < lottoCount; i++) {
             List<Integer> shuffledNumbers = getShuffledNumbers();
             allShuffledNumbers.add(shuffledNumbers);
+            Collections.sort(shuffledNumbers);
             System.out.println(shuffledNumbers);
         }
 
