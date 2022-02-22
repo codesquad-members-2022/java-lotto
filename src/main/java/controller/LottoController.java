@@ -26,9 +26,8 @@ public class LottoController {
         int userMoney = inputView.getMoneyInput();
         List<Lotto> purchasedLotteries = lottoShop.order(userMoney);
         outputView.printLotteries(purchasedLotteries);
-        inputView.getAnswerInput();
-        WinningNumbers winningNumbers = new WinningNumbers(inputView.getAnswerInput(),
-            inputView.getBonusNumberInput());
+        WinningNumbers winningNumbers =
+            new WinningNumbers(inputView.getAnswerInput(), inputView.getBonusNumberInput());
         Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries, winningNumbers);
         outputView.printStatistics(result, userMoney);
 

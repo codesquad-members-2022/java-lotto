@@ -21,10 +21,12 @@ public class OutputView {
         int totalPrize = 0;
         for (int i = 0; i < Rank.noRank.ordinal(); i++) {
             Rank rank = Rank.values()[i];
+            String bonus = rank == Rank.rank2 ? ", 보너스 볼 일치" : "";
             int prize = rank.getPrize();
             int count = result.get(rank);
-            System.out.printf("%d개 일치 (%d원)- %d개%n",
+            System.out.printf("%d개 일치%s (%d원)- %d개%n",
                 rank.getMatch(),
+                bonus,
                 prize,
                 count);
             totalPrize += prize * count;
@@ -32,7 +34,4 @@ public class OutputView {
 
         System.out.printf("총 수익률은 %.2f%%입니다.", ((float)totalPrize - userMoney) / userMoney * 100);
     }
-
-    public void printTotal수이률(float rate) {
-        System.out.printf("총 수익률은 %.2f%%입니다.", rate);
-    }}
+}
