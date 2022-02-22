@@ -9,11 +9,7 @@ public class Main {
 
         int money = scanner.nextInt();
 
-        int count = money / 1000;
-
-        System.out.println(count + "개를 구매하셨습니다.");
-
-        LottoGame lottoGame = new LottoGame(count);
+        LottoGame lottoGame = new LottoGame(money);
 
         lottoGame.start(scanner);
     }
