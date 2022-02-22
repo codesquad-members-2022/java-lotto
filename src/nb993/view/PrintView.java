@@ -27,6 +27,6 @@ public class PrintView {
         double resultAmount = 5000 * rankResult.getOrDefault(Rank.FIFTH, 0) + 50000 * rankResult.getOrDefault(Rank.FOURTH, 0)
             + 1500000 * rankResult.getOrDefault(Rank.THIRD, 0) + 30000000 * rankResult.getOrDefault(Rank.SECOND, 0)
             + 2000000000 * rankResult.getOrDefault(Rank.FIRST, 0);
-        System.out.println("총 수익률은 " + (resultAmount - purchaseAmount) / purchaseAmount + "%입니다");
+        System.out.println("총 수익률은 " + (resultAmount - purchaseAmount) / purchaseAmount * 100 + "%입니다");
     }
 }
