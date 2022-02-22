@@ -11,7 +11,7 @@ public class OutputView {
         System.out.println("거스름돈은 " + change + "원 입니다.");
 
         for (LottoTicket ticket : tickets) {
-            System.out.println(ticket.toString());
+            System.out.println(ticket.getTicketInfo());
         }
     }
 }

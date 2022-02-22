@@ -8,4 +8,8 @@ public class LottoTicket {
     public LottoTicket(List<Integer> lottoTicket) {
         this.lottoTicket = lottoTicket;
     }
+
+    public String getTicketInfo() {
+        return this.lottoTicket.toString();
+    }
 }

@@ -22,7 +22,7 @@ public class TicketOffice {
         }
     }
 
-    public LottoTicket getNewLottoTicket() {
+    private LottoTicket makeNewLottoTicket() {
         List<Integer> ticketNumber = new ArrayList<>();
         Collections.shuffle(lottoNumber);
         for (int i = 0; i < 6; i++) {
@@ -38,7 +38,7 @@ public class TicketOffice {
         int change = amount % PRICE;
         List<LottoTicket> tickets = new ArrayList<>();
         for (int i = 0; i < numberOfTickets; i++) {
-              tickets.add(getNewLottoTicket());
+              tickets.add(makeNewLottoTicket());
         }
         OutputView.completePurchase(numberOfTickets, change, tickets);
         return tickets;
