@@ -3,25 +3,41 @@ import java.util.List;
 
 public class LottoGame {
 
-    public void run() {
-        UserInterface ui = new UserInterface();
-        int purchaseMoney = ui.inputMoney();
-        int lottoCount = purchaseMoney / 1000;
-        OutputView.showLottoCount(lottoCount);
+    private static final int LOTTO_EACH_MONEY = 1000;
 
-        List<Lotto> lottoList = createLottoList(lottoCount);
-        OutputView.showLottoList(lottoList);
+    private final UserInterface ui = new UserInterface();
+    private final LottoMaker lottoMaker = new LottoMaker();
+    private List<Lotto> lottoList;
+
+    public void run() {
+        int purchaseMoney = buyLotto();
 
         List<Integer> winningNumbers = ui.inputWinningNumber();
         WinningStatistic winningStatistic = new WinningStatistic(lottoList, winningNumbers);
         OutputView.showWinningStatistic(winningStatistic.getStatistic(), purchaseMoney);
     }
 
+    private int buyLotto() {
+        int purchaseMoney = ui.inputMoney();
+        int lottoCount = purchaseMoney / LOTTO_EACH_MONEY;
+        OutputView.showLottoCount(lottoCount);
+
+        lottoList = createLottoList(lottoCount);
+        OutputView.showLottoList(lottoList);
+
+        return purchaseMoney;
+    }
+
     private List<Lotto> createLottoList(int lottoCount) {
-        List<Lotto> lottoList = new ArrayList<>();
+        // 로또 자동 생성
+        List<Lotto> list = new ArrayList<>();
         for (int i = 0; i < lottoCount; i++) {
-            lottoList.add(new Lotto());
+            list.add(new Lotto(lottoMaker.autoMakeLotto()));
         }
-        return lottoList;
+
+        // 로또 수동 생성
+        // TODO
+
+        return list;
     }
 }
