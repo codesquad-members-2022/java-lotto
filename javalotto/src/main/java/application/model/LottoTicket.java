@@ -2,12 +2,14 @@ package application.model;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import application.domain.Lotto;
+import application.domain.WinningData;
 import application.view.InputView;
 import application.view.OutputView;
 
@@ -16,7 +18,7 @@ public class LottoTicket {
     private static final int MIN_LOTTO_NUMBER = 1;
     private static final int MAX_LOTTO_NUMBER = 46;
     private static final int AMOUNT_LOTTO_NUMBER = 6;
-    private static final int LOTT_TICKET_PRICE = 1000;
+    private static final int LOTTO_TICKET_PRICE = 1000;
     private static final int SIZE_OF_ANSWER_ARRAY = 7;
     private static final int TWO_LOTTO_LENGTH_SUM = 12;
 
@@ -28,9 +30,18 @@ public class LottoTicket {
 
     private void start(List<Lotto> lottos, List<Integer> userWinningNumber) {
         int[] counts = makeStatistics(lottos, userWinningNumber);
+        calculateYield(counts);
         OutputView.printWinningStatistics(counts);
     }
 
+    private double calculateYield(int[] counts) {
+        int userPurchaseAmount = Arrays.stream(counts).sum() * LOTTO_TICKET_PRICE;
+        double currentYield = 0;
+        for (int winningCount = 3; winningCount <= 6; winningCount++) {
+            currentYield += WinningData.getWinningData(winningCount) * counts[winningCount];
+        }
+        return (currentYield - userPurchaseAmount) / userPurchaseAmount * 100;
+    }
 
     private int[] makeStatistics(List<Lotto> lottos, List<Integer> userWinningNumber) {
         Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber);
@@ -49,7 +60,7 @@ public class LottoTicket {
     private List<Lotto> makeLotto() {
         List<Lotto> lottos = new ArrayList<>();
         int userPurchaseAmount = InputView.getPurchaseAmount();
-        int userPurchaseQuantity = userPurchaseAmount / LOTT_TICKET_PRICE;
+        int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE;
         OutputView.printPurchaseQuantity(userPurchaseQuantity);
         for (int i = 0; i < userPurchaseQuantity; i++) {
             Lotto tempLotto = new Lotto(createNumbers());
