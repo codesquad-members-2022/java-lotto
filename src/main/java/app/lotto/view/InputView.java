@@ -9,13 +9,18 @@ import static app.lotto.validation.InputViewValidator.*;
 
 public class InputView {
 
-    private final Scanner sc = new Scanner(System.in);
+    private static final int LOTTERY_NUMBER_COUNT = 6;
+    private static final int LOTTERY_NUMBER_MIN = 1;
+    private static final int LOTTERY_NUMBER_MAX = 45;
+    private static final int PRICE_OF_LOTTERY = 1000;
 
-    public int readAmount() {
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static int readAmount() {
         try {
             System.out.println("구입금액을 입력해 주세요.");
             int amount = Integer.parseInt(sc.nextLine());
-            validateAmountUnit(amount, 1000);
+            validateAmountUnit(amount, PRICE_OF_LOTTERY);
             return amount;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -23,26 +28,27 @@ public class InputView {
         }
     }
 
-    public List<Integer> readWinningNumbers() {
+    public static List<Integer> readWinningNumbers() {
         try {
-            // 정상값 반환
             System.out.println("당첨 번호를 입력해 주세요.");
             String[] input = sc.nextLine().split(",");
 
-            // 6개 숫자가 들어있는지
-            validateNumbersCount(input, 6);
-            List<Integer> winningNumbers = Arrays.stream(input)
-                    .map(String::trim)
-                    .mapToInt(Integer::parseInt)
-                    .boxed()
-                    .collect(Collectors.toList());
-            // 1 ~ 45 검증
-            validateNumbersRange(winningNumbers, 1, 45);
+            validateNumbersCount(input, LOTTERY_NUMBER_COUNT);
+            List<Integer> winningNumbers = getWinningNumbers(input);
+
+            validateNumbersRange(winningNumbers, LOTTERY_NUMBER_MIN, LOTTERY_NUMBER_MAX);
             return winningNumbers;
         } catch (IllegalArgumentException e) {
-            // 오류메세지 출력
             System.out.println(e.getMessage());
             return readWinningNumbers();
         }
+    }
+
+    private static List<Integer> getWinningNumbers(String[] input) {
+        return Arrays.stream(input)
+                .map(String::trim)
+                .mapToInt(Integer::parseInt)
+                .boxed()
+                .collect(Collectors.toList());
     }
 }

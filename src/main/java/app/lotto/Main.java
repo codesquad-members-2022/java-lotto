@@ -11,11 +11,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        InputView inputView = new InputView();
-        int amount = inputView.readAmount();
+        int amount = InputView.readAmount();
         int lottoCount = getLottoCount(amount);
         List<List<Integer>> allShuffledNumbers = getAllShuffledNumbers(lottoCount);
-        List<Integer> winningNumbers = inputView.readWinningNumbers();
+        List<Integer> winningNumbers = InputView.readWinningNumbers();
         OutputView.winStatistics(allShuffledNumbers, winningNumbers, amount);
     }
 
