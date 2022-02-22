@@ -34,13 +34,21 @@ public class LottoStatistics {
 
     private MatchNumber countLottoNumberMatchWinNumber(List<Integer> lottoNumberList, int[] winNumbersArr) {
         int matchCount = 0;
+        int bonusNumber = winNumbersArr[winNumbersArr.length - 1];
         for (int i = 0; i < winNumbersArr.length; i++) {
             matchCount += lottoNumberListHasWinNumber(lottoNumberList, winNumbersArr[i]);
         }
-        return convertMatchCountToMatchNumber(matchCount);
+        return convertMatchCountToMatchNumber(matchCount, isMatchBonusNumber(lottoNumberList, bonusNumber));
     }
 
-    private MatchNumber convertMatchCountToMatchNumber(int matchCount) {
+    private boolean isMatchBonusNumber(List<Integer> lottoNumberList, int bonusNumber) {
+        if (lottoNumberListHasWinNumber(lottoNumberList, bonusNumber) == MATCH) {
+            return true;
+        }
+        return false;
+    }
+
+    private MatchNumber convertMatchCountToMatchNumber(int matchCount, boolean matchBonusNumber) {
         if (matchCount == 3) {
             lottoResult.addMatchNumberCount(MatchNumber.THREE);
             return MatchNumber.THREE;
@@ -49,9 +57,13 @@ public class LottoStatistics {
             lottoResult.addMatchNumberCount(MatchNumber.FOUR);
             return MatchNumber.FOUR;
         }
-        if (matchCount == 5) {
+        if (matchCount == 5 && !matchBonusNumber) {
             lottoResult.addMatchNumberCount(MatchNumber.FIVE);
             return MatchNumber.FIVE;
+        }
+        if (matchCount == 5 && matchBonusNumber) {
+            lottoResult.addMatchNumberCount(MatchNumber.FIVE_CONTAIN_BONUS);
+            return MatchNumber.FIVE_CONTAIN_BONUS;
         }
         if (matchCount == 6) {
             lottoResult.addMatchNumberCount(MatchNumber.SIX);

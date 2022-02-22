@@ -35,6 +35,7 @@ public class OutputView {
                 "3개 일치 (5000원)- " + resultMap.get(MatchNumber.THREE) + "개\n" +
                 "4개 일치 (50000원)- " + resultMap.get(MatchNumber.FOUR) + "개\n" +
                 "5개 일치 (1500000원)- " + resultMap.get(MatchNumber.FIVE) + "개\n" +
+                "5개 일치, 보너스 볼 일치(30000000원) - " + resultMap.get(MatchNumber.FIVE_CONTAIN_BONUS) + "개\n" +
                 "6개 일치 (2000000000원)- " + resultMap.get(MatchNumber.SIX) + "개");
         System.out.println("총 수익률은 " + rate + "%");
     }

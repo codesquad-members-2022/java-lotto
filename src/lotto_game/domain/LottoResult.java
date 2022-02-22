@@ -13,6 +13,7 @@ public class LottoResult {
             put(MatchNumber.THREE, 0);
             put(MatchNumber.FOUR, 0);
             put(MatchNumber.FIVE, 0);
+            put(MatchNumber.FIVE_CONTAIN_BONUS, 0);
             put(MatchNumber.SIX, 0);
         }};
     }
@@ -30,6 +31,9 @@ public class LottoResult {
         }
         if (matchNumber == MatchNumber.FIVE) {
             this.resultMap.put(MatchNumber.FIVE, this.resultMap.get(MatchNumber.FIVE) + 1);
+        }
+        if (matchNumber == MatchNumber.FIVE_CONTAIN_BONUS) {
+            this.resultMap.put(MatchNumber.FIVE_CONTAIN_BONUS, this.resultMap.get(MatchNumber.FIVE_CONTAIN_BONUS) + 1);
         }
         if (matchNumber == MatchNumber.SIX) {
             this.resultMap.put(MatchNumber.SIX, this.resultMap.get(MatchNumber.SIX) + 1);
