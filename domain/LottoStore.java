@@ -32,6 +32,15 @@ public class LottoStore {
     private List<Integer> getSixNumbers() {
         return lottoNumbers.stream()
                 .limit(6)
+                .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public List<LottoTicket> getLottoTickets(int count) {
+        List<LottoTicket> lottoTickets = new ArrayList<>();
+        for (int index = 0; index < count; index++) {
+            lottoTickets.add(new LottoTicket(getLottoNumbers()));
+        }
+        return lottoTickets;
     }
 }
