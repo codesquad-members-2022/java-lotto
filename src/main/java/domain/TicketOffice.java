@@ -3,10 +3,7 @@ package domain;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class TicketOffice {
     private final List<Integer> lottoNumber = new ArrayList<>();
@@ -14,6 +11,14 @@ public class TicketOffice {
     private final int SELECTED_NUMBER = 6;
     private final int PRICE = 1000;
     private List<Integer> winningNumbers =new ArrayList<>();
+    private Map<Integer, Integer> statistics = new HashMap<>();
+    {
+        statistics.put(3, 0);
+        statistics.put(4, 0);
+        statistics.put(5, 0);
+        statistics.put(6, 0);
+    }
+
 
     public TicketOffice() {
         setLottoNumber();
@@ -54,12 +59,34 @@ public class TicketOffice {
             .forEach(winningNumbers::add);
     }
 
-    private void getStatistic(List<LottoTicket> tickets) {
+    public void getStatistic(List<LottoTicket> tickets) {
         int matchedNumber = 0;
         for (LottoTicket ticket : tickets) {
             matchedNumber = checkWinningNumber(ticket.getTicketInfo());
-            
+            statistics.computeIfPresent(matchedNumber, (k, v) -> v++);
         }
+    }
+
+    public int calculateProfit() {
+        int totalPrize = 0;
+        for(Integer matchedNumber: statistics.keySet()){
+            totalPrize += (switchPrize(matchedNumber) * statistics.get(matchedNumber));
+        }
+        return totalPrize;
+    }
+
+    private int switchPrize(int matchedNumber){
+        switch (matchedNumber){
+            case 3:
+                return ProfitAmount.FORTH.getPrize();
+            case 4:
+                return ProfitAmount.THIRD.getPrize();
+            case 5:
+                return ProfitAmount.SECOND.getPrize();
+            default:
+                return ProfitAmount.FIRST.getPrize();
+        }
+
     }
 
     private int checkWinningNumber(List<Integer> ticketInfo) {

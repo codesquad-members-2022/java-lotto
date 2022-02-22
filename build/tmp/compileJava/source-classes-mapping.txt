@@ -6,5 +6,7 @@ domain/LottoTicket.java
  domain.LottoTicket
 view/InputView.java
  view.InputView
+domain/ProfitAmount.java
+ domain.ProfitAmount
 domain/TicketOffice.java
  domain.TicketOffice
