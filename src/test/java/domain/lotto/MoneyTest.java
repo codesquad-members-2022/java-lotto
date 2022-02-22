@@ -1,6 +1,5 @@
-package domain;
+package domain.lotto;
 
-import domain.lotto.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
