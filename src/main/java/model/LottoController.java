@@ -1,6 +1,5 @@
 package model;
 
-import com.sun.jdi.Value;
 import view.InputView;
 import view.OutputView;
 
@@ -13,9 +12,9 @@ public class LottoController {
     private int price;
     private static final int LOTTO_PRICE = 1000;
     private int count;
-    private List<Lotto> lottoList = new ArrayList<>();
-    private List<Integer> range = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
-    private static Map<Integer, Integer> map = new HashMap<>();
+    private final List<Lotto> lottoList = new ArrayList<>();
+    private final List<Integer> range = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
+    private static final Map<Integer, Integer> map = new HashMap<>();
 
     static {
         map.put(3, 0);
@@ -30,37 +29,48 @@ public class LottoController {
 
         while (lottoList.size() != count) {
             Set<Integer> numbers = new HashSet<>();
-            while (numbers.size() != 6) {
-                Collections.shuffle(range);
-                numbers.add(range.get(0));
-            }
-            List<Integer> lists = new ArrayList<>(numbers);
-            boolean overLapCheck = false;
-            for (Lotto lotto : lottoList) {
-                if (lotto.sameList(lists)) {
-                    overLapCheck = true;
-                    break;
-                }
-            }
-            if (!overLapCheck) {
-                Collections.sort(lists);
-                lottoList.add(new Lotto(lists));
-            }
+            makeRandomNumberSet(numbers);
+            checkOverLap(new ArrayList<>(numbers));
         }
         OutputView.printPurchaseCount(count, lottoList);
+    }
+
+    private void checkOverLap(List<Integer> lists) {
+        int size = lottoList.stream()
+                .filter(l -> l.sameList(lists))
+                .collect(Collectors.toList())
+                .size();
+        sortingNumber(lists, size);
+    }
+
+    private void sortingNumber(List<Integer> lists, int size) {
+        if (size == 0) {
+            Collections.sort(lists);
+            lottoList.add(new Lotto(lists));
+        }
+    }
+
+    private void makeRandomNumberSet(Set<Integer> numbers) {
+        while (numbers.size() != 6) {
+            Collections.shuffle(range);
+            numbers.add(range.get(0));
+        }
     }
 
     public void checkWinNumber() {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
-
         for (Lotto lotto : lottoList) {
-            int count = lotto.countCollectNumber(winNumbers);
-            if (count >= 3) {
-                map.put(count, map.get(count) + 1);
-            }
+            countHowManyLotto(winNumbers, lotto);
         }
         rateOfReturn();
+    }
+
+    private void countHowManyLotto(String[] winNumbers, Lotto lotto) {
+        int tempCount = lotto.countCollectNumber(winNumbers);
+        if (tempCount >= 3) {
+            map.put(tempCount, map.get(tempCount) + 1);
+        }
     }
 
     private void rateOfReturn() {
@@ -71,7 +81,6 @@ public class LottoController {
         double temp = (double) (revenue - price) / (price) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
         String result = df.format(temp);
-
         OutputView.printResult(map, result);
     }
 }
