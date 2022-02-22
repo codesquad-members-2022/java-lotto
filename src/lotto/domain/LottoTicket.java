@@ -24,6 +24,11 @@ public class LottoTicket {
         this.lottoNumbers = parseNumbers(numbers);
     }
 
+    @Override
+    public String toString() {
+        return lottoNumbers.toString();
+    }
+
     private void validateRange(int[] numbers) {
         validateMinimum(numbers);
         validateMaximum(numbers);

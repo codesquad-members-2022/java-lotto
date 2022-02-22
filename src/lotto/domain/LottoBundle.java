@@ -19,6 +19,14 @@ public class LottoBundle {
         }
     }
 
+    public int count() {
+        return ticketCount;
+    }
+
+    public LottoTicket getTicket(int index) {
+        return lottoTickets.get(index);
+    }
+
     private void validatePositiveInt(int paidAmount) {
         if (paidAmount <= 0) {
             throw new IllegalArgumentException("돈의 금액은 양의 정수여야 합니다.");
