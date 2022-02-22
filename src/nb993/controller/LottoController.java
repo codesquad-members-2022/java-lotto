@@ -41,15 +41,18 @@ public class LottoController {
 
     private void printLottoResult() {
         WinningNumber winningNumbers = new WinningNumber(scanView.getWinningNumber(), scanView.getBonusNumber());
-        Map<Rank, Integer> rankResult = new HashMap<>();
+        Map<Rank, Integer> rankResult = getRankResultMap(winningNumbers);
+        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO, getAmountOfWinningMoney(rankResult));
+    }
 
+    private Map<Rank, Integer> getRankResultMap(WinningNumber winningNumbers) {
+        Map<Rank, Integer> rankResult = new HashMap<>();
         for (int i = 0; i < lottos.size(); i++) {
             Rank r = lottos.get(i).getResult(winningNumbers);
             int count = rankResult.getOrDefault(r, 0);
             rankResult.put(r, count + 1);
         }
-
-        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO, getAmountOfWinningMoney(rankResult));
+        return rankResult;
     }
 
     private int getAmountOfWinningMoney(Map<Rank, Integer> rankResult) {
