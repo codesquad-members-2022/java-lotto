@@ -1,7 +1,9 @@
 package domain;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class LottoTicketFactory {
 
@@ -21,8 +23,8 @@ public class LottoTicketFactory {
         return new LottoTicket(new ArrayList<>(lottoNumbers));
     }
 
-    private static int randomRangeInt(int min, int max){
+    private static int randomRangeInt(int min, int max) {
         Random random = new Random();
-        return random.nextInt((max-min) + 1) + min;
+        return random.nextInt((max - min) + 1) + min;
     }
 }

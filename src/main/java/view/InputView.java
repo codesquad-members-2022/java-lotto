@@ -14,7 +14,7 @@ public class InputView {
         return userMoney;
     }
 
-    public static String[] requestLottoNumbers(){
+    public static String[] requestLottoNumbers() {
         System.out.println(REQUEST_LOTTO_NUMBERS_MESSAGE);
         String numbers = scanner.nextLine();
         return numbers.split(",");
