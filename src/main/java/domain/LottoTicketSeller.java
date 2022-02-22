@@ -13,6 +13,10 @@ public class LottoTicketSeller {
         return resultTickets;
     }
 
+    public LottoTicket exchangeTicket(ArrayList<LottoNumber> numbers) {
+        return LottoTicketFactory.generateCustomTicket(numbers);
+    }
+
     private int countNumberOfTickets(int money) {
         return money / TICKET_PRICE;
     }
