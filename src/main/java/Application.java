@@ -1,20 +1,9 @@
-import domain.Ball;
-import domain.Lotto;
-import domain.User;
-import view.InputView;
-import view.OutputView;
+import controller.Controller;
 
 public class Application {
 
     public static void main(String[] args) {
-        User user = InputView.askHowManyLottos();
-        user.buy();
-        OutputView.printLottos(user.getLottos());
-        Lotto winningLotto = InputView.createWinningLotto();
-        user.matchWinningLotto(winningLotto);
-        OutputView.printResult(user);
-
-        Ball bonusBall = new Ball(13);
-
+        Controller controller = new Controller();
+        controller.play();
     }
 }

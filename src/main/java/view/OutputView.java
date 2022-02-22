@@ -13,6 +13,10 @@ public class OutputView {
 
     private static final String PURCHASE_MESSAGE = "개를 구입했습니다.";
     private static final String NUMBER_DELIMITER = ", ";
+    private static final String RESULT_MESSAGE = "당첨 통계\n--------";
+    private static final String DETAILED_RESULT_MESSAGE = "%d개 일치 (%d원) - %d개\n";
+    private static final String PROFIT_MESSAGE = "총 수익률은 %.2f%%입니다.";
+
 
     public static void printLottos(List<Lotto> lottos) {
         System.out.println(lottos.size() + PURCHASE_MESSAGE);
@@ -35,17 +39,16 @@ public class OutputView {
     }
 
     public static void printResult(User user) {
-        System.out.println("당첨 통계");
-        System.out.println("--------");
+        System.out.println(RESULT_MESSAGE);
         List<Rank> ranks = Arrays.stream(Rank.values())
                 .filter(rank -> !rank.equals(Rank.FAIL))
                 .sorted(Comparator.comparingInt(Rank::getPrice))
                 .collect(Collectors.toList());
         for (Rank rank : ranks) {
             int count = user.countRank(rank);
-            System.out.printf("%d개 일치 (%d원) - %d개\n", rank.getMatchCount(), rank.getPrice(), count);
+            System.out.printf(DETAILED_RESULT_MESSAGE, rank.getMatchCount(), rank.getPrice(), count);
         }
-        System.out.printf("총 수익률은 %.2f%%입니다.", user.calculateRateOfReturn());
+        System.out.printf(PROFIT_MESSAGE, user.calculateRateOfReturn());
     }
 
 
