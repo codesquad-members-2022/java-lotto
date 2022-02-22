@@ -2,6 +2,7 @@ package lotto.controller;
 
 import lotto.domain.LottoPaper;
 import lotto.domain.LottoStore;
+import lotto.domain.WinningStrategy;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -16,23 +17,36 @@ public class LottoGame {
         InputView.init();
 
         int purchaseAmount = InputView.getPurchaseAmount();
+        LottoPaper lottoPaper = purchase(purchaseAmount);
 
+        List<WinningStrategy> winningStrategies = checkWinning(lottoPaper);
+
+        calculateWinningStats(winningStrategies, purchaseAmount);
+
+        InputView.close();
+    }
+
+    private LottoPaper purchase(int purchaseAmount) {
         LottoStore lottoStore = new LottoStore();
         LottoPaper lottoPaper = lottoStore.purchase(purchaseAmount);
 
         OutputView.printPurchaseCount(lottoPaper.getLottoSize());
         OutputView.printLottoPaper(lottoPaper.showLottoPaper());
 
+        return lottoPaper;
+    }
+
+    private List<WinningStrategy> checkWinning(LottoPaper lottoPaper) {
         String stringWinningNumbers = InputView.getRequiredWinningNumber();
-        InputView.close();
         List<Integer> winningNumbers = getWinningNumbers(stringWinningNumbers);
+        List<Integer> correctNumberCounts = lottoPaper.judgeWinning(winningNumbers);
 
-        List<Integer> correctCounts = lottoPaper.judgeWinning(winningNumbers);
-//        calculateRank(correctCounts);
-        // 수익률 계산
+        List<WinningStrategy> winningStrategies = new ArrayList<>();
+        for (int eachNumber : correctNumberCounts) {
+            winningStrategies.add(convertMatchNumberToWinningStrategy(eachNumber));
+        }
 
-//        OutputView.printWinningStats();
-
+        return winningStrategies;
     }
 
     private List<Integer> getWinningNumbers(String stringWinningNumbers) {
@@ -46,22 +60,38 @@ public class LottoGame {
         return winningNumbers;
     }
 
-    /**
-     * 각 등수별로 몇 개가 당첨되었는지 리턴
-     * 3개부터 6개까지만 카운트
-     * @param correctCounts
-     * @return
-     */
-//    private List<Integer> calculateRank(List<Integer> correctCounts) {
-//
-//    }
+    private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber) {
+        if (matchNumber == 0) {
+            return WinningStrategy.ZERO_MATCHES;
+        }
+        if (matchNumber == 1) {
+            return WinningStrategy.ONE_MATCHES;
+        }
+        if (matchNumber == 2) {
+            return WinningStrategy.TWO_MATCHES;
+        }
+        if (matchNumber == 3) {
+            return WinningStrategy.THREE_MATCHES;
+        }
+        if (matchNumber == 4) {
+            return WinningStrategy.FOUR_MATCHES;
+        }
+        if (matchNumber == 5) {
+            return WinningStrategy.FIVE_MATCHES;
+        }
+        return WinningStrategy.SIX_MATCHES;
+    }
 
-    /**
-     * 수익률 계산 공식
-     * ((당첨금액 / 구매금액) * 100) - 100
-     * @return
-     */
-//    private double calculateProfit() {
-//
-//    }
+    private void calculateWinningStats(List<WinningStrategy> winningStrategies, int purchaseAmount) {
+        long winningPrices = winningStrategies.stream()
+                .mapToLong(WinningStrategy::getWinningPrice)
+                .sum();
+        double profit = calculateProfit(purchaseAmount, winningPrices);
+
+        OutputView.printWinningStats(winningStrategies, profit);
+    }
+
+    private double calculateProfit(int purchaseAmount, long winningPrices) {
+        return (((double)winningPrices / (double)purchaseAmount) * 100) - 100;
+    }
 }
