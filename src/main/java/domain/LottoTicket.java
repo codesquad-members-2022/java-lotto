@@ -20,11 +20,11 @@ public class LottoTicket {
         return list.size();
     }
 
-    private boolean isValidTicketSize(List<LottoNumber> list) {
+    private boolean isValidTicketSize(ArrayList<LottoNumber> list) {
         return list.size() == 6;
     }
 
-    public int countWinningNumber(List<LottoNumber> winningTicket) {
+    public int countWinningNumber(int[] winningNumbers) {
         int count = 0;
         for (int i = 0; i < list.size(); i++) {
             count += checkWinningNumber(winningNumbers, list.get(i));
@@ -32,9 +32,9 @@ public class LottoTicket {
         return count;
     }
 
-    private int checkWinningNumber(List<LottoNumber> winningTicket, LottoNumber myNumber) {
-        for (int i = 0; i < winningTicket.size(); i++) {
-            if (myNumber.isSameNumber(winningTicket.get(i))) {
+    private int checkWinningNumber(int[] winningNumbers, LottoNumber myNumber) {
+        for (int i = 0; i < winningNumbers.length; i++) {
+            if (myNumber.isSameNumber(winningNumbers[i])) {
                 return 1;
             }
         }
