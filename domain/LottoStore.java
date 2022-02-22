@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 public class LottoStore {
     private static List<Integer> lottoNumbers = new ArrayList<>();
 
-
     static {
         init();
     }
