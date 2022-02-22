@@ -15,4 +15,8 @@ public class WinningNumbers {
     public List<Integer> getWinningNumbersWithoutBonus() {
         return winningNumbers.subList(0, BONUS_NUMBER_INDEX);
     }
+
+    public int getBonusNumber() {
+        return winningNumbers.get(BONUS_NUMBER_INDEX);
+    }
 }

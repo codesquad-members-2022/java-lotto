@@ -23,6 +23,7 @@ public class LottoShop {
         result.put(Rank.rank2, 0);
         result.put(Rank.rank3, 0);
         result.put(Rank.rank4, 0);
+        result.put(Rank.rank5, 0);
         result.put(Rank.noRank, 0);
 
         for (Lotto purchasedLottery : purchasedLotteries) {
@@ -32,7 +33,8 @@ public class LottoShop {
                     count++;
                 }
             }
-            Rank rank = Rank.getMatchedRank(count);
+            boolean containsBonus = purchasedLottery.contains(winningNumbers.getBonusNumber());
+            Rank rank = Rank.getMatchedRank(count, containsBonus);
             result.replace(rank, result.get(rank) + 1);
         }
         return result;
