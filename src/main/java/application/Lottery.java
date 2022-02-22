@@ -8,10 +8,11 @@ public class Lottery {
 
     private static final int MIN_NUM = 1;
     private static final int MAX_NUM = 45;
-    private static final int COUNT = 6;
+    public static final int COUNT = 6;
 
     private static final List<Integer> candidates;
     private final List<Integer> numbers;
+    private int matchCount;
 
     static {
         candidates = new ArrayList<>();
@@ -38,7 +39,16 @@ public class Lottery {
         return new Lottery();
     }
 
+    public void addMatchCount() {
+        matchCount += 1;
+    }
+
     public List<Integer> getNumbers() {
         return numbers;
     }
+
+    public int getMatchCount() {
+        return matchCount;
+    }
+
 }

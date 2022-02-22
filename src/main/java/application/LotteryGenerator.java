@@ -2,10 +2,11 @@ package application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LotteryGenerator {
 
-    private List<Lottery> userLotteries;
+    private final List<Lottery> userLotteries = new ArrayList<>();
     private Lottery winLottery;
 
     private Statistics stat;
@@ -15,7 +16,6 @@ public class LotteryGenerator {
     }
 
     public void playLottery(int count) {
-        userLotteries = new ArrayList<>();
         for (int idx = 0; idx < count; idx++) {
             userLotteries.add(Lottery.generate());
         }
@@ -25,6 +25,22 @@ public class LotteryGenerator {
         winLottery = new Lottery(numbers);
     }
 
+    public void compareEach() {
+        for (Lottery lottery : userLotteries) {
+            for (int idx = 0; idx < Lottery.COUNT; idx++) {
+                Integer number = winLottery.getNumbers().get(idx);
+
+                if (lottery.getNumbers().contains(number)) {
+                    lottery.addMatchCount();
+                }
+            }
+        }
+    }
+
+    public void addUserLottery(List<Integer> numbers) {
+        userLotteries.add(new Lottery(numbers));
+    }
+
     public List<Lottery> getUserLotteries() {
         return userLotteries;
     }
@@ -32,5 +48,12 @@ public class LotteryGenerator {
     public Lottery getWinLottery() {
         return winLottery;
     }
+
+    public List<Integer> getMatchCounts() {
+        return userLotteries.stream()
+            .map(Lottery::getMatchCount)
+            .collect(Collectors.toList());
+    }
+
 }
 
