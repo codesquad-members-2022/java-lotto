@@ -14,7 +14,7 @@ public class Controller {
         OutputView.printLottos(user.getLottos());
         Lotto winningLotto = InputView.createWinningLotto();
         Ball bonusBall = InputView.getBonusBall();
-        user.matchWinningLotto(winningLotto);
+        user.matchWinningLotto(winningLotto, bonusBall);
         OutputView.printResult(user);
         InputView.close();
     }

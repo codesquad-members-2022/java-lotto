@@ -21,14 +21,16 @@ public class User {
         return lottos;
     }
 
-    public void matchWinningLotto(Lotto winningLotto) {
+    public void matchWinningLotto(Lotto winningLotto, Ball bonusBall) {
         for (Lotto lotto : lottos) {
             int count = lotto.getMatchBallCount(winningLotto);
-            Rank status = Rank.createRank(count);
+            boolean matchBonus = lotto.isMatchBonusBall(bonusBall);
+            Rank status = Rank.createRank(count, matchBonus);
             profit += status.getPrice();
             ranks.add(status);
         }
     }
+
 
     public int countRank(Rank rank) {
         return (int) ranks.stream()

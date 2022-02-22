@@ -1,17 +1,20 @@
 package domain;
 
 public enum Rank {
-    FIRST(6, 2000000000),
-    SECOND(5, 1500000),
-    THIRD(4, 50000),
-    FOURTH(3, 5000),
-    FAIL(0, 0);
+    FIRST(6, false, 2000000000),
+    SECOND(5,true, 30000000),
+    THIRD(5,false, 1500000),
+    FOURTH(4, false, 50000),
+    FIFTH(3, false, 5000),
+    FAIL(0, false, 0);
 
     private final int matchCount;
+    private final boolean matchBonus;
     private final int price;
 
-    Rank(int matchCount, int price) {
+    Rank(int matchCount, boolean matchBonus, int price) {
         this.matchCount = matchCount;
+        this.matchBonus = matchBonus;
         this.price = price;
     }
 
@@ -23,11 +26,11 @@ public enum Rank {
         return price;
     }
 
-    public static Rank createRank(int matchCount) {
+    public static Rank createRank(int matchCount, boolean matchBonus) {
         if (matchCount == FIRST.matchCount) {
             return FIRST;
         }
-        if (matchCount == SECOND.matchCount) {
+        if (matchCount == SECOND.matchCount && matchBonus) {
             return SECOND;
         }
         if (matchCount == THIRD.matchCount) {
@@ -35,6 +38,9 @@ public enum Rank {
         }
         if (matchCount == FOURTH.matchCount) {
             return FOURTH;
+        }
+        if (matchCount == FIFTH.matchCount) {
+            return FIFTH;
         }
         return FAIL;
     }
