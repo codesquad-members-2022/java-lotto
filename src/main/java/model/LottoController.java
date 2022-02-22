@@ -13,9 +13,16 @@ public class LottoController {
     private int count;
     private List<Lotto> lottoList = new ArrayList<>();
     private List<Integer> range = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
-    private Map<Integer, Integer> map = new HashMap<>();
+    private static Map<Integer, Integer> map = new HashMap<>();
     // key : 3, 4, 5, 6
     // value : 3? 4? 5? 6?
+
+    static {
+        map.put(3,0);
+        map.put(4,0);
+        map.put(5,0);
+        map.put(6,0);
+    }
 
     public void buildLotto() {
         price = Integer.parseInt(InputView.requestPrice());
@@ -40,12 +47,34 @@ public class LottoController {
                 lottoList.add(new Lotto(lists));
             }
         }
+        //Test
+        for (Lotto lotto : lottoList) {
+            for (Integer number : lotto.getNumbers()) {
+                System.out.print(number + " ");
+            }
+            System.out.println();
+        }
     }
+
+
 
     public void checkWinNumber() {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", "); // 1,2,3,4,5,6
-        // TODO : 당첨 통계 구현 필요
+
+        for (Lotto lotto : lottoList) {
+            int count = lotto.countCollectNumber(winNumbers);
+            if(count >= 3){
+                map.put(count,map.get(count)+1);
+            }
+        }
+        //Test
+        Set<Integer> integers = map.keySet();
+        for (Integer integer : integers) {
+            Integer integer1 = map.get(integer);
+            System.out.println(integer1);
+        }
+
     }
 }
 

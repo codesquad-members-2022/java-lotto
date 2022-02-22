@@ -21,4 +21,14 @@ public class Lotto {
     public boolean sameNumber(int checkWinNumber) {
         return numbers.contains(checkWinNumber);
     }
+
+    public int countCollectNumber(String[] winNumbers) {
+        int count = 0;
+        for (String winNumber : winNumbers) {
+            if(numbers.contains(Integer.parseInt(winNumber))){
+                count++;
+            }
+        }
+        return count;
+    }
 }
