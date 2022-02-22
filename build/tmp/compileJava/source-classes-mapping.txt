@@ -1,10 +1,10 @@
-view/InputView.java
- view.InputView
 Main.java
  Main
-domain/LottoTicket.java
- domain.LottoTicket
 view/OutputView.java
  view.OutputView
+domain/LottoTicket.java
+ domain.LottoTicket
+view/InputView.java
+ view.InputView
 domain/TicketOffice.java
  domain.TicketOffice
