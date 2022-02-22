@@ -1,3 +1,5 @@
+package domain;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -17,10 +19,18 @@ public class Lotto {
     public int check(int[] winingNumber) {
         int count = 0;
 
-        for (int i = 0; i < winingNumber.length; i++) {
-            if(numbers.contains(winingNumber[i])) {
-                count++;
-            }
+        for (int index = 0; index < winingNumber.length; index++) {
+            count += countContainNumber(winingNumber, index);
+        }
+
+        return count;
+    }
+
+    private int countContainNumber(int[] winingNumber, int index) {
+        int count = 0;
+
+        if (numbers.contains(winingNumber[index])) {
+            count++;
         }
 
         return count;
@@ -29,6 +39,5 @@ public class Lotto {
     @Override
     public String toString() {
         return numbers + "";
-
     }
 }
