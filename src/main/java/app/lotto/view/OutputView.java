@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static void winStatistics(List<List<Integer>> allShuffledNumbers, List<Integer> winningNumbers, int amount) {
+    public static void winStatistics(List<List<Integer>> allShuffledNumbers, List<Integer> winningNumbers, int amount, int bonusNumber) {
         System.out.println("당첨 통계");
         System.out.println("----------");
 
-        Map<Integer, Integer> statistics = getStatistics(allShuffledNumbers, winningNumbers);
+        Map<LottoPrize, Integer> statistics = getStatistics(allShuffledNumbers, winningNumbers, bonusNumber);
 
         List<LottoResult> lottoResults = getLottoResults(statistics);
 
@@ -21,7 +21,6 @@ public class OutputView {
         double result = (totalWinAmount - amount) / (double) amount * 100.0;
 
         System.out.printf("총 수익률은 %.2f%%입니다.", result);
-
     }
 
     private static long getTotalWinAmount(List<LottoResult> lottoResults) {
@@ -33,35 +32,39 @@ public class OutputView {
         return totalWinAmount;
     }
 
-    private static List<LottoResult> getLottoResults(Map<Integer, Integer> statistics) {
+    private static List<LottoResult> getLottoResults(Map<LottoPrize, Integer> statistics) {
         List<LottoResult> lottoResults = new ArrayList<>();
 
         for (LottoPrize lottoPrize : LottoPrize.values()) {
-            lottoResults.add(getLottoResult(statistics, lottoPrize.getCount(), lottoPrize.getPrizeMoney()));
+            lottoResults.add(getLottoResult(statistics, lottoPrize, lottoPrize.getPrizeMoney()));
         }
         return lottoResults;
     }
 
-    private static LottoResult getLottoResult(Map<Integer, Integer> statistics, int count, long prizeMoney) {
-        int winningCaseCount = statistics.getOrDefault(count, 0);
+    private static LottoResult getLottoResult(Map<LottoPrize, Integer> statistics, LottoPrize lottoPrize, long prizeMoney) {
+        int winningCaseCount = statistics.getOrDefault(lottoPrize, 0);
 
         return new LottoResult.Builder()
                 .setStatistics(statistics)
-                .setCount(count)
+                .setCount(lottoPrize.getCount())
                 .setWinningCaseCount(winningCaseCount)
                 .setPrizeMoney(prizeMoney)
-                .setWinAmount((long) prizeMoney * winningCaseCount)
+                .setWinAmount(prizeMoney * winningCaseCount)
                 .build();
     }
 
-    private static Map<Integer, Integer> getStatistics(List<List<Integer>> allShuffledNumbers, List<Integer> winningNumbers) {
-        Map<Integer, Integer> statistics = new HashMap<>();
+    private static Map<LottoPrize, Integer> getStatistics(List<List<Integer>> allShuffledNumbers, List<Integer> winningNumbers, int bonusNumber) {
+        Map<LottoPrize, Integer> statistics = new HashMap<>();
 
         for (List<Integer> shuffledNumber : allShuffledNumbers) {
             int sameNumberCount = getSameNumberCount(shuffledNumber, winningNumbers);
-            int value = statistics.getOrDefault(sameNumberCount, 0);
+            boolean isBonus = shuffledNumber.contains(bonusNumber);
+            if (!LottoPrize.isLottoPrize(sameNumberCount, isBonus)) continue;
+            LottoPrize lottoPrize = LottoPrize.findLottoPrize(sameNumberCount, isBonus)
+                    .orElseThrow(() -> new IllegalStateException("당첨 여부 확인 중 오류가 발생하였습니다."));
+            int value = statistics.getOrDefault(lottoPrize, 0);
             value++;
-            statistics.put(sameNumberCount, value);
+            statistics.put(lottoPrize, value);
         }
         return statistics;
     }

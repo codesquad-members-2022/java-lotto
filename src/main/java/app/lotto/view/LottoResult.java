@@ -1,16 +1,18 @@
 package app.lotto.view;
 
+import app.lotto.domain.LottoPrize;
+
 import java.util.Map;
 
 public class LottoResult {
 
-    private final Map<Integer, Integer> statistics;
+    private final Map<LottoPrize, Integer> statistics;
     private final int count;
     private final int winningCaseCount;
     private final long prizeMoney;
     private final long winAmount;
 
-    private LottoResult(Map<Integer, Integer> statistics, int count, int winningCaseCount, long prizeMoney, long winAmount) {
+    private LottoResult(Map<LottoPrize, Integer> statistics, int count, int winningCaseCount, long prizeMoney, long winAmount) {
         this.statistics = statistics;
         this.count = count;
         this.winningCaseCount = winningCaseCount;
@@ -18,7 +20,7 @@ public class LottoResult {
         this.winAmount = winAmount;
     }
 
-    public Map<Integer, Integer> getStatistics() {
+    public Map<LottoPrize, Integer> getStatistics() {
         return statistics;
     }
 
@@ -39,13 +41,13 @@ public class LottoResult {
     }
 
     public static class Builder {
-        private Map<Integer, Integer> statistics;
+        private Map<LottoPrize, Integer> statistics;
         private int count;
         private int winningCaseCount;
         private long prizeMoney;
         private long winAmount;
 
-        public Builder setStatistics(Map<Integer, Integer> statistics) {
+        public Builder setStatistics(Map<LottoPrize, Integer> statistics) {
             this.statistics = statistics;
             return this;
         }

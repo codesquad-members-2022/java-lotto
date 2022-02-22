@@ -15,7 +15,8 @@ public class Main {
         int lottoCount = getLottoCount(amount);
         List<List<Integer>> allShuffledNumbers = getAllShuffledNumbers(lottoCount);
         List<Integer> winningNumbers = InputView.readWinningNumbers();
-        OutputView.winStatistics(allShuffledNumbers, winningNumbers, amount);
+        int bonusNumber = InputView.readBonusNumber();
+        OutputView.winStatistics(allShuffledNumbers, winningNumbers, amount, bonusNumber);
     }
 
     private static int getLottoCount(int amount) {
