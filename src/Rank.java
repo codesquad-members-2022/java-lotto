@@ -4,10 +4,10 @@ public enum Rank {
     THIRD(4, 50000),
     FORTH(3, 5000);
 
-    private int countOfMatch;
-    private int winningMoney;
+    private final int countOfMatch;
+    private final int winningMoney;
 
-    private Rank(int countOfMatch, int winningMoney) {
+    Rank(int countOfMatch, int winningMoney) {
         this.countOfMatch = countOfMatch;
         this.winningMoney = winningMoney;
     }

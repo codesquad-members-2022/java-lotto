@@ -9,55 +9,39 @@ import java.util.stream.Collectors;
 public class LottoGame {
 
     private final Lottos lottos = new Lottos();
-
-    private Map<Lotto, Integer> numOfMatchingResult;
+    private final Map<Lotto, Integer> numOfMatchingResult = new HashMap<>();
     private List<Integer> luckyNumbers;
     private Map<Rank, Integer> rankResult;
 
     public void start() {
-        init();
-        int inputMoney = Input.getInputMoney("구입금액을 입력해 주세요.");
-        List<Lotto> buyedLottos = lottos.buyLotto(inputMoney);
+        List<Lotto> buyedLottos = lottos.buyLotto(Input.getInputMoney());
         Output.printLottoNum(buyedLottos);
-        this.luckyNumbers = Arrays.stream(Input.getLuckyNumbers()).boxed()
-            .collect(Collectors.toList());
+        setLuckyNumbers();
         getResult(buyedLottos);
+        matchRank();
         printResult();
     }
 
-    private void printResult() {
-        matchRank();
+    private void setLuckyNumbers() {
+        this.luckyNumbers = Arrays.stream(Input.getLuckyNumbers())
+            .boxed()
+            .collect(Collectors.toList());
+    }
 
+    private double getEarningRate(int numOfLottos) {
         int total = getTotalEarning(rankResult);
-        double earningRate = getEarningRate(numOfMatchingResult.size(), total);
-
-        Output.printResult(rankResult, total, earningRate);
-    }
-
-    private double getEarningRate(int numOfLottos, int total) {
+        int pay = numOfLottos * Lotto.LOTTO_PRICE;
         return
-            (double) ((total - numOfLottos * Lotto.LOTTO_PRICE) / (numOfLottos * Lotto.LOTTO_PRICE))
-                * 100;
-    }
-
-    private void matchRank() {
-        for (int numOfMatch : numOfMatchingResult.values()) {
-            Rank rank = Rank.create(numOfMatch);
-            if (!Objects.isNull(rank)) {
-                rankResult.put(rank, rankResult.get(rank) + 1);
-            }
-        }
+            ((total - pay) / (double) pay) * 100;
     }
 
     private int getTotalEarning(Map<Rank, Integer> rankResult) {
         int total = 0;
-        total += rankResult.getOrDefault(Rank.FORTH, 0) * Rank.FORTH.getWinningMoney();
-        total += rankResult.getOrDefault(Rank.THIRD, 0) * Rank.THIRD.getWinningMoney();
-        total += rankResult.getOrDefault(Rank.SECOND, 0) * Rank.SECOND.getWinningMoney();
-        total += rankResult.getOrDefault(Rank.FIRST, 0) * Rank.FIRST.getWinningMoney();
+        for (Rank rank : rankResult.keySet()) {
+            total += rankResult.get(rank) * rank.getWinningMoney();
+        }
         return total;
     }
-
 
     private void getResult(List<Lotto> buyedLottos) {
         for (Lotto lotto : buyedLottos) {
@@ -81,15 +65,26 @@ public class LottoGame {
         return count;
     }
 
-    private void init() {
-        numOfMatchingResult = new HashMap<>();
-        rankResult = new EnumMap<>(Rank.class);
+    private void matchRank() {
+        initRankResult();
 
+        for (int numOfMatch : numOfMatchingResult.values()) {
+            Rank rank = Rank.create(numOfMatch);
+            if (!Objects.isNull(rank)) {
+                rankResult.put(rank, rankResult.get(rank) + 1);
+            }
+        }
+    }
+
+    private void initRankResult() {
+        rankResult = new EnumMap<>(Rank.class);
         rankResult.put(Rank.FIRST, 0);
         rankResult.put(Rank.SECOND, 0);
         rankResult.put(Rank.THIRD, 0);
         rankResult.put(Rank.FORTH, 0);
     }
 
-
+    private void printResult() {
+        Output.printResult(rankResult, getEarningRate(numOfMatchingResult.size()));
+    }
 }

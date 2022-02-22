@@ -1,37 +1,45 @@
+import static java.lang.System.lineSeparator;
+
 import java.util.List;
 import java.util.Map;
 
 public class Output {
 
-    private Output() {
-    }
+    private static final StringBuilder sb = new StringBuilder();
 
-    public static void printLottoNum(List<Lotto> lottos) {
-        System.out.println(lottos.size() + "개를 구매했습니다.");
+    private Output() {}
 
-        for (Lotto lotto : lottos) {
-            System.out.println(lotto.getNumbers());
+    public static void printLottoNum(List<Lotto> lotteries) {
+        sb.append(lotteries.size()).append("개를 구매했습니다.").append(lineSeparator());
+        for (Lotto lottery : lotteries) {
+            sb.append(lottery.getNumbers()).append(lineSeparator());
         }
+        System.out.println(sb);
+        sb.setLength(0);
     }
 
-    public static void printResult(Map<Rank, Integer> rankResult, int total, double earningRate) {
-        System.out.println("당첨 통계");
-        System.out.println("--------");
+    public static void printResult(Map<Rank, Integer> map, double earningRate) {
+        sb.append("당첨 통계")
+            .append(lineSeparator())
+            .append("----------")
+            .append(lineSeparator());
 
-        System.out.println(
-            "3개 일치 (" + Rank.FORTH.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
-                Rank.FORTH, 0));
-        System.out.println(
-            "4개 일치 (" + Rank.THIRD.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
-                Rank.THIRD, 0));
-        System.out.println(
-            "5개 일치 (" + Rank.SECOND.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
-                Rank.SECOND,
-                0));
-        System.out.println(
-            "6개 일치 (" + Rank.FIRST.getWinningMoney() + ")" + "-" + rankResult.getOrDefault(
-                Rank.FIRST, 0));
-
-        System.out.println("총 수익률은 " + earningRate + "%입니다.");
+        appendMatchedInfo(map, earningRate);
+        System.out.println(sb);
+        sb.setLength(0);
     }
+
+    private static void appendMatchedInfo(Map<Rank, Integer> map, double earningRate) {
+
+        for (Rank rank : map.keySet()) {
+            sb.append(rank.getCountOfMatch())
+                .append("개 일치 (")
+                .append(rank.getWinningMoney())
+                .append(")-")
+                .append(map.getOrDefault(rank, 0))
+                .append(lineSeparator());
+        }
+        sb.append("수익률은 ").append(earningRate).append("%");
+    }
+
 }
