@@ -75,7 +75,6 @@ public class LottoGame {
             Rank rank = Rank.create(numOfMatchingResult.get(lotto), isMatchBonusNumber);
             putOnlyWinningLottery(rank);
         }
-        System.out.println();
     }
 
     private void putOnlyWinningLottery(Rank rank) {

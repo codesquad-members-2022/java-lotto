@@ -11,7 +11,8 @@ public class Output {
 
     private static final StringBuilder sb = new StringBuilder();
 
-    private Output() {}
+    private Output() {
+    }
 
     public static void printLottoNum(List<Lotto> lotteries) {
         sb.append(lotteries.size()).append("개를 구매했습니다.").append(lineSeparator());
@@ -33,11 +34,14 @@ public class Output {
     }
 
     private static void appendMatchedInfo(Map<Rank, Integer> map, double earningRate) {
+        boolean isSecond = false;
+
         for (Rank rank : map.keySet()) {
+            isSecond = Rank.SECOND.equals(rank);
             sb.append(rank.getCountOfMatch())
-                .append("개 일치 (")
-                .append(rank.getWinningMoney())
-                .append(")-")
+                .append("개 일치")
+                .append(isSecond ? ", 보너스 볼 일치" : "")
+                .append("(").append(rank.getWinningMoney()).append(")-")
                 .append(map.getOrDefault(rank, 0))
                 .append(lineSeparator());
         }
