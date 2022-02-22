@@ -30,6 +30,5 @@ public class LottoController {
             new WinningNumbers(inputView.getAnswerInput(), inputView.getBonusNumberInput());
         Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries, winningNumbers);
         outputView.printStatistics(result, userMoney);
-
     }
 }

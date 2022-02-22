@@ -25,7 +25,7 @@ public class OutputView {
             int prize = rank.getPrize();
             int count = result.get(rank);
             System.out.printf("%d개 일치%s (%d원)- %d개%n",
-                rank.getMatch(),
+                rank.getMatchedCount(),
                 bonus,
                 prize,
                 count);

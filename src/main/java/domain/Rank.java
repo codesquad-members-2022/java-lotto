@@ -9,12 +9,12 @@ public enum Rank {
     noRank(0, 0, false);
 
     private int prize;
-    private int match;
+    private int matchedCount;
     private boolean containsBonus;
 
     Rank(int prize, int match, boolean containsBonus) {
         this.prize = prize;
-        this.match = match;
+        this.matchedCount = match;
         this.containsBonus = containsBonus;
     }
 
@@ -22,19 +22,19 @@ public enum Rank {
         return prize;
     }
 
-    public int getMatch() {
-        return match;
+    public int getMatchedCount() {
+        return matchedCount;
     }
 
     public boolean containsBonus() {
         return containsBonus;
     }
 
-    public static Rank getMatchedRank(int match, boolean containsBonus) {
+    public static Rank getMatchedRank(int matchedCount, boolean containsBonus) {
         // TODO : 리팩토링(depth 줄이기)
         for (Rank rank : values()) {
-            if (rank.getMatch() == match) {
-                if (match == 5) {
+            if (rank.getMatchedCount() == matchedCount) {
+                if (matchedCount == 5) {
                     return (rank.containsBonus() == containsBonus) ? rank2 : rank3;
                 }
                 return rank;
