@@ -1,6 +1,6 @@
 package view.input;
 
-import domain.Money;
+import domain.lotto.Money;
 import domain.lotto.LottoNumber;
 import domain.lotto.WinningTicket;
 
@@ -27,6 +27,7 @@ public class InputView {
     public static WinningTicket inputWinnigTicket() {
         System.out.print(REQUEST_INPUT_WINNING_TICKET_MESSAGE);
         String[] inputSplit = scanner.nextLine().split(",");
+        System.out.println();
         Set<LottoNumber> lottoNumbers = parseLottoNumbers(inputSplit);
         return new WinningTicket(lottoNumbers);
     }

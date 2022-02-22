@@ -1,7 +1,8 @@
 package controller;
 
-import domain.Money;
 import domain.lotto.LottoTickets;
+import domain.lotto.Money;
+import domain.lotto.RewardMachine;
 import domain.lotto.WinningTicket;
 import view.input.InputView;
 import view.output.OutputView;
@@ -17,10 +18,10 @@ public class LottoController {
         OutputView.printLottoTickets(lottoTickets);
 
         WinningTicket winningTicket = InputView.inputWinnigTicket();
+        RewardMachine rewardMachine = new RewardMachine(money, lottoTickets, winningTicket);
 
-        //TODO : 당첨번호매칭 -> 결과 받아오기
         //TODO : 결과를 OutputView에게 넘겨서 출력하기
-
+        OutputView.printReward(rewardMachine);
         InputView.close();
     }
 
