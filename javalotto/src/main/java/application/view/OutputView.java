@@ -50,6 +50,9 @@ public class OutputView {
 
         for (int i = MINIMUM_NUMBER_OF_WINS; i <= MAXIMUM_NUMBER_OF_WINS; i++) {
             System.out.println(i + "개 일치 " + "(" + WinningData.getWinningData(i) + "원)-" + counts[i] + "개");
+            if (i == 5) {
+                System.out.println(i + "개 일치 ,보너스볼 일치" + "(" + WinningData.getWinningData(7) + "원)-" + counts[7] + "개");
+            }
         }
         printTotalYield(totalYield);
     }

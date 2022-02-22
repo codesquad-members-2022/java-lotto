@@ -19,17 +19,19 @@ public class LottoTicket {
     private static final int MAX_LOTTO_NUMBER = 46;
     private static final int AMOUNT_LOTTO_NUMBER = 6;
     private static final int LOTTO_TICKET_PRICE = 1000;
-    private static final int SIZE_OF_ANSWER_ARRAY = 7;
+    private static final int SIZE_OF_ANSWER_ARRAY = 8;
     private static final int TWO_LOTTO_LENGTH_SUM = 12;
+    private static final int INDEX_OF_BONUS_BALL = 7;
 
     public void init() {
         List<Lotto> lottos = makeLotto();
         List<Integer> userWinningNumber = InputView.getWinningNumber();
-        start(lottos, userWinningNumber);
+        int bonusBallNumber = InputView.getBonusBall();
+        start(lottos, userWinningNumber, bonusBallNumber);
     }
 
-    private void start(List<Lotto> lottos, List<Integer> userWinningNumber) {
-        int[] counts = makeStatistics(lottos, userWinningNumber);
+    private void start(List<Lotto> lottos, List<Integer> userWinningNumber, int bonusBallNumber) {
+        int[] counts = makeStatistics(lottos, userWinningNumber, bonusBallNumber);
         double totalYield = calculateYield(counts);
         OutputView.printWinningStatistics(counts, totalYield);
     }
@@ -43,7 +45,7 @@ public class LottoTicket {
         return (currentYield - userPurchaseAmount) / userPurchaseAmount * 100;
     }
 
-    private int[] makeStatistics(List<Lotto> lottos, List<Integer> userWinningNumber) {
+    private int[] makeStatistics(List<Lotto> lottos, List<Integer> userWinningNumber, int bonusBallNumber) {
         Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber);
 
         int[] counts = new int[SIZE_OF_ANSWER_ARRAY];
@@ -52,6 +54,9 @@ public class LottoTicket {
             Set<Integer> lottoSet = new HashSet<>(lotto.getNumbers());
             lottoSet.addAll(new HashSet<>(userWinningNumberSet));
             count = TWO_LOTTO_LENGTH_SUM - lottoSet.size();
+            if (count == 5) {
+                counts[INDEX_OF_BONUS_BALL] += lotto.getNumbers().contains(bonusBallNumber) ? 1 : 0;
+            }
             counts[count] += 1;
         }
         return counts;
