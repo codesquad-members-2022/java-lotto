@@ -63,14 +63,16 @@ public class LottoGame {
     }
 
     private void printResult(int[] result) {
+        printStatisticalResult(result);
+        System.out.printf("총 수익률은 %5.2f%%입니다.", method(result));
+    }
+
+    private void printStatisticalResult(int[] result) {
         System.out.println("당첨 통계");
         System.out.println("---------");
-        System.out.println("3개 일치 (5000원)- " + result[3] + "개");
-        System.out.println("4개 일치 (50000원)- " + result[4] + "개");
-        System.out.println("5개 일치 (1500000원)- " + result[5] + "개");
-        System.out.println("6개 일치 (2000000000원)- " + result[6] + "개");
-        System.out.printf("총 수익률은 %5.2f%%입니다.", method(result));
-
+        for (int i = 3; i < result.length; i++) {
+            System.out.println(i+"개 일치 ("+Rank.aaa(i)+"원)- " + result[i] + "개");
+        }
     }
 
     private double method(int[] result) {
