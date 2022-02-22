@@ -5,11 +5,13 @@ import java.util.List;
 
 public class LottoBundle {
     private final int ticketCount;
+    private final int paidAmount;
 
     private final List<LottoTicket> lottoTickets = new ArrayList<>();
 
     public LottoBundle(int paidAmount) {
         validatePositiveInt(paidAmount);
+        this.paidAmount = paidAmount;
         this.ticketCount = paidAmount / LottoTicket.PRICE;
     }
 
@@ -25,6 +27,10 @@ public class LottoBundle {
 
     public LottoTicket getTicket(int index) {
         return lottoTickets.get(index);
+    }
+
+    public int getPaidAmount() {
+        return paidAmount;
     }
 
     private void validatePositiveInt(int paidAmount) {
