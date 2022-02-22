@@ -4,7 +4,8 @@ public enum WinningData {
     THREE(3, 5000),
     FOUR(4, 50000),
     FIVE(5, 1500000),
-    SIX(6, 2000000000);
+    SIX(6, 2000000000),
+    BONUS(7, 3000000);
 
     private final int winningCount;
     private final int reward;
