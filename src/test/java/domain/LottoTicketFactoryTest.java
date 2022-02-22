@@ -15,8 +15,7 @@ public class LottoTicketFactoryTest {
         LottoTicket lottoTicket = LottoTicketFactory.generateCustomTicket(
                 new ArrayList<LottoNumber>(
                         List.of(new LottoNumber(1), new LottoNumber(2), new LottoNumber(3),
-                                new LottoNumber(7), new LottoNumber(8), new LottoNumber(9)
-                        )));
+                                new LottoNumber(7), new LottoNumber(8), new LottoNumber(9))));
         assertThat(lottoTicket.size()).isEqualTo(6);
     }
 

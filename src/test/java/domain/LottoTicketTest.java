@@ -1,6 +1,5 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,18 +23,15 @@ public class LottoTicketTest {
     void lottoSizeTest() {
         ArrayList<LottoNumber> list = new ArrayList<>(List.of(new LottoNumber(1), new LottoNumber(2), new LottoNumber(3),
                 new LottoNumber(4), new LottoNumber(5)));
-
         assertThatThrownBy(() -> new LottoTicket(list)).isInstanceOf(IllegalArgumentException.class);
 
         ArrayList<LottoNumber> list2 = new ArrayList<>(List.of(new LottoNumber(1), new LottoNumber(2), new LottoNumber(3),
                 new LottoNumber(4), new LottoNumber(5), new LottoNumber(6), new LottoNumber(7)));
-
         assertThatThrownBy(() -> new LottoTicket(list2)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 정답_일치_테스트() {
-
         ArrayList<LottoNumber> winList = new ArrayList<>(List.of(new LottoNumber(1), new LottoNumber(2), new LottoNumber(3),
                 new LottoNumber(7), new LottoNumber(8), new LottoNumber(9)));
         ArrayList<LottoNumber> winList2 = new ArrayList<>(List.of(new LottoNumber(1), new LottoNumber(2), new LottoNumber(3),
