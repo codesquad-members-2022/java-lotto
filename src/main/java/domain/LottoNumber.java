@@ -28,6 +28,11 @@ public class LottoNumber implements Comparable<LottoNumber> {
     }
 
     @Override
+    public String toString() {
+        return "" + number;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(number);
     }
