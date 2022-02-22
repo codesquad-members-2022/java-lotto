@@ -8,3 +8,5 @@
 /dataSources.local.xml
 # .iml files
 /*.iml
+# Others
+git_toolbox_prj.xml
