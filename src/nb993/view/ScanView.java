@@ -1,6 +1,5 @@
 package nb993.view;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

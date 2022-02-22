@@ -20,7 +20,4 @@ public class WinningNumber {
     public int getNumber(int idx) {
         return winningNumbers.get(idx);
     }
-
-
-
 }

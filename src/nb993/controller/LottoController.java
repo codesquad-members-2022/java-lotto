@@ -12,6 +12,7 @@ import nb993.view.ScanView;
 import java.util.List;
 
 public class LottoController {
+
     public static final int PRICE_PER_LOTTO = 1000;
 
     private final ScanView scanView;
@@ -40,9 +41,11 @@ public class LottoController {
     }
 
     private void printLottoResult() {
-        WinningNumber winningNumbers = new WinningNumber(scanView.getWinningNumber(), scanView.getBonusNumber());
+        WinningNumber winningNumbers = new WinningNumber(scanView.getWinningNumber(),
+            scanView.getBonusNumber());
         Map<Rank, Integer> rankResult = getRankResultMap(winningNumbers);
-        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO, getAmountOfWinningMoney(rankResult));
+        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO,
+            getAmountOfWinningMoney(rankResult));
     }
 
     private Map<Rank, Integer> getRankResultMap(WinningNumber winningNumbers) {
@@ -65,10 +68,8 @@ public class LottoController {
         return winningMoney;
     }
 
-
     public void printGame() {
         printView.printLottos(lottos);
     }
-
 
 }
