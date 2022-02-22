@@ -2,19 +2,13 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LottoService {
 	private static final int TICKET_PRICE = 1000;
-	private static final Map<Integer, Integer> WINNING_AMOUNT = new HashMap<>(){{
-		put(3, 5_000);
-		put(4, 50_000);
-		put(5, 15_000_000);
-		put(6, 2_000_000_000);
-	}};
 	private static final List<Integer> NUMBERS = initLottoNumbers();
 
 	public List<Lotto> publishLottoTickets(int purchaseAmount){
@@ -28,37 +22,32 @@ public class LottoService {
 		return tickets;
 	}
 
-	public Map<Integer, Integer> checkResult(List<Lotto> tickets, List<Integer> winningNumbers){
-		Map<Integer, Integer> result = new HashMap<>(){{
-			put(3, 0);
-			put(4, 0);
-			put(5, 0);
-			put(6, 0);
+	public Map<Rank, Integer> checkResult(List<Lotto> tickets, List<Integer> winningNumbers){
+		Map<Rank, Integer> result = new LinkedHashMap<>() {{
+			put(Rank.FOURTH, 0);
+			put(Rank.THIRD, 0);
+			put(Rank.SECOND, 0);
+			put(Rank.FIRST, 0);
 		}};
 
 		tickets.forEach(lotto -> {
 			int ticketResult = checkTicket(lotto.getTicket(), winningNumbers);
 			if (isWinning(ticketResult)) {
-				result.put(ticketResult, result.get(ticketResult) + 1);
+				result.put(Rank.checkRank(ticketResult), result.get(ticketResult) + 1);
 			}
 		});
 
 		return result;
 	}
 
-	public double calculateEarningRate(int purchaseAmount, Map<Integer, Integer> result) {
-
+	public double calculateEarningRate(int purchaseAmount, Map<Rank, Integer> result) {
 		return (double)calculateWinningAmount(result) / purchaseAmount * 100 - 100;
 	}
 
-	public Map<Integer, Integer> getWinningAmount() {
-		return WINNING_AMOUNT;
-	}
-
-	private int calculateWinningAmount(Map<Integer, Integer> result) {
+	private int calculateWinningAmount(Map<Rank, Integer> result) {
 		int winningAmount = 0;
-		for (Integer key : result.keySet()) {
-			winningAmount += result.get(key) * WINNING_AMOUNT.get(key);
+		for (Rank rank : result.keySet()) {
+			winningAmount += result.get(rank) * rank.getWinningAmount();
 		}
 		return  winningAmount;
 	}

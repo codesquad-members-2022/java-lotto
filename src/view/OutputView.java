@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Lotto;
+import model.Rank;
 
 public class OutputView {
 	private static final String TICKET_AMOUNT_MESSAGE = "%d개를 구매했습니다.%n";
@@ -17,10 +18,10 @@ public class OutputView {
 		}
 	}
 
-	public void printResult(Map<Integer, Integer> result, Map<Integer, Integer> winningAmount,double earningRate) {
+	public void printResult(Map<Rank, Integer> result, double earningRate) {
 		System.out.println(WINNING_RESULT_MESSAGE);
-		for (int count : result.keySet()) {
-			System.out.printf("%d개 일치 (%d원)- %d개%n", count, winningAmount.get(count), result.get(count));
+		for (Rank rank : result.keySet()) {
+			System.out.printf("%d개 일치 (%d원)- %d개%n", rank.getCount(), rank.getWinningAmount(), result.get(rank));
 		}
 		System.out.printf("총 수익률은 %s%%입니다", String.format("%.2f",earningRate));
 	}

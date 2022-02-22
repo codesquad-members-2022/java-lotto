@@ -5,6 +5,7 @@ import java.util.Map;
 
 import model.Lotto;
 import model.LottoService;
+import model.Rank;
 import view.InputView;
 import view.OutputView;
 
@@ -19,9 +20,9 @@ public class Controller {
 		outputView.printTickets(lottoTickets);
 
 		List<Integer> winningNumbers = inputView.getWinningNumbers();
-		Map<Integer, Integer> result = lottoService.checkResult(lottoTickets, winningNumbers);
+		Map<Rank, Integer> result = lottoService.checkResult(lottoTickets, winningNumbers);
 		double earningRate = lottoService.calculateEarningRate(purchaseAmount, result);
 
-		outputView.printResult(result, lottoService.getWinningAmount(), earningRate);
+		outputView.printResult(result, earningRate);
 	}
 }

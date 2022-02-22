@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public enum Rank {
 	FIRST(6, 2_000_000_000),
 	SECOND(5, 15_000_000),
@@ -20,5 +23,12 @@ public enum Rank {
 
 	public int getWinningAmount() {
 		return winningAmount;
+	}
+
+	public static Rank checkRank(int count){
+		return Arrays.stream(Rank.values())
+			.filter(r -> r.getCount() == count)
+			.collect(Collectors.toList())
+			.get(0);
 	}
 }
