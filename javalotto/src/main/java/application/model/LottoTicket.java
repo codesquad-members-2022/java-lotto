@@ -23,9 +23,14 @@ public class LottoTicket {
     public void init() {
         List<Lotto> lottos = makeLotto();
         List<Integer> userWinningNumber = InputView.getWinningNumber();
+        start(lottos, userWinningNumber);
+    }
+
+    private void start(List<Lotto> lottos, List<Integer> userWinningNumber) {
         int[] counts = makeStatistics(lottos, userWinningNumber);
         OutputView.printWinningStatistics(counts);
     }
+
 
     private int[] makeStatistics(List<Lotto> lottos, List<Integer> userWinningNumber) {
         Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber);
