@@ -13,4 +13,8 @@ public class User {
     public void buy() {
         lottos = LottoMachine.createLottos(money);
     }
+
+    public List<Lotto> getLottos() {
+        return lottos;
+    }
 }
