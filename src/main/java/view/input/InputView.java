@@ -11,7 +11,8 @@ import java.util.Set;
 public class InputView {
 
     private static final String REQUEST_INPUT_MONEY_MESSAGE = "구매금액을 입력해주세요.\nMoney > ";
-    private static final String REQUEST_INPUT_WINNING_TICKET_MESSAGE = "당첨 번호를 입력해주세요.\nWinning Ticket > ";
+    private static final String REQUEST_INPUT_WINNING_NUMBERS_MESSAGE = "당첨 번호를 입력해주세요.\nWinning Numbers > ";
+    private static final String REQUEST_INPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요.\nBonue Number > ";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void close() {
@@ -25,11 +26,26 @@ public class InputView {
     }
 
     public static WinningTicket inputWinnigTicket() {
-        System.out.print(REQUEST_INPUT_WINNING_TICKET_MESSAGE);
+        Set<LottoNumber> lottoNumbers = inputWinnnigNumbers();
+        LottoNumber bonusNumber = inputBonusNumber();
+
+        return new WinningTicket(lottoNumbers, bonusNumber);
+    }
+
+    private static Set<LottoNumber>  inputWinnnigNumbers() {
+        System.out.print(REQUEST_INPUT_WINNING_NUMBERS_MESSAGE);
         String[] inputSplit = scanner.nextLine().split(",");
         System.out.println();
         Set<LottoNumber> lottoNumbers = parseLottoNumbers(inputSplit);
-        return new WinningTicket(lottoNumbers);
+        return lottoNumbers;
+    }
+
+    private static LottoNumber inputBonusNumber() {
+        System.out.print(REQUEST_INPUT_BONUS_NUMBER_MESSAGE);
+        int inputBonusNumber = Integer.parseInt(scanner.nextLine());
+        System.out.println();
+
+        return LottoNumber.of(inputBonusNumber);
     }
 
     private static Set<LottoNumber> parseLottoNumbers(String[] inputSplit) {
