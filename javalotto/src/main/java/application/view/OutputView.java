@@ -18,6 +18,10 @@ public class OutputView {
 
     }
 
+    private static void printTotalYield(double totalYield) {
+        System.out.printf("총 수익율은 %.2f%%입니다.", totalYield);
+    }
+
     public static void printEnterPurchaseAmount() {
         System.out.println(ENTER_PURCHASE_AMOUNT);
     }
@@ -34,12 +38,13 @@ public class OutputView {
         System.out.println(PLEASE_ENTER_YOUR_WINNING_NUMBER);
     }
 
-    public static void printWinningStatistics(int[] counts) {
+    public static void printWinningStatistics(int[] counts, double totalYield) {
         System.out.println(WINNING_STATISTICS);
         System.out.println(DIVISION);
 
         for (int i = MINIMUM_NUMBER_OF_WINS; i <= MAXIMUM_NUMBER_OF_WINS; i++) {
             System.out.println(i + "개 일치 " + "(" + WinningData.getWinningData(i) + "원)-" + counts[i] + "개");
         }
+        printTotalYield(totalYield);
     }
 }

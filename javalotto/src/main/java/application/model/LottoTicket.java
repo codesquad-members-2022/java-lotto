@@ -30,8 +30,8 @@ public class LottoTicket {
 
     private void start(List<Lotto> lottos, List<Integer> userWinningNumber) {
         int[] counts = makeStatistics(lottos, userWinningNumber);
-        calculateYield(counts);
-        OutputView.printWinningStatistics(counts);
+        double totalYield = calculateYield(counts);
+        OutputView.printWinningStatistics(counts, totalYield);
     }
 
     private double calculateYield(int[] counts) {
