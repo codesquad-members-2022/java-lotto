@@ -1,7 +1,9 @@
 package nb993.view;
 
 import java.util.List;
+import java.util.Map;
 import nb993.model.LottoTicket;
+import nb993.model.Rank;
 
 public class PrintView {
 
@@ -13,16 +15,18 @@ public class PrintView {
         }
     }
 
-    public void printResult(int[] result, int purchaseAmount) {
+    public void printResult(Map<Rank, Integer> rankResult, int purchaseAmount) {
         System.out.println("당첨통계");
         System.out.println("-----------");
-        System.out.println("3개 일치 (5000원) - " + result[3] + "개");
-        System.out.println("4개 일치 (50000원) - " + result[4] + "개");
-        System.out.println("5개 일치 (1500000원) - " + result[5] + "개");
-        System.out.println("6개 일치 (2000000000원) - " + result[6] + "개");
+        System.out.println("3개 일치 (5000원) - " + rankResult.getOrDefault(Rank.FIFTH, 0) + "개");
+        System.out.println("4개 일치 (50000원) - " + rankResult.getOrDefault(Rank.FOURTH, 0) + "개");
+        System.out.println("5개 일치 (1500000원) - " + rankResult.getOrDefault(Rank.THIRD, 0) + "개");
+        System.out.println("5개 일치, 보너스 볼 일치(30000000원) - " + rankResult.getOrDefault(Rank.SECOND, 0) + "개");
+        System.out.println("6개 일치 (2000000000원) - " + rankResult.getOrDefault(Rank.FIRST, 0) + "개");
 
-        double resultAmount = 5000 * result[3] + 50000 * result[4] + 1500000 * result[5]
-            + 2000000000 * result[6];
-        System.out.println("총 수익률은" + (resultAmount - purchaseAmount) / purchaseAmount + "%입니다");
+        double resultAmount = 5000 * rankResult.getOrDefault(Rank.FIFTH, 0) + 50000 * rankResult.getOrDefault(Rank.FOURTH, 0)
+            + 1500000 * rankResult.getOrDefault(Rank.THIRD, 0) + 30000000 * rankResult.getOrDefault(Rank.SECOND, 0)
+            + 2000000000 * rankResult.getOrDefault(Rank.FIRST, 0);
+        System.out.println("총 수익률은 " + (resultAmount - purchaseAmount) / purchaseAmount + "%입니다");
     }
 }

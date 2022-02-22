@@ -1,13 +1,17 @@
 package nb993.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import nb993.model.LottoTicket;
+import nb993.model.Rank;
 import nb993.view.PrintView;
 import nb993.view.ScanView;
 
 import java.util.List;
 
 public class LottoController {
+    public static final int PRICE_PER_LOTTO = 1000;
 
     private final ScanView scanView;
     private final PrintView printView;
@@ -21,7 +25,7 @@ public class LottoController {
     public void initLottos() {
         this.lottos = new ArrayList<>();
         int purchaseAmount = scanView.getPurchaseAmount();
-        int purchaseCount = purchaseAmount / 1000;
+        int purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
 
         for (int i = 0; i < purchaseCount; ++i) {
             lottos.add(new LottoTicket());
@@ -36,12 +40,16 @@ public class LottoController {
 
     private void printLottoResult() {
         int[] winningNumbers = scanView.getWinningNumber();
-        int[] result = new int[7];
+        int bonusNumber = scanView.getBonusNumber();
+        Map<Rank, Integer> rankResult = new HashMap<>();
 
         for (int i = 0; i < lottos.size(); i++) {
-            result[lottos.get(i).getResult(winningNumbers)]++;
+            Rank r = lottos.get(i).getResult(winningNumbers, bonusNumber);
+            int count = rankResult.getOrDefault(r, 0);
+            rankResult.put(r, count + 1);
         }
-        printView.printResult(result, 1000 * lottos.size());
+
+        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO);
     }
 
     public void printGame() {

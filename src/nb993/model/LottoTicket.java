@@ -8,7 +8,7 @@ public class LottoTicket {
 
     private static final int LOTTO_NUMBERS_SIZE = 6;
 
-    private List<Integer> lottoNumbers;
+    private final List<Integer> lottoNumbers;
 
     public LottoTicket() {
         List<Integer> possibleNumbers = new ArrayList<>(45);
@@ -23,14 +23,19 @@ public class LottoTicket {
         return lottoNumbers.toString();
     }
 
-    public int getResult(int[] winningNumbers) {
+    public Rank getResult(int[] winningNumbers, int bonusNumber) {
         int correctNum = 0;
+        boolean hasBonus = false;
         for (int i = 0; i < lottoNumbers.size(); i++) {
             if (lottoNumbers.contains(winningNumbers[i])) {
                 correctNum++;
             }
+
+            if (lottoNumbers.contains(bonusNumber)) {
+                hasBonus = true;
+            }
         }
 
-        return correctNum;
+        return Rank.valueOf(correctNum, hasBonus);
     }
 }
