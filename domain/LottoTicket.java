@@ -28,4 +28,14 @@ public class LottoTicket {
                 "numbers=" + numbers +
                 '}';
     }
+
+    public int countAnswer(List<Integer> winningNumbers) {
+        int count = 0;
+        for(int  index = 0; index < winningNumbers.size();index++){
+            if(winningNumbers.contains(numbers.get(index))){
+                count++;
+            }
+        }
+        return count;
+    }
 }
