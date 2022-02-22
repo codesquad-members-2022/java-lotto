@@ -32,11 +32,11 @@ public class OutputView {
         System.out.println(PLEASE_ENTER_YOUR_WINNING_NUMBER);
     }
 
-    public static void printWinningStatistics() {
+    public static void printWinningStatistics(int[] counts) {
         System.out.println(WINNING_STATISTICS);
         System.out.println(DIVISION);
         for (int i = 3; i < 7; i++) {
-            System.out.println(i + "개 일치 " + "(" + WinningData.getWinningData(i) + "원)-" + "개");
+            System.out.println(i + "개 일치 " + "(" + WinningData.getWinningData(i) + "원)-" + counts[i] + "개");
         }
     }
 }

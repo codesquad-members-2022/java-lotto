@@ -2,7 +2,9 @@ package application.model;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import application.domain.Lotto;
@@ -24,7 +26,17 @@ public class LottoTicket {
     }
 
     private int[] makeStatistics(List<Lotto> lottos, List<Integer> userWinningNumber) {
-        return null;
+        Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber);
+
+        int[] counts = new int[7];
+        int count;
+        for (var lotto : lottos) {
+            Set<Integer> lottoSet = new HashSet<>(lotto.getNumbers());
+            lottoSet.addAll(new HashSet<>(userWinningNumberSet));
+            count = 12 - lottoSet.size();
+            counts[count] += 1;
+        }
+        return counts;
     }
 
     private List<Lotto> makeLotto() {
