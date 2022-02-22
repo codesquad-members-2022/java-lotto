@@ -13,7 +13,9 @@ public class InputView {
     private StringTokenizer st;
 
     private static final String INPUTMONEY_MESSAGE = "구입금액을 입력해 주세요.";
+    private static final String INPUTNUMBER_MESSAGE = "당첨번호를 입력해 주세요.";
     private static final String INVALID_NUMBERS = "올바른 번호를 입력해 주세요.";
+    private static final String INVALID_MONEY = "올바른 번호를 입력해 주세요.";
 
     public int inputMoney() {
         try {
@@ -21,18 +23,12 @@ public class InputView {
             money = Integer.parseInt(br.readLine());
             validateMoney(money);
         } catch (IllegalArgumentException e) {
-            System.out.println("올바른 금액을 입력해주세요.");
+            System.out.println(INVALID_MONEY);
             return inputMoney();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return money;
-    }
-
-    public static void main(String[] args) {
-        InputView inputView = new InputView();
-        inputView.inputWinningNumber().forEach(System.out::println);
-
     }
 
 
@@ -45,6 +41,7 @@ public class InputView {
     public List<Integer> inputWinningNumber() {
         List<Integer> winningNumber = new ArrayList<>();
         try {
+            System.out.println(INPUTNUMBER_MESSAGE);
             String inputWinningNumber = br.readLine();
             winningNumber = Arrays.stream(inputWinningNumber.split(","))
                     .map(String::trim)
