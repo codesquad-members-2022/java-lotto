@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.jdi.Value;
 import view.InputView;
 import view.OutputView;
 
@@ -15,20 +16,12 @@ public class LottoController {
     private List<Lotto> lottoList = new ArrayList<>();
     private List<Integer> range = IntStream.rangeClosed(1, 45).boxed().collect(Collectors.toList());
     private static Map<Integer, Integer> map = new HashMap<>();
-    private static Map<Integer, Long> valueMap = new HashMap<>();
-    // key : 3, 4, 5, 6
-    // value : 3? 4? 5? 6?
 
     static {
         map.put(3, 0);
         map.put(4, 0);
         map.put(5, 0);
         map.put(6, 0);
-
-        valueMap.put(3, 5000L);
-        valueMap.put(4, 50000L);
-        valueMap.put(5, 1500000L);
-        valueMap.put(6, 2000000000L);
     }
 
     public void buildLotto() {
@@ -86,11 +79,11 @@ public class LottoController {
     private void rateOfReturn() {
         int revenue = 0;
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            revenue += valueMap.get(entry.getKey()) * entry.getValue();
+            revenue += ValueMap.valueMap.get(entry.getKey()) * entry.getValue();
         }
         double temp = (double) (revenue - price) / (price) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
-        String result = df.format(df);
+        String result = df.format(temp);
 
         OutputView.printResult(map, result);
     }

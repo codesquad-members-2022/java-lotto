@@ -1,5 +1,7 @@
 package view;
 
+import model.ValueMap;
+
 import java.util.Map;
 
 public class OutputView {
@@ -15,5 +17,9 @@ public class OutputView {
         System.out.println("당첨 통계");
         System.out.println("-----------");
 
+        for (Integer key : map.keySet()) {
+            System.out.println(key + "개 일치 (" + ValueMap.valueMap.get(key) + "원) - " + map.get(key) + "개");
+        }
+        System.out.println("총 수익률은 " + result + "%입니다.");
     }
 }
