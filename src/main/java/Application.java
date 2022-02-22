@@ -11,5 +11,6 @@ public class Application {
         OutputView.printLottos(user.getLottos());
         Lotto winningLotto = InputView.createWinningLotto();
         user.matchWinningLotto(winningLotto);
+        OutputView.printResult(user);
     }
 }

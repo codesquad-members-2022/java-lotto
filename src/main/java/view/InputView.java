@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public static Lotto createWinningLotto() {
-        System.out.println("당첨 번호를 입력해 주세요.");
+        System.out.println("\n당첨 번호를 입력해 주세요.");
         String[] numbers = sc.nextLine().split(", ");
         List<Ball> balls = Arrays.stream(numbers)
                 .map(number -> new Ball(Integer.parseInt(number)))

@@ -15,6 +15,14 @@ public enum Rank {
         this.price = price;
     }
 
+    public int getMatchCount() {
+        return matchCount;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
     public static Rank createRank(int matchCount) {
         if (matchCount == FIRST.matchCount) {
             return FIRST;

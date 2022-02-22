@@ -27,4 +27,8 @@ public class User {
             ranks.add(status);
         }
     }
+
+    public int countRank(Rank rank) {
+        return (int) ranks.stream().filter(status -> status.equals(rank)).count();
+    }
 }

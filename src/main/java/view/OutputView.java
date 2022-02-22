@@ -1,7 +1,11 @@
 package view;
 
 import domain.Lotto;
+import domain.Rank;
+import domain.User;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,5 +31,19 @@ public class OutputView {
         sb.append("]");
         return sb.toString();
     }
+
+    public static void printResult(User user) {
+        System.out.println("당첨 통계");
+        System.out.println("--------");
+        Rank[] ranks = Rank.values();
+        for (Rank rank : ranks) {
+            int count = user.countRank(rank);
+            if(rank.equals(Rank.FAIL)) {
+                continue;
+            }
+            System.out.printf("%d개 일치 (%d원) - %d개\n", rank.getMatchCount(), rank.getPrice(), count);
+        }
+    }
+
 
 }
