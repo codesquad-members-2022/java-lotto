@@ -1,6 +1,5 @@
 package lotto.domain;
 
-import java.math.BigInteger;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +24,11 @@ public class LottoGame {
         printResult();
     }
 
+
     private void setLuckyNumbers() {
         int[] luckyNumbers = Input.getLuckyNumbers();
-        luckyLotto = new LuckyLotto(luckyNumbers);
+        int bonusNumber = Input.getBonusNumber();
+        luckyLotto = new LuckyLotto(luckyNumbers, bonusNumber);
     }
 
     private double getEarningRate(int numOfLottos) {
@@ -69,11 +70,12 @@ public class LottoGame {
 
     private void matchRank() {
         initRankResult();
-
-        for (int numOfMatch : numOfMatchingResult.values()) {
-            Rank rank = Rank.create(numOfMatch);
+        for (Lotto lotto : numOfMatchingResult.keySet()) {
+            boolean isMatchBonusNumber = lotto.getNumbers().contains(luckyLotto.getBounsNumber());
+            Rank rank = Rank.create(numOfMatchingResult.get(lotto), isMatchBonusNumber);
             putOnlyWinningLottery(rank);
         }
+        System.out.println();
     }
 
     private void putOnlyWinningLottery(Rank rank) {

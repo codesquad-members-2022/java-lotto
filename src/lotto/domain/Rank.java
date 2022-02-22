@@ -2,9 +2,10 @@ package lotto.domain;
 
 public enum Rank {
     FIRST(6, 2000000000),
-    SECOND(5, 1500000),
-    THIRD(4, 50000),
-    FORTH(3, 5000);
+    SECOND(5, 30000000),
+    THIRD(5, 1500000),
+    FORTH(4, 50000),
+    FIFTH(3, 5000);
 
     private final int countOfMatch;
     private final int winningMoney;
@@ -22,14 +23,14 @@ public enum Rank {
         return winningMoney;
     }
 
-    public static Rank create(int countOfMatch) {
+    public static Rank create(int countOfMatch, boolean isMatchBonusNumber) {
         switch (countOfMatch) {
             case 3:
-                return Rank.FORTH;
+                return Rank.FIFTH;
             case 4:
-                return Rank.THIRD;
+                return Rank.FORTH;
             case 5:
-                return Rank.SECOND;
+                return isMatchBonusNumber ? Rank.SECOND : Rank.THIRD;
             case 6:
                 return Rank.FIRST;
             default:
