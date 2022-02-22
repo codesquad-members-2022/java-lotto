@@ -13,6 +13,7 @@ public class LottoGame {
         lottoBundle.issueLottoTicketsWithRandomNumbers();
 
         outputView.printPurchaseResult(lottoBundle);
+
         int[] winningNumber = inputView.getWinningNumber();
         LottoTicket winningTicket = new LottoTicket(winningNumber);
         LottoResult lottoResult = new LottoResult(lottoBundle, winningTicket);
