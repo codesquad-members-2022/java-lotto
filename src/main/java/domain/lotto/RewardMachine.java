@@ -44,4 +44,17 @@ public class RewardMachine {
             rankCounts.put(resultRank, rankCounts.get(resultRank) + 1);
         }
     }
+
+    public double getReturnToInvestment() {
+        long totalReward = getTotalReward();
+        double profit = totalReward - money.getPurchaseAmount();
+        double returnOfInvestment = (profit) / money.getPurchaseAmount() * 100;
+        return returnOfInvestment;
+    }
+
+    private long getTotalReward() {
+        return rankCounts.entrySet().stream()
+                .mapToLong(entry -> entry.getKey().getReward() * entry.getValue())
+                .sum();
+    }
 }

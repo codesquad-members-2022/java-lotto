@@ -1,9 +1,8 @@
 package view.output;
 
-import domain.lotto.LottoNumber;
-import domain.lotto.LottoTicket;
-import domain.lotto.LottoTickets;
+import domain.lotto.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,5 +25,24 @@ public class OutputView {
                 .mapToInt(LottoNumber::getNumber)
                 .mapToObj(String::valueOf)
                 .collect(Collectors.joining(", ", "[", "]"));
+    }
+
+    public static void printReward(RewardMachine rewardMachine) {
+        System.out.println("당첨 통계");
+        System.out.println("---------");
+        System.out.println(makeRewardsString(rewardMachine));
+        System.out.printf("총 수익률은 %.2f %% 입니다", rewardMachine.getReturnToInvestment());
+    }
+
+    private static String makeRewardsString(RewardMachine rewardMachine) {
+        return rewardMachine.getRankCounts().entrySet().stream()
+                .filter(entry -> entry.getKey() != Rank.FAILED)
+                .sorted(Comparator.comparing(entry -> entry.getKey().getCountOfMatch()))
+                .map(entry ->
+                        String.format("%d개 일치 (%d원) - %d개",
+                                entry.getKey().getCountOfMatch(),
+                                entry.getKey().getReward(),
+                                entry.getValue()))
+                .collect(Collectors.joining("\n"));
     }
 }

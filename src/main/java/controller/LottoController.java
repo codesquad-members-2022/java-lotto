@@ -20,7 +20,6 @@ public class LottoController {
         WinningTicket winningTicket = InputView.inputWinnigTicket();
         RewardMachine rewardMachine = new RewardMachine(money, lottoTickets, winningTicket);
 
-        //TODO : 결과를 OutputView에게 넘겨서 출력하기
         OutputView.printReward(rewardMachine);
         InputView.close();
     }
