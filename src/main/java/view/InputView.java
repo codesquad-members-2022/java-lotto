@@ -39,6 +39,7 @@ public class InputView {
     public static Ball getBonusBall() {
         System.out.println(BONUS_BALL_MESSAGE);
         int bonusNumber = Integer.parseInt(sc.nextLine());
+        System.out.println();
         return new Ball(bonusNumber);
     }
 }
