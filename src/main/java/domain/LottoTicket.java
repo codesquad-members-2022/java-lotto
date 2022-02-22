@@ -27,7 +27,7 @@ public class LottoTicket {
     public int countWinningNumber(List<LottoNumber> winningTicket) {
         int count = 0;
         for (int i = 0; i < list.size(); i++) {
-            count += checkWinningNumber(winningTicket, list.get(i));
+            count += checkWinningNumber(winningNumbers, list.get(i));
         }
         return count;
     }
