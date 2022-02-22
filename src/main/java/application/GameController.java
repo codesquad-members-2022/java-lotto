@@ -1,5 +1,6 @@
 package application;
 
+import application.domain.UserBundle;
 import application.domain.UserLottery;
 import application.domain.Statistics;
 import application.domain.WinningLottery;
@@ -20,27 +21,26 @@ public class GameController {
     }
 
     public void run() {
-        int money = inputView.getMoney();
-        int count = money / 1_000;
+        UserBundle userBundle = new UserBundle(inputView.getMoney());
+        outputView.printCount(userBundle.getCount());
+        outputView.printLotteries(userBundle.getUserLottery().getLotteries());
 
-        UserLottery userLottery = new UserLottery(count);
-        outputView.printCount(count);
-        outputView.printLotteries(userLottery.getLotteries());
+        List<Integer> numbers = getNumbers();
+        WinningLottery winningLottery = new WinningLottery(numbers, inputView.getBonusBall());
+        userBundle.getUserLottery().compareEach(winningLottery);
 
+        Statistics statistics = new Statistics(userBundle.getUserLottery().getLotteries());
+        outputView.printStatistics(statistics);
+        outputView.printEarningsRate(statistics.getEarningsRate(userBundle.getMoney()));
+    }
+    
+    public List<Integer> getNumbers() {
         String winningNumber = inputView.winningNumber();
         String[] split = winningNumber.trim().split(",");
 
-        List<Integer> numbers = Arrays.stream(split)
+        return Arrays.stream(split)
             .map(Integer::parseInt)
             .collect(Collectors.toList());
-
-        int bonusBall = inputView.getBonusBall();
-        WinningLottery winningLottery = new WinningLottery(numbers, bonusBall);
-        userLottery.compareEach(winningLottery);
-
-        Statistics statistics = new Statistics(userLottery.getLotteries());
-        outputView.printStatistics(statistics);
-        outputView.printEarningsRate(statistics.getEarningsRate(money));
     }
-
+    
 }
