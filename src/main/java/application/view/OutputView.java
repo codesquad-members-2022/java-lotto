@@ -42,7 +42,8 @@ public class OutputView {
 
         counts.keySet().forEach(key ->
             sb.append(key.getResult().getMatchCount()).append("개 일치")
-                .append(key.getResult().getBonus() ? ", 보너스 볼 일치(" : " (")
+                .append(key.getResult().getBonus() != null &&
+                        key.getResult().getBonus() ? ", 보너스 볼 일치(" : " (")
                 .append(key.getReward()).append("원) - ")
                 .append(counts.get(key)).append("개")
                 .append(System.lineSeparator()));

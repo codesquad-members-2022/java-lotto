@@ -10,6 +10,7 @@ public class UserLottery extends Lottery {
     public UserLottery() {
         super();
     }
+
     public UserLottery(List<Integer> numbers) {
         super(numbers);
     }

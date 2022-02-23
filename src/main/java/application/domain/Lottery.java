@@ -30,10 +30,17 @@ public class Lottery {
     }
 
     public Lottery(List<Integer> numbers) {
+        validateNumbersLength(numbers.size());
         this.numbers = numbers;
     }
 
     public List<Integer> getNumbers() {
         return numbers;
+    }
+
+    public void validateNumbersLength(int length) {
+        if (length != COUNT) {
+            throw new IllegalArgumentException("로또 숫자 개수는 6개이어야 합니다.");
+        }
     }
 }
