@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class Lotto {
 
-    private static final int PICK_NUMBER_LENGTH = 6;
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -14,10 +13,12 @@ public class Lotto {
     }
 
     private List<Integer> pickSixNumbers(List<Integer> numbers) {
+        int pickNumberLength = 6;
+
         Collections.shuffle(numbers);
 
         return numbers.stream()
-                .limit(PICK_NUMBER_LENGTH)
+                .limit(pickNumberLength)
                 .sorted()
                 .collect(Collectors.toList());
     }
@@ -27,13 +28,9 @@ public class Lotto {
     }
 
     public int getCorrectNumberCount(List<Integer> winningNumbers) {
-        int correctCount = 0;
-
-        for (int number : winningNumbers) {
-            correctCount += correctNumber(number);
-        }
-
-        return correctCount;
+        return winningNumbers.stream()
+                .mapToInt(this::correctNumber)
+                .sum();
     }
 
     private int correctNumber(int number) {

@@ -10,8 +10,8 @@ public enum WinningStrategy {
     FIVE_WITH_BONUS_MATCHES(5, 30_000_000),
     SIX_MATCHES(6, 2_000_000_000);
 
-    private int correctNumber;
-    private int winningPrice;
+    private final int correctNumber;
+    private final int winningPrice;
 
     WinningStrategy(int correctNumber, int winningPrice) {
         this.correctNumber = correctNumber;

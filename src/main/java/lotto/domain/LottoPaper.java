@@ -1,7 +1,7 @@
 package lotto.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LottoPaper {
 
@@ -26,22 +26,15 @@ public class LottoPaper {
     }
 
     public List<Integer> judgeWinning(List<Integer> winningNumbers) {
-        List<Integer> correctCounts = new ArrayList<>();
-
-        for (Lotto lotto : lottos) {
-            correctCounts.add(lotto.getCorrectNumberCount(winningNumbers));
-        }
-
-        return correctCounts;
+        return lottos.stream()
+                .mapToInt(lotto -> lotto.getCorrectNumberCount(winningNumbers))
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     public List<Boolean> hasBonusNumbers(int bonusNumber) {
-        List<Boolean> hasBonuses = new ArrayList<>();
-
-        for (Lotto lotto : lottos) {
-            hasBonuses.add(lotto.hasBonusNumber(bonusNumber));
-        }
-        
-        return hasBonuses; 
+        return lottos.stream()
+                .map(lotto -> lotto.hasBonusNumber(bonusNumber))
+                .collect(Collectors.toList());
     }
 }
