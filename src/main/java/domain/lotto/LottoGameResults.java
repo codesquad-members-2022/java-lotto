@@ -41,16 +41,21 @@ public class LottoGameResults {
     }
 
     public double getReturnToInvestment() {
-        long totalReward = getTotalReward();
-        double profit = totalReward - money.getPurchaseAmount();
+        long totalRewards = getTotalRewards();
+        double profit = totalRewards - money.getPurchaseAmount();
         double returnOfInvestment = (profit) / money.getPurchaseAmount() * 100;
         return returnOfInvestment;
     }
 
-    private long getTotalReward() {
-        return rankCounts.entrySet().stream()
-                .mapToLong(entry -> entry.getKey().getReward() * entry.getValue())
-                .sum();
+    private long getTotalRewards() {
+        long totalRewards = 0;
+        for (Map.Entry<Rank, Integer> entry : rankCounts.entrySet()) {
+            long reward = entry.getKey().getReward();
+            int count = entry.getValue();
+            long totalReward = reward * count;
+            totalRewards += totalReward;
+        }
+        return totalRewards;
     }
 
     public int getRankCountOf(Rank rank) {
