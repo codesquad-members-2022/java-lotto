@@ -1,20 +1,51 @@
 package lotto.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LottoNumbers {
+public class LottoFactory {
     public static final int LOTTO_NUMBER_COUNT = 6;
-    private List<Integer> lottoNumberPool;
+    private static final List<Integer> lottoNumberPool = new ArrayList<>();
 
-    public LottoNumbers() {
+    static {
         initialize();
     }
 
-    public List<LottoNumber> generateRandomLottoNumbers() {
+    public static LottoTicket issueLottoTicketWithRandomNumbers() {
+        shuffleNumberPool();
+        return new LottoTicket(getLottoNumbers());
+    }
+
+    public static LottoTicket issueLottoTicketWithSelectNumbers(int[] numbers) {
+        return new LottoTicket(parseNumbers(numbers));
+    }
+
+    public static WinningNumber drawWinningNumber() {
+        shuffleNumberPool();
+        return new WinningNumber(getLottoNumbers(), getBonusNumber());
+    }
+
+    public static WinningNumber selectWinningNumber(int[] numbers, int bonusNumber) {
+        return new WinningNumber(parseNumbers(numbers), new LottoNumber(bonusNumber));
+    }
+
+    private static void initialize() {
+        IntStream.rangeClosed(LottoNumber.MINIMUM_NUMBER, LottoNumber.MAXIMUM_NUMBER)
+                .boxed()
+                .forEach(lottoNumberPool::add);
+
+        Collections.shuffle(lottoNumberPool);
+    }
+
+    private static void shuffleNumberPool() {
+        Collections.shuffle(lottoNumberPool);
+    }
+
+    private static List<LottoNumber> getLottoNumbers() {
         return lottoNumberPool.stream()
                 .limit(LOTTO_NUMBER_COUNT)
                 .sorted()
@@ -22,11 +53,11 @@ public class LottoNumbers {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public LottoNumber generateRandomBonusNumber() {
+    private static LottoNumber getBonusNumber() {
         return new LottoNumber(lottoNumberPool.get(LOTTO_NUMBER_COUNT));
     }
 
-    public static List<LottoNumber> parseNumbers(int[] numbers) {
+    private static List<LottoNumber> parseNumbers(int[] numbers) {
         validateLength(numbers);
         validateNoDuplicate(numbers);
 
@@ -34,14 +65,6 @@ public class LottoNumbers {
                 .sorted()
                 .mapToObj(LottoNumber::new)
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    private void initialize() {
-        lottoNumberPool = IntStream.rangeClosed(LottoNumber.MINIMUM_NUMBER, LottoNumber.MAXIMUM_NUMBER)
-                .boxed()
-                .collect(Collectors.toList());
-
-        Collections.shuffle(lottoNumberPool);
     }
 
     private static void validateLength(int[] numbers) {

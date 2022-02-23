@@ -6,12 +6,20 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class LottoResult {
+    private final LottoBundle lottoBundle;
+    private final WinningNumber winningNumber;
     private final Map<PrizeDivision, Integer> winnersPerPrize = new EnumMap<>(PrizeDivision.class);
-    private final int paidAmount;
 
-    public LottoResult(LottoBundle lottoBundle, WinningNumber winningNumber) {
-        this.paidAmount = lottoBundle.getPaidAmount();
-        countWinnersPerPrize(lottoBundle, winningNumber);
+    private LottoResult(LottoBundle lottoBundle, WinningNumber winningNumber) {
+        this.lottoBundle = lottoBundle;
+        this.winningNumber = winningNumber;
+    }
+
+    public static LottoResult of(LottoBundle lottoBundle, WinningNumber winningNumber) {
+        LottoResult result = new LottoResult(lottoBundle, winningNumber);
+        result.countWinnersPerPrize();
+
+        return result;
     }
 
     public int getWinnerCount(PrizeDivision division) {
@@ -19,13 +27,15 @@ public class LottoResult {
     }
 
     public double getProfitRate() {
-        int sum = Stream.of(lotto.domain.PrizeDivision.values())
+        int sum = Stream.of(PrizeDivision.values())
                 .map(d -> d.getPrizeValue() * winnersPerPrize.getOrDefault(d, 0))
                 .reduce(0, Math::addExact);
+        int paidAmount = lottoBundle.getPaidAmount();
+
         return (double) (sum - paidAmount) / paidAmount * 100;
     }
 
-    private void countWinnersPerPrize(LottoBundle lottoBundle, WinningNumber winningNumber) {
+    private void countWinnersPerPrize() {
         IntStream.range(0, lottoBundle.count())
                 .mapToObj(lottoBundle::getTicket)
                 .map(winningNumber::evaluateTicket)

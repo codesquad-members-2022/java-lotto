@@ -6,15 +6,9 @@ public class WinningNumber {
     private final List<LottoNumber> winningNumbers;
     private final LottoNumber bonusNumber;
 
-    public WinningNumber() {
-        LottoNumbers pool = new LottoNumbers();
-        this.winningNumbers = pool.generateRandomLottoNumbers();
-        this.bonusNumber = pool.generateRandomBonusNumber();
-    }
-
-    public WinningNumber(int[] numbers, int bonusNumber) {
-        this.winningNumbers = LottoNumbers.parseNumbers(numbers);
-        this.bonusNumber = new LottoNumber(bonusNumber);
+    public WinningNumber(List<LottoNumber> winningNumbers, LottoNumber bonusNumber) {
+        this.winningNumbers = winningNumbers;
+        this.bonusNumber = bonusNumber;
     }
 
     public PrizeDivision evaluateTicket(LottoTicket lottoTicket) {

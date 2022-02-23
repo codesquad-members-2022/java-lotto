@@ -15,9 +15,9 @@ public class LottoBundle {
         this.ticketCount = paidAmount / LottoTicket.PRICE;
     }
 
-    public void issueLottoTicketsWithRandomNumbers() {
+    public void fillWithRandomLottoTickets() {
         for (int i = 0; i < ticketCount; i++){
-            lottoTickets.add(new LottoTicket());
+            lottoTickets.add(LottoFactory.issueLottoTicketWithRandomNumbers());
         }
     }
 
