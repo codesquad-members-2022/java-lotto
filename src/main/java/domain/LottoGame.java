@@ -4,48 +4,56 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class LottoGame {
+    private static final int LOTTO_SIZE = 6;
+    private static final int LOTTO_FIRST_NUMBER = 1;
+    private static final int LOTTO_LAST_NUMBER = 45;
 
-    private final List<Lotto> lottos = new ArrayList<>();
-    private final LottoCalculator lottoCalculator = new LottoCalculator();
+    private final int purchasePrice;
+    private final int[] winingNumber = new int[LOTTO_SIZE];
+    private final Lottos lottos = new Lottos();
 
-    public void start(int money) {
-        int count = money / 1000;
+    public LottoGame(int purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
 
-        System.out.println(count + "개를 구매하셨습니다.");
-        createLotto(count, createLottoBalls());
+    public void start() {
+        lottos.createLotto(purchasePrice, createLottoBalls());
 
-        OutputView.printLottos(lottos);
+        lottos.print();
 
+        createWiningNumber();
+
+        int[] winingResult = lottos.checkWiningNumber(winingNumber);
+
+        printGameResult(winingResult);
+    }
+
+    private void printGameResult(int[] winingResult) {
+        OutputView.printStatisticalResult(winingResult);
+        OutputView.printBenefitPercentage(lottos.calculateRateBenefit(winingResult, purchasePrice));
+    }
+
+    private void createWiningNumber() {
         String[] split = InputView.winningNumber().split(", ");
-
-        int[] winingNumber = new int[6];
 
         for (int index = 0; index < winingNumber.length; index++) {
             winingNumber[index] = Integer.parseInt(split[index]);
         }
 
-        lottoCalculator.operate(lottos, winingNumber, money);
     }
 
     private List<Integer> createLottoBalls() {
         List<Integer> lottoBalls = new ArrayList<>();
 
-        for (int lottoBall = 1; lottoBall <= 45; lottoBall++) {
+        for (int lottoBall = LOTTO_FIRST_NUMBER; lottoBall <= LOTTO_LAST_NUMBER; lottoBall++) {
             lottoBalls.add(lottoBall);
         }
+
         return lottoBalls;
     }
 
-    private void createLotto(int count, List<Integer> lottoBalls) {
-        for (int i = 0; i < count; i++) {
-            Collections.shuffle(lottoBalls);
-            ArrayList<Integer> lottoNumbers = new ArrayList<>(lottoBalls.subList(0, 6));
-            lottos.add(new Lotto(lottoNumbers));
-        }
-    }
 
 }
