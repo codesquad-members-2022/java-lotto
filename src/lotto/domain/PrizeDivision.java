@@ -1,9 +1,12 @@
 package lotto.domain;
 
+import java.util.stream.Stream;
+
 public enum PrizeDivision {
     MATCH_OF_THREE(3, 5_000),
     MATCH_OF_FOUR(4, 50_000),
     MATCH_OF_FIVE(5, 1_500_000),
+    MATCH_OF_FIVE_WITH_BONUS(5, 300_000_000),
     MATCH_OF_SIX(6, 2_000_000_000);
 
     private final int matchCount;
@@ -14,19 +17,15 @@ public enum PrizeDivision {
         this.prizeValue = prizeValue;
     }
 
-    public static PrizeDivision getWhichDivision(int matchCount) {
-        switch (matchCount) {
-            case 3:
-                return MATCH_OF_THREE;
-            case 4:
-                return MATCH_OF_FOUR;
-            case 5:
-                return MATCH_OF_FIVE;
-            case 6:
-                return MATCH_OF_SIX;
-            default:
-                return null;
+    public static PrizeDivision getWhichDivision(int matchCount, boolean hasBonusNumber) {
+        if (matchCount == MATCH_OF_FIVE_WITH_BONUS.matchCount && hasBonusNumber) {
+            return MATCH_OF_FIVE_WITH_BONUS;
         }
+
+        return Stream.of(values())
+                .filter(d -> d.matchCount == matchCount)
+                .findAny()
+                .orElse(null);
     }
 
     public int getMatchCount() {

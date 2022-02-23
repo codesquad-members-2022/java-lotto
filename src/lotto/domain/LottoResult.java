@@ -9,9 +9,9 @@ public class LottoResult {
     private final Map<PrizeDivision, Integer> winnersPerPrize = new EnumMap<>(PrizeDivision.class);
     private final int paidAmount;
 
-    public LottoResult(LottoBundle lottoBundle, LottoTicket winningTicket) {
+    public LottoResult(LottoBundle lottoBundle, WinningNumber winningNumber) {
         this.paidAmount = lottoBundle.getPaidAmount();
-        countWinnersPerPrize(lottoBundle, winningTicket);
+        countWinnersPerPrize(lottoBundle, winningNumber);
     }
 
     public int getWinnerCount(PrizeDivision division) {
@@ -25,11 +25,10 @@ public class LottoResult {
         return (double) (sum - paidAmount) / paidAmount * 100;
     }
 
-    private void countWinnersPerPrize(LottoBundle lottoBundle, LottoTicket winningTicket) {
+    private void countWinnersPerPrize(LottoBundle lottoBundle, WinningNumber winningNumber) {
         IntStream.range(0, lottoBundle.count())
                 .mapToObj(lottoBundle::getTicket)
-                .mapToInt(t -> t.matchNumbers(winningTicket))
-                .mapToObj(PrizeDivision::getWhichDivision)
+                .map(winningNumber::evaluateTicket)
                 .forEach(this::incrementWinnerCount);
     }
 

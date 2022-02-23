@@ -14,9 +14,9 @@ public class LottoGame {
 
         outputView.printPurchaseResult(lottoBundle);
 
-        int[] winningNumber = inputView.getWinningNumber();
-        LottoTicket winningTicket = new LottoTicket(winningNumber);
-        LottoResult lottoResult = new LottoResult(lottoBundle, winningTicket);
+        int[] winningNumberInput = inputView.getWinningNumber();
+        WinningNumber winningNumber = new WinningNumber(winningNumberInput, 1);
+        LottoResult lottoResult = new LottoResult(lottoBundle, winningNumber);
 
         outputView.printLottoResult(lottoResult);
 

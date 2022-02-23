@@ -14,13 +14,6 @@ public class LottoTicket {
         this.lottoNumbers = LottoNumbers.parseNumbers(numbers);
     }
 
-    public int matchNumbers(LottoTicket anotherTicket) {
-        return lottoNumbers.stream()
-                .map(anotherTicket::contains)
-                .mapToInt(b -> b ? 1 : 0)
-                .sum();
-    }
-    
     public boolean contains(LottoNumber lottoNumber) {
         return lottoNumbers.contains(lottoNumber);
     }
