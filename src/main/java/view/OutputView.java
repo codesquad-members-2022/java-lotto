@@ -20,6 +20,7 @@ public class OutputView {
         System.out.println("당첨 통계");
         System.out.println("-----------");
 
+        // TODO
         for (Integer key : map.keySet()) {
             System.out.println(key + "개 일치 (" + CollectCalculator.getWinnerMoney(key) + "원) - " + map.get(key) + "개");
         }

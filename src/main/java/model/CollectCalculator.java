@@ -25,6 +25,12 @@ public enum CollectCalculator {
         long calculate(int count) {
             return count * SIX.price;
         }
+    },
+    BONUS(30000000) {
+        @Override
+        long calculate(int count) {
+            return count * BONUS.price;
+        }
     };
 
     public static long getCalculator(int number, int count) {
@@ -35,8 +41,10 @@ public enum CollectCalculator {
                 return FOUR.calculate(count);
             case 5:
                 return FIVE.calculate(count);
-            default:
+            case 6:
                 return SIX.calculate(count);
+            default:
+                return BONUS.calculate(count);
         }
     }
 
@@ -52,8 +60,10 @@ public enum CollectCalculator {
                 return FOUR.getPrice();
             case 5:
                 return FIVE.getPrice();
-            default:
+            case 6:
                 return SIX.getPrice();
+            default:
+                return BONUS.getPrice();
         }
     }
 

@@ -20,7 +20,11 @@ public class LottoController {
     private static final int MIN_WINNING_NUMBER = 3;
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 45;
-    private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER).boxed().collect(Collectors.toList());
+    private static final int BONUS_COUNT = 7;
+
+    private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
+        .boxed()
+        .collect(Collectors.toList());
 
     private final List<Lotto> lottoList;
     private Map<Integer, Integer> map;
@@ -37,6 +41,7 @@ public class LottoController {
         map.put(4, 0);
         map.put(5, 0);
         map.put(6, 0);
+        map.put(BONUS_COUNT, 0);
     }
 
     public void buildLotto() {
@@ -74,15 +79,15 @@ public class LottoController {
     public void checkWinNumber() {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
+        String bonusNumber = InputView.requestBonusNumber();
         for (Lotto lotto : lottoList) {
-            countHowManyLotto(winNumbers, lotto);
+            countHowManyLotto(winNumbers, lotto, bonusNumber);
         }
         rateOfReturn();
-        String bonusNumber = InputView.requestBonusNumber();
 
     }
 
-    private void countHowManyLotto(String[] winNumbers, Lotto lotto) {
+    private void countHowManyLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
         int tempCount = lotto.countCollectNumber(winNumbers);
         if (tempCount >= MIN_WINNING_NUMBER) {
             map.put(tempCount, map.get(tempCount) + 1);
@@ -94,7 +99,7 @@ public class LottoController {
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             revenue += CollectCalculator.getCalculator(entry.getKey(), entry.getValue());
         }
-        double temp = (double) (revenue - price) / (price) * 100;
+        double temp = (double)(revenue - price) / (price) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
         String result = df.format(temp);
         OutputView.printResult(map, result);

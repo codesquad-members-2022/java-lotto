@@ -24,4 +24,8 @@ public class Lotto {
                 .map(Integer::parseInt)
                 .filter(numbers::contains).count();
     }
+
+    public boolean hasBonusNumber(String bonusNumber) {
+        return numbers.contains(Integer.parseInt(bonusNumber));
+    }
 }
