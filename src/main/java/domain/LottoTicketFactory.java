@@ -6,6 +6,9 @@ import java.util.Random;
 import java.util.Set;
 
 public class LottoTicketFactory {
+    private static final int NORMAL_TICKET_SIZE = 6;
+    private static final int LOWER_BOUND_NUMBER = 1;
+    private static final int UPPER_BOUND_NUMBER = 45;
 
     private LottoTicketFactory() {
     }
@@ -14,11 +17,10 @@ public class LottoTicketFactory {
         return new LottoTicket(lottoNumbers);
     }
 
-
     public static LottoTicket generateRandomTicket() {
         Set<LottoNumber> lottoNumbers = new HashSet<>();
-        while (lottoNumbers.size() < 6) {
-            lottoNumbers.add(new LottoNumber(randomRangeInt(1, 45)));
+        while (lottoNumbers.size() < NORMAL_TICKET_SIZE) {
+            lottoNumbers.add(new LottoNumber(randomRangeInt(LOWER_BOUND_NUMBER, UPPER_BOUND_NUMBER)));
         }
         return new LottoTicket(new ArrayList<>(lottoNumbers));
     }
