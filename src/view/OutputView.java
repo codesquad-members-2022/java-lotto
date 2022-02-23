@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.Map;
 
 import model.Lotto;
+import model.LottoTickets;
 import model.Rank;
 
 public class OutputView {
 	private static final String TICKET_AMOUNT_MESSAGE = "%d개를 구매했습니다.%n";
 	private static final String WINNING_RESULT_MESSAGE = "당첨 통계\n---------";
 
-	public void printTickets(List<Lotto> tickets) {
-		System.out.printf(TICKET_AMOUNT_MESSAGE, tickets.size());
+	public void printTickets(LottoTickets tickets) {
+		List<Lotto> ticketList = tickets.getTickets();
+		System.out.printf(TICKET_AMOUNT_MESSAGE, ticketList.size());
 
-		for (Lotto ticket : tickets) {
+		for (Lotto ticket : ticketList) {
 			System.out.println(ticket.getTicket().toString());
 		}
 	}
