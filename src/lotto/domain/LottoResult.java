@@ -30,7 +30,7 @@ public class LottoResult {
         int sum = Stream.of(PrizeDivision.values())
                 .map(d -> d.getPrizeValue() * winnersPerPrize.getOrDefault(d, 0))
                 .reduce(0, Math::addExact);
-        int paidAmount = lottoBundle.getPaidAmount();
+        int paidAmount = lottoBundle.getCashValue();
 
         return (double) (sum - paidAmount) / paidAmount * 100;
     }

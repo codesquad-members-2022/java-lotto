@@ -9,7 +9,7 @@ public class LottoGame {
 
     public void run() {
         int paidAmount = inputView.getPaidAmount();
-        LottoBundle lottoBundle = new LottoBundle(paidAmount);
+        LottoBundle lottoBundle = LottoBundle.createByCashValue(paidAmount);
         lottoBundle.fillWithRandomLottoTickets();
 
         outputView.printPurchaseResult(lottoBundle);
