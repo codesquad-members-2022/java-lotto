@@ -26,6 +26,7 @@ public class LottoController {
     private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
         .boxed()
         .collect(Collectors.toList());
+
     private final List<Lotto> lottoList;
     private final Map<Integer, Integer> map;
     private int price;
@@ -49,18 +50,19 @@ public class LottoController {
         int count = price / LOTTO_PRICE;
 
         while (lottoList.size() != count) {
-            Set<Integer> numbers = new HashSet<>();
-            makeRandomNumberSet(numbers);
+            Set<Integer> numbers = makeRandomNumberSet();
             checkOverLap(new ArrayList<>(numbers));
         }
         OutputView.printPurchaseCount(count, lottoList);
     }
 
-    private void makeRandomNumberSet(Set<Integer> numbers) {
+    private Set<Integer> makeRandomNumberSet() {
+        Set<Integer> numbers = new HashSet<>();
         while (numbers.size() != MAX_NUMBER_COUNT) {
             Collections.shuffle(range);
             numbers.add(range.get(0));
         }
+        return numbers;
     }
 
     private void checkOverLap(List<Integer> lists) {
