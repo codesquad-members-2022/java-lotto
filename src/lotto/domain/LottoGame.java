@@ -16,6 +16,10 @@ public class LottoGame {
     private LuckyLotto luckyLotto;
 
     public void start() {
+        Input.getInputNumbOfLottos();
+        Input.getLottoNumbersInfo();
+        Input.getLottoNumbers();
+
         List<Lotto> buyedLottos = lottos.buyLotto(Input.getInputMoney());
         Output.printLottoNum(buyedLottos);
         setLuckyNumbers();
