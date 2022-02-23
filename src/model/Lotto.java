@@ -1,15 +1,16 @@
 package model;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Lotto {
-	private List<Integer> ticket;
+	private final List<Integer> ticket;
 
 	public Lotto(List<Integer> ticket) {
-		this.ticket = ticket;
+		this.ticket = List.copyOf(ticket);
 	}
 
 	public List<Integer> getTicket() {
-		return ticket;
+		return Collections.unmodifiableList(ticket);
 	}
 }
