@@ -10,7 +10,7 @@ import lotto_game.view.OutputView;
 
 public class LottoController {
 
-    public void doWorkLottoManager() {
+    public void run() {
         LottoManager lottoManager = new LottoManager();
 
         // 구입 금액 입력
