@@ -1,7 +1,7 @@
 package view;
 
+import model.CollectCalculator;
 import model.Lotto;
-import model.ValueMap;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class OutputView {
         System.out.println("-----------");
 
         for (Integer key : map.keySet()) {
-            System.out.println(key + "개 일치 (" + ValueMap.valueMap.get(key) + "원) - " + map.get(key) + "개");
+            System.out.println(key + "개 일치 (" + CollectCalculator.getWinnerMoney(key) + "원) - " + map.get(key) + "개");
         }
         System.out.println("총 수익률은 " + result + "%입니다.");
     }

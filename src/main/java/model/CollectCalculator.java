@@ -2,25 +2,25 @@ package model;
 
 public enum CollectCalculator {
 
-    THREE(3, 5000) {
+    THREE(5000) {
         @Override
         long calculate(int count) {
             return count * THREE.price;
         }
     },
-    FOUR(4, 50000) {
+    FOUR(50000) {
         @Override
         long calculate(int count) {
             return count * FOUR.price;
         }
     },
-    FIVE(5, 1500000) {
+    FIVE(1500000) {
         @Override
         long calculate(int count) {
             return count * FIVE.price;
         }
     },
-    SIX(6, 2000000000) {
+    SIX(2000000000) {
         @Override
         long calculate(int count) {
             return count * SIX.price;
@@ -40,15 +40,28 @@ public enum CollectCalculator {
         }
     }
 
-    // TODO
-    private long price;
-    private int collectCount;
-
-    CollectCalculator(int collectCount, long price) {
-        this.collectCount = collectCount;
-        this.price = price;
+    private long getPrice() {
+        return price;
     }
 
+    public static long getWinnerMoney(int number) {
+        switch (number) {
+            case 3:
+                return THREE.getPrice();
+            case 4:
+                return FOUR.getPrice();
+            case 5:
+                return FIVE.getPrice();
+            default:
+                return SIX.getPrice();
+        }
+    }
+
+    private final long price;
+
+    CollectCalculator(long price) {
+        this.price = price;
+    }
 
     abstract long calculate(int count);
 }

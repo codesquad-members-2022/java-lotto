@@ -92,7 +92,7 @@ public class LottoController {
     private void rateOfReturn() {
         int revenue = 0;
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            revenue += ValueMap.valueMap.get(entry.getKey()) * entry.getValue();
+            revenue += CollectCalculator.getCalculator(entry.getKey(), entry.getValue());
         }
         double temp = (double) (revenue - price) / (price) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
