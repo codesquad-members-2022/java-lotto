@@ -7,19 +7,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LottoStore {
-    private static List<Integer> lottoNumbers = new ArrayList<>();
+
+    private static final List<Integer> lottoNumbers;
+    private static final int START_INDEX = 0;
+    private static final int START = 1;
+    private static final int END = 45;
+    private static final int LIMIT = 6;
 
     static {
-        init();
-    }
-
-    private static void init() {
-        IntStream.rangeClosed(1, 45)
+        lottoNumbers = IntStream.rangeClosed(START, END)
                 .boxed()
-                .forEach(number -> lottoNumbers.add(number));
+                .collect(Collectors.toList());
     }
 
-    // 섞고 -> 6개를 뽑는 메서드
     public List<Integer> getLottoNumbers() {
         shuffle();
         return getSixNumbers();
@@ -31,14 +31,14 @@ public class LottoStore {
 
     private List<Integer> getSixNumbers() {
         return lottoNumbers.stream()
-                .limit(6)
+                .limit(LIMIT)
                 .sorted()
                 .collect(Collectors.toList());
     }
 
     public List<LottoTicket> getLottoTickets(int count) {
         List<LottoTicket> lottoTickets = new ArrayList<>();
-        for (int index = 0; index < count; index++) {
+        for (int index = START_INDEX; index < count; index++) {
             lottoTickets.add(new LottoTicket(getLottoNumbers()));
         }
         return lottoTickets;

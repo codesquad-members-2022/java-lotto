@@ -1,20 +1,16 @@
 package PACKAGE_NAME.domain;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class LottoCompany {
-    private static List<Integer> winningNumbers = new ArrayList<>();
-    private static final Function<Integer, Integer> add = x -> x + 1;
+    private static Set<Integer> winningNumbers = new HashSet<>();
 
-    public List<Integer> getWinningNumbers() {
-        Collections.sort(winningNumbers);
-        return winningNumbers;
-    }
-
-    public void notifyAnswer(List<Integer> inputWinningNumber) {
+    public void registWinningNumbers(Set<Integer> inputWinningNumber) {
         if (winningNumbers.size() != 0) {
-            winningNumbers = new ArrayList<>();
+            winningNumbers = new HashSet<>();
         }
         winningNumbers.addAll(inputWinningNumber);
     }
@@ -25,10 +21,9 @@ public class LottoCompany {
         for (int index = 0; index < lottoTickets.getLottoTickets().size(); index++) {
             LottoTicket lottoTicket = lottoTickets.getLottoTickets().get(index);
             int count = lottoTicket.countAnswer(winningNumbers);
-            answers.put(count,answers.getOrDefault(count,0)+1);
+            answers.put(count, answers.getOrDefault(count, 0) + 1);
         }
         lottoTickets.winningAmount(answers);
-
         return answers;
     }
 }

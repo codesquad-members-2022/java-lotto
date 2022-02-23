@@ -1,14 +1,24 @@
 package PACKAGE_NAME.domain;
 
-import PACKAGE_NAME.view.InputView;
-
 import java.util.List;
 import java.util.Map;
 
 public class LottoTickets {
     private final List<LottoTicket> lottoTickets;
 
-    InputView inputView = new InputView();
+    private static final int DEFAULT_VALUE = 0;
+    private static final int ONE_HUNDRED = 100;
+
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
+
+    private static final int FOURTH_WINNING_AMOUNT = 5_000;
+    private static final int THIRD_WINNING_AMOUNT = 50_000;
+    private static final int SECOND_WINNING_AMOUNT = 1_500_000;
+    private static final int FIRST_WINNING_AMOUNT = 2_000_000_000;
+
 
     public LottoTickets(List<LottoTicket> lottoTickets) {
         this.lottoTickets = lottoTickets;
@@ -18,40 +28,32 @@ public class LottoTickets {
         int sum = 0;
 
         for (int answerCount : answers.keySet()) {
-            sum += getWinningAmount(answerCount) * answers.getOrDefault(answerCount, 0);
+            sum += getWinningAmount(answerCount) * answers.getOrDefault(answerCount, DEFAULT_VALUE);
         }
         return sum;
     }
 
-    public double calculateYield(int sum, int inputMoney){
-        //수익률 계산 (당첨금 총합 - 로또 구매금액)*100 / 로또 구매금액
-        double yield = 0;
-
-        yield = (sum-inputMoney)*100/inputMoney;
-
-        return Math.round(yield*100)/100.0;
+    public double calculateYield(int sum, int inputMoney) {
+        double yield = (sum - inputMoney) * ONE_HUNDRED / inputMoney;
+        return Math.round(yield * ONE_HUNDRED) / ONE_HUNDRED;
     }
 
     private int getWinningAmount(int answerCount) {
         switch (answerCount) {
-            case 3:
-                return 5000;
-            case 4:
-                return 50000;
-            case 5:
-                return 1500000;
-            case 6:
-                return 2000000000;
+            case THREE:
+                return FOURTH_WINNING_AMOUNT;
+            case FOUR:
+                return THIRD_WINNING_AMOUNT;
+            case FIVE:
+                return SECOND_WINNING_AMOUNT;
+            case SIX:
+                return FIRST_WINNING_AMOUNT;
             default:
-                return 0;
+                return DEFAULT_VALUE;
         }
-
     }
-
 
     public List<LottoTicket> getLottoTickets() {
         return lottoTickets;
     }
-
-
 }

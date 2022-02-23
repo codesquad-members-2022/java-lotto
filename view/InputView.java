@@ -5,9 +5,11 @@ import PACKAGE_NAME.domain.LottoCompany;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 public class InputView {
     private int money;
@@ -20,6 +22,10 @@ public class InputView {
     private static final String INPUTNUMBER_MESSAGE = "당첨번호를 입력해 주세요.";
     private static final String INVALID_NUMBERS = "올바른 번호를 입력해 주세요.";
     private static final String INVALID_MONEY = "올바른 번호를 입력해 주세요.";
+    private static final String DELIMETER_COMMA = ",";
+    private static final int ZERO = 0;
+    private static final int VALID_LOTTO_COUNT = 6;
+    private static final int MINIMUM_MONEY = 1000;
 
     public int inputMoney() {
         try {
@@ -37,22 +43,22 @@ public class InputView {
 
 
     private void validateMoney(int money) {
-        if (money < 1000 || (money % 1000 != 0)) {
+        if (money < MINIMUM_MONEY || (money % MINIMUM_MONEY != ZERO)) {
             throw new IllegalArgumentException();
         }
     }
 
-    public List<Integer> inputWinningNumber() {
+    public Set<Integer> inputWinningNumber() {
 
-        List<Integer> winningNumber = new ArrayList<>();
+        Set<Integer> winningNumber = new HashSet<>();
 
         try {
             System.out.println(INPUTNUMBER_MESSAGE);
             String inputWinningNumber = br.readLine();
-            winningNumber = Arrays.stream(inputWinningNumber.split(","))
+            winningNumber = Arrays.stream(inputWinningNumber.split(DELIMETER_COMMA))
                     .map(String::trim)
                     .map(Integer::parseInt)
-                    .collect(toList());
+                    .collect(Collectors.toSet());
             validateNumbers(winningNumber);
             return winningNumber;
         } catch (IllegalArgumentException e) {
@@ -64,8 +70,8 @@ public class InputView {
         return winningNumber;
     }
 
-    private void validateNumbers(List<Integer> winningNumber) {
-        if (winningNumber.size() != 6) {
+    private void validateNumbers(Set<Integer> winningNumber) {
+        if (winningNumber.size() != VALID_LOTTO_COUNT) {
             throw new IllegalArgumentException();
         }
 

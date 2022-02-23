@@ -23,6 +23,8 @@ public class OutputView {
     private static final String LAST_BRACKET = ")";
     private static final String LINE = "----------";
     private static final String WINNING_STATISTIC = "당첨 통계";
+    private static final String TOTAL_WINNING_MONEY = "당첨금액 총합: ";
+    private static final String BUYING_MESSAGE = "개를 구매했습니다.";
 
 
     public void printLottoResult(Map<Integer, Integer> numberMatch) {
@@ -46,7 +48,15 @@ public class OutputView {
     }
 
     public void printLottoTicket(LottoTickets lottoTickets) {
+        int ticketCount = lottoTickets.getLottoTickets().size();
+        System.out.println(ticketCount + BUYING_MESSAGE);
+
         lottoTickets.getLottoTickets()
                 .forEach(System.out::println);
+    }
+
+    public void printRateOfReturn(int sum, double rateOfReturn) {
+        System.out.println(TOTAL_WINNING_MONEY + sum);
+        System.out.print("총 수익률은" + rateOfReturn + "% 입니다.");
     }
 }
