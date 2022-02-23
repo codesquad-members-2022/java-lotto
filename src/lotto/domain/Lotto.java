@@ -24,6 +24,10 @@ public class Lotto {
         return new Lotto(allNumbers.subList(0, 6));
     }
 
+    public static Lotto create(List<Integer> lottoNumbers) {
+        return new Lotto(lottoNumbers);
+    }
+
     public List<Integer> getNumbers() {
         return Collections.unmodifiableList(numbers);
     }

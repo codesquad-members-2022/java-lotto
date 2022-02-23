@@ -16,16 +16,33 @@ public class LottoGame {
     private LuckyLotto luckyLotto;
 
     public void start() {
-        Input.getInputNumbOfLottos();
-        Input.getLottoNumbersInfo();
-        Input.getLottoNumbers();
-
-        List<Lotto> buyedLottos = lottos.buyLotto(Input.getInputMoney());
-        Output.printLottoNum(buyedLottos);
+        List<Lotto> buyedLottos = getLottos();
         setLuckyNumbers();
         getResult(buyedLottos);
         matchRank();
         printResult();
+    }
+
+    private List<Lotto> getLottos() {
+        int inputMoney = Input.getInputMoney();
+        int numOfMaunalLottos = getManualLottoNumbers();
+        int numOfAutoLottos = inputMoney / Lotto.PRICE - numOfMaunalLottos;
+        if (numOfAutoLottos < 0) {
+            throw new IllegalArgumentException("돈보다 더 많은 수동 번호를 입력하셨습니다.");
+        }
+        List<Lotto> buyedLottos = lottos.buyLotto(numOfAutoLottos);
+        Output.printLottoNum(buyedLottos);
+        return buyedLottos;
+    }
+
+    private int getManualLottoNumbers() {
+        int numOfManualLottos = Input.getInputNumbOfLottos();
+        Input.getLottoNumbersInfo();
+        for (int i = 0; i < numOfManualLottos; i++) {
+            List<Integer> lottoNumbers = Input.getLottoNumbers();
+            lottos.buyLotto(lottoNumbers);
+        }
+        return numOfManualLottos;
     }
 
 

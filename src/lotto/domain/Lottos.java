@@ -5,14 +5,17 @@ import java.util.List;
 
 public class Lottos {
 
-    private List<Lotto> lottos;
+    private List<Lotto> lottos = new ArrayList<>();
 
-    public List<Lotto> buyLotto(int inputMoney) {
-        lottos = new ArrayList<>();
-        int numOfLotto = inputMoney / Lotto.PRICE;
+    public List<Lotto> buyLotto(int numOfLotto) {
         for (int i = 0; i < numOfLotto; i++) {
             lottos.add(Lotto.create());
         }
+        return lottos;
+    }
+
+    public List<Lotto> buyLotto(List<Integer> lottoNumbers) {
+        lottos.add(Lotto.create(lottoNumbers));
         return lottos;
     }
 }
