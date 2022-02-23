@@ -11,11 +11,7 @@ public class Controller {
 
     public void play() {
         User user = InputView.askHowManyLottos();
-        boolean check = true;
-        while (check) {
-            Lotto lotto = LottoMachine.createRandomLotto();
-            check = user.buyLotto(lotto);
-        }
+        LottoMachine.sellLotto(user);
         OutputView.printLottos(user.getLottos());
         Lotto winningLotto = InputView.createWinningLotto();
         Ball bonusBall = InputView.getBonusBall();

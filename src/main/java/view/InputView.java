@@ -12,14 +12,17 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final Scanner sc = new Scanner(System.in);
-    private static final String HOW_MANY_MONEY_MESSAGE = "구입금액을 입력해 주세요.";
+    private static final String HOW_MUCH_MONEY_MESSAGE = "구입금액을 입력해 주세요.";
     private static final String WINNING_NUMBER_MESSAGE = "\n당첨 번호를 입력해 주세요.";
     private static final String BONUS_BALL_MESSAGE = "보너스 볼을 입력해 주세요.";
+    private static final String COUNT_OF_SELF_LOTTO_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요.";
 
     public static User askHowManyLottos() {
-        System.out.println(HOW_MANY_MONEY_MESSAGE);
+        System.out.println(HOW_MUCH_MONEY_MESSAGE);
         int money = Integer.parseInt(sc.nextLine());
-        return new User(money);
+        System.out.println(COUNT_OF_SELF_LOTTO_MESSAGE);
+        int countOfSelf = Integer.parseInt(sc.nextLine());
+        return new User(money, countOfSelf);
     }
 
     public static Lotto createWinningLotto() {

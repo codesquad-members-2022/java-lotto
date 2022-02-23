@@ -7,23 +7,19 @@ public class User {
 
     private static final int LOTTO_PRICE = 1000;
 
-    private final int money;
     private final List<Lotto> lottos = new ArrayList<>();
     private final List<Rank> ranks = new ArrayList<>();
-    private int currentMoney;
+    private final int countOfSelf;
+    private final int money;
     private int profit;
 
-    public User(int money) {
+    public User(int money, int countOfSelf) {
         this.money = money;
-        this.currentMoney = money;
+        this.countOfSelf = countOfSelf;
     }
 
-    public boolean buyLotto(Lotto lotto) {
-        if (currentMoney < LOTTO_PRICE) {
-            return false;
-        }
-        currentMoney -= LOTTO_PRICE;
-        return lottos.add(lotto);
+    public void buyLotto(Lotto lotto) {
+        lottos.add(lotto);
     }
 
     public void matchWinningLotto(Lotto winningLotto, Ball bonusBall) {
@@ -48,5 +44,13 @@ public class User {
 
     public List<Lotto> getLottos() {
         return lottos;
+    }
+
+    public int getCountOfself() {
+        return countOfSelf;
+    }
+
+    public int getCountOfAuto() {
+        return money / LOTTO_PRICE - countOfSelf;
     }
 }
