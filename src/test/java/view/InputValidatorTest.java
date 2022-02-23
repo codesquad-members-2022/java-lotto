@@ -1,4 +1,4 @@
-package validation;
+package view;
 
 import static org.assertj.core.api.Assertions.*;
 

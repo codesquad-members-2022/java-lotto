@@ -23,11 +23,13 @@ public class LottoController {
     }
 
     public void runLotto() {
+        //TODO : 메소드로 분리
         int userMoney = inputView.getMoneyInput();
         List<Lotto> purchasedLotteries = lottoShop.order(userMoney);
         outputView.printLotteries(purchasedLotteries);
-        WinningNumbers winningNumbers =
-            new WinningNumbers(inputView.getAnswerInput(), inputView.getBonusNumberInput());
+        List<Integer> winningNumberInput = inputView.getWinningNumberInput();
+        int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
+        WinningNumbers winningNumbers = new WinningNumbers(winningNumberInput, bonusNumberInput);
         Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries, winningNumbers);
         outputView.printStatistics(result, userMoney);
     }

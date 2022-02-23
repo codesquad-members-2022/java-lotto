@@ -1,4 +1,4 @@
-package validation;
+package view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import domain.Lotto;
 
-public class InputValidator {
+class InputValidator {
     // TODO: 리팩
-    public int validateInteger(String input) throws IllegalArgumentException {
+    int validateInteger(String input) throws IllegalArgumentException {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
@@ -20,10 +20,11 @@ public class InputValidator {
         }
     }
 
-    public List<Integer> validateWinningNumber(String input) {
-        String[] split = input.replace(" ", "").split(",");
+    List<Integer> validateWinningNumber(String input) throws IllegalArgumentException {
+        String[] split = input.split(",");
 
         Set<Integer> numberSet = Arrays.stream(split)
+            .map(String::trim)
             .map(this::validateInteger)
             .map(this::validateLottoNumber)
             .collect(Collectors.toSet());
@@ -34,7 +35,7 @@ public class InputValidator {
         return List.copyOf(numberSet);
     }
 
-    public int validateLottoNumber(int input) {
+    int validateLottoNumber(int input) throws IllegalArgumentException {
         if (input < Lotto.MIN_LOTTO_NUMBER || input > Lotto.MAX_LOTTO_NUMBER) {
             throw new IllegalArgumentException(Lotto.MIN_LOTTO_NUMBER
                 + "~"
@@ -44,7 +45,8 @@ public class InputValidator {
         return input;
     }
 
-    public int validateBonusNumber(List<Integer> winningNumbers, int bonusNumber) {
+    int validateBonusNumber(List<Integer> winningNumbers, int bonusNumber) throws
+        IllegalArgumentException {
         boolean isDuplicate = winningNumbers.stream()
             .anyMatch(n -> n == bonusNumber);
         if (isDuplicate) {
