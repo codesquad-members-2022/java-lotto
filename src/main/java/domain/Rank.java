@@ -2,21 +2,24 @@ package domain;
 
 public enum Rank {
     FIRST(6, 2000000000),
+    BONUS_SECOND(5, 30000000),
     SECOND(5, 1500000),
     THIRD(4, 50000),
     FOURTH(3, 5000),
     LOSE(0, 0);
 
-    private int winningCount;
-    private int prize;
+    private final int winningCount;
+    private final int prize;
 
     Rank(int winningCount, int prize) {
         this.winningCount = winningCount;
         this.prize = prize;
     }
 
-    public static Rank getRank(int winningCount) {
-        switch (winningCount) {
+    public static Rank getRank(int resultIndex) {
+        switch (resultIndex) {
+            case 7:
+                return BONUS_SECOND;
             case 6:
                 return FIRST;
             case 5:
