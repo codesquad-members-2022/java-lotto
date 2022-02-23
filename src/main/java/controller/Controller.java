@@ -1,9 +1,6 @@
 package controller;
 
-import domain.Ball;
-import domain.Lotto;
-import domain.LottoMachine;
-import domain.User;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
@@ -13,9 +10,8 @@ public class Controller {
         User user = InputView.askHowManyLottos();
         InputView.sellLottos(user);
         OutputView.printLottos(user);
-        Lotto winningLotto = InputView.createWinningLotto();
-        Ball bonusBall = InputView.getBonusBall();
-        user.matchWinningLotto(winningLotto, bonusBall);
+        WinningLotto winningLotto = InputView.createWinningLotto();
+        user.matchWinningLotto(winningLotto);
         OutputView.printResult(user);
         InputView.close();
     }

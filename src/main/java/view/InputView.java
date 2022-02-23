@@ -1,9 +1,7 @@
 package view;
 
-import domain.Ball;
-import domain.Lotto;
-import domain.LottoMachine;
-import domain.User;
+import domain.*;
+
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
@@ -29,9 +27,9 @@ public class InputView {
         return new User(money, countOfCustom);
     }
 
-    public static Lotto createWinningLotto() {
+    public static WinningLotto createWinningLotto() {
         System.out.println(WINNING_NUMBER_MESSAGE);
-        return createLotto();
+        return new WinningLotto(createLotto(), getBonusBall());
     }
 
     public static void sellLottos(User user) {
@@ -39,15 +37,15 @@ public class InputView {
         sellRandomLottos(user);
     }
 
-    public static void close() {
-        sc.close();
-    }
-
-    public static Ball getBonusBall() {
+    private static Ball getBonusBall() {
         System.out.println(BONUS_BALL_MESSAGE);
         int bonusNumber = Integer.parseInt(sc.nextLine());
         System.out.println();
         return new Ball(bonusNumber);
+    }
+
+    public static void close() {
+        sc.close();
     }
 
     private static Lotto createLotto() {

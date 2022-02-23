@@ -26,10 +26,10 @@ public class User {
         lottos.add(lotto);
     }
 
-    public void matchWinningLotto(Lotto winningLotto, Ball bonusBall) {
+    public void matchWinningLotto(WinningLotto winningLotto) {
         for (Lotto lotto : lottos) {
             int count = lotto.getMatchBallCount(winningLotto);
-            boolean matchBonus = lotto.isMatchBonusBall(bonusBall);
+            boolean matchBonus = lotto.isMatchBonusBall(winningLotto);
             Rank status = Rank.createRank(count, matchBonus);
             profit += status.getPrice();
             ranks.add(status);

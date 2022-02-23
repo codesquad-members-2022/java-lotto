@@ -2,6 +2,7 @@ package domainTest;
 
 import domain.Ball;
 import domain.Lotto;
+import domain.WinningLotto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.*;
 
 public class LottoTest {
-    Lotto winningLotto;
+    WinningLotto winningLotto;
 
     @BeforeEach
     void setUp() {
@@ -21,7 +22,7 @@ public class LottoTest {
         for (int i = 0; i < numbers.length; i++) {
             winningBalls.add(new Ball(numbers[i]));
         }
-        winningLotto = new Lotto(winningBalls);
+        winningLotto = new WinningLotto(new Lotto(winningBalls), new Ball(7));
     }
 
     @Test
@@ -42,8 +43,8 @@ public class LottoTest {
         Lotto lotto1 = new Lotto(balls);
         Lotto lotto2 = new Lotto(balls1);
 
-        assertThat(winningLotto.getMatchBallCount(lotto1)).isEqualTo(6);
-        assertThat(winningLotto.getMatchBallCount(lotto2)).isEqualTo(3);
+        assertThat(lotto1.getMatchBallCount(winningLotto)).isEqualTo(6);
+        assertThat(lotto2.getMatchBallCount(winningLotto)).isEqualTo(3);
     }
 
     @Test
@@ -81,10 +82,17 @@ public class LottoTest {
     @Test
     @DisplayName("같은 공을 가지고 있으면 true를 반환한다.")
     void isMatchBonusBall() {
-        Ball ball1 = new Ball(6);
-        Ball ball2 = new Ball(7);
+        Lotto lotto1 = new Lotto(Set.of(
+                new Ball(1), new Ball(2), new Ball(3),
+                new Ball(4), new Ball(5), new Ball(7)
+        ));
 
-        assertThat(winningLotto.isMatchBonusBall(ball1)).isTrue();
-        assertThat(winningLotto.isMatchBonusBall(ball2)).isFalse();
+        Lotto lotto2 = new Lotto(Set.of(
+                new Ball(1), new Ball(2), new Ball(3),
+                new Ball(4), new Ball(5), new Ball(6)
+        ));
+
+        assertThat(lotto1.isMatchBonusBall(winningLotto)).isTrue();
+        assertThat(lotto2.isMatchBonusBall(winningLotto)).isFalse();
     }
 }

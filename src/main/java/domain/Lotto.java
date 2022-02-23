@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,12 +24,13 @@ public class Lotto {
                 .collect(Collectors.toSet());
     }
 
-    public int getMatchBallCount(Lotto winningLotto) {
-        return (int) winningLotto.balls.stream()
+    public int getMatchBallCount(WinningLotto winningLotto) {
+        return (int) winningLotto.getLotto().balls.stream()
                 .filter(balls::contains).count();
     }
 
-    public boolean isMatchBonusBall(Ball bonusBall) {
-        return balls.contains(bonusBall);
+    public boolean isMatchBonusBall(WinningLotto winningLotto) {
+        return winningLotto.isMatch(balls);
     }
+
 }
