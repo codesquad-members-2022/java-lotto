@@ -11,7 +11,7 @@ public class OutputView {
         System.out.printf("수동으로 %d장, 자동으로 %d장을 구매했습니다.\n", customLottoCount, lottoCount);
     }
 
-    public static void printAllSuffledNumbers(List<LottoTicket> allShuffledNumbers) {
+    public static void printAllLottoNumbers(List<LottoTicket> allShuffledNumbers) {
         for (LottoTicket shuffledNumbers : allShuffledNumbers) {
             shuffledNumbers.sort();
             System.out.println(shuffledNumbers);

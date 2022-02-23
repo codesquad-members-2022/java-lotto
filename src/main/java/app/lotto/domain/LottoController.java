@@ -1,36 +1,42 @@
 package app.lotto.domain;
 
+import app.lotto.view.OutputView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// - 구매 금액을 받아서, 로또 번호를 생성해주는 클래스
 public class LottoController {
 
     private static final int LOTTO_PRICE = 1000;
 
-    public static List<LottoTicket> getAllShuffledNumbers(int autoLottoCount) {
-        List<LottoTicket> allShuffledNumbers = new ArrayList<>();
+    public static List<LottoTicket> getAllAutoLottoNumbers(int autoLottoCount) {
+        List<LottoTicket> allAutoLottoNumbers = new ArrayList<>();
 
         for (int i = 0; i < autoLottoCount; i++) {
-            LottoTicket shuffledNumbers = getShuffledNumbers();
-            allShuffledNumbers.add(shuffledNumbers);
+            LottoTicket autoLottoNumbers = getAutoLottoNumbers();
+            allAutoLottoNumbers.add(autoLottoNumbers);
         }
 
-        return allShuffledNumbers;
+        return allAutoLottoNumbers;
+    }
+
+    public static List<LottoTicket> purchaseLotto(int amount, int customLottoCount) {
+        int autoLottoCount = LottoController.getLottoCount(amount) - customLottoCount;
+        OutputView.printLottoCount(autoLottoCount, customLottoCount);
+
+        return LottoController.getAllAutoLottoNumbers(autoLottoCount);
     }
 
     public static int getLottoCount(int amount) {
         return amount / LOTTO_PRICE;
     }
 
-    private static LottoTicket getShuffledNumbers() {
+    private static LottoTicket getAutoLottoNumbers() {
         List<Integer> lottoNumbers = getLottoNumbers();
-
         Collections.shuffle(lottoNumbers);
-
         LottoTicket shuffledNumbers = new LottoTicket();
 
         for (int i = 0; i < 6; i++) {

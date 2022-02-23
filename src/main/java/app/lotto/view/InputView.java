@@ -67,10 +67,9 @@ public class InputView {
             String[] input = sc.nextLine().split(",");
             validateNumbersCount(input, LOTTERY_NUMBER_COUNT);
 
-//            LottoTicket lottoNumbers = getLottoTicket(input);
             LottoTicket lottoNumbers = LottoTicket.createWithStringNumbers(input);
-
             validateNumbersRange(lottoNumbers, LOTTERY_NUMBER_MIN, LOTTERY_NUMBER_MAX);
+
             return lottoNumbers;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -88,13 +87,5 @@ public class InputView {
             System.out.println(e.getMessage());
             return readBonusNumber();
         }
-    }
-
-    private static LottoTicket getLottoTicket(String[] input) {
-        return new LottoTicket(Arrays.stream(input)
-                .map(String::trim)
-                .mapToInt(Integer::parseInt)
-                .boxed()
-                .collect(Collectors.toList()));
     }
 }

@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class LottoGame {
 
-    public static List<LottoResult> processLottoGame(List<LottoTicket> allShuffledNumbers, LottoTicket winningNumbers, int bonusNumber) {
-        Map<LottoPrize, Integer> statistics = getStatistics(allShuffledNumbers, winningNumbers, bonusNumber);
+    public static List<LottoResult> processLottoGame(LottoGameResult lottoGameResult) {
+        Map<LottoPrize, Integer> statistics = getStatistics(lottoGameResult);
         return getLottoResults(statistics);
     }
 
@@ -26,23 +26,27 @@ public class LottoGame {
         List<LottoResult> lottoResults = new ArrayList<>();
 
         for (LottoPrize lottoPrize : LottoPrize.values()) {
-            lottoResults.add(getLottoResult(statistics, lottoPrize, lottoPrize.getPrizeMoney()));
+            lottoResults.add(getLottoResult(statistics, lottoPrize));
         }
         return lottoResults;
     }
 
-    private static LottoResult getLottoResult(Map<LottoPrize, Integer> statistics, LottoPrize lottoPrize, long prizeMoney) {
+    private static LottoResult getLottoResult(Map<LottoPrize, Integer> statistics, LottoPrize lottoPrize) {
         int winningCaseCount = statistics.getOrDefault(lottoPrize, 0);
 
         return new LottoResult(lottoPrize, winningCaseCount);
     }
 
-    private static Map<LottoPrize, Integer> getStatistics(List<LottoTicket> allShuffledNumbers, LottoTicket winningNumbers, int bonusNumber) {
+    private static Map<LottoPrize, Integer> getStatistics(LottoGameResult lottoGameResult) {
         Map<LottoPrize, Integer> statistics = new HashMap<>();
 
-        for (LottoTicket shuffledNumber : allShuffledNumbers) {
-            int sameNumberCount = getSameNumberCount(shuffledNumber, winningNumbers);
-            boolean isBonus = shuffledNumber.contains(bonusNumber);
+        List<LottoTicket> allLottoTicket = new ArrayList<>();
+        allLottoTicket.addAll(lottoGameResult.getAllAutoLottoNumbers());
+        allLottoTicket.addAll(lottoGameResult.getCustomLottoNumbers());
+
+        for (LottoTicket lottoTicket : allLottoTicket) {
+            int sameNumberCount = getSameNumberCount(lottoTicket, lottoGameResult.getWinningNumbers());
+            boolean isBonus = lottoTicket.contains(lottoGameResult.getBonusNumber());
 
             addCountToStatistics(statistics, sameNumberCount, isBonus);
         }
