@@ -12,10 +12,7 @@ public class InputView {
 
     public static String inputWinNumbers() {
         System.out.println("당첨 번호를 입력해 주세요. ");
-        String str = sc.nextLine();
-        System.out.println("보너스 볼을 입력해 주세요. ");
-        str += ", "+ sc.nextLine();
-        return str;
+        return sc.nextLine();
     }
 
     public static int inputBonusNumber() {
