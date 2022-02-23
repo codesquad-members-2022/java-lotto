@@ -80,17 +80,7 @@ public class TicketOffice {
     }
 
     private int switchPrize(int matchedNumber) {
-        switch (matchedNumber) {
-            case 3:
-                return ProfitAmount.FORTH.getPrize();
-            case 4:
-                return ProfitAmount.THIRD.getPrize();
-            case 5:
-                return ProfitAmount.SECOND.getPrize();
-            default:
-                return ProfitAmount.FIRST.getPrize();
-        }
-
+        return Rank.designateRank(matchedNumber).getPrize();
     }
 
     private int checkWinningNumber(List<Integer> ticketInfo) {

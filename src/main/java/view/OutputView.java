@@ -1,7 +1,7 @@
 package view;
 
 import domain.LottoTicket;
-import domain.ProfitAmount;
+import domain.Rank;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class OutputView {
         System.out.println("__________");
         int matchedNumber;
         int prize;
-        for (ProfitAmount pa : ProfitAmount.values()) {
+        for (Rank pa : Rank.values()) {
             matchedNumber = pa.getMatchedNumber();
             prize = pa.getPrize();
             System.out.printf("%d개 일치 (%d원) - %d개", matchedNumber, prize, statistics.get(matchedNumber));

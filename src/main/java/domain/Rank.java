@@ -1,6 +1,6 @@
 package domain;
 
-public enum ProfitAmount {
+public enum Rank {
     FORTH(3, 5000),
     THIRD(4, 50000),
     SECOND(5, 1500000),
@@ -9,7 +9,7 @@ public enum ProfitAmount {
     private final int matchedNumber;
     private final int prize;
 
-    ProfitAmount(int matchedNumber, int prize) {
+    private Rank(int matchedNumber, int prize) {
         this.matchedNumber = matchedNumber;
         this.prize = prize;
     }
@@ -20,5 +20,18 @@ public enum ProfitAmount {
 
     public int getPrize(){
         return prize;
+    }
+
+    public static Rank designateRank(int matchedNumber) {
+        switch (matchedNumber) {
+            case 3:
+                return FORTH;
+            case 4:
+                return THIRD;
+            case 5:
+                return SECOND;
+            default:
+                return FIRST;
+        }
     }
 }
