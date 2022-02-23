@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class LottoTicket {
-    private List<LottoNumber> list;
+    private final List<LottoNumber> list;
 
     public LottoTicket(ArrayList<LottoNumber> list) {
         if (!isValidTicketSize(list)) {
@@ -25,14 +25,14 @@ public class LottoTicket {
 
     public int countWinningNumber(int[] winningNumbers) {
         int count = 0;
-        for (int i = 0; i < list.size(); i++) {
-            count += checkWinningNumber(winningNumbers, list.get(i));
+        for (LottoNumber lottoNumber : list) {
+            count += checkWinningNumber(winningNumbers, lottoNumber);
         }
         return count;
     }
 
     private int checkWinningNumber(int[] winningNumbers, LottoNumber myNumber) {
-        for (int i = 0; i < winningNumbers.length; i++) {
+        for (int i = 0; i < winningNumbers.length - 1; i++) {
             if (myNumber.isSameNumber(winningNumbers[i])) {
                 return 1;
             }
@@ -42,5 +42,14 @@ public class LottoTicket {
 
     public void showLottoNumbers() {
         System.out.println(list);
+    }
+
+    public boolean checkBonusNumber(int bonusNumber) {
+        for (LottoNumber lottoNumber : list) {
+            if (lottoNumber.isSameNumber(bonusNumber)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
