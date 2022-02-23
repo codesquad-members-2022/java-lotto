@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class LottoTickets {
 	private static final List<Integer> NUMBERS = initLottoNumbers();
 
-	private List<Lotto> tickets;
+	private final List<Lotto> tickets;
 
 
 	private LottoTickets(List<Lotto> tickets) {
@@ -16,7 +16,7 @@ public class LottoTickets {
 	}
 
 	public List<Lotto> getTickets() {
-		return tickets;
+		return Collections.unmodifiableList(tickets);
 	}
 
 	public static LottoTickets createLottoTickets(int ticketCount) {
