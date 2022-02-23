@@ -26,12 +26,14 @@ public class LottoController {
         .boxed()
         .collect(Collectors.toList());
 
+    private final List<Lotto> bonusList;
     private final List<Lotto> lottoList;
     private Map<Integer, Integer> map;
     private int price;
 
     public LottoController(List<Lotto> lottoList) {
         this.lottoList = lottoList;
+        this.bonusList = new ArrayList<>();
         initMap();
     }
 
@@ -89,6 +91,11 @@ public class LottoController {
 
     private void countHowManyLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
         int tempCount = lotto.countCollectNumber(winNumbers);
+        if (tempCount == 5 && lotto.hasBonusNumber(bonusNumber)) {
+            bonusList.add(lotto);
+            map.put(BONUS_COUNT, map.get(BONUS_COUNT) + 1);
+            return;
+        }
         if (tempCount >= MIN_WINNING_NUMBER) {
             map.put(tempCount, map.get(tempCount) + 1);
         }
