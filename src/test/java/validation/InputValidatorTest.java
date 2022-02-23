@@ -63,11 +63,11 @@ class InputValidatorTest {
     @DisplayName("중복되지 않는 로또 범위 내의 6개의 정수로 이루어진 스트링을 입력하면, List<Integer>를 반환한다.")
     void validateWinningNumber() {
         assertThat(iv.validateWinningNumber("1,5,10,40,42,43"))
-            .containsExactly(1, 5, 10, 40, 42, 43);
+            .containsOnly(1, 5, 10, 40, 42, 43);
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1,46})
+    @ValueSource(ints = {-1, 46})
     @DisplayName("입력 값이 로또 범위를 벗어나면 \"1~45 내의 숫자를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 "
         + "던진다.")
     void validateLottoNumber_OutOfLottoRange(int input) {
@@ -77,7 +77,7 @@ class InputValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1,45})
+    @ValueSource(ints = {1, 45})
     @DisplayName("로또 범위 내의 정수가 입력되면 해당 int 값을 반환한다.")
     void validateLottoNumber(int input) {
         assertThat(iv.validateLottoNumber(input)).isEqualTo(input);
@@ -87,24 +87,15 @@ class InputValidatorTest {
     @DisplayName("보너스 번호가 당첨번호 리스트와 중복되면 당첨번호 리스트 내용과 함께\"중복되지 않는 값을 입력해주세요.\"라는 예외를 던진다.")
     void validateBonusNumber_DuplicateInput() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThatThrownBy(() -> iv.validateBonusNumber(winningNumbers,6))
+        assertThatThrownBy(() -> iv.validateBonusNumber(winningNumbers, 6))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("중복되지 않는 값을 입력해주세요.");
     }
+
     @Test
     @DisplayName("보너스 번호가 당첨번호 리스트와 중복되지 않으면 해당 보너스 번호를 반환한다.")
-    void validateBonusNumber_DuplicateInput() {
+    void validateBonusNumber() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        asserThat(iv.validateBonusNumber(winningNumbers,7)).isEqualTo(7);
+        assertThat(iv.validateBonusNumber(winningNumbers, 7)).isEqualTo(7);
     }
-
-    // 2-2) 로또 범위 내인지
-    // set.stream.allMatch(n -> 로또 범위 내(1~45))
-    // 아닌 경우 -> "1~45 내의 숫자를 입력해주세요"
-
-    // 3. 보너스번호
-    // 1. 숫자인지 v
-    // 2-1) 로또 범위 내인지 v
-    // 2-2) 당첨번호리스트와 중복되지않는지(
-    // 당첨번호리스트만 입력을 받아서
 }
