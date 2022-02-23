@@ -44,14 +44,19 @@ public class LottoGame {
             int sameNumberCount = getSameNumberCount(shuffledNumber, winningNumbers);
             boolean isBonus = shuffledNumber.contains(bonusNumber);
 
-            if (!LottoPrize.isLottoPrize(sameNumberCount)) continue;
+            addCountToStatistics(statistics, sameNumberCount, isBonus);
+        }
+        return statistics;
+    }
+
+    private static void addCountToStatistics(Map<LottoPrize, Integer> statistics, int sameNumberCount, boolean isBonus) {
+        if (LottoPrize.isLottoPrize(sameNumberCount)) {
             LottoPrize lottoPrize = LottoPrize.findLottoPrize(sameNumberCount, isBonus)
                     .orElseThrow(() -> new IllegalStateException("당첨 여부 확인 중 오류가 발생하였습니다."));
             int value = statistics.getOrDefault(lottoPrize, 0);
             value++;
             statistics.put(lottoPrize, value);
         }
-        return statistics;
     }
 
     private static int getSameNumberCount(List<Integer> shuffledNumbers, List<Integer> winningNumbers) {

@@ -34,11 +34,10 @@ public enum LottoPrize {
     public static Optional<LottoPrize> findLottoPrize(int count, boolean isBonus) {
         // 찾는 로직
         for (LottoPrize lottoPrize : values()) {
-            if (isLottoPrize(lottoPrize, count)){
-
-                if (count == 5 && isBonus) {
-                    return Optional.of(LottoPrize.SECOND);
-                }
+            if (count == SECOND.getCount() && isBonus) {
+                return Optional.of(LottoPrize.SECOND);
+            }
+            if (count == lottoPrize.count) {
                 return Optional.of(lottoPrize);
             }
         }
