@@ -34,4 +34,14 @@ public class LottoPaper {
 
         return correctCounts;
     }
+
+    public List<Boolean> hasBonusNumbers(int bonusNumber) {
+        List<Boolean> hasBonuses = new ArrayList<>();
+
+        for (Lotto lotto : lottos) {
+            hasBonuses.add(lotto.hasBonusNumber(bonusNumber));
+        }
+        
+        return hasBonuses; 
+    }
 }
