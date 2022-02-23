@@ -22,12 +22,15 @@ public class InputView {
                 .map(Integer::parseInt).collect(Collectors.toList());
     }
 
-    public static boolean askisAuto() {
+    public static boolean askIsAuto() {
         sc = new Scanner(System.in);
         System.out.println("자동을 원하시면 'a', 수동을 원하시면 'm'을 입력해주세요.");
-        if (Objects.equals(sc.next(), 'a'))
-            return true;
-        return false;
+        char input = sc.nextLine().charAt(0);
+        while (input != 'a' && input != 'm') {
+            System.out.println("올바르지 않은 명령입니다. 'a'와 'm'으로 입력하세요.");
+            input = sc.nextLine().charAt(0);
+        }
+        return Objects.equals(input, 'a');
     }
 
     public static List<Integer> getManualNumber() {

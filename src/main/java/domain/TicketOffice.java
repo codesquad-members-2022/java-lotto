@@ -55,7 +55,7 @@ public class TicketOffice {
         TOTAL_PRICE = PRICE * numberOfTickets;
         List<LottoTicket> tickets = new ArrayList<>();
 
-        boolean isAuto = InputView.askisAuto();
+        boolean isAuto = InputView.askIsAuto();
         if (isAuto) {
             for (int i = 0; i < numberOfTickets; i++) {
                 tickets.add(makeAutoTicket());
