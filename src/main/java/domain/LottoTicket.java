@@ -5,27 +5,28 @@ import java.util.Collections;
 import java.util.List;
 
 public class LottoTicket {
-    private final List<LottoNumber> list;
+    public static final int NORMAL_TICKET_SIZE = 6;
+    private final List<LottoNumber> lottoNumbers;
 
-    public LottoTicket(ArrayList<LottoNumber> list) {
-        if (!isValidTicketSize(list)) {
+    public LottoTicket(ArrayList<LottoNumber> lottoNumbers) {
+        if (!isValidTicketSize(lottoNumbers)) {
             throw new IllegalArgumentException("로또 숫자는 6개가 필요합니다.");
         }
-        this.list = list;
-        Collections.sort(list);
+        this.lottoNumbers = lottoNumbers;
+        Collections.sort(this.lottoNumbers);
     }
 
     public int size() {
-        return list.size();
+        return lottoNumbers.size();
     }
 
-    private boolean isValidTicketSize(ArrayList<LottoNumber> list) {
-        return list.size() == 6;
+    private boolean isValidTicketSize(ArrayList<LottoNumber> lottoNumbers) {
+        return lottoNumbers.size() == NORMAL_TICKET_SIZE;
     }
 
     public int countWinningNumber(int[] winningNumbers) {
         int count = 0;
-        for (LottoNumber lottoNumber : list) {
+        for (LottoNumber lottoNumber : lottoNumbers) {
             count += checkWinningNumber(winningNumbers, lottoNumber);
         }
         return count;
@@ -41,11 +42,11 @@ public class LottoTicket {
     }
 
     public void showLottoNumbers() {
-        System.out.println(list);
+        System.out.println(lottoNumbers);
     }
 
     public boolean checkBonusNumber(int bonusNumber) {
-        for (LottoNumber lottoNumber : list) {
+        for (LottoNumber lottoNumber : lottoNumbers) {
             if (lottoNumber.isSameNumber(bonusNumber)) {
                 return true;
             }
