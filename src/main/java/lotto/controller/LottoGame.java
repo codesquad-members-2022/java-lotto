@@ -38,12 +38,17 @@ public class LottoGame {
 
     private List<WinningStrategy> checkWinning(LottoPaper lottoPaper) {
         String stringWinningNumbers = InputView.getRequiredWinningNumber();
+        String stringBonusNumber = InputView.getBonusBallNumber();
+
         List<Integer> winningNumbers = getWinningNumbers(stringWinningNumbers);
+        int bonusNumber = getBonusNumber(stringBonusNumber);
+
         List<Integer> correctNumberCounts = lottoPaper.judgeWinning(winningNumbers);
+        List<Boolean> hasBonusNumbers = lottoPaper.hasBonusNumbers(bonusNumber);
 
         List<WinningStrategy> winningStrategies = new ArrayList<>();
-        for (int eachNumber : correctNumberCounts) {
-            winningStrategies.add(convertMatchNumberToWinningStrategy(eachNumber));
+        for (int i = 0; i < correctNumberCounts.size(); i++) {
+            winningStrategies.add(convertMatchNumberToWinningStrategy(correctNumberCounts.get(i), hasBonusNumbers.get(i)));
         }
 
         return winningStrategies;
@@ -60,7 +65,11 @@ public class LottoGame {
         return winningNumbers;
     }
 
-    private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber) {
+    private int getBonusNumber(String stringBonusNumber) {
+        return Integer.parseInt(stringBonusNumber);
+    }
+
+    private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber, boolean hasBonusNumber) {
         if (matchNumber == WinningStrategy.ZERO_MATCHES.getCorrectNumber()) {
             return WinningStrategy.ZERO_MATCHES;
         }
@@ -75,6 +84,9 @@ public class LottoGame {
         }
         if (matchNumber == WinningStrategy.FOUR_MATCHES.getCorrectNumber()) {
             return WinningStrategy.FOUR_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber() && hasBonusNumber) {
+            return WinningStrategy.FIVE_WITH_BONUS_MATCHES;
         }
         if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber()) {
             return WinningStrategy.FIVE_MATCHES;
