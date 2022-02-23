@@ -33,7 +33,7 @@ public class LottoGame {
 
     private double getEarningRate(int numOfLottos) {
         int total = getTotalEarning(rankResult);
-        int pay = numOfLottos * Lotto.LOTTO_PRICE;
+        int pay = numOfLottos * Lotto.PRICE;
         return
             ((total - pay) / (double) pay) * 100;
     }
