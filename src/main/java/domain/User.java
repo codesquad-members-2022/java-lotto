@@ -6,7 +6,6 @@ import java.util.List;
 public class User {
 
     private static final int LOTTO_PRICE = 1000;
-
     private final List<Lotto> lottos = new ArrayList<>();
     private final List<Rank> ranks = new ArrayList<>();
     private final int countOfSelf;
@@ -46,7 +45,7 @@ public class User {
         return lottos;
     }
 
-    public int getCountOfself() {
+    public int getCountOfSelf() {
         return countOfSelf;
     }
 

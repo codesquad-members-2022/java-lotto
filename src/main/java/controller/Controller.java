@@ -12,7 +12,7 @@ public class Controller {
     public void play() {
         User user = InputView.askHowManyLottos();
         LottoMachine.sellLotto(user);
-        OutputView.printLottos(user.getLottos());
+        OutputView.printLottos(user);
         Lotto winningLotto = InputView.createWinningLotto();
         Ball bonusBall = InputView.getBonusBall();
         user.matchWinningLotto(winningLotto, bonusBall);

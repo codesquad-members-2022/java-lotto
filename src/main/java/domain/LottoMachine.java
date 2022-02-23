@@ -3,6 +3,7 @@ package domain;
 import view.InputView;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -17,8 +18,8 @@ public class LottoMachine {
     }
 
     private static void createSelfLottos(User user) {
-        for (int i = 0; i < user.getCountOfself(); i++) {
-            Lotto lotto = InputView.createWinningLotto();
+        for (int i = 0; i < user.getCountOfSelf(); i++) {
+            Lotto lotto = InputView.inputSelfLotto();
             user.buyLotto(lotto);
         }
     }
@@ -31,10 +32,10 @@ public class LottoMachine {
 
     private static Lotto createRandomLotto() {
         Collections.shuffle(lottoNumbers);
-        List<Ball> balls = lottoNumbers.stream()
+        Set<Ball> balls = lottoNumbers.stream()
                 .limit(BALL_COUNT)
                 .map(Ball::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         return new Lotto(balls);
     }
 }

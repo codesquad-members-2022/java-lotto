@@ -5,8 +5,8 @@ import domain.Lotto;
 import domain.User;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InputView {
@@ -21,8 +21,12 @@ public class InputView {
     public static User askHowManyLottos() {
         System.out.println(HOW_MUCH_MONEY_MESSAGE);
         int money = Integer.parseInt(sc.nextLine());
+        System.out.println();
+
         System.out.println(COUNT_OF_SELF_LOTTO_MESSAGE);
         int countOfSelf = Integer.parseInt(sc.nextLine());
+        System.out.println();
+
         return new User(money, countOfSelf);
     }
 
@@ -50,9 +54,9 @@ public class InputView {
     private static Lotto createLotto() {
         String[] numbers = sc.nextLine().replaceAll(" ","").split(",");
         System.out.println();
-        List<Ball> balls = Arrays.stream(numbers)
+        Set<Ball> balls = Arrays.stream(numbers)
                 .map(number -> new Ball(Integer.parseInt(number)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         return new Lotto(balls);
     }
 }
