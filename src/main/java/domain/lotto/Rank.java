@@ -1,40 +1,45 @@
 package domain.lotto;
 
 public enum Rank {
-    FIRST(6, 2000000000),
-    SECOND(5, 1500000),
-    THIRD(4, 50000),
-    FOURTH(3, 5000),
-    FAILED(-1, 0);
+    FIRST(6, 2_000_000_000L),
+    SECOND(5, 30_000_000L),
+    THIRD(5, 1_500_000L),
+    FOURTH(4, 50_000L),
+    FIFTH(3, 5_000L),
+    FAILED(-1, 0L);
 
     private final int countOfMatch;
-    private final int reward;
+    private final long reward;
 
-    Rank(int contOfMatch, int reward) {
+    Rank(int contOfMatch, long reward) {
         this.countOfMatch = contOfMatch;
         this.reward = reward;
     }
 
-    public int getReward() {
+    public long getReward() {
         return reward;
     }
 
-    public int getCountOfMatch() {
-        return countOfMatch;
-    }
-
-    public static Rank of(long matchCount) {
-        switch ((int) matchCount) {
-            case 6:
+    public static Rank of(int matchCount, boolean matchBonus) {
+        switch (matchCount) {
+            case 6 :
                 return FIRST;
-            case 5:
-                return SECOND;
-            case 4:
-                return THIRD;
-            case 3:
+            case 5 :
+                return matchBonus? SECOND : THIRD;
+            case 4 :
                 return FOURTH;
-            default:
+            case 3 :
+                return FIFTH;
+            default :
                 return FAILED;
         }
+    }
+
+    @Override
+    public String toString() {
+        if (this == SECOND) {
+            return String.format("%d개 일치, 보너스 볼 일치(%d원)", countOfMatch, reward);
+        }
+        return String.format("%d개 일치, (%d원)", countOfMatch, reward);
     }
 }

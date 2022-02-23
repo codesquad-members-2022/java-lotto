@@ -20,12 +20,17 @@ public class WinningTicket {
     }
 
     public Rank match(LottoTicket lottoTicket) {
-        long matchCount = calculateMatchCount(lottoTicket);
-        return Rank.of(matchCount);
+        int matchCount = calculateMatchCount(lottoTicket);
+        boolean matchBonus = isMatchBonus(lottoTicket);
+        return Rank.of(matchCount, matchBonus);
     }
 
-    private long calculateMatchCount(LottoTicket lottoTicket) {
-        return lottoTicket.getLottoNumbers().stream()
+    private boolean isMatchBonus(LottoTicket lottoTicket) {
+        return winningNumbers.contains(bonusNumber);
+    }
+
+    private int calculateMatchCount(LottoTicket lottoTicket) {
+        return (int) lottoTicket.getLottoNumbers().stream()
                 .filter(winningNumbers::contains)
                 .count();
     }
