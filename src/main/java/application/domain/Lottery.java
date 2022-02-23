@@ -36,7 +36,4 @@ public class Lottery {
     public List<Integer> getNumbers() {
         return numbers;
     }
-
-
-
 }

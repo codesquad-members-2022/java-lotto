@@ -19,9 +19,8 @@ public class UserLotteries {
     }
 
     public void compareEach(WinningLottery winningLottery) {
-        for (UserLottery lottery : lotteries) {
-            lottery.compareLottery(winningLottery);
-        }
+        lotteries.stream()
+                .forEach(lottery -> lottery.compareLottery(winningLottery));
     }
 
     public void addUserLottery(List<Integer> numbers) {
@@ -37,6 +36,5 @@ public class UserLotteries {
             .map(UserLottery::getResult)
             .collect(Collectors.toList());
     }
-
 }
 

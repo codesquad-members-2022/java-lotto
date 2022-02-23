@@ -1,6 +1,5 @@
 package application.view;
 
-import application.domain.Lottery;
 import application.domain.Prize;
 import application.domain.Statistics;
 import application.domain.UserLottery;
@@ -24,9 +23,9 @@ public class OutputView {
     }
 
     public void printLotteries(List<UserLottery> lotteries) {
-        for (UserLottery lottery : lotteries) {
-            System.out.println(lottery.getNumbers());
-        }
+        lotteries.stream()
+                .map(UserLottery::getNumbers)
+                .forEach(System.out::println);
     }
 
     public void printEarningsRate(double earningsRate) {

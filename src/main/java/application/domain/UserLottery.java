@@ -35,5 +35,4 @@ public class UserLottery extends Lottery {
     public Result getResult() {
         return result;
     }
-
 }

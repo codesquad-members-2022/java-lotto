@@ -11,5 +11,4 @@ public class InputValidator {
         }
         return true;
     }
-
 }

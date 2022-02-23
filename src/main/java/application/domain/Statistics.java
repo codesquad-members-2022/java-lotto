@@ -2,7 +2,6 @@ package application.domain;
 
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,12 +17,12 @@ public class Statistics {
         Arrays.stream(Prize.values())
             .forEach(prize -> counts.put(prize, 0));
 
-        for (UserLottery lottery : userLotteries.get()) {
-            Result result = lottery.getResult();
-
-            Optional<Prize> prize = Prize.create(result);
-            prize.ifPresent(p -> counts.put(p, counts.get(p) + 1));
-        }
+        userLotteries.get().stream()
+                .map(UserLottery::getResult)
+                .map(Prize::create)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .forEach(p -> counts.put(p, counts.get(p) + 1));
     }
 
     public double getEarningsRate() {
@@ -37,5 +36,4 @@ public class Statistics {
     public Map<Prize, Integer> getCounts() {
         return counts;
     }
-
 }
