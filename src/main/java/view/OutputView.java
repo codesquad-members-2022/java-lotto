@@ -19,12 +19,18 @@ public class OutputView {
     public static void printResult(Map<Integer, Integer> map, String result) {
         System.out.println("당첨 통계");
         System.out.println("-----------");
-
-        // TODO
         for (Integer key : map.keySet()) {
-            System.out.println(key + "개 일치 (" + CollectCalculator.getWinnerMoney(key) + "원) - " + map.get(key) + "개");
+            String tempValue = makeResultTemplate(key);
+            System.out.println(tempValue + CollectCalculator.getWinnerMoney(key) + "원) - " + map.get(key) + "개");
         }
         System.out.println("총 수익률은 " + result + "%입니다.");
+    }
+
+    private static String makeResultTemplate(Integer key) {
+        if (key == 7) {
+            return "5개 일치, 보너스 볼 일치 (";
+        }
+        return key + "개 일치 (";
     }
 
     public static void printPurchaseCount(int count, List<Lotto> lottoList) {

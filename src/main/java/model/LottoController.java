@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,24 +27,22 @@ public class LottoController {
         .boxed()
         .collect(Collectors.toList());
 
-    private final List<Lotto> bonusList;
     private final List<Lotto> lottoList;
     private Map<Integer, Integer> map;
     private int price;
 
     public LottoController(List<Lotto> lottoList) {
         this.lottoList = lottoList;
-        this.bonusList = new ArrayList<>();
         initMap();
     }
 
     private void initMap() {
-        map = new HashMap<>();
+        map = new LinkedHashMap<>();
         map.put(3, 0);
         map.put(4, 0);
         map.put(5, 0);
-        map.put(6, 0);
         map.put(BONUS_COUNT, 0);
+        map.put(6, 0);
     }
 
     public void buildLotto() {
@@ -92,7 +91,6 @@ public class LottoController {
     private void countHowManyLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
         int tempCount = lotto.countCollectNumber(winNumbers);
         if (tempCount == 5 && lotto.hasBonusNumber(bonusNumber)) {
-            bonusList.add(lotto);
             map.put(BONUS_COUNT, map.get(BONUS_COUNT) + 1);
             return;
         }
