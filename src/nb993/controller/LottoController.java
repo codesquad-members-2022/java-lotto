@@ -15,6 +15,9 @@ public class LottoController {
 
     public static final int PRICE_PER_LOTTO = 1000;
 
+    private int purchaseCount;
+    private int manualPurchaseCount;
+
     private final ScanView scanView;
     private final PrintView printView;
     private List<LottoTicket> lottos;
@@ -27,9 +30,15 @@ public class LottoController {
     public void initLottos() {
         this.lottos = new ArrayList<>();
         int purchaseAmount = scanView.getPurchaseAmount();
-        int purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
 
-        for (int i = 0; i < purchaseCount; ++i) {
+        purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
+        manualPurchaseCount = scanView.getManualPurchaseCount();
+
+        for (int i = 0; i < manualPurchaseCount; i++) {
+            lottos.add(new LottoTicket(scanView.getManualNumber()));
+        }
+
+        for (int i = 0; i < purchaseCount - manualPurchaseCount; ++i) {
             lottos.add(new LottoTicket());
         }
     }
@@ -69,7 +78,7 @@ public class LottoController {
     }
 
     public void printGame() {
-        printView.printLottos(lottos);
+        printView.printLottos(lottos, purchaseCount, manualPurchaseCount);
     }
 
 }

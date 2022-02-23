@@ -3,6 +3,7 @@ package nb993.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import nb993.util.LottoUtil;
 
 public class LottoTicket {
 
@@ -17,6 +18,14 @@ public class LottoTicket {
         }
         Collections.shuffle(possibleNumbers);
         lottoNumbers = new ArrayList<>(possibleNumbers.subList(0, LOTTO_NUMBERS_SIZE));
+    }
+
+    public LottoTicket(List<Integer> numbers) {
+        // 갯수가 6개 인지
+        // 범위가 1 - 45 이내인지
+        // 중복되는 숫자가 있는지 확인
+        LottoUtil.validate(numbers);
+        lottoNumbers = numbers;
     }
 
     public String toString() {
