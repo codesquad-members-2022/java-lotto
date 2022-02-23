@@ -28,6 +28,8 @@ public class Controller {
         outputView.printLotto(lottoTicket, purchaseQuantity);
 
         List<Integer> winningNumbers = inputView.getWinningNumber();
+        int bonusNumber = inputView.getBonusNumber();
+        winningNumbers.add(bonusNumber);
         WinningNumbersValidator.validate(winningNumbers);
 
         int[] winningResult = new LottoMatchChecker(winningNumbers, lottoTicket).getWinningResult();

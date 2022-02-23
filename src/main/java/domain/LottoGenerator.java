@@ -8,7 +8,7 @@ public class LottoGenerator {
 
     static final int LOTTO_NUMBER_MIN = 1;
     static final int LOTTO_NUMBER_MAX = 45;
-    static final int LOTTO_NUMBER_SIZE = 6;
+    static final int LOTTO_NUMBER_SIZE = 7;
     private List<Integer> shuffledNumbers = new ArrayList<>();
 
     public LottoGenerator() {

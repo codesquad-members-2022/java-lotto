@@ -9,14 +9,13 @@ public class InputView {
 
     private static final String ASK_PURCHASING_AMOUNT = "구입금액을 입력해 주세요.";
     private static final String ASK_WINNING_NUMBER_MESSAGE = "당첨 번호를 입력해 주세요.";
+    private static final String ASK_BONUS_NUMBER = "보너스 볼을 입력해 주세요.";
 
     private Scanner scanner = new Scanner(System.in);
 
     public int getPurchasingAmount() {
         System.out.println(ASK_PURCHASING_AMOUNT);
-        int number = scanner.nextInt();
-        scanner.nextLine();
-        return number;
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public List<Integer> getWinningNumber() {
@@ -27,5 +26,10 @@ public class InputView {
             .mapToInt(Integer::parseInt)
             .boxed()
             .collect(Collectors.toList());
+    }
+
+    public int getBonusNumber() {
+        System.out.println(ASK_BONUS_NUMBER);
+        return Integer.parseInt(scanner.nextLine());
     }
 }
