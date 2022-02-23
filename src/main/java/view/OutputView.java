@@ -1,34 +1,39 @@
 package view;
 
 import domain.LottoSheet;
-import domain.LottoTicket;
-import domain.ProfitCalculator;
-import java.util.HashMap;
+import domain.Rank;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class OutputView {
 
     private static final String PURCHASE_CONFIRMATION_MESSAGE = "개를 구매했습니다.";
 
-    public void printLotto(LottoTicket lottoTicket, int numberOfLotto) {
+    public static void printLotto(List<LottoSheet> lottoTicket, int numberOfLotto) {
         System.out.println(numberOfLotto + PURCHASE_CONFIRMATION_MESSAGE);
 
-        List<LottoSheet> lottoSheets = lottoTicket.getLottoSheets();
-        lottoSheets.stream().map(LottoSheet::getLottoNumbers).forEach(System.out::println);
+        lottoTicket.stream().map(LottoSheet::getLottoNumbers).forEach(System.out::println);
     }
 
-    public void printProfitTable(int[] winningResult) {
-        System.out.println("당첨 통계");
-        System.out.println("----------");
-        HashMap<Integer, Integer> winningPriceTable = ProfitCalculator.winningPriceTable;
-
-        for (int key : winningPriceTable.keySet()) {
-            System.out.println(
-                key + "개 일치 (" + winningPriceTable.get(key) + "원) - " + winningResult[key] + "개");
+    private static void printBonusNumberMessage(Rank rank) {
+        if (rank.equals(Rank.SECOND)) {
+            System.out.print(", 보너스 볼 일치");
         }
     }
 
-    public void printProfit(double profit) {
+    public static void printProfitTable(LinkedHashMap<Rank,Integer> winningResult) {
+        System.out.println("당첨 통계");
+        System.out.println("----------");
+
+        for (Rank key : winningResult.keySet()) {
+            System.out.print(key.getCountOfMatch() + "개 일치");
+            printBonusNumberMessage(key);
+            System.out.println(" (" + key.getWinningMoney() + "원) - " + winningResult.get(key) + "개");
+        }
+    }
+
+    public static void printProfit(double profit) {
         System.out.println("총 수익률은 " + String.format("%.2f", profit) + "%입니다.");
     }
 }
