@@ -29,8 +29,19 @@ public class LottoNumber {
     }
 
     public static LottoNumber of(int number) {
+        validateRangeOfNumber(number);
         return LOTTO_NUMBER_POOL.get(number);
     }
+
+    private static void validateRangeOfNumber(int number) {
+        if (MIN_RANDOM_NUMBER <= number && number <= MAX_RANDOM_NUMBER) {
+            return;
+        }
+        throw new IllegalArgumentException(String.format("로또 번호의 유효 범위는 %d ~ %d 입니다.",
+                MIN_RANDOM_NUMBER,
+                MAX_RANDOM_NUMBER));
+    }
+
 
     public static LottoNumber getLottoRandomLottoNumber() {
         int randomNumber = (int) (Math.random() * MAX_RANDOM_NUMBER) + MIN_RANDOM_NUMBER;
