@@ -18,6 +18,7 @@ public class LottoTicket {
         }
         Collections.shuffle(possibleNumbers);
         lottoNumbers = new ArrayList<>(possibleNumbers.subList(0, LOTTO_NUMBERS_SIZE));
+        Collections.sort(lottoNumbers);
     }
 
     public LottoTicket(List<Integer> numbers) {
@@ -25,6 +26,7 @@ public class LottoTicket {
         // 범위가 1 - 45 이내인지
         // 중복되는 숫자가 있는지 확인
         LottoUtil.validate(numbers);
+        Collections.sort(numbers);
         lottoNumbers = numbers;
     }
 
@@ -33,10 +35,10 @@ public class LottoTicket {
     }
 
     public Rank getResult(WinningNumber winningNumber) {
-        int correctNum = getCorrectNum(winningNumber);
+        int correctCount = getCorrectCount(winningNumber);
         boolean hasBonus = hasBonus(winningNumber);
 
-        return Rank.valueOf(correctNum, hasBonus);
+        return Rank.valueOf(correctCount, hasBonus);
     }
 
     private boolean hasBonus(WinningNumber winningNumber) {
@@ -47,11 +49,11 @@ public class LottoTicket {
         return false;
     }
 
-    private int getCorrectNum(WinningNumber winningNumber) {
-        int correctNum = 0;
+    private int getCorrectCount(WinningNumber winningNumber) {
+        int correctCount = 0;
         for (int i = 0; i < lottoNumbers.size(); i++) {
-            correctNum += lottoNumbers.contains(winningNumber.getNumber(i)) ? 1 : 0;
+            correctCount += lottoNumbers.contains(winningNumber.getNumber(i)) ? 1 : 0;
         }
-        return correctNum;
+        return correctCount;
     }
 }
