@@ -1,10 +1,11 @@
 package domain;
 
 public enum Rank {
-    FORTH(3, 5000),
-    THIRD(4, 50000),
-    SECOND(5, 1500000),
-    FIRST(6, 2000000000);
+    FIFTH(3, 5_000),
+    FORTH(4, 50_000),
+    THIRD(5, 1_500_000),
+    SECOND(7, 30_000_000),
+    FIRST(6, 2_000_000_000);
 
     private final int matchedNumber;
     private final int prize;
@@ -18,17 +19,19 @@ public enum Rank {
         return matchedNumber;
     }
 
-    public int getPrize(){
+    public int getPrize() {
         return prize;
     }
 
-    public static Rank designateRank(int matchedNumber) {
+    public static Rank designateRank(int matchedNumber, boolean isBonus) {
         switch (matchedNumber) {
             case 3:
-                return FORTH;
+                return FIFTH;
             case 4:
-                return THIRD;
+                return FORTH;
             case 5:
+                return THIRD;
+            case 7:
                 return SECOND;
             default:
                 return FIRST;

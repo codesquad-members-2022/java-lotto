@@ -8,6 +8,7 @@ public class Main {
         TicketOffice to = new TicketOffice();
         List<LottoTicket> tickets = to.issueTickets();
         to.setWinningNumber();
+        to.setBonusNumber();
         to.getStatistic(tickets);
     }
 }

@@ -11,6 +11,7 @@ public class TicketOffice {
     private final int SELECTED_NUMBER = 6;
     private final int PRICE = 1000;
     private int TOTAL_PRICE;
+    private int bonusNumber;
     private List<Integer> winningNumbers = new ArrayList<>();
     private Map<Integer, Integer> statistics = new HashMap<>();
 
@@ -19,6 +20,7 @@ public class TicketOffice {
         statistics.put(4, 0);
         statistics.put(5, 0);
         statistics.put(6, 0);
+        statistics.put(7, 0);
     }
 
 
@@ -59,8 +61,7 @@ public class TicketOffice {
             for (int i = 0; i < numberOfTickets; i++) {
                 tickets.add(makeAutoTicket());
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < numberOfTickets; i++) {
                 tickets.add(makeManualTicket());
             }
@@ -76,25 +77,41 @@ public class TicketOffice {
         }
     }
 
-    public void getStatistic(List<LottoTicket> tickets) {
-        int matchedNumber = 0;
-        for (LottoTicket ticket : tickets) {
-            matchedNumber = checkWinningNumber(ticket.getTicketInfo());
-            statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
-        }
-        OutputView.showWinningResult(this.statistics, calculateProfit());
+    public void setBonusNumber() { // 추후 당첨 번호에 없는 번호만 받도록 예외처리 필요
+        bonusNumber = InputView.getBonusNumber();
     }
 
-    public double calculateProfit() {
+    public void getStatistic(List<LottoTicket> tickets) {
+        int matchedNumber = 0;
+        boolean isBonus = false;
+        for (LottoTicket ticket : tickets) {
+            matchedNumber = checkWinningNumber(ticket.getTicketInfo());
+            isBonus = checkBonusNumber(ticket.getTicketInfo());
+            matchedNumber += temp(matchedNumber, isBonus);
+            statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
+        }
+        OutputView.showWinningResult(this.statistics, calculateProfit(isBonus));
+    }
+
+    private int temp(int matchedNumber, boolean isBonus){
+        if (matchedNumber == 5){
+            if(isBonus){
+                return 2;
+            }
+        }
+        return 0;
+    }
+
+    public double calculateProfit(boolean isBonus) {
         int totalPrize = 0;
         for (Integer matchedNumber : statistics.keySet()) {
-            totalPrize += (switchPrize(matchedNumber) * statistics.get(matchedNumber));
+            totalPrize += (switchPrize(matchedNumber, isBonus) * statistics.get(matchedNumber));
         }
         return ((double) (totalPrize - TOTAL_PRICE) / TOTAL_PRICE) * 100;
     }
 
-    private int switchPrize(int matchedNumber) {
-        return Rank.designateRank(matchedNumber).getPrize();
+    private int switchPrize(int matchedNumber, boolean isBonus) {
+        return Rank.designateRank(matchedNumber, isBonus).getPrize();
     }
 
     private int checkWinningNumber(List<Integer> ticketInfo) {
@@ -103,6 +120,13 @@ public class TicketOffice {
             count += isWinningNumber(number);
         }
         return count;
+    }
+
+    private boolean checkBonusNumber(List<Integer> ticketInfo) {
+        if (ticketInfo.contains(bonusNumber)) {
+            return true;
+        }
+        return false;
     }
 
     private int isWinningNumber(int number) {

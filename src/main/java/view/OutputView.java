@@ -17,16 +17,27 @@ public class OutputView {
     }
 
     public static void showWinningResult(Map<Integer, Integer> statistics, double profitRate) {
-        System.out.println("\n당첨 통계");
-        System.out.println("__________");
+        StringBuilder sb = new StringBuilder();
         int matchedNumber;
         int prize;
-        for (Rank pa : Rank.values()) {
-            matchedNumber = pa.getMatchedNumber();
-            prize = pa.getPrize();
-            System.out.printf("%d개 일치 (%d원) - %d개", matchedNumber, prize, statistics.get(matchedNumber));
-            System.out.println();
+        sb.append("\n당첨 통계\n");
+        sb.append("__________\n");
+        for (Rank rank : Rank.values()) {
+            matchedNumber = rank.getMatchedNumber();
+            prize = rank.getPrize();
+            if (rank == Rank.SECOND){
+                matchedNumber -= 2;
+            }
+            sb.append(matchedNumber).append("개 일치");
+
+            if (rank == Rank.SECOND){
+                matchedNumber += 2;
+                sb.append(", 보너스 볼 일치");
+            }
+            sb.append(" (").append(prize).append(")원 - ");
+            sb.append(statistics.get(matchedNumber)).append("개\n");
         }
+        System.out.println(sb.toString());
         System.out.printf("총 수익률은 %.2f%%입니다.", profitRate);
     }
 }

@@ -18,7 +18,7 @@ public class InputView {
 
     public static String[] getWinningNumber() {
         sc = new Scanner(System.in);
-        System.out.println("\n당첨 번호를 입력해 주세요.");
+        System.out.println("\n지난 주 당첨 번호를 입력해 주세요.");
         return sc.nextLine().split(",");
     }
 
@@ -38,5 +38,11 @@ public class InputView {
         for (String number : userInput)
             manualNumber.add(Integer.parseInt(number));
         return manualNumber;
+    }
+
+    public static int getBonusNumber(){
+        sc = new Scanner(System.in);
+        System.out.println("보너스 볼을 입력해 주세요.");
+        return Integer.parseInt(sc.nextLine());
     }
 }
