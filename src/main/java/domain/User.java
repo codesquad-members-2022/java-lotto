@@ -10,16 +10,16 @@ public class User {
 
     private final List<Lotto> lottos = new ArrayList<>();
     private final List<Rank> ranks = new ArrayList<>();
-    private final int countOfSelf;
+    private final int countOfCustom;
     private final int money;
     private int profit;
 
-    public User(int money, int countOfSelf) {
-        if( money / LOTTO_PRICE < countOfSelf) {
+    public User(int money, int countOfCustom) {
+        if (money / LOTTO_PRICE < countOfCustom) {
             throw new IllegalArgumentException(EXCESS_MONEY_ERROR);
         }
         this.money = money;
-        this.countOfSelf = countOfSelf;
+        this.countOfCustom = countOfCustom;
     }
 
     public void buyLotto(Lotto lotto) {
@@ -50,11 +50,11 @@ public class User {
         return lottos;
     }
 
-    public int getCountOfSelf() {
-        return countOfSelf;
+    public int getCountOfCustom() {
+        return countOfCustom;
     }
 
     public int getCountOfAuto() {
-        return money / LOTTO_PRICE - countOfSelf;
+        return money / LOTTO_PRICE - countOfCustom;
     }
 }

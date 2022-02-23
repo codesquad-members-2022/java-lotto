@@ -11,7 +11,7 @@ public class Controller {
 
     public void play() {
         User user = InputView.askHowManyLottos();
-        LottoMachine.sellLotto(user);
+        InputView.sellLottos(user);
         OutputView.printLottos(user);
         Lotto winningLotto = InputView.createWinningLotto();
         Ball bonusBall = InputView.getBonusBall();

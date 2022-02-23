@@ -2,8 +2,8 @@ package view;
 
 import domain.Ball;
 import domain.Lotto;
+import domain.LottoMachine;
 import domain.User;
-
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
@@ -15,19 +15,18 @@ public class InputView {
     private static final String HOW_MUCH_MONEY_MESSAGE = "구입금액을 입력해 주세요.";
     private static final String WINNING_NUMBER_MESSAGE = "\n당첨 번호를 입력해 주세요.";
     private static final String BONUS_BALL_MESSAGE = "보너스 볼을 입력해 주세요.";
-    private static final String COUNT_OF_SELF_LOTTO_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요.";
-    private static final String SELF_NUMMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요.";
+    private static final String COUNT_OF_CUSTOM_LOTTO_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요.";
+    private static final String CUSTOM_NUMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요.";
 
     public static User askHowManyLottos() {
         System.out.println(HOW_MUCH_MONEY_MESSAGE);
         int money = Integer.parseInt(sc.nextLine());
         System.out.println();
 
-        System.out.println(COUNT_OF_SELF_LOTTO_MESSAGE);
-        int countOfSelf = Integer.parseInt(sc.nextLine());
+        System.out.println(COUNT_OF_CUSTOM_LOTTO_MESSAGE);
+        int countOfCustom = Integer.parseInt(sc.nextLine());
         System.out.println();
-
-        return new User(money, countOfSelf);
+        return new User(money, countOfCustom);
     }
 
     public static Lotto createWinningLotto() {
@@ -35,9 +34,9 @@ public class InputView {
         return createLotto();
     }
 
-    public static Lotto inputSelfLotto() {
-        System.out.println(SELF_NUMMBER_MESSAGE);
-        return createLotto();
+    public static void sellLottos(User user) {
+        sellCustomLottos(user);
+        sellRandomLottos(user);
     }
 
     public static void close() {
@@ -53,10 +52,24 @@ public class InputView {
 
     private static Lotto createLotto() {
         String[] numbers = sc.nextLine().replaceAll(" ","").split(",");
-        System.out.println();
         Set<Ball> balls = Arrays.stream(numbers)
                 .map(number -> new Ball(Integer.parseInt(number)))
                 .collect(Collectors.toSet());
         return new Lotto(balls);
     }
+
+    private static void sellCustomLottos(User user) {
+        System.out.println(CUSTOM_NUMBER_MESSAGE);
+        for (int i = 0; i < user.getCountOfCustom(); i++) {
+            Lotto lotto = createLotto();
+            user.buyLotto(lotto);
+        }
+    }
+
+    private static void sellRandomLottos(User user) {
+        for (int i = 0; i < user.getCountOfAuto(); i++) {
+            user.buyLotto(LottoMachine.createRandomLotto());
+        }
+    }
+
 }
