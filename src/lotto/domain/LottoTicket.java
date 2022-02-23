@@ -8,10 +8,8 @@ import java.util.stream.IntStream;
 
 public class LottoTicket {
     public static final int PRICE = 1000;
-    private static final int MINIMUM_NUMBER = 1;
-    private static final int MAXIMUM_NUMBER = 45;
     private static final int NUMBER_COUNT = 6;
-    private final List<Integer> lottoNumbers;
+    private final List<LottoNumber> lottoNumbers;
 
     public LottoTicket() {
         this.lottoNumbers = generateRandomLottoNumbers();
@@ -19,7 +17,7 @@ public class LottoTicket {
 
     public LottoTicket(int[] numbers) {
         validateLength(numbers);
-        validateRange(numbers);
+
         validateNoDuplicate(numbers);
         this.lottoNumbers = parseNumbers(numbers);
     }
@@ -31,40 +29,14 @@ public class LottoTicket {
                 .sum();
     }
     
-    public boolean contains(int i) {
-        return lottoNumbers.contains(i);
+    public boolean contains(LottoNumber lottoNumber) {
+        return lottoNumbers.contains(lottoNumber);
     }
 
     @Override
     public String toString() {
         return lottoNumbers.toString();
     }
-
-    private void validateRange(int[] numbers) {
-        validateMinimum(numbers);
-        validateMaximum(numbers);
-    }
-
-    private void validateMaximum(int[] numbers) {
-        if (isAboveMaximum(numbers)) {
-            throw new IllegalArgumentException(String.format("로또 번호는 %d보다 작아야 합니다.", MAXIMUM_NUMBER));
-        }
-    }
-
-    private boolean isAboveMaximum(int[] numbers) {
-        return Arrays.stream(numbers).max().orElseThrow() > MAXIMUM_NUMBER;
-    }
-
-    private void validateMinimum(int[] numbers) {
-        if (isBelowMinimum(numbers)) {
-            throw new IllegalArgumentException(String.format("로또 번호는 %d보다 커야 합니다.", MINIMUM_NUMBER));
-        }
-    }
-
-    private boolean isBelowMinimum(int[] numbers) {
-        return Arrays.stream(numbers).min().orElseThrow() < MINIMUM_NUMBER;
-    }
-
 
     private void validateLength(int[] numbers) {
         if (numbers.length != NUMBER_COUNT) {
@@ -85,8 +57,8 @@ public class LottoTicket {
         return numbers.length != lengthWithoutDuplicate;
     }
 
-    private List<Integer> generateRandomLottoNumbers() {
-        List<Integer> numbers = IntStream.rangeClosed(MINIMUM_NUMBER, MAXIMUM_NUMBER)
+    private List<LottoNumber> generateRandomLottoNumbers() {
+        List<Integer> numbers = IntStream.rangeClosed(LottoNumber.MINIMUM_NUMBER, LottoNumber.MAXIMUM_NUMBER)
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -95,13 +67,14 @@ public class LottoTicket {
         return numbers.stream()
                 .limit(NUMBER_COUNT)
                 .sorted()
+                .map(LottoNumber::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Integer> parseNumbers(int[] numbers) {
+    private List<LottoNumber> parseNumbers(int[] numbers) {
         return Arrays.stream(numbers)
                 .sorted()
-                .boxed()
+                .mapToObj(LottoNumber::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 }
