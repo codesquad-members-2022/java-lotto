@@ -10,14 +10,13 @@ public class InputView {
     private static final String PROMPT_ANSWER = "당첨 번호를 입력해 주세요.";
     private static final String PROMPT_BONUS_NUMBER = "보너스 볼을 입력해 주세요.";
     private static final Scanner sc = new Scanner(System.in);
-
-    private static InputValidator validator = new InputValidator();
+    private static final InputValidator validator = InputValidator.getInstance();
 
     public int getMoneyInput() {
         System.out.println(PROMPT_MONEY);
         System.out.print(PROMPT);
         try {
-            return validator.validateInteger(sc.nextLine());
+            return validator.validatePositiveInteger(sc.nextLine());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getMoneyInput();
@@ -39,8 +38,7 @@ public class InputView {
         System.out.println(PROMPT_BONUS_NUMBER);
         System.out.print(PROMPT);
         try {
-            int bonusNumber = validator.validateInteger(sc.nextLine());
-            return validator.validateBonusNumber(winningNumber, bonusNumber);
+            return validator.validateBonusNumber(winningNumber, sc.nextLine());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getBonusNumberInput(winningNumber);

@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class InputValidatorTest {
 
-    InputValidator iv = new InputValidator();
+    InputValidator iv = InputValidator.getInstance();
 
     @ParameterizedTest
     @NullAndEmptySource
@@ -37,6 +37,22 @@ class InputValidatorTest {
     @ValueSource(strings = {"2", "7", "-40", "0"})
     @DisplayName("정수 형태의 String을 입력하면 int 타입으로 변환하여 리턴한다.")
     void validateInteger(String input) {
+        assertThat(iv.validateInteger(input)).isEqualTo(Integer.parseInt(input));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"-2", "0"})
+    @DisplayName("입력값이 양수범위를 벗어나면 \"양수를 입력해 주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
+    void validatePositiveInteger_NegativeInput(String input) {
+        assertThatThrownBy(() -> iv.validatePositiveInteger(input))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("양수를 입력해 주세요.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"2", "7"})
+    @DisplayName("양수의 String을 입력하면 int 타입으로 변환하여 리턴한다.")
+    void validatePositiveInteger(String input) {
         assertThat(iv.validateInteger(input)).isEqualTo(Integer.parseInt(input));
     }
 
@@ -87,7 +103,7 @@ class InputValidatorTest {
     @DisplayName("보너스 번호가 당첨번호 리스트와 중복되면 당첨번호 리스트 내용과 함께\"중복되지 않는 값을 입력해주세요.\"라는 예외를 던진다.")
     void validateBonusNumber_DuplicateInput() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThatThrownBy(() -> iv.validateBonusNumber(winningNumbers, 6))
+        assertThatThrownBy(() -> iv.validateBonusNumber(winningNumbers, "6"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("중복되지 않는 값을 입력해주세요.");
     }
@@ -96,6 +112,6 @@ class InputValidatorTest {
     @DisplayName("보너스 번호가 당첨번호 리스트와 중복되지 않으면 해당 보너스 번호를 반환한다.")
     void validateBonusNumber() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThat(iv.validateBonusNumber(winningNumbers, 7)).isEqualTo(7);
+        assertThat(iv.validateBonusNumber(winningNumbers, "7")).isEqualTo(7);
     }
 }

@@ -8,6 +8,16 @@ import java.util.stream.Collectors;
 import domain.Lotto;
 
 class InputValidator {
+
+    private static final InputValidator validator = new InputValidator();
+
+    private InputValidator() {
+    }
+
+    public static InputValidator getInstance() {
+        return validator;
+    }
+
     // TODO: 리팩
     int validateInteger(String input) throws IllegalArgumentException {
         try {
@@ -18,6 +28,14 @@ class InputValidator {
             }
             throw new IllegalArgumentException("int 범위 내로 입력해주세요.");
         }
+    }
+
+    int validatePositiveInteger(String input) throws IllegalArgumentException {
+        int number = validateInteger(input);
+        if (number < 1) {
+            throw new IllegalArgumentException("양수를 입력해 주세요.");
+        }
+        return number;
     }
 
     List<Integer> validateWinningNumber(String input) throws IllegalArgumentException {
@@ -45,8 +63,10 @@ class InputValidator {
         return input;
     }
 
-    int validateBonusNumber(List<Integer> winningNumbers, int bonusNumber) throws
+    int validateBonusNumber(List<Integer> winningNumbers, String input) throws
         IllegalArgumentException {
+        int number = validator.validateInteger(input);
+        int bonusNumber = validator.validateLottoNumber(number);
         boolean isDuplicate = winningNumbers.stream()
             .anyMatch(n -> n == bonusNumber);
         if (isDuplicate) {
