@@ -15,11 +15,11 @@ public class LottoCalculator {
         }
 
         OutputView.printStatisticalResult(result);
-        OutputView.printBenefitPercentage(method(result, money));
+        OutputView.printBenefitPercentage(calculateRateBenefit(result, money));
 
     }
 
-    private double method(int[] result, int money) {
+    private double calculateRateBenefit(int[] result, int money) {
         double benefit = 0;
 
         for (int index = 3; index < result.length; index++) {

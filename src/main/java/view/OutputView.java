@@ -4,8 +4,8 @@ import domain.Rank;
 
 public class OutputView {
 
-    public static void printBenefitPercentage(double method) {
-        System.out.printf("총 수익률은 %5.2f%%입니다.", method);
+    public static void printBenefitPercentage(double percent) {
+        System.out.printf("총 수익률은 %5.2f%%입니다.", percent);
     }
 
     public static void printStatisticalResult(int[] result) {
