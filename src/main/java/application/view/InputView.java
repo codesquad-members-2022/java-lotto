@@ -1,6 +1,9 @@
 package application.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -19,18 +22,27 @@ public class InputView {
         return inputView;
     }
 
-    public int getMoney() {
+    public int getMoney() throws IllegalArgumentException {
         System.out.println("구입금액을 입력해 주세요.");
-        return Integer.parseInt(scanner.nextLine());
+        String line = scanner.nextLine();
+        InputValidator.validateNumberFormat(line);
+        return Integer.parseInt(line);
     }
 
-    public String getWinningNumbers() {
+    public List<Integer> getWinningNumbers() throws IllegalArgumentException {
         System.out.println("\n당첨 번호를 입력해 주세요.");
-        return scanner.nextLine();
+        String[] split = scanner.nextLine().trim().split(",");
+
+        return Arrays.stream(split)
+                .filter(InputValidator::validateNumberFormat)
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 
-    public int getBonusNumber() {
+    public int getBonusNumber() throws IllegalArgumentException {
         System.out.println("보너스 볼을 입력해 주세요.");
-        return Integer.parseInt(scanner.nextLine());
+        String line = scanner.nextLine();
+        InputValidator.validateNumberFormat(line);
+        return Integer.parseInt(line);
     }
 }
