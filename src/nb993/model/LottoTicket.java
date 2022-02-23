@@ -7,7 +7,9 @@ import nb993.util.LottoUtil;
 
 public class LottoTicket {
 
-    private static final int LOTTO_NUMBERS_SIZE = 6;
+    public static final int PRICE = 1000;
+
+    public static final int LOTTO_NUMBERS_SIZE = 6;
 
     private final List<Integer> lottoNumbers;
 

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import nb993.model.LottoTicket;
 
 public class LottoUtil {
-    public static final int COUNT_OF_LOTTO_NUM = 6;
-    public static final int PRICE_OF_LOTTO_TICKET = 1000;
+
     public static void validate(List<Integer> lottoNumbers) {
         validateCountOfNumbers(lottoNumbers);
         validateTicketRange(lottoNumbers);
@@ -23,8 +23,8 @@ public class LottoUtil {
     }
 
     private static void validateCountOfNumbers(List<Integer> lottoNumbers) {
-        if (lottoNumbers.size() != COUNT_OF_LOTTO_NUM) {
-            throw new IllegalArgumentException("로또 번호의 갯수는 " + COUNT_OF_LOTTO_NUM + "개여야 합니다.");
+        if (lottoNumbers.size() != LottoTicket.LOTTO_NUMBERS_SIZE) {
+            throw new IllegalArgumentException("로또 번호의 갯수는 " + LottoTicket.LOTTO_NUMBERS_SIZE + "개여야 합니다.");
         }
     }
 
@@ -54,10 +54,10 @@ public class LottoUtil {
     }
 
     public static void validatePurchaseAmount(int purchaseAmount) {
-        if (purchaseAmount < PRICE_OF_LOTTO_TICKET) {
+        if (purchaseAmount < LottoTicket.PRICE) {
             throw new IllegalArgumentException("1000원 이상 구매해야 합니다.");
         }
-        if (purchaseAmount % PRICE_OF_LOTTO_TICKET != 0) {
+        if (purchaseAmount % LottoTicket.PRICE != 0) {
             throw new IllegalArgumentException("로또 티켓은 한장 당 1000원 입니다.");
         }
     }

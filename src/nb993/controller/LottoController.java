@@ -13,17 +13,16 @@ import java.util.List;
 
 public class LottoController {
 
-    public static final int PRICE_PER_LOTTO = 1000;
-
-    private int purchaseCount;
-    private int manualPurchaseCount;
-
     private final ScanView scanView;
     private final PrintView printView;
+
     private List<LottoTicket> lottos;
+
+    private int purchaseAmount;
+    private int purchaseCount;
+    private int manualPurchaseCount;
     private Map<Rank, Integer> rankResult;
     private long amountOfWinningMoney;
-    private int purchaseAmount;
     private WinningNumber winningNumbers;
 
     public LottoController(ScanView scanView, PrintView printView) {
@@ -37,7 +36,7 @@ public class LottoController {
         printLottoResult();
     }
 
-    public void initLottos() {
+    private void initLottos() {
         setPurchaseAmount();
         setPurchaseCount();
         setManualPurchaseCount();
@@ -45,7 +44,7 @@ public class LottoController {
         setManualLottoTickets();
         setAutoLottoTickets();
 
-        printGame();
+        printAllLottoTickets();
 
         setWinningNumbers();
         setRankResultMap();
@@ -57,7 +56,7 @@ public class LottoController {
     }
 
     private void setPurchaseCount() {
-        purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
+        purchaseCount = purchaseAmount / LottoTicket.PRICE;
     }
 
     private void setManualPurchaseCount() {
@@ -123,7 +122,7 @@ public class LottoController {
         }
     }
 
-    public void printGame() {
+    private void printAllLottoTickets() {
         printView.printLottos(lottos, purchaseCount, manualPurchaseCount);
     }
 
