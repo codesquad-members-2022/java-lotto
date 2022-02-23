@@ -1,5 +1,8 @@
 package application.view;
 
+import java.util.List;
+
+import application.domain.Lotto;
 import application.domain.WinningData;
 
 public class OutputView {
@@ -35,7 +38,7 @@ public class OutputView {
         System.out.println(userPurchaseQuantity + PURCHASE_QUANTITY);
     }
 
-    public static void printLottoNumbers(String lottoString) {
+    private static void printLottoNumbers(String lottoString) {
         System.out.println(lottoString);
     }
 
@@ -54,5 +57,11 @@ public class OutputView {
             }
         }
         printTotalYield(totalYield);
+    }
+
+    public static void printLottoList(List<Lotto> lottos) {
+        for (Lotto lotto : lottos) {
+            printLottoNumbers(lotto.lottoNumbersToString());
+        }
     }
 }

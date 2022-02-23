@@ -7,9 +7,14 @@ import application.view.InputView;
 import application.view.OutputView;
 
 public class LottoGame {
+    private static final int LOTTO_TICKET_PRICE = 1000;
 
     public void init() {
-        List<Lotto> lottos = LottoTicket.makeLotto();
+        int userPurchaseAmount = InputView.getPurchaseAmount();
+        int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE;
+        OutputView.printPurchaseQuantity(userPurchaseQuantity);
+        List<Lotto> lottos = LottoTicket.makeLotto(userPurchaseQuantity);
+        OutputView.printLottoList(lottos);
         List<Integer> userWinningNumber = InputView.getWinningNumber();
         int bonusBallNumber = InputView.getBonusBall();
         start(lottos, userWinningNumber, bonusBallNumber);
