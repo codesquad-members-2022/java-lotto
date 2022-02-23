@@ -15,7 +15,7 @@ public class WinningNumbers {
     }
 
     public List<Integer> getWinningNumbersWithoutBonus() {
-        return winningNumbers.subList(0, BONUS_NUMBER_INDEX);
+        return List.copyOf(winningNumbers.subList(0, BONUS_NUMBER_INDEX));
     }
 
     public int getBonusNumber() {

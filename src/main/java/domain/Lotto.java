@@ -24,7 +24,15 @@ public class Lotto {
         return lottoNumbers.size();
     }
 
-    public boolean contains(int number){
+    public boolean contains(int number) {
         return lottoNumbers.contains(number);
+    }
+
+    public Rank getMatchedRank(WinningNumbers winningNumbers) {
+        int matchedCount = (int)winningNumbers.getWinningNumbersWithoutBonus().stream()
+            .filter(this::contains)
+            .count();
+        boolean containsBonus = contains(winningNumbers.getBonusNumber());
+        return Rank.getMatchedRank(matchedCount, containsBonus);
     }
 }

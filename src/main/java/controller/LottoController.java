@@ -6,7 +6,7 @@ import java.util.Map;
 
 import domain.Lotto;
 import domain.LottoMaker;
-import domain.MyLotteries;
+import domain.PurchasedLotteries;
 import domain.Rank;
 import domain.WinningNumbers;
 import view.InputView;
@@ -23,24 +23,28 @@ public class LottoController {
     }
 
     public void runLotto() {
-        //TODO : 메소드로 분리
-        int userMoney = inputView.getMoneyInput();
+        PurchasedLotteries purchasedLotteries = purchase();
+        outputView.printPurchasedLotteries(purchasedLotteries);
 
-        MyLotteries myLotteries = order(userMoney);
-        outputView.printMyLotteries(myLotteries);
-        List<Integer> winningNumberInput = inputView.getWinningNumberInput();
-        int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
-        WinningNumbers winningNumbers = new WinningNumbers(winningNumberInput, bonusNumberInput);
-        Map<Rank, Integer> result = myLotteries.getResult(winningNumbers);
-        outputView.printStatistics(result, userMoney);
+        WinningNumbers winningNumbers =  draw();
+
+        Map<Rank, Integer> result = purchasedLotteries.getResult(winningNumbers);
+        outputView.printStatistics(result, purchasedLotteries.getProfitRate(winningNumbers));
     }
 
-    private MyLotteries order(int balance) {
+    private PurchasedLotteries purchase() {
+        int userMoney = inputView.getMoneyInput();
         List<Lotto> lotteries = new ArrayList<>();
-        int lottoCount = balance / Lotto.PRICE;
+        int lottoCount = userMoney / Lotto.PRICE;
         for (int i = 0; i < lottoCount; i++) {
             lotteries.add(LottoMaker.make());
         }
-        return new MyLotteries(lotteries);
+        return new PurchasedLotteries(lotteries);
+    }
+
+    private WinningNumbers draw() {
+        List<Integer> winningNumberInput = inputView.getWinningNumberInput();
+        int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
+        return new WinningNumbers(winningNumberInput, bonusNumberInput);
     }
 }

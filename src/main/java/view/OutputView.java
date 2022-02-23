@@ -2,20 +2,19 @@ package view;
 
 import java.util.Map;
 
-import domain.MyLotteries;
+import domain.PurchasedLotteries;
 import domain.Rank;
 
 public class OutputView {
 
-    public void printMyLotteries(MyLotteries myLotteries) {
-        System.out.println(myLotteries.count() + "개를 구매했습니다.");
-        myLotteries.get().forEach(System.out::println);
+    public void printPurchasedLotteries(PurchasedLotteries purchasedLotteries) {
+        System.out.println(purchasedLotteries.count() + "개를 구매했습니다.");
+        purchasedLotteries.get().forEach(System.out::println);
     }
 
-    public void printStatistics(Map<Rank, Integer> result, int userMoney) {
+    public void printStatistics(Map<Rank, Integer> result, float profitRate) {
         System.out.println("당첨 통계");
         System.out.println("---------");
-        int totalPrize = 0;
         for (int i = 0; i < Rank.noRank.ordinal(); i++) {
             Rank rank = Rank.values()[i];
             String bonus = rank == Rank.rank2 ? ", 보너스 볼 일치" : "";
@@ -26,9 +25,8 @@ public class OutputView {
                 bonus,
                 prize,
                 count);
-            totalPrize += prize * count;
         }
 
-        System.out.printf("총 수익률은 %.2f%%입니다.", ((float)totalPrize - userMoney) / userMoney * 100);
+        System.out.printf("총 수익률은 %.2f%%입니다.", profitRate);
     }
 }
