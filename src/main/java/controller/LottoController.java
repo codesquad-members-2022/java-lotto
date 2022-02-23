@@ -24,8 +24,17 @@ public class LottoController {
     }
 
     private int[] makeResult(Person testUser) {
-        String[] userNumbers = InputView.requestLottoNumbers();
-        return testUser.checkLottoTickets(Arrays.stream(userNumbers).mapToInt(Integer::parseInt).toArray());
+        String[] winningNumbers = getWinningNumbersWithBonusNumber();
+        return testUser.checkLottoTickets(Arrays.stream(winningNumbers).mapToInt(Integer::parseInt).toArray());
+    }
+
+    private String[] getWinningNumbersWithBonusNumber() {
+        String[] winningNumbers = InputView.requestLottoWinningNumbers();
+        String bonusNumber = InputView.requestBonusNumber();
+        String[] temp = new String[7];
+        System.arraycopy(winningNumbers, 0, temp, 0, winningNumbers.length);
+        temp[6] = bonusNumber;
+        return temp;
     }
 
     private void showResult(int[] results) {
