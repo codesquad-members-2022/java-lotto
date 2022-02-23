@@ -42,7 +42,7 @@ public class InputView {
         }
     }
 
-    public void inputWinningNumber() {
+    public List<Integer> inputWinningNumber() {
 
         List<Integer> winningNumber = new ArrayList<>();
 
@@ -54,13 +54,14 @@ public class InputView {
                     .map(Integer::parseInt)
                     .collect(toList());
             validateNumbers(winningNumber);
-            lottoCompany.notifyAnswer(winningNumber);
+            return winningNumber;
         } catch (IllegalArgumentException e) {
             System.out.println(INVALID_NUMBERS);
             inputWinningNumber();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return winningNumber;
     }
 
     private void validateNumbers(List<Integer> winningNumber) {

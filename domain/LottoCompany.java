@@ -19,14 +19,16 @@ public class LottoCompany {
         winningNumbers.addAll(inputWinningNumber);
     }
 
-    public Map<Integer, Integer> numberMatch(List<LottoTicket> lottoTickets) {
+    public Map<Integer, Integer> numberMatch(LottoTickets lottoTickets) {
         Map<Integer, Integer> answers = new HashMap<>();
 
-        for (int index = 0; index < lottoTickets.size(); index++) {
-            LottoTicket lottoTicket = lottoTickets.get(index);
+        for (int index = 0; index < lottoTickets.getLottoTickets().size(); index++) {
+            LottoTicket lottoTicket = lottoTickets.getLottoTickets().get(index);
             int count = lottoTicket.countAnswer(winningNumbers);
             answers.put(count,answers.getOrDefault(count,0)+1);
         }
+        lottoTickets.winningAmount(answers);
+
         return answers;
     }
 }
