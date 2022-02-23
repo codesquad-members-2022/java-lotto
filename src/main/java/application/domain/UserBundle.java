@@ -6,13 +6,13 @@ public class UserBundle {
 
     private final int money;
     private final int count;
-    private final UserLottery userLottery;
+    private final UserLotteries userLottery;
 
     public UserBundle(int money) {
         this.money = money;
 
         count = money / PRICE;
-        userLottery = new UserLottery(count);
+        userLottery = new UserLotteries(count);
     }
 
     public int getMoney() {
@@ -23,7 +23,7 @@ public class UserBundle {
         return count;
     }
 
-    public UserLottery getUserLottery() {
+    public UserLotteries getUserLottery() {
         return userLottery;
     }
 }

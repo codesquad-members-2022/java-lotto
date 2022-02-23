@@ -15,8 +15,8 @@ public class Statistics {
         put(Prize.FIRST, 0);
     }};
 
-    public Statistics(List<Lottery> lotteries) {
-        for (Lottery lottery : lotteries) {
+    public Statistics(List<UserLottery> lotteries) {
+        for (UserLottery lottery : lotteries) {
             Result result = lottery.getResult();
 
             Optional<Prize> prize = Prize.create(result);

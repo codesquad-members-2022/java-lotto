@@ -1,42 +1,39 @@
 package application.domain;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class UserLottery {
+public class UserLottery extends Lottery {
 
-    private final List<Lottery> lotteries = new ArrayList<>();
+    private Result result;
 
-    public UserLottery(int count) {
-        for (int idx = 0; idx < count; idx++) {
-            lotteries.add(new Lottery());
-        }
+    public UserLottery() {
+        super();
     }
-
     public UserLottery(List<Integer> numbers) {
-        lotteries.add(new Lottery(numbers));
+        super(numbers);
     }
 
-    public void compareEach(WinningLottery winningLottery) {
-        for (Lottery lottery : lotteries) {
-            lottery.compareLottery(winningLottery);
-        }
+    public void compareLottery(WinningLottery winningLottery) {
+        int matchCount = compareNumbers(winningLottery.getNumbers());
+        boolean bonus = compareBonus(winningLottery.getBonusBall());
+
+        result = new Result(matchCount, bonus);
     }
 
-    public void addUserLottery(List<Integer> numbers) {
-        lotteries.add(new Lottery(numbers));
+    public int compareNumbers(List<Integer> winningNumbers) {
+        return (int) IntStream.range(0, Lottery.COUNT)
+            .map(winningNumbers::get)
+            .filter(numbers::contains)
+            .count();
     }
 
-    public List<Lottery> getLotteries() {
-        return lotteries;
+    public boolean compareBonus(int bonusBall) {
+        return numbers.contains(bonusBall);
     }
 
-    public List<Result> getMatchCounts() {
-        return lotteries.stream()
-            .map(Lottery::getResult)
-            .collect(Collectors.toList());
+    public Result getResult() {
+        return result;
     }
 
 }
-

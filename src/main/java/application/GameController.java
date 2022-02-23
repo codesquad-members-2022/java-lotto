@@ -1,7 +1,6 @@
 package application;
 
 import application.domain.UserBundle;
-import application.domain.UserLottery;
 import application.domain.Statistics;
 import application.domain.WinningLottery;
 import application.view.InputView;

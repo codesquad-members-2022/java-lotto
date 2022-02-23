@@ -3,7 +3,7 @@ package application;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import application.domain.Lottery;
-import application.domain.UserLottery;
+import application.domain.UserLotteries;
 import application.domain.WinningLottery;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,7 +30,7 @@ class LotteryGeneratorTest {
     @Test
     @DisplayName("유저 로또 개수 입력 받아 랜덤으로 생성한다.")
     void userLotteryCountTest() {
-        UserLottery userLottery = new UserLottery(14);
+        UserLotteries userLottery = new UserLotteries(14);
         assertThat(userLottery.getLotteries().size()).isEqualTo(14);
     }
 
@@ -47,7 +47,7 @@ class LotteryGeneratorTest {
     @MethodSource("provideParameters")
     void matchingTest(List<Integer> numbers, int matchCount) {
 
-        UserLottery userLottery = new UserLottery(numbers);
+        UserLotteries userLottery = new UserLotteries(numbers);
         userLottery.addUserLottery(numbers);
         WinningLottery winningLottery = new WinningLottery(List.of(1, 2, 3, 4, 5, 6), 7);
         userLottery.compareEach(winningLottery);

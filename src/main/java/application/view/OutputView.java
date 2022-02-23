@@ -3,6 +3,7 @@ package application.view;
 import application.domain.Lottery;
 import application.domain.Prize;
 import application.domain.Statistics;
+import application.domain.UserLottery;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +23,8 @@ public class OutputView {
         System.out.printf("%d개를 구매했습니다.%n", count);
     }
 
-    public void printLotteries(List<Lottery> lotteries) {
-        for (Lottery lottery : lotteries) {
+    public void printLotteries(List<UserLottery> lotteries) {
+        for (UserLottery lottery : lotteries) {
             System.out.println(lottery.getNumbers());
         }
     }
