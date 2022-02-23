@@ -53,15 +53,14 @@ public class PersonTest {
         Person person = new Person("jerry", 14000, new LottoTicketSeller());
 
         // when
-        int[] numbers = new int[]{1, 2, 3, 4, 5, 6};
-        person.buyCustomLottoTicket(numbers);
+        int[] winningNumbers = new int[]{1, 2, 3, 4, 5, 6, 10};
         int[] numbers2 = new int[]{1, 2, 3, 4, 5, 7};
         person.buyCustomLottoTicket(numbers2);
         int[] numbers3 = new int[]{1, 2, 3, 4, 9, 8};
         person.buyCustomLottoTicket(numbers3);
 
         // then
-        assertThat(person.checkLottoTickets(numbers)).isEqualTo(new int[]{0, 0, 0, 0, 1, 1, 1});
+        assertThat(person.checkLottoTickets(winningNumbers)).isEqualTo(new int[]{0, 0, 0, 0, 1, 1, 0, 0});
 
     }
 

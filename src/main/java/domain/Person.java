@@ -18,11 +18,10 @@ public class Person {
         myLottoTicketList = new ArrayList<>();
     }
 
-    public ArrayList<LottoTicket> buyRandomLottoTicket(int money) {
+    public void buyRandomLottoTicket(int money) {
         isValidInputMoney(money);
         myLottoTicketList = lottoTicketSeller.exchangeTicket(money);
         this.money -= money;
-        return null;
     }
 
     private void isValidInputMoney(int money) {
@@ -66,17 +65,21 @@ public class Person {
 
     public void buyCustomLottoTicket(int[] numbers) {
         ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
-        for (int i = 0; i < numbers.length; i++) {
-            lottoNumbers.add(new LottoNumber(numbers[i]));
+        for (int number : numbers) {
+            lottoNumbers.add(new LottoNumber(number));
         }
         myLottoTicketList.add(lottoTicketSeller.exchangeTicket(lottoNumbers));
         this.money -= TICKET_PRICE;
     }
 
     public int[] checkLottoTickets(int[] numbers) {
-        int[] result = new int[7];
-        for (int i = 0; i < myLottoTicketList.size(); i++) {
-            int count = myLottoTicketList.get(i).countWinningNumber(numbers);
+        int[] result = new int[8];
+        for (LottoTicket lottoTicket : myLottoTicketList) {
+            int count = lottoTicket.countWinningNumber(numbers);
+            if (count == 5 && lottoTicket.checkBonusNumber(numbers[6])) {
+                result[7]++;
+                continue;
+            }
             result[count]++;
         }
         return result;
