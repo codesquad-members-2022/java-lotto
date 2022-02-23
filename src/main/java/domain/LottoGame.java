@@ -1,6 +1,7 @@
 package domain;
 
 import view.InputView;
+import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +23,7 @@ public class LottoGame {
         System.out.println(count + "개를 구매하셨습니다.");
         createLotto(count, createLottoBalls());
 
-        print();
+        OutputView.printLottos(lottos);
 
         String[] split = InputView.winningNumber().split(", ");
 
@@ -51,12 +52,5 @@ public class LottoGame {
             lottos.add(new Lotto(lottoNumbers));
         }
     }
-
-    public void print() {
-        for (Lotto lotto : lottos) {
-            System.out.println(lotto);
-        }
-    }
-
 
 }
