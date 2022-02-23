@@ -20,7 +20,19 @@ public class InputView {
         return sc.nextLine();
     }
 
+    public static String requestManual() {
+        OutputView.requestManual();
+        return sc.nextLine();
+
+    }
+
+    // TODO
     public static void scannerClose() {
+
         sc.close();
+    }
+
+    public static String requestManualLottoNumber(int count) {
+        return sc.nextLine();
     }
 }

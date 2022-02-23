@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -28,15 +29,38 @@ public class LottoController {
         this.repository = new LottoRepository(new ArrayList<>());
     }
 
-
     public void buildLotto() {
         price = Integer.parseInt(InputView.requestPrice());
         int count = price / LOTTO_PRICE;
-        while (repository.getLottoList().size() != count) {
+        int manualLottoEach = Integer.parseInt(InputView.requestManual());
+
+        if (manualLottoEach != 0) {
+            makeManualLottoPerCount(manualLottoEach);
+        }
+
+        // TODO!!
+        while (repository.getLottoList().size() != (count - manualLottoEach)) {
             Set<Integer> numbers = makeRandomNumberSet();
             checkOverLap(new ArrayList<>(numbers));
         }
-        OutputView.printPurchaseCount(count, repository.getLottoList());
+        OutputView.printPurchaseCount(count - manualLottoEach, repository.getLottoList());
+    }
+
+    private void makeManualLottoPerCount(int manualLottoEach) {
+        String manualLottoNumber;
+        OutputView.requestManualLottoNumber();
+        while (manualLottoEach-- > 0) {
+            manualLottoNumber = InputView.requestManualLottoNumber(manualLottoEach);
+            makeManualLotto(manualLottoNumber);
+        }
+    }
+
+    private void makeManualLotto(String manualLottoNumber) {
+        String[] split = manualLottoNumber.split(", ");
+        List<Integer> collect = Arrays.stream(split)
+            .map(Integer::valueOf)
+            .collect(Collectors.toList());
+        checkOverLap(collect);
     }
 
     private Set<Integer> makeRandomNumberSet() {
@@ -56,8 +80,7 @@ public class LottoController {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
         String bonusNumber = InputView.requestBonusNumber();
-        repository.checkWinNumber(winNumbers, bonusNumber,price);
+        repository.checkWinNumber(winNumbers, bonusNumber, price);
     }
-
 
 }
