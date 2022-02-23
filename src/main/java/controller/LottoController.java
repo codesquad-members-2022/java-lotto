@@ -11,6 +11,9 @@ import java.util.List;
 
 public class LottoController {
 
+    public static final int WINNING_NUMBER_SIZE = 7;
+    public static final int BONUS_NUMBER_INDEX = 6;
+
     public void run() {
         int userMoney = InputView.requestMoney();
         LottoTicketSeller seller = new LottoTicketSeller();
@@ -31,9 +34,14 @@ public class LottoController {
     private String[] getWinningNumbersWithBonusNumber() {
         String[] winningNumbers = InputView.requestLottoWinningNumbers();
         String bonusNumber = InputView.requestBonusNumber();
-        String[] temp = new String[7];
+        String[] winningNumbersWithBonus = arrayCopy(winningNumbers);
+        winningNumbersWithBonus[BONUS_NUMBER_INDEX] = bonusNumber;
+        return winningNumbersWithBonus;
+    }
+
+    private String[] arrayCopy(String[] winningNumbers) {
+        String[] temp = new String[WINNING_NUMBER_SIZE];
         System.arraycopy(winningNumbers, 0, temp, 0, winningNumbers.length);
-        temp[6] = bonusNumber;
         return temp;
     }
 
