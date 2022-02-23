@@ -14,4 +14,13 @@ public class InputView {
         OutputView.requestWinNumber();
         return sc.nextLine();
     }
+
+    public static String requestBonusNumber() {
+        OutputView.requestBonusNumber();
+        return sc.nextLine();
+    }
+
+    public void close() {
+        sc.close();
+    }
 }

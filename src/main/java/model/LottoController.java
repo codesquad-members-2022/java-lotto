@@ -1,12 +1,18 @@
 package model;
 
-import view.InputView;
-import view.OutputView;
-
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import view.InputView;
+import view.OutputView;
 
 public class LottoController {
     private static final int LOTTO_PRICE = 1000;
@@ -46,10 +52,8 @@ public class LottoController {
     }
 
     private void checkOverLap(List<Integer> lists) {
-        int size = lottoList.stream()
-                .filter(l -> l.sameList(lists))
-                .collect(Collectors.toList())
-                .size();
+        int size = (int)lottoList.stream()
+            .filter(l -> l.sameList(lists)).count();
         sortingNumber(lists, size);
     }
 
@@ -74,6 +78,8 @@ public class LottoController {
             countHowManyLotto(winNumbers, lotto);
         }
         rateOfReturn();
+        String bonusNumber = InputView.requestBonusNumber();
+
     }
 
     private void countHowManyLotto(String[] winNumbers, Lotto lotto) {

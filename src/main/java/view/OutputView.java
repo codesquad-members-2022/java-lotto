@@ -13,7 +13,7 @@ public class OutputView {
     }
 
     public static void requestWinNumber() {
-        System.out.println("당첨번호를 입력해 주세요.");
+        System.out.println("지난 주 당첨번호를 입력해 주세요.");
     }
 
     public static void printResult(Map<Integer, Integer> map, String result) {
@@ -34,5 +34,9 @@ public class OutputView {
                     .collect(Collectors.joining(", ", "[", "]"));
             System.out.println(collect);
         }
+    }
+
+    public static void requestBonusNumber() {
+        System.out.println("보너스 볼을 입력해주세요.");
     }
 }
