@@ -26,7 +26,7 @@ public class Lotto {
 
     public int getMatchBallCount(WinningLotto winningLotto) {
         return (int) winningLotto.getLotto().balls.stream()
-                .filter(balls::contains).count();
+                .filter(this.balls::contains).count();
     }
 
     public boolean isMatchBonusBall(WinningLotto winningLotto) {
