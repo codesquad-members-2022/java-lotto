@@ -1,12 +1,9 @@
 package model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -17,33 +14,20 @@ import view.OutputView;
 public class LottoController {
     private static final int LOTTO_PRICE = 1000;
     private static final int MAX_NUMBER_COUNT = 6;
-    private static final int MIN_WINNING_NUMBER = 3;
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 45;
-    private static final int BONUS_COUNT = 7;
-    private static final int BONUS_TARGET_COUNT = 5;
 
     private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
         .boxed()
         .collect(Collectors.toList());
 
     private final LottoRepository repository;
-    private final Map<Integer, Integer> map;
     private int price;
 
     public LottoController() {
         this.repository = new LottoRepository(new ArrayList<>());
-        this.map = new LinkedHashMap<>();
-        initMap();
     }
 
-    private void initMap() {
-        map.put(3, 0);
-        map.put(4, 0);
-        map.put(5, 0);
-        map.put(BONUS_COUNT, 0);
-        map.put(6, 0);
-    }
 
     public void buildLotto() {
         price = Integer.parseInt(InputView.requestPrice());
@@ -72,32 +56,8 @@ public class LottoController {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
         String bonusNumber = InputView.requestBonusNumber();
-        for (Lotto lotto : repository.getLottoList()) {
-            countMatchLotto(winNumbers, lotto, bonusNumber);
-        }
-        rateOfReturn();
-        InputView.scannerClose();
+        repository.checkWinNumber(winNumbers, bonusNumber,price);
     }
 
-    private void countMatchLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
-        int tempCount = lotto.countCollectNumber(winNumbers);
-        if (tempCount == BONUS_TARGET_COUNT && lotto.hasBonusNumber(bonusNumber)) {
-            map.put(BONUS_COUNT, map.get(BONUS_COUNT) + 1);
-            return;
-        }
-        if (tempCount >= MIN_WINNING_NUMBER) {
-            map.put(tempCount, map.get(tempCount) + 1);
-        }
-    }
 
-    private void rateOfReturn() {
-        int revenue = 0;
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            revenue += CollectCalculator.getCalculator(entry.getKey(), entry.getValue());
-        }
-        double temp = (double)(revenue - price) / (price) * 100;
-        DecimalFormat df = new DecimalFormat("0.00");
-        String result = df.format(temp);
-        OutputView.printResult(map, result);
-    }
 }
