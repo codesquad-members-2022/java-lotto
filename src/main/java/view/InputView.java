@@ -20,7 +20,7 @@ public class InputView {
         return sc.nextLine();
     }
 
-    public void close() {
+    public static void ScannerClose() {
         sc.close();
     }
 }

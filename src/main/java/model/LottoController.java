@@ -3,7 +3,6 @@ package model;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,22 +21,22 @@ public class LottoController {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 45;
     private static final int BONUS_COUNT = 7;
+    private static final int BONUS_TARGET_COUNT = 5;
 
     private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
         .boxed()
         .collect(Collectors.toList());
-
     private final List<Lotto> lottoList;
-    private Map<Integer, Integer> map;
+    private final Map<Integer, Integer> map;
     private int price;
 
     public LottoController(List<Lotto> lottoList) {
         this.lottoList = lottoList;
+        this.map = new LinkedHashMap<>();
         initMap();
     }
 
     private void initMap() {
-        map = new LinkedHashMap<>();
         map.put(3, 0);
         map.put(4, 0);
         map.put(5, 0);
@@ -57,6 +56,13 @@ public class LottoController {
         OutputView.printPurchaseCount(count, lottoList);
     }
 
+    private void makeRandomNumberSet(Set<Integer> numbers) {
+        while (numbers.size() != MAX_NUMBER_COUNT) {
+            Collections.shuffle(range);
+            numbers.add(range.get(0));
+        }
+    }
+
     private void checkOverLap(List<Integer> lists) {
         int size = (int)lottoList.stream()
             .filter(l -> l.sameList(lists)).count();
@@ -70,27 +76,20 @@ public class LottoController {
         }
     }
 
-    private void makeRandomNumberSet(Set<Integer> numbers) {
-        while (numbers.size() != MAX_NUMBER_COUNT) {
-            Collections.shuffle(range);
-            numbers.add(range.get(0));
-        }
-    }
-
     public void checkWinNumber() {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
         String bonusNumber = InputView.requestBonusNumber();
         for (Lotto lotto : lottoList) {
-            countHowManyLotto(winNumbers, lotto, bonusNumber);
+            countMatchLotto(winNumbers, lotto, bonusNumber);
         }
         rateOfReturn();
-
+        InputView.ScannerClose();
     }
 
-    private void countHowManyLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
+    private void countMatchLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
         int tempCount = lotto.countCollectNumber(winNumbers);
-        if (tempCount == 5 && lotto.hasBonusNumber(bonusNumber)) {
+        if (tempCount == BONUS_TARGET_COUNT && lotto.hasBonusNumber(bonusNumber)) {
             map.put(BONUS_COUNT, map.get(BONUS_COUNT) + 1);
             return;
         }

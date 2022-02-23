@@ -48,11 +48,7 @@ public enum CollectCalculator {
         }
     }
 
-    private long getPrice() {
-        return price;
-    }
-
-    public static long getWinnerMoney(int number) {
+    public static long getWinningMoney(int number) {
         switch (number) {
             case 3:
                 return THREE.getPrice();
@@ -67,11 +63,13 @@ public enum CollectCalculator {
         }
     }
 
+    private long getPrice() {
+        return price;
+    }
     private final long price;
 
     CollectCalculator(long price) {
         this.price = price;
     }
-
     abstract long calculate(int count);
 }

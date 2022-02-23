@@ -21,7 +21,7 @@ public class OutputView {
         System.out.println("-----------");
         for (Integer key : map.keySet()) {
             String tempValue = makeResultTemplate(key);
-            System.out.println(tempValue + CollectCalculator.getWinnerMoney(key) + "원) - " + map.get(key) + "개");
+            System.out.println(tempValue + CollectCalculator.getWinningMoney(key) + "원) - " + map.get(key) + "개");
         }
         System.out.println("총 수익률은 " + result + "%입니다.");
     }
