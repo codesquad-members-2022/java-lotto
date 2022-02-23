@@ -25,7 +25,7 @@ public class InputView {
         return new Money(inputMoney);
     }
 
-    public static WinningTicket inputWinnigTicket() {
+    public static WinningTicket inputWinningTicket() {
         Set<LottoNumber> lottoNumbers = inputWinnnigNumbers();
         LottoNumber bonusNumber = inputBonusNumber();
 
