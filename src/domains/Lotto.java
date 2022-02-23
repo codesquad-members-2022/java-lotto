@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class Lotto {
+	public static final String ERROR_OF_LOTTO_PARAMS = "error of lotto params";
 	private final List<Integer> sixNumbers;
 
 	public Lotto(List<Integer> sixNumbers) {
 		if (Objects.isNull(sixNumbers)) {
-			throw new NullPointerException("NPE - lotto");
+			throw new IllegalArgumentException(ERROR_OF_LOTTO_PARAMS);
 		}
 		if (sixNumbers.size() < 6) {
-			throw new IllegalArgumentException("error of lotto params");
+			throw new IllegalArgumentException(ERROR_OF_LOTTO_PARAMS);
 		}
 		Collections.sort(sixNumbers);
 		this.sixNumbers = sixNumbers;
@@ -23,10 +24,17 @@ public class Lotto {
 	}
 
 	public int numberOfWinnings(List<Integer> winningNumbers){
-		long count = winningNumbers.stream()
-				.filter(sixNumbers::contains)
-				.count();
+		int count = 0;
+		for (Integer winningNumber : winningNumbers) {
+			count = getCount(count, winningNumber);
+		}
+		return count;
+	}
 
-		return Long.valueOf(count).intValue();
+	private int getCount(int count, Integer winningNumber) {
+		if (sixNumbers.contains(winningNumber)) {
+			count++;
+		}
+		return count;
 	}
 }

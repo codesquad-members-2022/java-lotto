@@ -1,67 +1,46 @@
 import static views.Input.*;
 import static views.Output.*;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import domains.LottoMachine;
 import domains.Lottos;
+import domains.Ranking;
+import domains.Winnings;
 
 public class Main {
-	private static final int LOTTO_START_NUMBER = 1;
-	private static final int LOTTO_MAX_LIMITED_NUMBER = 46;
-	private static final int NUMBER_OF_AUTO_MAX = 6;
+	private static final int IDX_PURCHASED_AMOUNT = 0;
+	private static final int IDX_NUMBER_OF_TICKET = 1;
+	private static LottoMachine lottoMachine = new LottoMachine();
 	private static Lottos lottos = new Lottos();
 
 	public static void main(String[] args) {
-		int purchaseAmount = getPurchaseAmount();
-		int ticketAccount = getTicketAccount(purchaseAmount);
+		int[] purchasedLotto = purchaseLotto();
+		int purchaseAmount = purchasedLotto[IDX_PURCHASED_AMOUNT];
+		int numberOfTicket = purchasedLotto[IDX_NUMBER_OF_TICKET];
 
-		ArrayList<Integer> lottoNumbers = getLottoNumbers();
-		bulidLottos(ticketAccount, lottoNumbers);
-		List<List<Integer>> purchasedLottos = lottos.getPurchasedLottos();
+		ArrayList<ArrayList<Integer>> tickets = lottoMachine.getTicket(numberOfTicket);
+		List<List<Integer>> totalLottos = lottos.getTotalLottos(tickets);
+		showLottos(totalLottos);
 
-		purchaseHistory(purchasedLottos);
+		List<Integer> winningNumbers = inputWinningNumbers();
+		List<Integer> threeOrMore = lottos.numberOfWinningAboveThree(winningNumbers);
 
-		List<Integer> winningNumbers = getWinningNumbers();
-
-		int numberOfWinnings = lottos.compareResult(winningNumbers);
-		System.out.println(numberOfWinnings);
+		getResultOfLotto(purchaseAmount, threeOrMore);
 
 		scanClose();
 	}
 
-	private static void bulidLottos(int ticketAccount, ArrayList<Integer> lottoNumbers) {
-		for (int i = 0; i < ticketAccount; i++) {
-			mixNumber(lottoNumbers);
-			ArrayList<Integer> autoPickedNumber = pickAutoLottoNumber(lottoNumbers);
-			lottos.purchased(autoPickedNumber);
-		}
-	}
+	private static void getResultOfLotto(int purchaseAmount, List<Integer> threeOrMore) {
+		Winnings winnings = new Winnings(threeOrMore);
+		Ranking ranking = new Ranking(winnings);
 
-	private static void purchaseHistory(List<List<Integer>> purchasedLottos) {
-		for (List<Integer> lotto : purchasedLottos) {
-			prints.accept(lotto);
-		}
-	}
-
-	private static ArrayList<Integer> getLottoNumbers() {
-		ArrayList<Integer> lottoNumbers = new ArrayList<>();
-		for (int i = LOTTO_START_NUMBER; i < LOTTO_MAX_LIMITED_NUMBER; i++) {
-			lottoNumbers.add(i);
-		}
-		return lottoNumbers;
-	}
-
-	private static ArrayList<Integer> pickAutoLottoNumber(ArrayList<Integer> lottoNumbers) {
-		ArrayList<Integer> autoPickedNumber = new ArrayList<>();
-		for (int j = 0; j < NUMBER_OF_AUTO_MAX; j++) {
-			autoPickedNumber.add(lottoNumbers.get(j));
-		}
-		return autoPickedNumber;
-	}
-
-	private static void mixNumber(ArrayList<Integer> lottoNumbers) {
-		Collections.shuffle(lottoNumbers);
+		Map<Ranking.Rank, Integer> ranks = ranking.resultOfRanks();
+		double yields = ranking.totalYields(purchaseAmount);
+		printResultOfLottoAndYield(ranks, yields);
 	}
 }

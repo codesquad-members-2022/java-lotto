@@ -17,7 +17,7 @@ public class Input {
 	public Input() {
 	}
 
-	public static List<Integer> getWinningNumbers(){
+	public static List<Integer> inputWinningNumbers(){
 		println.accept(OUTPUT_ASK_WINNING_NUMBER);
 		String textNumbers = nextLine();
 		List<Integer> winningNumbers = toInteger(textNumbers);
@@ -28,6 +28,12 @@ public class Input {
 		return Arrays.stream(textNumbers.split(","))
 				.map(Integer::parseInt)
 				.collect(toList());
+	}
+
+	public static int[] purchaseLotto() {
+		int purchaseAmount = getPurchaseAmount();
+		int numberOfTicket = getTicketAccount(purchaseAmount);
+		return new int[] {purchaseAmount, numberOfTicket};
 	}
 
 	public static int getPurchaseAmount() {
