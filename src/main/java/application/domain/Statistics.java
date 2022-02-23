@@ -1,5 +1,6 @@
 package application.domain;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -7,16 +8,17 @@ import java.util.Optional;
 
 public class Statistics {
 
-    private final Map<Prize, Integer> counts = new EnumMap<>(Prize.class) {{
-        put(Prize.FIFTH, 0);
-        put(Prize.FORTH, 0);
-        put(Prize.THIRD, 0);
-        put(Prize.SECOND, 0);
-        put(Prize.FIRST, 0);
-    }};
+    private final Map<Prize, Integer> counts = new EnumMap<>(Prize.class);
+    private final int money;
 
-    public Statistics(List<UserLottery> lotteries) {
-        for (UserLottery lottery : lotteries) {
+    public Statistics(UserBundle userBundle) {
+        UserLotteries userLotteries = userBundle.getUserLotteries();
+        money = userBundle.getMoney();
+
+        Arrays.stream(Prize.values())
+            .forEach(prize -> counts.put(prize, 0));
+
+        for (UserLottery lottery : userLotteries.get()) {
             Result result = lottery.getResult();
 
             Optional<Prize> prize = Prize.create(result);
@@ -24,7 +26,7 @@ public class Statistics {
         }
     }
 
-    public double getEarningsRate(int money) {
+    public double getEarningsRate() {
         int reward = counts.keySet().stream()
             .mapToInt(key -> key.reward * counts.get(key))
             .sum();

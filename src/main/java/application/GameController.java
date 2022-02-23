@@ -2,6 +2,7 @@ package application;
 
 import application.domain.UserBundle;
 import application.domain.Statistics;
+import application.domain.UserLotteries;
 import application.domain.WinningLottery;
 import application.view.InputView;
 import application.view.OutputView;
@@ -21,20 +22,20 @@ public class GameController {
 
     public void run() {
         UserBundle userBundle = new UserBundle(inputView.getMoney());
+        UserLotteries userLotteries = userBundle.getUserLotteries();
         outputView.printCount(userBundle.getCount());
-        outputView.printLotteries(userBundle.getUserLottery().getLotteries());
+        outputView.printLotteries(userLotteries.get());
 
-        List<Integer> numbers = getNumbers();
-        WinningLottery winningLottery = new WinningLottery(numbers, inputView.getBonusBall());
-        userBundle.getUserLottery().compareEach(winningLottery);
+        WinningLottery winningLottery = new WinningLottery(getNumbers(), inputView.getBonusNumber());
+        userLotteries.compareEach(winningLottery);
 
-        Statistics statistics = new Statistics(userBundle.getUserLottery().getLotteries());
+        Statistics statistics = new Statistics(userBundle);
         outputView.printStatistics(statistics);
-        outputView.printEarningsRate(statistics.getEarningsRate(userBundle.getMoney()));
+        outputView.printEarningsRate(statistics.getEarningsRate());
     }
-    
+
     public List<Integer> getNumbers() {
-        String winningNumber = inputView.winningNumber();
+        String winningNumber = inputView.getWinningNumbers();
         String[] split = winningNumber.trim().split(",");
 
         return Arrays.stream(split)

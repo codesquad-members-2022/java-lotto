@@ -24,12 +24,12 @@ public class InputView {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public String winningNumber() {
+    public String getWinningNumbers() {
         System.out.println("\n당첨 번호를 입력해 주세요.");
         return scanner.nextLine();
     }
 
-    public int getBonusBall() {
+    public int getBonusNumber() {
         System.out.println("보너스 볼을 입력해 주세요.");
         return Integer.parseInt(scanner.nextLine());
     }

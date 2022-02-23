@@ -28,7 +28,7 @@ public class UserLotteries {
         lotteries.add(new UserLottery(numbers));
     }
 
-    public List<UserLottery> getLotteries() {
+    public List<UserLottery> get() {
         return lotteries;
     }
 
