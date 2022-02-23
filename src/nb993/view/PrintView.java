@@ -9,8 +9,9 @@ import nb993.model.Rank;
 
 public class PrintView {
 
-    public void printLottos(List<LottoTicket> lottos) {
-        System.out.println(lottos.size() + "개를 구매했습니다.");
+    public void printLottos(List<LottoTicket> lottos, int purchaseCount, int manualPurchaseCount) {
+        System.out.println("수동으로 " + manualPurchaseCount + "장, 자동으로 "
+            + (purchaseCount - manualPurchaseCount) + "개를 구매했습니다.");
 
         for (int i = 0; i < lottos.size(); i++) {
             System.out.println(lottos.get(i));
