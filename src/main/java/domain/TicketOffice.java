@@ -12,9 +12,8 @@ public class TicketOffice {
     private final int PRICE = 1000;
     private int TOTAL_PRICE;
     private int bonusNumber;
-    private List<Integer> winningNumbers = new ArrayList<>();
+    private LottoTicket winningTicket;
     private Map<Integer, Integer> statistics = new HashMap<>();
-
     {
         statistics.put(3, 0);
         statistics.put(4, 0);
@@ -70,11 +69,8 @@ public class TicketOffice {
         return tickets;
     }
 
-    public void setWinningNumber() {
-        String[] winning = InputView.getWinningNumber();
-        for (int i = 0; i < winning.length; i++) {
-            winningNumbers.add(Integer.parseInt(winning[i]));
-        }
+    public void setWinningTicket() {
+        winningTicket = new LottoTicket(InputView.getWinningNumber());
     }
 
     public void setBonusNumber() { // 추후 당첨 번호에 없는 번호만 받도록 예외처리 필요
@@ -85,7 +81,7 @@ public class TicketOffice {
         int matchedNumber = 0;
         boolean isBonus = false;
         for (LottoTicket ticket : tickets) {
-            matchedNumber = checkWinningNumber(ticket.getTicketInfo());
+            matchedNumber = ticket.comparisonWinningTicket(winningTicket);
             isBonus = checkBonusNumber(ticket.getTicketInfo());
             matchedNumber += temp(matchedNumber, isBonus);
             statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
@@ -114,25 +110,10 @@ public class TicketOffice {
         return Rank.designateRank(matchedNumber, isBonus).getPrize();
     }
 
-    private int checkWinningNumber(List<Integer> ticketInfo) {
-        int count = 0;
-        for (Integer number : ticketInfo) {
-            count += isWinningNumber(number);
-        }
-        return count;
-    }
-
     private boolean checkBonusNumber(List<Integer> ticketInfo) {
         if (ticketInfo.contains(bonusNumber)) {
             return true;
         }
         return false;
-    }
-
-    private int isWinningNumber(int number) {
-        if (winningNumbers.contains(number)) {
-            return 1;
-        }
-        return 0;
     }
 }

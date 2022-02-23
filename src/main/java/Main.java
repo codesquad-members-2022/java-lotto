@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         TicketOffice to = new TicketOffice();
         List<LottoTicket> tickets = to.issueTickets();
-        to.setWinningNumber();
+        to.setWinningTicket();
         to.setBonusNumber();
         to.getStatistic(tickets);
     }

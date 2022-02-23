@@ -1,9 +1,7 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static Scanner sc;
@@ -16,10 +14,12 @@ public class InputView {
     }
 
 
-    public static String[] getWinningNumber() {
+    public static List<Integer> getWinningNumber() {
         sc = new Scanner(System.in);
         System.out.println("\n지난 주 당첨 번호를 입력해 주세요.");
-        return sc.nextLine().split(",");
+        String[] winningNumbers = sc.nextLine().split(",");
+        return Arrays.stream(winningNumbers)
+                .map(Integer::parseInt).collect(Collectors.toList());
     }
 
     public static boolean askisAuto() {
