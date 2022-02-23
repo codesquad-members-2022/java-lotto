@@ -21,25 +21,51 @@ public class LottoController {
     private final ScanView scanView;
     private final PrintView printView;
     private List<LottoTicket> lottos;
+    private Map<Rank, Integer> rankResult;
+    private long amountOfWinningMoney;
+    private int purchaseAmount;
+    private WinningNumber winningNumbers;
 
     public LottoController(ScanView scanView, PrintView printView) {
+        this.lottos = new ArrayList<>();
         this.scanView = scanView;
         this.printView = printView;
     }
 
-    public void initLottos() {
-        this.lottos = new ArrayList<>();
-        int purchaseAmount = scanView.getPurchaseAmount();
+    public void playGame() {
+        initLottos();
+        printGame();
+        printLottoResult();
+    }
 
+    public void initLottos() {
+        setPurchaseAmount();
+        setPurchaseCount();
+        setManualPurchaseCount();
+        setManualLottoTickets();
+        setAutoLottoTickets();
+        setWinningNumbers();
+        setRankResultMap();
+        setAmountOfWinningMoney();
+    }
+
+    private void setPurchaseAmount() {
+        purchaseAmount = scanView.getPurchaseAmount();
+    }
+
+    private void setPurchaseCount() {
         purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
+    }
+
+    private void setManualPurchaseCount() {
         manualPurchaseCount = scanView.getManualPurchaseCount(purchaseCount);
+    }
+
+
+    private void setManualLottoTickets() {
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
         for (int i = 0; i < manualPurchaseCount; i++) {
             createManualLottoTicket();
-        }
-
-        for (int i = 0; i < purchaseCount - manualPurchaseCount; ++i) {
-            lottos.add(new LottoTicket());
         }
     }
 
@@ -53,38 +79,36 @@ public class LottoController {
         }
     }
 
-    public void playGame() {
-        initLottos();
-        printGame();
-        printLottoResult();
+    private void setAutoLottoTickets() {
+        for (int i = 0; i < purchaseCount - manualPurchaseCount; ++i) {
+            lottos.add(new LottoTicket());
+        }
     }
+
 
     private void printLottoResult() {
-        WinningNumber winningNumbers = new WinningNumber(scanView.getWinningNumber(),
-            scanView.getBonusNumber());
-        Map<Rank, Integer> rankResult = getRankResultMap(winningNumbers);
-        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO,
-            getAmountOfWinningMoney(rankResult));
+        printView.printResult(rankResult, purchaseAmount, amountOfWinningMoney);
     }
 
-    private Map<Rank, Integer> getRankResultMap(WinningNumber winningNumbers) {
-        Map<Rank, Integer> rankResult = new HashMap<>();
+    private void setRankResultMap() {
+        rankResult = new HashMap<>();
         for (int i = 0; i < lottos.size(); i++) {
             Rank r = lottos.get(i).getResult(winningNumbers);
             int count = rankResult.getOrDefault(r, 0);
             rankResult.put(r, count + 1);
         }
-        return rankResult;
     }
 
-    private long getAmountOfWinningMoney(Map<Rank, Integer> rankResult) {
-        long winningMoney = 0;
+    private void setAmountOfWinningMoney() {
         for (Map.Entry<Rank, Integer> entry : rankResult.entrySet()) {
             Rank rank = entry.getKey();
             int count = entry.getValue();
-            winningMoney += (long)rank.getWinningMoney() * count;
+            amountOfWinningMoney += (long)rank.getWinningMoney() * count;
         }
-        return winningMoney;
+    }
+
+    private void setWinningNumbers() {
+        winningNumbers = new WinningNumber(scanView.getWinningNumber(), scanView.getBonusNumber());
     }
 
     public void printGame() {
