@@ -1,8 +1,9 @@
-import lotto_game.LottoManager;
+import lotto_game.controller.LottoController;
 
 public class Application {
+
     public static void main(String[] args) {
-        LottoManager lottoManager = new LottoManager();
-        lottoManager.startLottoGames();
+        LottoController lottoController = new LottoController();
+        lottoController.doWorkLottoManager();
     }
 }
