@@ -33,7 +33,9 @@ public class TicketOffice {
         }
     }
 
-    private LottoTicket makeAutoTicket() {
+    private LottoTicket makeLottoTicket(boolean isAuto) {
+        if (!isAuto)
+            return new LottoTicket(InputView.getManualNumber());
         List<Integer> ticketNumber = new ArrayList<>();
         Collections.shuffle(lottoNumber);
         for (int i = 0; i < SELECTED_NUMBER; i++) {
@@ -43,28 +45,15 @@ public class TicketOffice {
         return new LottoTicket(ticketNumber);
     }
 
-    private LottoTicket makeManualTicket() {
-        List<Integer> ticketNumber = InputView.getManualNumber();
-        return new LottoTicket(ticketNumber);
-    }
-
     public List<LottoTicket> issueTickets() {
         int amount = InputView.getAmount();
         int numberOfTickets = amount / PRICE;
         int change = amount % PRICE;
         TOTAL_PRICE = PRICE * numberOfTickets;
         List<LottoTicket> tickets = new ArrayList<>();
-
         boolean isAuto = InputView.askIsAuto();
-        if (isAuto) {
-            for (int i = 0; i < numberOfTickets; i++) {
-                tickets.add(makeAutoTicket());
-            }
-        } else {
-            for (int i = 0; i < numberOfTickets; i++) {
-                tickets.add(makeManualTicket());
-            }
-        }
+        for (int i = 0; i < numberOfTickets; i++)
+            tickets.add(makeLottoTicket(isAuto));
         OutputView.completePurchase(numberOfTickets, change, tickets);
         return tickets;
     }
