@@ -45,4 +45,10 @@ public class LottoUtil {
             throw new IllegalArgumentException("중복된 숫자가 존재합니다.");
         }
     }
+
+    public static void validatePurchaseLimit(int purchaseLimit, int manualPurchaseCount) {
+        if (purchaseLimit < manualPurchaseCount) {
+            throw new IllegalArgumentException("구매 금액을 초과하였습니다.");
+        }
+    }
 }
