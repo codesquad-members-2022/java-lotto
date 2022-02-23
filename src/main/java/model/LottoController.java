@@ -27,12 +27,12 @@ public class LottoController {
         .boxed()
         .collect(Collectors.toList());
 
-    private final List<Lotto> lottoList;
+    private final LottoRepository repository;
     private final Map<Integer, Integer> map;
     private int price;
 
-    public LottoController(List<Lotto> lottoList) {
-        this.lottoList = lottoList;
+    public LottoController() {
+        this.repository = new LottoRepository(new ArrayList<>());
         this.map = new LinkedHashMap<>();
         initMap();
     }
@@ -48,12 +48,11 @@ public class LottoController {
     public void buildLotto() {
         price = Integer.parseInt(InputView.requestPrice());
         int count = price / LOTTO_PRICE;
-
-        while (lottoList.size() != count) {
+        while (repository.getLottoList().size() != count) {
             Set<Integer> numbers = makeRandomNumberSet();
             checkOverLap(new ArrayList<>(numbers));
         }
-        OutputView.printPurchaseCount(count, lottoList);
+        OutputView.printPurchaseCount(count, repository.getLottoList());
     }
 
     private Set<Integer> makeRandomNumberSet() {
@@ -66,27 +65,18 @@ public class LottoController {
     }
 
     private void checkOverLap(List<Integer> lists) {
-        int size = (int)lottoList.stream()
-            .filter(l -> l.sameList(lists)).count();
-        sortingNumber(lists, size);
-    }
-
-    private void sortingNumber(List<Integer> lists, int size) {
-        if (size == 0) {
-            Collections.sort(lists);
-            lottoList.add(new Lotto(lists));
-        }
+        repository.checkOverLap(lists);
     }
 
     public void checkWinNumber() {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
         String bonusNumber = InputView.requestBonusNumber();
-        for (Lotto lotto : lottoList) {
+        for (Lotto lotto : repository.getLottoList()) {
             countMatchLotto(winNumbers, lotto, bonusNumber);
         }
         rateOfReturn();
-        InputView.ScannerClose();
+        InputView.scannerClose();
     }
 
     private void countMatchLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
