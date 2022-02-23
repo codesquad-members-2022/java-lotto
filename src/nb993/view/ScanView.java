@@ -48,8 +48,13 @@ public class ScanView {
         return numbers;
     }
 
-    public List<Integer> getManualNumber() {
+    public List<List<Integer>> getManualNumber(int count) {
         System.out.println("수동으로 구매할 번호를 입력해주세요.");
-        return getNumbers();
+        List<List<Integer>> lottoTicketList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            lottoTicketList.add(getNumbers());
+        }
+
+        return lottoTicketList;
     }
 }

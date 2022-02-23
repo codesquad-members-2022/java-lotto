@@ -33,9 +33,10 @@ public class LottoController {
 
         purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
         manualPurchaseCount = scanView.getManualPurchaseCount();
+        List<List<Integer>> manualTicketList = scanView.getManualNumber(manualPurchaseCount);
 
         for (int i = 0; i < manualPurchaseCount; i++) {
-            lottos.add(new LottoTicket(scanView.getManualNumber()));
+            lottos.add(new LottoTicket(manualTicketList.get(i)));
         }
 
         for (int i = 0; i < purchaseCount - manualPurchaseCount; ++i) {
@@ -67,8 +68,8 @@ public class LottoController {
         return rankResult;
     }
 
-    private int getAmountOfWinningMoney(Map<Rank, Integer> rankResult) {
-        int winningMoney = 0;
+    private long getAmountOfWinningMoney(Map<Rank, Integer> rankResult) {
+        long winningMoney = 0;
         for (Map.Entry<Rank, Integer> entry : rankResult.entrySet()) {
             Rank rank = entry.getKey();
             int count = entry.getValue();
