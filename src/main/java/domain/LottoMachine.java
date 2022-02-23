@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,10 +12,10 @@ public class LottoMachine {
 
     public static Lotto createRandomLotto() {
         Collections.shuffle(lottoNumbers);
-        List<Ball> balls = new ArrayList<>();
-        for (int i = 0; i < BALL_COUNT; i++) {
-            balls.add(new Ball(lottoNumbers.get(i)));
-        }
+        List<Ball> balls = lottoNumbers.stream()
+                .limit(6)
+                .map(number -> new Ball(number))
+                .collect(Collectors.toList());
         return new Lotto(balls);
     }
 }
