@@ -15,9 +15,15 @@ public class ScanView {
 
     public int getPurchaseAmount() {
         System.out.println("구매 금액을 입력해 주세요.");
-        int purchaseAmount = sc.nextInt();
-        sc.nextLine();
-        return purchaseAmount;
+        try {
+            int purchaseAmount = sc.nextInt();
+            sc.nextLine();
+            LottoUtil.validatePurchaseAmount(purchaseAmount);
+            return purchaseAmount;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getPurchaseAmount();
+        }
     }
 
     public List<Integer> getWinningNumber() {
