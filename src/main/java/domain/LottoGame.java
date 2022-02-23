@@ -9,13 +9,8 @@ import java.util.List;
 
 public class LottoGame {
 
-    private List<Lotto> lottos;
-    private LottoCalculator lottoCalculator;
-
-    public LottoGame() {
-        lottos = new ArrayList<>();
-        lottoCalculator = new LottoCalculator();
-    }
+    private final List<Lotto> lottos = new ArrayList<>();
+    private final LottoCalculator lottoCalculator = new LottoCalculator();
 
     public void start(int money) {
         int count = money / 1000;
