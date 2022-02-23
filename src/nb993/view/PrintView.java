@@ -18,8 +18,8 @@ public class PrintView {
         }
     }
 
-    public void printResult(Map<Rank, Integer> rankResult, int purchaseAmount, int resultAmount) {
-        System.out.println("당첨통계");
+    public void printResult(Map<Rank, Integer> rankResult, int purchaseAmount, long resultAmount) {
+        System.out.println("\n당첨통계");
         System.out.println("-----------");
 
         List<Rank> ranks = Arrays.stream(Rank.values())
