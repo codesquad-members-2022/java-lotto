@@ -15,10 +15,7 @@ public class Matcher {
     }
 
     public boolean isMatchBonusNumber(List<Integer> lottoNumberList, int bonusNumber) {
-        if (lottoNumberListHasWinNumber(lottoNumberList, bonusNumber) == MATCH) {
-            return true;
-        }
-        return false;
+        return lottoNumberListHasWinNumber(lottoNumberList, bonusNumber) == MATCH;
     }
 
     private int lottoNumberListHasWinNumber(List<Integer> lottoNumberList, int winNumber) {
