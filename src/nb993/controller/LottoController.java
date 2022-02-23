@@ -73,7 +73,7 @@ public class LottoController {
         for (Map.Entry<Rank, Integer> entry : rankResult.entrySet()) {
             Rank rank = entry.getKey();
             int count = entry.getValue();
-            winningMoney += rank.getWinningMoney() * count;
+            winningMoney += (long)rank.getWinningMoney() * count;
         }
         return winningMoney;
     }
