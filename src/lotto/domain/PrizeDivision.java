@@ -35,5 +35,17 @@ public enum PrizeDivision {
     public int getPrizeValue() {
         return prizeValue;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%d개 일치", matchCount));
+
+        if (this == MATCH_OF_FIVE_WITH_BONUS) {
+            sb.append(", 보너스 볼 일치");
+        }
+
+        return sb.append(String.format(" (%,d원)", prizeValue)).toString();
+    }
 }
 

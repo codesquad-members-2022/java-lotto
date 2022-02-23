@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,18 +9,22 @@ import java.util.stream.IntStream;
 
 public class LottoNumbers {
     public static final int LOTTO_NUMBER_COUNT = 6;
-    private List<LottoNumber> lottoNumberPool;
+    private List<Integer> lottoNumberPool;
 
     public LottoNumbers() {
         initialize();
     }
 
     public List<LottoNumber> generateRandomLottoNumbers() {
-        return Collections.unmodifiableList(lottoNumberPool.subList(0, LOTTO_NUMBER_COUNT));
+        return lottoNumberPool.stream()
+                .limit(LOTTO_NUMBER_COUNT)
+                .sorted()
+                .map(LottoNumber::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public LottoNumber generateRandomBonusNumber() {
-        return lottoNumberPool.get(LOTTO_NUMBER_COUNT);
+        return new LottoNumber(lottoNumberPool.get(LOTTO_NUMBER_COUNT));
     }
 
     public static List<LottoNumber> parseNumbers(int[] numbers) {
@@ -33,15 +38,11 @@ public class LottoNumbers {
     }
 
     private void initialize() {
-        List<Integer> list = IntStream.rangeClosed(LottoNumber.MINIMUM_NUMBER, LottoNumber.MAXIMUM_NUMBER)
+        lottoNumberPool = IntStream.rangeClosed(LottoNumber.MINIMUM_NUMBER, LottoNumber.MAXIMUM_NUMBER)
                 .boxed()
                 .collect(Collectors.toList());
 
-        Collections.shuffle(list);
-
-        lottoNumberPool = list.stream()
-                .map(LottoNumber::new)
-                .collect(Collectors.toList());
+        Collections.shuffle(lottoNumberPool);
     }
 
     private static void validateLength(int[] numbers) {

@@ -22,11 +22,8 @@ public class OutputView {
         System.out.println("당첨 통계");
         System.out.println("-------");
         Stream.of(PrizeDivision.values())
-                .map(d -> String.format("%d개 일치 (%d) - %d장",
-                        d.getMatchCount(),
-                        d.getPrizeValue(),
-                        lottoResult.getWinnerCount(d)))
+                .map(d -> d.toString() + String.format(" - %d장", lottoResult.getWinnerCount(d)))
                 .forEach(System.out::println);
-        System.out.printf("총 수익률은 %4.2f%%입니다.%n", lottoResult.getProfitRate());
+        System.out.printf("총 수익률은 %,4.2f%%입니다.%n", lottoResult.getProfitRate());
     }
 }

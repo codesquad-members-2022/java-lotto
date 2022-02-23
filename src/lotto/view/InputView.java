@@ -8,7 +8,7 @@ public class InputView {
 
     public int getPaidAmount() {
         System.out.println("구입 금액을 입력해주십시오.");
-        return Integer.parseInt(scanner.nextLine());
+        return getInt();
     }
 
     public int[] getWinningNumber() {
@@ -19,7 +19,17 @@ public class InputView {
                 .toArray();
     }
 
+    public int getBonusNumber() {
+        System.out.println("보너스 볼을 입력해주십시오.");
+        return getInt();
+    }
+
+    private int getInt() {
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public void close() {
         scanner.close();
     }
+
 }
