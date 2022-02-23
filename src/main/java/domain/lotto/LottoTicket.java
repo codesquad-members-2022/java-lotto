@@ -11,7 +11,15 @@ public class LottoTicket {
     private final Set<LottoNumber> lottoNumbers;
 
     private LottoTicket(Set<LottoNumber> lottoNumbers) {
+        validateLottoNumbersSize(lottoNumbers);
         this.lottoNumbers = lottoNumbers;
+    }
+
+    private void validateLottoNumbersSize(Set<LottoNumber> lottoNumbers) {
+        if (lottoNumbers.size() == LIMIT_LOTTO_NUMBERS) {
+            return;
+        }
+        throw new IllegalArgumentException(String.format("서로 다른 로또 번호가 %d개 존재하지 않습니다.", LIMIT_LOTTO_NUMBERS));
     }
 
     public static LottoTicket createRandomTicket() {
@@ -20,6 +28,10 @@ public class LottoTicket {
             lottoNumbers.add(LottoNumber.getLottoRandomLottoNumber());
         }
 
+        return new LottoTicket(lottoNumbers);
+    }
+
+    public static LottoTicket createManualTicket(Set<LottoNumber> lottoNumbers) {
         return new LottoTicket(lottoNumbers);
     }
 
