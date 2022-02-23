@@ -3,10 +3,10 @@ package domain;
 import java.util.Objects;
 
 public class LottoNumber implements Comparable<LottoNumber> {
-    public static final String NUMBER_ERROR_MESSAGE = "1~45 사이의 수를 입력해주세요";
-    public static final int LOWER_BOUND_NUMBER = 1;
-    public static final int UPPER_BOUND_NUMBER = 45;
-    private int number;
+    private static final String NUMBER_ERROR_MESSAGE = "1~45 사이의 수를 입력해주세요";
+    private static final int LOWER_BOUND_NUMBER = 1;
+    private static final int UPPER_BOUND_NUMBER = 45;
+    private final int number;
 
     public LottoNumber(int number) {
         if (!isValidNumber(number)) {

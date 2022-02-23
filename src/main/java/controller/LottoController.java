@@ -11,8 +11,8 @@ import java.util.List;
 
 public class LottoController {
 
-    public static final int WINNING_NUMBER_SIZE = 7;
-    public static final int BONUS_NUMBER_INDEX = 6;
+    private static final int WINNING_NUMBER_SIZE = 7;
+    private static final int BONUS_NUMBER_INDEX = 6;
 
     public void run() {
         int userMoney = InputView.requestMoney();

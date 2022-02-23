@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class LottoTicket {
-    public static final int NORMAL_TICKET_SIZE = 6;
+    private static final int NORMAL_TICKET_SIZE = 6;
     private final List<LottoNumber> lottoNumbers;
 
     public LottoTicket(ArrayList<LottoNumber> lottoNumbers) {
