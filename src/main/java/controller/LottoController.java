@@ -1,9 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import domain.LottoShop;
+import domain.Lotto;
+import domain.LottoMaker;
 import domain.MyLotteries;
 import domain.Rank;
 import domain.WinningNumbers;
@@ -14,19 +16,17 @@ public class LottoController {
 
     private InputView inputView;
     private OutputView outputView;
-    private LottoShop lottoShop;
 
-    public LottoController(InputView inputView, OutputView outputView, LottoShop lottoShop) {
+    public LottoController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.lottoShop = lottoShop;
     }
 
     public void runLotto() {
         //TODO : 메소드로 분리
         int userMoney = inputView.getMoneyInput();
 
-        MyLotteries myLotteries = lottoShop.order(userMoney);
+        MyLotteries myLotteries = order(userMoney);
         outputView.printMyLotteries(myLotteries);
         List<Integer> winningNumberInput = inputView.getWinningNumberInput();
         int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
@@ -35,4 +35,12 @@ public class LottoController {
         outputView.printStatistics(result, userMoney);
     }
 
+    private MyLotteries order(int balance) {
+        List<Lotto> lotteries = new ArrayList<>();
+        int lottoCount = balance / Lotto.PRICE;
+        for (int i = 0; i < lottoCount; i++) {
+            lotteries.add(LottoMaker.make());
+        }
+        return new MyLotteries(lotteries);
+    }
 }

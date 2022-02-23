@@ -1,5 +1,4 @@
 import controller.LottoController;
-import domain.LottoShop;
 import view.InputView;
 import view.OutputView;
 
@@ -8,8 +7,7 @@ public class Main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        LottoShop lottoShop = new LottoShop();
-        LottoController lottoController = new LottoController(inputView, outputView, lottoShop);
+        LottoController lottoController = new LottoController(inputView, outputView);
         lottoController.runLotto();
     }
 }

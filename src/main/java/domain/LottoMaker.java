@@ -20,7 +20,7 @@ public class LottoMaker {
 
     public static Lotto make() {
         Collections.shuffle(allNumbers);
-        List<Integer> randomNumbers = allNumbers.subList(0, 6);
+        List<Integer> randomNumbers = List.copyOf(allNumbers.subList(0, 6));
         return new Lotto(randomNumbers);
     }
 }
