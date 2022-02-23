@@ -71,7 +71,7 @@ public class TicketOffice {
         boolean isBonus = false;
         for (LottoTicket ticket : tickets) {
             matchedNumber = ticket.comparisonWinningTicket(winningTicket);
-            isBonus = checkBonusNumber(ticket.getTicketInfo());
+            isBonus = ticket.checkBonusNumber(bonusNumber);
             matchedNumber += temp(matchedNumber, isBonus);
             statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
         }
@@ -97,12 +97,5 @@ public class TicketOffice {
 
     private int switchPrize(int matchedNumber, boolean isBonus) {
         return Rank.designateRank(matchedNumber, isBonus).getPrize();
-    }
-
-    private boolean checkBonusNumber(List<Integer> ticketInfo) {
-        if (ticketInfo.contains(bonusNumber)) {
-            return true;
-        }
-        return false;
     }
 }

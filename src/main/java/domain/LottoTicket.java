@@ -36,6 +36,10 @@ public class LottoTicket {
         return 0;
     }
 
+    public boolean checkBonusNumber(int bonusNumber){
+        return lottoTicket.contains(bonusNumber);
+    }
+
 
 
 }
