@@ -39,18 +39,19 @@ public class Input {
         return bonusNumber;
     }
 
-    public static int[] getLuckyNumbers() {
-        System.out.println(LUCKY_NUMBERS_INFO);
-        return trimInputLuckyNumbers();
+    public static List<Integer> getLottoNumbers() throws IllegalArgumentException {
+        List<Integer> lottoNumbers = Arrays.stream(scanner.nextLine().split(",")).map(String::trim)
+            .mapToInt(Integer::parseInt)
+            .sorted()
+            .boxed()
+            .collect(Collectors.toList());
+
+        return isValidLottoNumbers(lottoNumbers);
     }
 
-    private static int[] trimInputLuckyNumbers() {
-        String[] split = scanner.nextLine().split(",");
-        int[] result = new int[split.length];
-        for (int i = 0; i < split.length; i++) {
-            result[i] = Integer.parseInt(split[i].trim());
-        }
-        return result;
+    public static List<Integer> getLuckyNumbers() {
+        System.out.println(LUCKY_NUMBERS_INFO);
+        return getLottoNumbers();
     }
 
     public static int getInputNumbOfLottos() {
@@ -65,19 +66,8 @@ public class Input {
 
     }
 
-    public static List<Integer> getLottoNumbers() throws IllegalArgumentException {
-        List<Integer> lottoNumbers = Arrays.stream(scanner.nextLine().split(",")).map(String::trim)
-            .mapToInt(Integer::parseInt)
-            .sorted()
-            .boxed()
-            .collect(Collectors.toList());
 
-        isValidLottoNumbers(lottoNumbers);
-
-        return lottoNumbers;
-    }
-
-    private static void isValidLottoNumbers(List<Integer> lottoNumbers) {
+    private static List<Integer> isValidLottoNumbers(List<Integer> lottoNumbers) {
         if (lottoNumbers.size() != LOTTO_NUMBERS_LENGTH) {
             throw new IllegalArgumentException(ERROR_MESSAGE_FOR_LOTTO_NUMBERS_LENGTH);
         }
@@ -90,5 +80,6 @@ public class Input {
         if (abcd.size() != LOTTO_NUMBERS_LENGTH) {
             throw new IllegalArgumentException(ERROR_MESSAGE_FOR_LOTTO_NUMBER_DUPLICATION);
         }
+        return lottoNumbers;
     }
 }

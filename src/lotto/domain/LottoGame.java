@@ -31,7 +31,7 @@ public class LottoGame {
             throw new IllegalArgumentException("돈보다 더 많은 수동 번호를 입력하셨습니다.");
         }
         List<Lotto> buyedLottos = lottos.buyLotto(numOfAutoLottos);
-        Output.printLottoNum(buyedLottos);
+        Output.printLottoNum(buyedLottos, numOfMaunalLottos);
         return buyedLottos;
     }
 
@@ -47,7 +47,7 @@ public class LottoGame {
 
 
     private void setLuckyNumbers() {
-        int[] luckyNumbers = Input.getLuckyNumbers();
+        List<Integer> luckyNumbers = Input.getLuckyNumbers();
         int bonusNumber = Input.getBonusNumber();
         luckyLotto = new LuckyLotto(luckyNumbers, bonusNumber);
     }
