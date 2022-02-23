@@ -14,17 +14,23 @@ public class Main {
     public static void main(String[] args) {
 
         int amount = InputView.readAmount();
-        List<LottoTicket> allShuffledNumbers = purchaseLotto(amount);
-
         int customLottoCount = InputView.readCustomLottoCount(LottoController.getLottoCount(amount));
 
-        List<Integer> winningNumbers = InputView.readWinningNumbers();
+        List<LottoTicket> customLottoNumbers = InputView.readCustomLottoNumbers(customLottoCount);
+        List<LottoTicket> allShuffledNumbers = purchaseLotto(amount, customLottoCount);
+        OutputView.printAllSuffledNumbers(customLottoNumbers);
+        OutputView.printAllSuffledNumbers(allShuffledNumbers);
+        System.out.println();
+
+        LottoTicket winningNumbers = InputView.readWinningNumbers();
         int bonusNumber = InputView.readBonusNumber();
+
+        System.out.println();
 
         printLottoGameResult(amount, allShuffledNumbers, winningNumbers, bonusNumber);
     }
 
-    private static void printLottoGameResult(int amount, List<LottoTicket> allShuffledNumbers, List<Integer> winningNumbers, int bonusNumber) {
+    private static void printLottoGameResult(int amount, List<LottoTicket> allShuffledNumbers, LottoTicket winningNumbers, int bonusNumber) {
         List<LottoResult> lottoResults = LottoGame.processLottoGame(allShuffledNumbers, winningNumbers, bonusNumber);
         long totalProfit = LottoGame.getTotalProfit(lottoResults);
 
@@ -33,13 +39,10 @@ public class Main {
         OutputView.printTotalProfit(result);
     }
 
-    private static List<LottoTicket> purchaseLotto(int amount) {
-        OutputView.printLottoCount(LottoController.getLottoCount(amount));
+    private static List<LottoTicket> purchaseLotto(int amount, int customLottoCount) {
+        int autoLottoCount = LottoController.getLottoCount(amount) - customLottoCount;
+        OutputView.printLottoCount(autoLottoCount, customLottoCount);
 
-        List<LottoTicket> allShuffledNumbers = LottoController.getAllShuffledNumbers(amount);
-
-        OutputView.printAllSuffledNumbers(allShuffledNumbers);
-
-        return allShuffledNumbers;
+        return LottoController.getAllShuffledNumbers(autoLottoCount);
     }
 }

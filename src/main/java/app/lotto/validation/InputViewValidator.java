@@ -1,6 +1,6 @@
 package app.lotto.validation;
 
-import java.util.List;
+import app.lotto.domain.LottoTicket;
 
 public class InputViewValidator {
 
@@ -20,9 +20,9 @@ public class InputViewValidator {
         }
     }
 
-    public static void validateNumbersRange(List<Integer> winningNumbers, int min, int max) {
-        for (int num : winningNumbers) {
-            validateRange(min, max, num);
+    public static void validateNumbersRange(LottoTicket winningNumbers, int min, int max) {
+        for (int i = 0; i < winningNumbers.getSize(); i++) {
+            validateRange(min, max, winningNumbers.getNumber(i));
         }
     }
 

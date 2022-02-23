@@ -11,11 +11,10 @@ public class LottoController {
 
     private static final int LOTTO_PRICE = 1000;
 
-    public static List<LottoTicket> getAllShuffledNumbers(int amount) {
-        int lottoCount = getLottoCount(amount);
+    public static List<LottoTicket> getAllShuffledNumbers(int autoLottoCount) {
         List<LottoTicket> allShuffledNumbers = new ArrayList<>();
 
-        for (int i = 0; i < lottoCount; i++) {
+        for (int i = 0; i < autoLottoCount; i++) {
             LottoTicket shuffledNumbers = getShuffledNumbers();
             allShuffledNumbers.add(shuffledNumbers);
         }

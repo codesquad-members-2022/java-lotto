@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class LottoGame {
 
-    public static List<LottoResult> processLottoGame(List<LottoTicket> allShuffledNumbers, List<Integer> winningNumbers, int bonusNumber) {
+    public static List<LottoResult> processLottoGame(List<LottoTicket> allShuffledNumbers, LottoTicket winningNumbers, int bonusNumber) {
         Map<LottoPrize, Integer> statistics = getStatistics(allShuffledNumbers, winningNumbers, bonusNumber);
         return getLottoResults(statistics);
     }
@@ -37,7 +37,7 @@ public class LottoGame {
         return new LottoResult(lottoPrize, winningCaseCount);
     }
 
-    private static Map<LottoPrize, Integer> getStatistics(List<LottoTicket> allShuffledNumbers, List<Integer> winningNumbers, int bonusNumber) {
+    private static Map<LottoPrize, Integer> getStatistics(List<LottoTicket> allShuffledNumbers, LottoTicket winningNumbers, int bonusNumber) {
         Map<LottoPrize, Integer> statistics = new HashMap<>();
 
         for (LottoTicket shuffledNumber : allShuffledNumbers) {
@@ -59,7 +59,7 @@ public class LottoGame {
         }
     }
 
-    private static int getSameNumberCount(LottoTicket shuffledNumbers, List<Integer> winningNumbers) {
+    private static int getSameNumberCount(LottoTicket shuffledNumbers, LottoTicket winningNumbers) {
         int count = 0;
 
         for (int i = 0; i < shuffledNumbers.getSize(); i++) {
@@ -69,7 +69,7 @@ public class LottoGame {
         return count;
     }
 
-    private static int getCount(List<Integer> winningNumbers, int count, int number) {
+    private static int getCount(LottoTicket winningNumbers, int count, int number) {
         if (winningNumbers.contains(number)) {
             count++;
         }
