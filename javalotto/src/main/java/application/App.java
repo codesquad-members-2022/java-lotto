@@ -1,10 +1,10 @@
 package application;
 
-import application.model.LottoTicket;
+import application.model.LottoGame;
 
 public class App {
     public static void main(String[] args) {
-        LottoTicket game = new LottoTicket();
+        LottoGame game = new LottoGame();
         game.init();
     }
 }

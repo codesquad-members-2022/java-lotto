@@ -1,7 +1,5 @@
 package application.view;
 
-import java.util.List;
-
 import application.domain.WinningData;
 
 public class OutputView {
@@ -15,6 +13,7 @@ public class OutputView {
 
     private static final int MINIMUM_NUMBER_OF_WINS = 3;
     private static final int MAXIMUM_NUMBER_OF_WINS = 6;
+    private static final int INDEX_OF_BONUS_BALL = 7;
 
     private OutputView() {
 
@@ -36,8 +35,8 @@ public class OutputView {
         System.out.println(userPurchaseQuantity + PURCHASE_QUANTITY);
     }
 
-    public static void printLottoNumbers(List<Integer> lotto) {
-        System.out.println(lotto);
+    public static void printLottoNumbers(String lottoString) {
+        System.out.println(lottoString);
     }
 
     public static void printPleaseEnterYourWinningNumber() {
@@ -48,10 +47,10 @@ public class OutputView {
         System.out.println(WINNING_STATISTICS);
         System.out.println(DIVISION);
 
-        for (int i = MINIMUM_NUMBER_OF_WINS; i <= MAXIMUM_NUMBER_OF_WINS; i++) {
-            System.out.println(i + "개 일치 " + "(" + WinningData.getWinningData(i) + "원)-" + counts[i] + "개");
-            if (i == 5) {
-                System.out.println(i + "개 일치 ,보너스볼 일치" + "(" + WinningData.getWinningData(7) + "원)-" + counts[7] + "개");
+        for (int winnigCount = MINIMUM_NUMBER_OF_WINS; winnigCount <= MAXIMUM_NUMBER_OF_WINS; winnigCount++) {
+            System.out.println(winnigCount + "개 일치 " + "(" + WinningData.getWinningData(winnigCount) + "원)-" + counts[winnigCount] + "개");
+            if (winnigCount == 5) {
+                System.out.println(winnigCount + "개 일치 ,보너스볼 일치" + "(" + WinningData.getWinningData(INDEX_OF_BONUS_BALL) + "원)-" + counts[INDEX_OF_BONUS_BALL] + "개");
             }
         }
         printTotalYield(totalYield);
