@@ -13,6 +13,7 @@ public enum WinningStrategy {
     private final int correctNumber;
     private final int winningPrice;
 
+
     WinningStrategy(int correctNumber, int winningPrice) {
         this.correctNumber = correctNumber;
         this.winningPrice = winningPrice;

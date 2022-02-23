@@ -8,6 +8,7 @@ public class InputView {
     private static String REQUIRED_WINNING_NUMBER_MESSAGE = "당첨 번호를 입력해 주세요.";
     private static String BONUS_BALL_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요.";
 
+
     public static int getPurchaseAmount() {
         System.out.println(PURCHASE_AMOUNT_MESSAGE);
         int purchaseAmount = sc.nextInt();
