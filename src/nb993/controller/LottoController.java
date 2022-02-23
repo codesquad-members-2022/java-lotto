@@ -34,7 +34,6 @@ public class LottoController {
 
     public void playGame() {
         initLottos();
-        printGame();
         printLottoResult();
     }
 
@@ -42,8 +41,12 @@ public class LottoController {
         setPurchaseAmount();
         setPurchaseCount();
         setManualPurchaseCount();
+
         setManualLottoTickets();
         setAutoLottoTickets();
+
+        printGame();
+
         setWinningNumbers();
         setRankResultMap();
         setAmountOfWinningMoney();
@@ -63,6 +66,9 @@ public class LottoController {
 
 
     private void setManualLottoTickets() {
+        if (manualPurchaseCount == 0) {
+            return;
+        }
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
         for (int i = 0; i < manualPurchaseCount; i++) {
             createManualLottoTicket();
@@ -108,7 +114,13 @@ public class LottoController {
     }
 
     private void setWinningNumbers() {
-        winningNumbers = new WinningNumber(scanView.getWinningNumber(), scanView.getBonusNumber());
+        try {
+            winningNumbers = new WinningNumber(scanView.getWinningNumber(),
+                scanView.getBonusNumber());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            setWinningNumbers();
+        }
     }
 
     public void printGame() {
