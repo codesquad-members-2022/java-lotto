@@ -11,12 +11,12 @@ public class LottoController {
 
     private static final int LOTTO_PRICE = 1000;
 
-    public static List<List<Integer>> getAllShuffledNumbers(int amount) {
+    public static List<LottoTicket> getAllShuffledNumbers(int amount) {
         int lottoCount = getLottoCount(amount);
-        List<List<Integer>> allShuffledNumbers = new ArrayList<>();
+        List<LottoTicket> allShuffledNumbers = new ArrayList<>();
 
         for (int i = 0; i < lottoCount; i++) {
-            List<Integer> shuffledNumbers = getShuffledNumbers();
+            LottoTicket shuffledNumbers = getShuffledNumbers();
             allShuffledNumbers.add(shuffledNumbers);
         }
 
@@ -27,15 +27,15 @@ public class LottoController {
         return amount / LOTTO_PRICE;
     }
 
-    private static List<Integer> getShuffledNumbers() {
+    private static LottoTicket getShuffledNumbers() {
         List<Integer> lottoNumbers = getLottoNumbers();
 
         Collections.shuffle(lottoNumbers);
 
-        List<Integer> shuffledNumbers = new ArrayList<>();
+        LottoTicket shuffledNumbers = new LottoTicket();
 
         for (int i = 0; i < 6; i++) {
-            shuffledNumbers.add(lottoNumbers.get(i));
+            shuffledNumbers.addNumber(lottoNumbers.get(i));
         }
 
         return shuffledNumbers;

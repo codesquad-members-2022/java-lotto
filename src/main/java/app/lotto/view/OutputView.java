@@ -1,8 +1,8 @@
 package app.lotto.view;
 
 import app.lotto.domain.LottoPrize;
+import app.lotto.domain.LottoTicket;
 
-import java.util.Collections;
 import java.util.List;
 
 public class OutputView {
@@ -11,9 +11,9 @@ public class OutputView {
         System.out.printf("%d개를 구매했습니다.\n", lottoCount);
     }
 
-    public static void printAllSuffledNumbers(List<List<Integer>> allShuffledNumbers) {
-        for (List<Integer> shuffledNumbers : allShuffledNumbers) {
-            Collections.sort(shuffledNumbers);
+    public static void printAllSuffledNumbers(List<LottoTicket> allShuffledNumbers) {
+        for (LottoTicket shuffledNumbers : allShuffledNumbers) {
+            shuffledNumbers.sort();
             System.out.println(shuffledNumbers);
         }
     }
