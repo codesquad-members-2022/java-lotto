@@ -2,9 +2,8 @@ package application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import application.domain.Lottery;
-import application.domain.UserLotteries;
-import application.domain.WinningLottery;
+import application.domain.*;
+
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class LotteryGeneratorTest {
+class LotteryTest {
 
     @BeforeEach
     void setUp() {
@@ -45,25 +44,25 @@ class LotteryGeneratorTest {
     @ParameterizedTest
     @DisplayName("당첨 번호를 비교해서 매칭되는 개수를 증가시킨다.")
     @MethodSource("provideParameters")
-    void matchingTest(List<Integer> numbers, int matchCount) {
+    void matchingTest(List<Integer> numbers, Result result) {
 
-        UserLotteries userLottery = new UserLotteries(numbers);
-        userLottery.addUserLottery(numbers);
+        UserLotteries userLotteries = new UserLotteries(numbers);
+        userLotteries.addUserLottery(numbers);
+
         WinningLottery winningLottery = new WinningLottery(List.of(1, 2, 3, 4, 5, 6), 7);
-        userLottery.compareEach(winningLottery);
+        userLotteries.compareEach(winningLottery);
 
-        assertThat(userLottery.getMatchCounts())
-            .isEqualTo(List.of(matchCount));
+        List<UserLottery> lotteries = userLotteries.get();
+        assertThat(lotteries.get(0).getResult()).isEqualTo(result);
     }
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-            Arguments.of(List.of(1, 2, 3, 4, 5, 6), 6),
-            Arguments.of(List.of(2, 3, 4, 5, 6, 7), 5),
-            Arguments.of(List.of(3, 4, 5, 6, 7, 8), 4),
-            Arguments.of(List.of(4, 5, 6, 7, 8, 9), 3),
-            Arguments.of(List.of(5, 6, 7, 8, 9, 10), 2),
-            Arguments.of(List.of(6, 7, 8, 9, 10, 11), 1)
+            Arguments.of(List.of(1, 2, 3, 4, 5, 6), Prize.FIRST.getResult()),
+            Arguments.of(List.of(2, 3, 4, 5, 6, 7), Prize.SECOND.getResult()),
+            Arguments.of(List.of(2, 3, 4, 5, 6, 8), Prize.THIRD.getResult()),
+            Arguments.of(List.of(3, 4, 5, 6, 7, 8), Prize.FORTH.getResult()),
+            Arguments.of(List.of(4, 5, 6, 7, 8, 9), Prize.FIFTH.getResult())
         );
     }
 

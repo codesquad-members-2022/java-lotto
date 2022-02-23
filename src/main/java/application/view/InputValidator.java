@@ -1,5 +1,7 @@
 package application.view;
 
+import application.domain.UserBundle;
+
 public class InputValidator {
 
     public static boolean validateNumberFormat(String str) throws IllegalArgumentException {
@@ -11,4 +13,11 @@ public class InputValidator {
         }
         return true;
     }
+
+    public static void validateManualCount(int money, int manualCount) {
+        if (money < manualCount * UserBundle.PRICE) {
+            throw new IllegalArgumentException("금액이 부족합니다.");
+        }
+    }
+
 }

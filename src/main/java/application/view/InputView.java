@@ -45,4 +45,30 @@ public class InputView {
         InputValidator.validateNumberFormat(line);
         return Integer.parseInt(line);
     }
+
+    public int getManualCount(int money) {
+        System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
+
+        String line = scanner.nextLine();
+        InputValidator.validateNumberFormat(line);
+
+        int manualCount = Integer.parseInt(line);
+        InputValidator.validateManualCount(money, manualCount);
+        return manualCount;
+    }
+
+    public void requestManual() {
+        System.out.println("\n수동으로 구매할 번호를 입력해 주세요.");
+    }
+
+    public List<Integer> getManualNumbers() throws IllegalArgumentException {
+        String line = scanner.nextLine();
+        String[] split = line.trim().split(",");
+
+        return Arrays.stream(split)
+                .filter(InputValidator::validateNumberFormat)
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
 }

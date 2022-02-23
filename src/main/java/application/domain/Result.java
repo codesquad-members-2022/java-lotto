@@ -3,9 +3,9 @@ package application.domain;
 public class Result {
 
     private final int matchCount;
-    private final boolean bonus;
+    private final Boolean bonus;
 
-    public Result(int matchCount, boolean bonus) {
+    public Result(int matchCount, Boolean bonus) {
         this.matchCount = matchCount;
         this.bonus = bonus;
     }
@@ -14,7 +14,7 @@ public class Result {
         return matchCount;
     }
 
-    public boolean getBonus() {
+    public Boolean getBonus() {
         return bonus;
     }
 
@@ -29,12 +29,20 @@ public class Result {
         }
 
         Result result = (Result) object;
-        return matchCount == result.getMatchCount()
-            && bonus == result.getBonus();
+        return (matchCount == result.getMatchCount() && result.getBonus() == null)
+                || (matchCount == result.getMatchCount() && bonus == result.getBonus());
     }
 
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "matchCount=" + matchCount +
+                ", bonus=" + bonus +
+                '}';
     }
 }
