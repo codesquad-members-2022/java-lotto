@@ -28,6 +28,18 @@ public class InputView {
         }
     }
 
+    public static int readCustomLottoCount(int totalCount) {
+        try {
+            System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
+            int count = Integer.parseInt(sc.nextLine());
+            validateRange(0, totalCount, count);
+            return count;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readAmount();
+        }
+    }
+
     public static List<Integer> readWinningNumbers() {
         try {
             System.out.println("당첨 번호를 입력해 주세요.");

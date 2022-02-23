@@ -16,6 +16,8 @@ public class Main {
         int amount = InputView.readAmount();
         List<LottoTicket> allShuffledNumbers = purchaseLotto(amount);
 
+        int customLottoCount = InputView.readCustomLottoCount(LottoController.getLottoCount(amount));
+
         List<Integer> winningNumbers = InputView.readWinningNumbers();
         int bonusNumber = InputView.readBonusNumber();
 
