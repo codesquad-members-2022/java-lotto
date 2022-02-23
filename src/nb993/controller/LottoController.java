@@ -32,15 +32,24 @@ public class LottoController {
         int purchaseAmount = scanView.getPurchaseAmount();
 
         purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
-        manualPurchaseCount = scanView.getManualPurchaseCount();
-        List<List<Integer>> manualTicketList = scanView.getManualNumber(manualPurchaseCount);
-
+        manualPurchaseCount = scanView.getManualPurchaseCount(purchaseCount);
+        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
         for (int i = 0; i < manualPurchaseCount; i++) {
-            lottos.add(new LottoTicket(manualTicketList.get(i)));
+            createManualLottoTicket();
         }
 
         for (int i = 0; i < purchaseCount - manualPurchaseCount; ++i) {
             lottos.add(new LottoTicket());
+        }
+    }
+
+    private void createManualLottoTicket() {
+        try {
+            System.out.print("[" + lottos.size() + "] : ");
+            lottos.add(new LottoTicket(scanView.getNumbers()));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            createManualLottoTicket();
         }
     }
 
