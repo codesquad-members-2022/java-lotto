@@ -11,7 +11,7 @@ class LottoMakerTest {
     @DisplayName("랜덤한 6자리 로또를 생성한다.")
     void make() {
         Lotto lotto = LottoMaker.make();
-        System.out.println(lotto.getLottoNumbers());
+        System.out.println(lotto);
         assertThat(lotto.size()).isEqualTo(6);
     }
 }

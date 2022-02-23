@@ -16,7 +16,8 @@ public class Lotto {
         this.lottoNumbers = new ArrayList<>(lottoNumbers);
     }
 
-    public String getLottoNumbers() {
+    @Override
+    public String toString() {
         return lottoNumbers.toString();
     }
 

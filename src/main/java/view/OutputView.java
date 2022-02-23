@@ -1,18 +1,15 @@
 package view;
 
-import java.util.List;
 import java.util.Map;
 
-import domain.Lotto;
+import domain.MyLotteries;
 import domain.Rank;
 
 public class OutputView {
 
-    public void printLotteries(List<Lotto> lotteries) {
-        System.out.println(lotteries.size() + "개를 구매했습니다.");
-        for (Lotto lottery : lotteries) {
-            System.out.println(lottery.getLottoNumbers());
-        }
+    public void printMyLotteries(MyLotteries myLotteries) {
+        System.out.println(myLotteries.count() + "개를 구매했습니다.");
+        myLotteries.get().forEach(System.out::println);
     }
 
     public void printStatistics(Map<Rank, Integer> result, int userMoney) {
