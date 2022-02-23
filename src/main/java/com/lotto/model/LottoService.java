@@ -1,4 +1,4 @@
-package model;
+package com.lotto.model;
 
 import java.util.LinkedHashMap;
 import java.util.List;

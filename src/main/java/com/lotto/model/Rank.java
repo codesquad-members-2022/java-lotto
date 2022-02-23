@@ -1,4 +1,4 @@
-package model;
+package com.lotto.model;
 
 public enum Rank {
 	FIRST(6, 2_000_000_000),
