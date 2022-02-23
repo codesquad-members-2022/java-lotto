@@ -6,6 +6,8 @@ import java.util.List;
 public class User {
 
     private static final int LOTTO_PRICE = 1000;
+    private static final String EXCESS_MONEY_ERROR = "금액을 초과하였습니다.";
+
     private final List<Lotto> lottos = new ArrayList<>();
     private final List<Rank> ranks = new ArrayList<>();
     private final int countOfSelf;
@@ -13,6 +15,9 @@ public class User {
     private int profit;
 
     public User(int money, int countOfSelf) {
+        if( money / LOTTO_PRICE < countOfSelf) {
+            throw new IllegalArgumentException(EXCESS_MONEY_ERROR);
+        }
         this.money = money;
         this.countOfSelf = countOfSelf;
     }
