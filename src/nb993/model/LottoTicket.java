@@ -22,9 +22,6 @@ public class LottoTicket {
     }
 
     public LottoTicket(List<Integer> numbers) {
-        // 갯수가 6개 인지
-        // 범위가 1 - 45 이내인지
-        // 중복되는 숫자가 있는지 확인
         LottoUtil.validate(numbers);
         Collections.sort(numbers);
         lottoNumbers = numbers;
@@ -36,17 +33,13 @@ public class LottoTicket {
 
     public Rank getResult(WinningNumber winningNumber) {
         int correctCount = getCorrectCount(winningNumber);
-        boolean hasBonus = hasBonus(winningNumber);
+        boolean hasBonus = hasBonusNumber(winningNumber);
 
         return Rank.valueOf(correctCount, hasBonus);
     }
 
-    private boolean hasBonus(WinningNumber winningNumber) {
-        if (lottoNumbers.contains(winningNumber.getBonusNumber())) {
-            return true;
-        }
-
-        return false;
+    private boolean hasBonusNumber(WinningNumber winningNumber) {
+        return lottoNumbers.contains(winningNumber.getBonusNumber());
     }
 
     private int getCorrectCount(WinningNumber winningNumber) {
