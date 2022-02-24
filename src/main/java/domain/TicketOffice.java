@@ -10,7 +10,6 @@ public class TicketOffice {
     private final int SELECTABLE_NUMBER = 45;
     private final int SELECTED_NUMBER = 6;
     private final int PRICE = 1000;
-    private int TOTAL_PRICE;
 
 
     public TicketOffice() {
@@ -35,16 +34,15 @@ public class TicketOffice {
         return new LottoTicket(ticketNumber);
     }
 
-    public List<LottoTicket> issueTickets() {
-        int amount = InputView.getAmount();
-        int numberOfTickets = amount / PRICE;
-        int change = amount % PRICE;
-        TOTAL_PRICE = PRICE * numberOfTickets;
+    public List<LottoTicket> issueTickets(int numberOfTickets) {
         List<LottoTicket> tickets = new ArrayList<>();
         boolean isAuto = InputView.askIsAuto();
         for (int i = 0; i < numberOfTickets; i++)
             tickets.add(makeLottoTicket(isAuto));
-        OutputView.completePurchase(numberOfTickets, change, tickets);
         return tickets;
+    }
+
+    public int getPrice() {
+        return this.PRICE;
     }
 }
