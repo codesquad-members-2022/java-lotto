@@ -1,29 +1,40 @@
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class WinningStatistic {
-    private Map<Integer, Integer> statistic;
+    private Map<RankValue, Integer> statistic;
     private List<Integer> winningNumbers;
 
-    public WinningStatistic(List<Lotto> lottoList, List<Integer> winningNumbers) {
-        statistic = new HashMap<>();
+    public WinningStatistic(List<Lotto> lottoList, List<Integer> winningNumbers, int bonusBall) {
+        statistic = new LinkedHashMap<>();
         initStatistic();
         this.winningNumbers = winningNumbers;
         for (int i = 0; i < lottoList.size(); i++) {
-            int key = checkWinningNumber(lottoList.get(i));
-            statistic.put(key, statistic.get(key) + 1);
+            setStatistic(checkWinningNumber(lottoList.get(i)), checkBonus(lottoList.get(i), bonusBall));
         }
     }
 
-    public Map<Integer, Integer> getStatistic() {
+    public Map<RankValue, Integer> getStatistic() {
         return statistic;
     }
 
     private void initStatistic() {
-        for (int i = 0; i < 7; i++) {
-            statistic.put(i, 0);
+        for (RankValue rankValue : RankValue.values()) {
+            statistic.put(rankValue, 0);
         }
+    }
+
+    private void setStatistic(int countOfMatch, boolean matchBonus) {
+        if (countOfMatch < 3) {
+            return;
+        }
+        RankValue key = RankValue.valueOf(countOfMatch, matchBonus);
+        statistic.put(key, statistic.getOrDefault(key, 0) + 1);
+    }
+
+    private boolean checkBonus(Lotto lotto, int bonusBall) {
+        return lotto.getNumbers().contains(bonusBall);
     }
 
     private int checkWinningNumber(Lotto lotto) {
