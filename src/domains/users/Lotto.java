@@ -1,4 +1,4 @@
-package domains;
+package domains.users;
 
 import java.util.Collections;
 import java.util.List;

@@ -3,10 +3,10 @@ import static views.Output.*;
 
 import java.util.List;
 
-import domains.LottoMachine;
-import domains.Lottos;
-import domains.Ranking;
-import domains.UserLotto;
+import domains.users.LottoMachine;
+import domains.users.Lottos;
+import domains.winnings.Ranking;
+import domains.users.UserLotto;
 import views.PurchasedLotto;
 
 public class LottoPlay {

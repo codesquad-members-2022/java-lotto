@@ -1,8 +1,10 @@
-package domains;
+package domains.users;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import domains.winnings.BonusWinningNumbers;
+import domains.winnings.Ranking;
 import views.PurchasedLotto;
 
 public class UserLotto {

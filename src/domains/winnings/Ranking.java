@@ -1,4 +1,4 @@
-package domains;
+package domains.winnings;
 
 import static views.Output.*;
 
@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import domains.users.Money;
 
 public class Ranking {
 	public static final int TO_PERCENT = 100;

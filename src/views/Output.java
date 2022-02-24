@@ -1,12 +1,9 @@
 package views;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
-import domains.Ranking;
+import domains.winnings.Ranking;
 
 public class Output {
 	public static final String PATTERN_ROUND_DOWN = "0.00";

@@ -1,7 +1,10 @@
-package domains;
+package domains.users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import domains.winnings.AddedWinningNumbers;
+import domains.winnings.Ranking;
 
 public class Lottos {
     public static final int  MINIMUM_NUMBER_OF_WINNING = 3;
