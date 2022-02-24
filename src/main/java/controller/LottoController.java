@@ -14,23 +14,33 @@ public class LottoController {
 
     private static final int WINNING_NUMBER_SIZE = 7;
     private static final int BONUS_NUMBER_INDEX = 6;
+    private static final int TICKET_PRICE = 1000;
 
     public void run() {
         int userMoney = InputView.requestMoney();
         LottoTicketSeller seller = new LottoTicketSeller(new RandomTicketFactory());
         Person testUser = new Person("testUser", userMoney, seller);
+        int customTicketCount = buyManualLottery(testUser);
 
+        testUser.buyRandomLottoTicket(discharge(userMoney, customTicketCount));
+
+        showLottoInfo(testUser);
+
+        showResult(makeResult(testUser));
+        InputView.close();
+    }
+
+    private int discharge(int userMoney, int customTicketCount) {
+        return userMoney - customTicketCount * TICKET_PRICE;
+    }
+
+    private int buyManualLottery(Person testUser) {
         int customTicketCount = InputView.requestCustomTicketCount();
         InputView.requestCustomTicketNumberMessage();
         for (int i = 0; i < customTicketCount; i++) {
             testUser.buyCustomLottoTicket(InputView.requestCustomTicketNumber());
         }
-
-        testUser.buyRandomLottoTicket(userMoney - customTicketCount * 1000);
-
-        showLottoInfo(testUser);
-
-        showResult(makeResult(testUser));
+        return customTicketCount;
     }
 
     private int[] makeResult(Person testUser) {
