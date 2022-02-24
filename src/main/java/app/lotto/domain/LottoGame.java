@@ -1,7 +1,5 @@
 package app.lotto.domain;
 
-import app.lotto.view.LottoResult;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

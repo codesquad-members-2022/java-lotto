@@ -1,6 +1,7 @@
 package app.lotto.view;
 
 import app.lotto.domain.LottoPrize;
+import app.lotto.domain.LottoResult;
 import app.lotto.domain.LottoTicket;
 
 import java.util.List;

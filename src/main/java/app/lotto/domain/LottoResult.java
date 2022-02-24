@@ -1,4 +1,4 @@
-package app.lotto.view;
+package app.lotto.domain;
 
 import app.lotto.domain.LottoPrize;
 

@@ -5,7 +5,7 @@ import app.lotto.domain.LottoGame;
 import app.lotto.domain.LottoGameResult;
 import app.lotto.domain.LottoTicket;
 import app.lotto.view.InputView;
-import app.lotto.view.LottoResult;
+import app.lotto.domain.LottoResult;
 import app.lotto.view.OutputView;
 
 import java.util.ArrayList;
