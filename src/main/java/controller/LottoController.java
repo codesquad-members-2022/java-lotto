@@ -3,6 +3,7 @@ package controller;
 import domain.LottoTicket;
 import domain.LottoTicketSeller;
 import domain.Person;
+import domain.factory.RandomTicketFactory;
 import view.InputView;
 import view.OutputView;
 
@@ -16,7 +17,7 @@ public class LottoController {
 
     public void run() {
         int userMoney = InputView.requestMoney();
-        LottoTicketSeller seller = new LottoTicketSeller();
+        LottoTicketSeller seller = new LottoTicketSeller(new RandomTicketFactory());
 
         Person testUser = new Person("testUser", userMoney, seller);
         testUser.buyRandomLottoTicket(userMoney);
