@@ -29,7 +29,7 @@ public class Result {
         }
 
         Result result = (Result) object;
-        return (matchCount == result.getMatchCount() && result.getBonus() == null)
+        return (matchCount == result.getMatchCount() && bonus == null && result.getBonus() == null)
                 || (matchCount == result.getMatchCount() && bonus == result.getBonus());
     }
 
