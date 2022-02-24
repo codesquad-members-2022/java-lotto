@@ -20,11 +20,11 @@ public class UserBundle {
         userLotteries = new UserLotteries(count - manualLotteries.size(), manualLotteries);
     }
 
-    public LottoShowDto getLottos() {
-        List<List<Integer>> lottos = userLotteries.get().stream()
+    public LottoShowDto getLottoShowDto() {
+        List<List<Integer>> numbersList = userLotteries.get().stream()
                 .map(Lottery::getNumbers)
                 .collect(Collectors.toList());
-        return new LottoShowDto(lottos.size(), lottos);
+        return new LottoShowDto(numbersList.size(), numbersList);
     }
 
     public int getMoney() {

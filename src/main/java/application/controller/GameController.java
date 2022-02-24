@@ -73,7 +73,7 @@ public class GameController {
 //        outputView.printCount(userBundle.getCount());
 //        outputView.printLotteries(userLotteries.get());
 
-        return userBundle.getLottos();
+        return userBundle.getLottoShowDto();
     }
 
     public List<UserLottery> getManualLotteries(List<List<Integer>> manualNumbers) {

@@ -9,9 +9,10 @@ import application.dto.NumberDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import javax.swing.text.html.parser.Parser;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -36,7 +37,10 @@ public class Route {
 
             LottoShowDto lottoShowDto = controller.getUserBundle(bundleDto);
 
-            Map<String, Object> model = ParserUtil.objectToMap(lottoShowDto);
+            Map<String, Object> model = new HashMap<>();
+            model.put("lottosSize", lottoShowDto.getLottosSize());
+            model.put("lottos", lottoShowDto.getLottos());
+
             return render(model, "show.html");
         });
 
