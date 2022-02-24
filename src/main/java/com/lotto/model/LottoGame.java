@@ -5,16 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 public class LottoService {
-	private static final int TICKET_PRICE = 1000;
-
-	public LottoTickets publishLottoTickets(int purchaseAmount) {
-		int ticketCount = calculateAmount(purchaseAmount);
-		return LottoTickets.createLottoTickets(ticketCount);
+	public LottoTickets publishLottoTickets(int purchaseAmount){
+		return new LottoTickets(purchaseAmount);
 	}
-
+	public LottoTickets publishLottoTickets(int purchaseAmount, List<List<Integer>> manualNumbers){
+		return new LottoTickets(purchaseAmount, manualNumbers);
+	}
 	public Map<Rank, Integer> checkResult(LottoTickets tickets, List<Integer> winningNumbers, int bonusNumber) {
 		List<Lotto> ticketList = tickets.getTickets();
-
 		Map<Rank, Integer> result = new LinkedHashMap<>() {{
 			put(Rank.FIFTH, 0);
 			put(Rank.FOURTH, 0);
@@ -22,7 +20,6 @@ public class LottoService {
 			put(Rank.SECOND, 0);
 			put(Rank.FIRST, 0);
 		}};
-
 		for (Lotto lotto : ticketList) {
 			int ticketResult = checkTicket(lotto.getTicket(), winningNumbers);
 			boolean isWinningBonusNumber = checkBonusNumber(lotto.getTicket(), bonusNumber);
@@ -32,7 +29,6 @@ public class LottoService {
 				result.put(rank, result.get(rank) + 1);
 			}
 		}
-
 		return result;
 	}
 
