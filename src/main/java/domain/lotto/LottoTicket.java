@@ -3,6 +3,7 @@ package domain.lotto;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LottoTicket {
 
@@ -38,5 +39,17 @@ public class LottoTicket {
 
     public Set<LottoNumber> getLottoNumbers() {
         return Collections.unmodifiableSet(lottoNumbers);
+    }
+
+    /**
+     * 로또 티켓의 문자열 표현을 반환한다.
+     * 각 번호는 중복되지 않은 로또 번호이다.
+     * @return [x, x, x, x, x, x] 형태
+     */
+    @Override
+    public String toString() {
+        return lottoNumbers.stream().mapToInt(LottoNumber::getNumber)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(", ", "[", "]"));
     }
 }

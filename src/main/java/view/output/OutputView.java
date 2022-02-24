@@ -4,27 +4,12 @@ import domain.lotto.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
     public static void printLottoTickets(LottoTickets lottoTickets) {
-        List<LottoTicket> tickets = lottoTickets.getLottoTickets();
-        System.out.println(makeLottoTicketsString(tickets));
+        System.out.println(lottoTickets);
         System.out.println();
-    }
-
-    private static String makeLottoTicketsString(List<LottoTicket> tickets) {
-        return tickets.stream()
-                .map(OutputView::makeLottoTicketString)
-                .collect(Collectors.joining("\n"));
-    }
-
-    private static String makeLottoTicketString(LottoTicket lottoTicket) {
-        return lottoTicket.getLottoNumbers().stream()
-                .mapToInt(LottoNumber::getNumber)
-                .mapToObj(String::valueOf)
-                .collect(Collectors.joining(", ", "[", "]"));
     }
 
     public static void printLottoGameResults(LottoGameResults lottoGameResults) {

@@ -3,6 +3,7 @@ package domain.lotto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LottoTickets {
 
@@ -50,5 +51,16 @@ public class LottoTickets {
 
     public int getCountOfLottoTickets() {
         return lottoTickets.size();
+    }
+
+    /**
+     * 로또 티켓들의 문자열 표현을 반환한다.
+     * @return lottoTickets가 2개라면 [x, x, x, x, x, x]\n[x, x, x, x, x, x] 형태
+     */
+    @Override
+    public String toString() {
+        return lottoTickets.stream()
+                .map(LottoTicket::toString)
+                .collect(Collectors.joining("\n"));
     }
 }
