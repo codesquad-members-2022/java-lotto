@@ -1,25 +1,27 @@
 package domain;
 
+import domain.factory.CustomTicketFactory;
+import domain.factory.RandomTicketFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class PersonTest {
+class PersonTest {
 
     @Test
     void createTest() {
-        Person person = new Person("jerry", 14000, new LottoTicketSeller());
+        Person person = new Person("jerry", 14000, new LottoTicketSeller(new RandomTicketFactory()));
 
-        assertThat(person).isEqualTo(new Person("jerry", 14000, new LottoTicketSeller()));
-        assertThat(person).isEqualTo(new Person("jerry", 1000, new LottoTicketSeller()));
+        assertThat(person).isEqualTo(new Person("jerry", 14000, new LottoTicketSeller(new RandomTicketFactory())));
+        assertThat(person).isEqualTo(new Person("jerry", 1000, new LottoTicketSeller(new RandomTicketFactory())));
     }
 
     @Test
     void buyRandomTest() {
         // given
-        Person person = new Person("jerry", 14000, new LottoTicketSeller());
-        Person person2 = new Person("terry", 10000, new LottoTicketSeller());
+        Person person = new Person("jerry", 14000, new LottoTicketSeller(new RandomTicketFactory()));
+        Person person2 = new Person("terry", 10000, new LottoTicketSeller(new RandomTicketFactory()));
 
         //when
         person.buyRandomLottoTicket(10000);
@@ -36,7 +38,7 @@ public class PersonTest {
     @Test
     void buyCustomTest() {
         // given
-        Person person = new Person("jerry", 14000, new LottoTicketSeller());
+        Person person = new Person("jerry", 14000, new LottoTicketSeller(new CustomTicketFactory()));
 
         // when
         int[] numbers = new int[]{1, 2, 3, 4, 5, 6};
@@ -50,7 +52,7 @@ public class PersonTest {
     @Test
     void matchingNumberTest() {
         // given
-        Person person = new Person("jerry", 14000, new LottoTicketSeller());
+        Person person = new Person("jerry", 14000, new LottoTicketSeller(new CustomTicketFactory()));
 
         // when
         int[] winningNumbers = new int[]{1, 2, 3, 4, 5, 6, 10};
@@ -66,7 +68,7 @@ public class PersonTest {
 
     @Test
     void buyFailTest() {
-        Person person = new Person("jerry", 14000, new LottoTicketSeller());
+        Person person = new Person("jerry", 14000, new LottoTicketSeller(new RandomTicketFactory()));
         assertThatThrownBy(() -> person.buyRandomLottoTicket(14001)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> person.buyRandomLottoTicket(-1)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> person.buyRandomLottoTicket(999)).isInstanceOf(IllegalArgumentException.class);

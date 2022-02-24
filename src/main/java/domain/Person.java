@@ -1,5 +1,8 @@
 package domain;
 
+import domain.factory.CustomTicketFactory;
+import domain.factory.RandomTicketFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +16,7 @@ public class Person {
     private final String name;
     private final LottoTicketSeller lottoTicketSeller;
     private int money;
-    private List<LottoTicket> myLottoTicketList;
+    private final List<LottoTicket> myLottoTicketList;
 
     public Person(String name, int money, LottoTicketSeller lottoTicketSeller) {
         this.name = name;
@@ -23,9 +26,23 @@ public class Person {
     }
 
     public void buyRandomLottoTicket(int money) {
+        lottoTicketSeller.setFactory(new RandomTicketFactory());
         isValidInputMoney(money);
-        myLottoTicketList = lottoTicketSeller.exchangeTicket(money);
+        int ticketCount = money / TICKET_PRICE;
+        for (int i = 0; i < ticketCount; i++) {
+            myLottoTicketList.add(lottoTicketSeller.exchangeTicket(new ArrayList<>()));
+        }
         this.money -= money;
+    }
+
+    public void buyCustomLottoTicket(int[] numbers) {
+        lottoTicketSeller.setFactory(new CustomTicketFactory());
+        ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
+        for (int number : numbers) {
+            lottoNumbers.add(new LottoNumber(number));
+        }
+        myLottoTicketList.add(lottoTicketSeller.exchangeTicket(lottoNumbers));
+        this.money -= TICKET_PRICE;
     }
 
     private void isValidInputMoney(int money) {
@@ -55,15 +72,6 @@ public class Person {
 
     public List<LottoTicket> getMyLottoTicketList() {
         return myLottoTicketList;
-    }
-
-    public void buyCustomLottoTicket(int[] numbers) {
-        ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
-        for (int number : numbers) {
-            lottoNumbers.add(new LottoNumber(number));
-        }
-        myLottoTicketList.add(lottoTicketSeller.exchangeTicket(lottoNumbers));
-        this.money -= TICKET_PRICE;
     }
 
     public int[] checkLottoTickets(int[] numbers) {
