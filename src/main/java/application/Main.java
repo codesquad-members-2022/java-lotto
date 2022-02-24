@@ -15,7 +15,9 @@ public class Main {
 //        GameController gameController = new GameController();
 //        gameController.run();
 
+        Route route = new Route();
+
         port(8080);
-        Route.run();
+        route.run();
     }
 }
