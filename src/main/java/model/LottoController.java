@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import utils.InputValidator;
 import view.InputView;
 import view.OutputView;
 
@@ -30,11 +31,30 @@ public class LottoController {
     }
 
     public void buildLotto() {
-        price = Integer.parseInt(InputView.requestPrice());
-        // price 1000 검증을. 여기서 하면 된다.
+        OutputView.requestPrice();
+        while (true) {
+            price = Integer.parseInt(InputView.requestPrice());
+            try {
+                InputValidator.validatePriceUnit(price);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
 
         int count = price / LOTTO_PRICE;
-        int manualLottoEach = Integer.parseInt(InputView.requestManual());
+
+        int manualLottoEach;
+        OutputView.requestManual();
+        while (true) {
+            manualLottoEach = Integer.parseInt(InputView.requestManualCount());
+            try {
+                InputValidator.validateAvailablePurchase(manualLottoEach, count);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
 
         if (manualLottoEach != 0) {
             makeManualLottoPerCount(manualLottoEach);
@@ -52,6 +72,9 @@ public class LottoController {
         String manualLottoNumber;
         OutputView.requestManualLottoNumber();
         while (manualLottoEach-- > 0) {
+
+
+
             manualLottoNumber = InputView.requestManualLottoNumber();
             makeManualLotto(manualLottoNumber);
         }

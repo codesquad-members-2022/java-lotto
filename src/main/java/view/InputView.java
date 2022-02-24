@@ -8,12 +8,11 @@ public class InputView {
     private static final Scanner sc = new Scanner(System.in);
 
     public static String requestPrice() {
-        OutputView.requestPrice();
         String price;
         while (true) {
             price = nextLine();
             try {
-                InputValidator.validatePrice(price);
+                InputValidator.validateNumber(price);
                 return price;
             } catch (IllegalArgumentException e) {
                 OutputView.printSentence(e.getMessage());
@@ -31,10 +30,17 @@ public class InputView {
         return nextLine();
     }
 
-    public static String requestManual() {
-        OutputView.requestManual();
-        return nextLine();
-
+    public static String requestManualCount() {
+        String count;
+        while (true) {
+            count = nextLine();
+            try {
+                InputValidator.validateNumber(count);
+                return count;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
     }
 
     public static String requestManualLottoNumber() {
