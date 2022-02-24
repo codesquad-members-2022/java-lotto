@@ -3,6 +3,7 @@ package controller;
 import domain.LottoTicket;
 import domain.LottoTicketSeller;
 import domain.Person;
+import domain.WinningNumbers;
 import domain.factory.RandomTicketFactory;
 import view.InputView;
 import view.OutputView;
@@ -44,16 +45,14 @@ public class LottoController {
     }
 
     private int[] makeResult(Person testUser) {
-        String[] winningNumbers = getWinningNumbersWithBonusNumber();
-        return testUser.checkLottoTickets(Arrays.stream(winningNumbers).mapToInt(Integer::parseInt).toArray());
+        WinningNumbers winningNumbers = getWinningNumbersWithBonusNumber();
+        return testUser.checkLottoTickets(winningNumbers);
     }
 
-    private String[] getWinningNumbersWithBonusNumber() {
+    private WinningNumbers getWinningNumbersWithBonusNumber() {
         String[] winningNumbers = InputView.requestLottoWinningNumbers();
         String bonusNumber = InputView.requestBonusNumber();
-        String[] winningNumbersWithBonus = arrayCopy(winningNumbers);
-        winningNumbersWithBonus[BONUS_NUMBER_INDEX] = bonusNumber;
-        return winningNumbersWithBonus;
+        return new WinningNumbers(winningNumbers, bonusNumber);
     }
 
     private String[] arrayCopy(String[] winningNumbers) {

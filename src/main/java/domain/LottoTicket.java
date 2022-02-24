@@ -6,11 +6,12 @@ import java.util.List;
 
 public class LottoTicket {
     private static final int NORMAL_TICKET_SIZE = 6;
-    private final List<LottoNumber> lottoNumbers;
+    private static final String LOTTO_NUMBER_ERROR_MESSAGE = "로또 숫자는 6개가 필요합니다.";
+    private final ArrayList<LottoNumber> lottoNumbers;
 
     public LottoTicket(ArrayList<LottoNumber> lottoNumbers) {
         if (!isValidTicketSize(lottoNumbers)) {
-            throw new IllegalArgumentException("로또 숫자는 6개가 필요합니다.");
+            throw new IllegalArgumentException(LOTTO_NUMBER_ERROR_MESSAGE);
         }
         this.lottoNumbers = lottoNumbers;
         Collections.sort(this.lottoNumbers);
@@ -24,7 +25,7 @@ public class LottoTicket {
         return lottoNumbers.size() == NORMAL_TICKET_SIZE;
     }
 
-    public int countWinningNumber(int[] winningNumbers) {
+    public int countWinningNumber(WinningNumbers winningNumbers) {
         int count = 0;
         for (LottoNumber lottoNumber : lottoNumbers) {
             count += checkWinningNumber(winningNumbers, lottoNumber);
@@ -32,9 +33,9 @@ public class LottoTicket {
         return count;
     }
 
-    private int checkWinningNumber(int[] winningNumbers, LottoNumber myNumber) {
-        for (int i = 0; i < winningNumbers.length - 1; i++) {
-            if (myNumber.isSameNumber(winningNumbers[i])) {
+    private int checkWinningNumber(WinningNumbers winningNumbers, LottoNumber myNumber) {
+        for (int i = 0; i < winningNumbers.getSize(); i++) {
+            if (myNumber.isSameNumber(winningNumbers.getNumberOfIndex(i))) {
                 return 1;
             }
         }
@@ -45,7 +46,7 @@ public class LottoTicket {
         System.out.println(lottoNumbers);
     }
 
-    public boolean checkBonusNumber(int bonusNumber) {
+    public boolean checkBonusNumber(LottoNumber bonusNumber) {
         for (LottoNumber lottoNumber : lottoNumbers) {
             if (lottoNumber.isSameNumber(bonusNumber)) {
                 return true;

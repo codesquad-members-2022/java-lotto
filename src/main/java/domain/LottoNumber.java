@@ -42,7 +42,7 @@ public class LottoNumber implements Comparable<LottoNumber> {
         return this.number - o.number;
     }
 
-    public boolean isSameNumber(int number) {
-        return this.number == number;
+    public boolean isSameNumber(LottoNumber lottoNumber) {
+        return this.number == lottoNumber.number;
     }
 }

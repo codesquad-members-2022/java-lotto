@@ -74,17 +74,17 @@ public class Person {
         return myLottoTicketList;
     }
 
-    public int[] checkLottoTickets(int[] numbers) {
+    public int[] checkLottoTickets(WinningNumbers winningNumbers) {
         int[] result = new int[NUMBER_OF_RANKS];
         for (LottoTicket lottoTicket : myLottoTicketList) {
-            checkThisTicket(numbers, result, lottoTicket);
+            checkThisTicket(winningNumbers, result, lottoTicket);
         }
         return result;
     }
 
-    private void checkThisTicket(int[] numbers, int[] result, LottoTicket lottoTicket) {
-        int count = lottoTicket.countWinningNumber(numbers);
-        if (count == SECOND_WINNING_COUNT && lottoTicket.checkBonusNumber(numbers[BONUS_NUMBER_INDEX])) {
+    private void checkThisTicket(WinningNumbers winningNumbers, int[] result, LottoTicket lottoTicket) {
+        int count = lottoTicket.countWinningNumber(winningNumbers);
+        if (count == SECOND_WINNING_COUNT && lottoTicket.checkBonusNumber(winningNumbers.getBonusNumber())) {
             result[SECOND_WITH_BONUS_WINNING_COUNT]++;
             return;
         }
