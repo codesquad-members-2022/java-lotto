@@ -29,7 +29,6 @@ public class LottoRepository {
         map.put(6, 0);
     }
 
-
     public void checkOverLap(List<Integer> lists) {
         int size = (int)lottoList.stream()
             .filter(l -> l.sameList(lists)).count();

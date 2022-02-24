@@ -33,8 +33,9 @@ public class OutputView {
         return key + "개 일치 (";
     }
 
-    public static void printPurchaseCount(int count, List<Lotto> lottoList) {
-        System.out.println(count + "개를 구매했습니다.");
+    public static void printPurchaseCount(int count, int manualLottoEach, List<Lotto> lottoList) {
+        int autoLottoEach = count - manualLottoEach;
+        System.out.println("수동으로 " + manualLottoEach + "장, "+ "자동으로 " + autoLottoEach + "장을 구매했습니다.");
         for (Lotto lotto : lottoList) {
             String collect = lotto.getNumbers().stream()
                     .map(String::valueOf)

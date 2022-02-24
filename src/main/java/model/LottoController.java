@@ -38,12 +38,13 @@ public class LottoController {
             makeManualLottoPerCount(manualLottoEach);
         }
 
-        // TODO!!
-        while (repository.getLottoList().size() != (count - manualLottoEach)) {
+
+
+        while (repository.getLottoList().size() != count) {
             Set<Integer> numbers = makeRandomNumberSet();
             checkOverLap(new ArrayList<>(numbers));
         }
-        OutputView.printPurchaseCount(count - manualLottoEach, repository.getLottoList());
+        OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
     }
 
     private void makeManualLottoPerCount(int manualLottoEach) {
