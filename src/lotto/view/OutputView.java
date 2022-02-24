@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 
 public class OutputView {
     public void printPurchaseResult(LottoBundle lottoBundle) {
-        System.out.printf("%d장 구매했습니다. 복권은 소액으로 건전하게 즐기세요.%n", lottoBundle.count());
+        System.out.printf("수동으로 %d장, 자동으로 %d장 구매했습니다. 복권은 소액으로 건전하게 즐기세요.%n",
+                lottoBundle.getManualTicketCount(), lottoBundle.getAutoTicketCount());
         IntStream.range(0, lottoBundle.count())
                 .mapToObj(lottoBundle::getTicket)
                 .map(LottoTicket::toString)

@@ -29,6 +29,11 @@ public class LottoNumbers {
         return lottoNumberList.stream();
     }
 
+    @Override
+    public String toString() {
+        return lottoNumberList.toString();
+    }
+
     private static List<LottoNumber> parseNumbers(int[] numbers) {
         return Arrays.stream(numbers)
                 .sorted()

@@ -1,6 +1,7 @@
 package lotto.view;
 
 import java.util.Scanner;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class InputView {
@@ -13,10 +14,7 @@ public class InputView {
 
     public int[] getWinningNumber() {
         System.out.println("당첨 번호를 입력해주십시오.");
-        String winningNumber = scanner.nextLine();
-        return Stream.of(winningNumber.split(","))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        return getIntArray();
     }
 
     public int getBonusNumber() {
@@ -24,12 +22,30 @@ public class InputView {
         return getInt();
     }
 
-    private int getInt() {
-        return Integer.parseInt(scanner.nextLine());
-    }
-
     public void close() {
         scanner.close();
     }
 
+    public int getManualTicketCount() {
+        System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
+        return getInt();
+    }
+
+    public int[][] getManualLottoNumbers(int manualTicketCount) {
+        System.out.printf("조상님이 가르쳐준 번호를 입력해 주세요. (%d장)%n", manualTicketCount);
+        return IntStream.range(0, manualTicketCount)
+                .mapToObj(i -> getIntArray())
+                .toArray(int[][]::new);
+    }
+
+    private int getInt() {
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    private int[] getIntArray() {
+        String winningNumber = scanner.nextLine();
+        return Stream.of(winningNumber.split(","))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
 }
