@@ -1,20 +1,18 @@
 package domain;
 
 public enum Rank {
-    FIFTH(3, 5_000, false),
-    FORTH(4, 50_000, false),
-    THIRD(5, 1_500_000, false),
-    SECOND(5, 30_000_000, true),
-    FIRST(6, 2_000_000_000, false);
+    FIFTH(3, 5_000),
+    FORTH(4, 50_000),
+    THIRD(5, 1_500_000),
+    SECOND(5, 30_000_000),
+    FIRST(6, 2_000_000_000);
 
     private final int matchedNumber;
     private final int prize;
-    private final boolean isBonus;
 
-    private Rank(int matchedNumber, int prize, boolean isBonus) {
+    private Rank(int matchedNumber, int prize) {
         this.matchedNumber = matchedNumber;
         this.prize = prize;
-        this.isBonus = isBonus;
     }
 
     public int getMatchedNumber() {
@@ -25,10 +23,6 @@ public enum Rank {
         return prize;
     }
 
-    public boolean getIsBonus(){
-        return isBonus;
-    }
-
     public static Rank designateRank(int matchedNumber, boolean isBonus) {
         switch (matchedNumber) {
             case 3:
@@ -36,11 +30,15 @@ public enum Rank {
             case 4:
                 return FORTH;
             case 5:
-                if (isBonus)
-                    return SECOND;
-                return THIRD;
+                return checkBonus(isBonus);
             default:
                 return FIRST;
         }
+    }
+
+    private static Rank checkBonus(boolean isBonus){
+        if(isBonus)
+            return SECOND;
+        return THIRD;
     }
 }
