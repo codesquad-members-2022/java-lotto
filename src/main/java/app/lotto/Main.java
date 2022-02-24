@@ -1,6 +1,6 @@
 package app.lotto;
 
-import app.lotto.domain.LottoController;
+import app.lotto.domain.LottoAutoMachine;
 import app.lotto.domain.LottoGame;
 import app.lotto.domain.LottoGameResult;
 import app.lotto.domain.LottoTicket;
@@ -15,10 +15,10 @@ public class Main {
 
     public static void main(String[] args) {
         int amount = InputView.readAmount();
-        int customLottoCount = InputView.readCustomLottoCount(LottoController.getLottoCount(amount));
+        int customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
 
         List<LottoTicket> customLottoNumbers = InputView.readCustomLottoNumbers(customLottoCount);
-        List<LottoTicket> allAutoLottoNumbers = LottoController.purchaseLotto(amount, customLottoCount);
+        List<LottoTicket> allAutoLottoNumbers = LottoAutoMachine.purchaseLotto(amount, customLottoCount);
         List<LottoTicket> allLottoNumbers = getAllLottoNumbers(customLottoNumbers, allAutoLottoNumbers);
         OutputView.printAllLottoNumbers(allLottoNumbers);
         System.out.println();

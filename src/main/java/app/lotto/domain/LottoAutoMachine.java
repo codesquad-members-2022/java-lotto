@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LottoController {
+public class LottoAutoMachine {
 
     private static final int LOTTO_PRICE = 1000;
 
@@ -24,10 +24,10 @@ public class LottoController {
     }
 
     public static List<LottoTicket> purchaseLotto(int amount, int customLottoCount) {
-        int autoLottoCount = LottoController.getLottoCount(amount) - customLottoCount;
+        int autoLottoCount = LottoAutoMachine.getLottoCount(amount) - customLottoCount;
         OutputView.printLottoCount(autoLottoCount, customLottoCount);
 
-        return LottoController.getAllAutoLottoNumbers(autoLottoCount);
+        return LottoAutoMachine.getAllAutoLottoNumbers(autoLottoCount);
     }
 
     public static int getLottoCount(int amount) {
