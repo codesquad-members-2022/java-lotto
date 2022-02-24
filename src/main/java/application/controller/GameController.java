@@ -1,4 +1,4 @@
-package application;
+package application.controller;
 
 import application.domain.*;
 import application.view.InputView;
