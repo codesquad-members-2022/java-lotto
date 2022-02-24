@@ -38,8 +38,8 @@ public class OutputView {
     private static String makeRewardsString(LottoGameResults lottoGameResults) {
         return Arrays.stream(Rank.values())
                     .filter(rank -> rank != Rank.FAILED)
-                    .sorted(Comparator.comparing(Rank::getCountOfMatch))
-                    .map(rank -> String.format("%d개 일치 (%d원) - %d개", rank.getCountOfMatch(), rank.getReward(), lottoGameResults.getRankCountOf(rank)))
+                    .sorted(Comparator.comparing(Rank::getReward))
+                    .map(rank -> String.format("%s - %d개", rank, lottoGameResults.getRankCountOf(rank)))
                     .collect(Collectors.joining("\n"));
     }
 }
