@@ -9,10 +9,16 @@ public class InputView {
 
     private static final String PROMPT = "> ";
     private static final String PROMPT_MONEY = "구입금액을 입력해 주세요.";
+    private static final String PROMPT_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요.";
     private static final String PROMPT_ANSWER = "당첨 번호를 입력해 주세요.";
     private static final String PROMPT_BONUS_NUMBER = "보너스 볼을 입력해 주세요.";
-    private static final Scanner sc = new Scanner(System.in);
     private static final InputValidator validator = InputValidator.getInstance();
+
+    private final Scanner sc;
+
+    public InputView(Scanner sc) {
+        this.sc = sc;
+    }
 
     public int getMoneyInput() {
         System.out.println(PROMPT_MONEY);
@@ -45,5 +51,11 @@ public class InputView {
             System.out.println(e.getMessage());
             return getBonusNumberInput(winningNumber);
         }
+    }
+
+    public int getManualLottoCountInput() {
+        System.out.println(PROMPT_MANUAL_LOTTO_COUNT);
+        System.out.print(PROMPT);
+        return validator.validatePositiveInteger(sc.nextLine());
     }
 }

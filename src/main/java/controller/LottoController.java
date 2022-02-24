@@ -33,6 +33,7 @@ public class LottoController {
 
     private PurchasedLotteries purchase() {
         int userMoney = inputView.getMoneyInput();
+        int manualLottoCount = inputView.getManualLottoCountInput();
         List<Lotto> lotteries = new ArrayList<>();
         int lottoCount = userMoney / Lotto.PRICE;
         for (int i = 0; i < lottoCount; i++) {

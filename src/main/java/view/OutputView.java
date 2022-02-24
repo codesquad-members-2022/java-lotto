@@ -25,7 +25,6 @@ public class OutputView {
                 prize,
                 count);
         }
-
         System.out.printf("총 수익률은 %.2f%%입니다.", profitRate);
     }
 }
