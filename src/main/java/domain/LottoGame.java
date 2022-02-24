@@ -14,6 +14,7 @@ public class LottoGame {
     private final int purchasePrice;
     private final int[] winingNumber = new int[LOTTO_SIZE];
     private final Lottos lottos = new Lottos();
+    private int bonusNumber;
 
     public LottoGame(int purchasePrice) {
         this.purchasePrice = purchasePrice;
@@ -21,13 +22,9 @@ public class LottoGame {
 
     public void start() {
         lottos.createLotto(purchasePrice, createLottoBalls());
-
         lottos.print();
-
         createWiningNumber();
-
         int[] winingResult = lottos.checkWiningNumber(winingNumber);
-
         printGameResult(winingResult);
     }
 
@@ -43,6 +40,7 @@ public class LottoGame {
             winingNumber[index] = Integer.parseInt(split[index]);
         }
 
+         bonusNumber = Integer.parseInt(InputView.bonusNumber());
     }
 
     private List<Integer> createLottoBalls() {
@@ -54,6 +52,5 @@ public class LottoGame {
 
         return lottoBalls;
     }
-
 
 }
