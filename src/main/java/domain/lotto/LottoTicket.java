@@ -7,6 +7,7 @@ import java.util.Set;
 public class LottoTicket {
 
     private static final int LIMIT_LOTTO_NUMBERS = 6;
+    public static final int LOTTO_TICKET_PRICE = 1000;
 
     private final Set<LottoNumber> lottoNumbers;
 

@@ -2,8 +2,6 @@ package domain.lotto;
 
 public class Money {
 
-    private static final long PRICE_OF_LOTTO = 1000;
-
     private final long purchaseAmount;
 
     public Money(long purchaseAmount) {
@@ -20,7 +18,7 @@ public class Money {
         if (isMultipleOfPrice(purchaseAmount)) {
             return;
         }
-        throw new IllegalArgumentException(String.format("구입금액은 %d의 배수만 가능합니다.", PRICE_OF_LOTTO));
+        throw new IllegalArgumentException(String.format("구입금액은 %d의 배수만 가능합니다.", LottoTicket.LOTTO_TICKET_PRICE));
     }
 
     private boolean isMultipleOfPrice(long purchaseAmount) {
@@ -31,11 +29,11 @@ public class Money {
         if (isValidRangeOfPurchaseAmount(purchaseAmount)) {
             return;
         }
-        throw new IllegalArgumentException(String.format("구입금액은 %d 이상만 허용됩니다.", PRICE_OF_LOTTO));
+        throw new IllegalArgumentException(String.format("구입금액은 %d 이상만 허용됩니다.", LottoTicket.LOTTO_TICKET_PRICE));
     }
 
     private boolean isValidRangeOfPurchaseAmount(long purchaseAmount) {
-        return PRICE_OF_LOTTO <= purchaseAmount;
+        return LottoTicket.LOTTO_TICKET_PRICE <= purchaseAmount;
     }
 
     public long getPurchaseAmount() {
@@ -43,6 +41,6 @@ public class Money {
     }
 
     public long numberOfBuyableLottoTickets() {
-        return purchaseAmount / PRICE_OF_LOTTO;
+        return purchaseAmount / LottoTicket.LOTTO_TICKET_PRICE;
     }
 }

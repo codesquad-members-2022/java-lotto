@@ -6,13 +6,11 @@ import java.util.Map;
 
 public class LottoGameResults {
 
-    private final Money money;
     private final LottoTickets lottoTickets;
     private final WinningTicket winningTicket;
     private final Map<Rank, Integer> rankCounts;
 
-    public LottoGameResults(Money money, LottoTickets lottoTickets, WinningTicket winningTicket) {
-        this.money = money;
+    public LottoGameResults(LottoTickets lottoTickets, WinningTicket winningTicket) {
         this.lottoTickets = lottoTickets;
         this.winningTicket = winningTicket;
         this.rankCounts = setupRankCounts();
@@ -42,8 +40,8 @@ public class LottoGameResults {
 
     public double getReturnToInvestment() {
         long totalRewards = getTotalRewards();
-        double profit = totalRewards - money.getPurchaseAmount();
-        double returnOfInvestment = (profit) / money.getPurchaseAmount() * 100;
+        double profit = totalRewards - lottoTickets.getPriceSum();
+        double returnOfInvestment = (profit) / lottoTickets.getPriceSum() * 100;
         return returnOfInvestment;
     }
 
