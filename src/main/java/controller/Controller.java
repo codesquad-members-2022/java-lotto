@@ -1,39 +1,53 @@
 package controller;
 
-import domain.LottoCashier;
-import domain.LottoMatchChecker;
-import domain.WinningNumbersValidator;
-import domain.LottoTicketIssuer;
-import domain.LottoTicket;
-import domain.ProfitCalculator;
+import domain.*;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+
 import view.InputView;
 import view.OutputView;
 
 public class Controller {
 
-    private InputView inputView;
-    private OutputView outputView;
-
-    public Controller() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
-    }
-
     public void run() {
-        int purchasingAmount = inputView.getPurchasingAmount();
+        int purchasingAmount = getProperPurchaseAmount();
         int purchaseQuantity = LottoCashier.getLottoAmount(purchasingAmount);
 
-        LottoTicket lottoTicket = new LottoTicketIssuer(purchaseQuantity).getLottoTicket();
-        outputView.printLotto(lottoTicket, purchaseQuantity);
+        List<LottoSheet> lottoTicket = LottoTicketIssuer.getLottoTicket(purchaseQuantity);
+        OutputView.printLotto(lottoTicket, purchaseQuantity);
 
-        List<Integer> winningNumbers = inputView.getWinningNumber();
-        WinningNumbersValidator.validate(winningNumbers);
+        WinningNumbers winningNumbers = getProperWinningNumbers();
 
-        int[] winningResult = new LottoMatchChecker(winningNumbers, lottoTicket).getWinningResult();
+        LinkedHashMap<Rank, Integer> winningResult = new LottoMatchChecker(winningNumbers, lottoTicket).getWinningResult();
+
         Double profitPercent = new ProfitCalculator(purchasingAmount, winningResult).calculate();
 
-        outputView.printProfitTable(winningResult);
-        outputView.printProfit(profitPercent);
+        OutputView.printProfitTable(winningResult);
+        OutputView.printProfit(profitPercent);
+    }
+
+    public int getProperPurchaseAmount() {
+        try {
+            return InputView.getPurchasingAmount();
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 값을 입력하셨습니다!!");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return getProperPurchaseAmount();
+    }
+
+    public WinningNumbers getProperWinningNumbers() {
+        try {
+            List<Integer> winningNumbers = InputView.getWinningNumber();
+            int bonusNumber = InputView.getBonusNumber();
+            return new WinningNumbers(winningNumbers,bonusNumber);
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 값을 입력하셨습니다!!");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return getProperWinningNumbers();
     }
 }

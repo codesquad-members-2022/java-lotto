@@ -1,24 +1,25 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LottoTicketIssuer {
 
-    private static int purchaseQuantity;
-    private LottoTicket lottoTicket;
+    private static List<LottoSheet> lottoTicket;
 
-    public LottoTicketIssuer(int purchaseQuantity) {
-        this.purchaseQuantity = purchaseQuantity;
-        lottoTicket = new LottoTicket();
-        issue();
+    static {
+        lottoTicket = new ArrayList<>();
     }
 
-    public void issue() {
+    public static void issue(int purchaseQuantity) {
         for (int i = 0; i < purchaseQuantity; i++) {
-            LottoSheet lottoSheet = new LottoSheet(new LottoGenerator().getNumbers());
-            lottoTicket.insertIntoLottoSheets(lottoSheet);
+            LottoSheet lottoSheet = new LottoSheet(LottoGenerator.getNumbers());
+            lottoTicket.add(lottoSheet);
         }
     }
 
-    public LottoTicket getLottoTicket() {
+    public static List<LottoSheet> getLottoTicket(int purchaseQuantity) {
+        issue(purchaseQuantity);
         return lottoTicket;
     }
 }
