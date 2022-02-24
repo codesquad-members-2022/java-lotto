@@ -5,7 +5,6 @@ import java.util.List;
 
 public class LottoBundle {
     private final int size;
-
     private final List<LottoTicket> lottoTickets = new ArrayList<>();
 
     public LottoBundle(int size) {
