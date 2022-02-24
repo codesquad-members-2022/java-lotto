@@ -3,15 +3,13 @@ import static views.Output.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import domains.LottoMachine;
 import domains.Lottos;
 import domains.Ranking;
-import domains.WinningNumbersCounter;
 import domains.WinningNumbers;
 
-public class Main {
+public class LottoPlay {
 	private static final int IDX_PURCHASED_AMOUNT = 0;
 	private static final int IDX_NUMBER_OF_TICKET = 1;
 	private static LottoMachine lottoMachine = new LottoMachine();
@@ -28,23 +26,18 @@ public class Main {
 
 		List<Integer> inputValueOfWinningNumbers = inputWinningNumbers();
 		int bonusNumber = getBonusNumber();
+
 		WinningNumbers winningNumbers = new WinningNumbers(inputValueOfWinningNumbers, bonusNumber);
+		Ranking ranking = lottos.getNumberOfWinningAboveThree(winningNumbers);
 
-
-
-		List<Integer> threeOrMore = lottos.getNumberOfWinningAboveThree(winningNumbers);
-
-		getResultOfLotto(purchaseAmount, threeOrMore);
+		getResultOfLotto(ranking, purchaseAmount);
 
 		scanClose();
 	}
 
-	private static void getResultOfLotto(int purchaseAmount, List<Integer> threeOrMore) {
-		WinningNumbersCounter winnings = new WinningNumbersCounter(threeOrMore);
-		Ranking ranking = new Ranking(winnings);
-
-		Map<Ranking.Rank, Integer> ranks = ranking.resultOfRanks();
-		double yields = ranking.totalYields(purchaseAmount);
-		printResultOfLottoAndYield(ranks, yields);
+	private static void getResultOfLotto(Ranking ranking, int purchaseAmount) {
+		String winningStatistics = ranking.getWinningStatistics();
+		String rateOfReturn = ranking.getRateOfReturn(purchaseAmount);
+		printResultOfLottoAndYield(winningStatistics, rateOfReturn);
 	}
 }

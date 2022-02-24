@@ -1,9 +1,5 @@
 package domains;
 
-import domains.WinningNumbers;
-
-import static java.util.stream.Collectors.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,39 +30,17 @@ public class Lottos {
         this.lottos.add(lotto);
     }
 
-    public ArrayList<Lotto> get(){
-        return this.lottos;
-    }
-
-    public List<Integer> getNumberOfWinningAboveThree(WinningNumbers winningNumbers) {
+    public Ranking getNumberOfWinningAboveThree(WinningNumbers winningNumbers) {
+        Ranking ranking = new Ranking();
         List<Integer> winning = winningNumbers.getNumbers();
-        int threeBall = 0;
-        int fourBall = 0;
-        int fiveBall = 0;
-        int bonusFiveBall = 0;
-        int sixBall = 0;
+
         for (Lotto lotto : lottos) {
             int winningCount = lotto.countNumberOfWinnings(winning);
-            if (winningCount >= MINIMUM_NUMBER_OF_WINNING){
-                switch (winningCount) {
-                    case 3 :
-                        threeBall++;
-                        break;
-                    case 4 :
-                        if (lotto.getBonus(winningNumbers.getBonusBall())){
-                            fiveBall++;
-                            break;
-                        }fourBall++;
-                        break;
-                    case 5 :
-                        fiveBall++;
-                        break;
-                    case 6 :
-                        sixBall++;
-                        break;
-                }
+            if (winningCount >= MINIMUM_NUMBER_OF_WINNING) {
+                boolean checkedBonus = lotto.getBonus(winningNumbers.getBonusBall());
+                ranking.record(checkedBonus, winningCount);
             }
         }
-        return null;
+       return ranking;
     }
 }
