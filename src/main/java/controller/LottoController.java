@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.Lotto.Lotto;
-import domain.LottoGenerator;
+import domain.Lotto.LottoGenerator;
 import domain.PurchasedLotteries;
 import domain.Result;
 import domain.WinningNumbers;

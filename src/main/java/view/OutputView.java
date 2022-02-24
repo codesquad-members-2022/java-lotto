@@ -7,7 +7,9 @@ import domain.Result;
 public class OutputView {
 
     public void printPurchasedLotteries(PurchasedLotteries purchasedLotteries) {
-        System.out.println(purchasedLotteries.count() + "개를 구매했습니다.");
+        System.out.printf("수동으로 %d장, 자동으로 %d장을 구매했습니다.%n"
+            , purchasedLotteries.countManualLotto()
+            , purchasedLotteries.countRandomLotto());
         purchasedLotteries.get().forEach(System.out::println);
     }
 

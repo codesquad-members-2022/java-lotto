@@ -3,6 +3,8 @@ package domain;
 import java.util.List;
 
 import domain.Lotto.Lotto;
+import domain.Lotto.ManualLotto;
+import domain.Lotto.RandomLotto;
 
 public class PurchasedLotteries {
 
@@ -17,7 +19,7 @@ public class PurchasedLotteries {
     }
 
     public int getTotalInvestment() {
-        return Lotto.PRICE * count();
+        return Lotto.PRICE * countAllLotto();
     }
 
     public int getTotalPrize(WinningNumbers winningNumbers) {
@@ -31,8 +33,20 @@ public class PurchasedLotteries {
             * 100;
     }
 
-    public int count() {
+    public int countAllLotto() {
         return purchasedLotteries.size();
+    }
+
+    public int countManualLotto() {
+        return (int)purchasedLotteries.stream()
+            .filter(ManualLotto.class::isInstance)
+            .count();
+    }
+
+    public int countRandomLotto() {
+        return (int)purchasedLotteries.stream()
+            .filter(RandomLotto.class::isInstance)
+            .count();
     }
 
     public List<Lotto> get() {
