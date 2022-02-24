@@ -1,18 +1,20 @@
 package view;
 
 import domain.LottoSheet;
+import domain.LottoTicket;
 import domain.Rank;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class OutputView {
 
-    private static final String PURCHASE_CONFIRMATION_MESSAGE = "개를 구매했습니다.";
+    public static void printPurchaseConfirmMessage(int lottoQuantity, int manualLottoQuantity) {
+        System.out.println("수동으로 " + manualLottoQuantity +"장, 자동으로 " + (lottoQuantity - manualLottoQuantity) + "장 구매했습니다.");
+    }
 
-    public static void printLotto(List<LottoSheet> lottoTicket, int numberOfLotto) {
-        System.out.println(numberOfLotto + PURCHASE_CONFIRMATION_MESSAGE);
-
-        lottoTicket.stream().map(LottoSheet::getLottoNumbers).forEach(System.out::println);
+    public static void printLotto(LottoTicket lottoTicket) {
+        List<LottoSheet> lottoSheetList = lottoTicket.getLottoTicket();
+        lottoSheetList.stream().map(LottoSheet::getLottoNumbers).forEach(System.out::println);
     }
 
     private static void printBonusNumberMessage(Rank rank) {

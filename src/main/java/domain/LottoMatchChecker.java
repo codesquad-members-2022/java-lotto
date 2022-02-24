@@ -10,10 +10,10 @@ public class LottoMatchChecker {
     private List<LottoSheet> lottoTicket;
     private LinkedHashMap<Rank, Integer> winningResult;
 
-    public LottoMatchChecker(WinningNumbers winningNumbers, List<LottoSheet> lottoTicket) {
+    public LottoMatchChecker(WinningNumbers winningNumbers, LottoTicket lottoTicket) {
         this.winningNumbersList = winningNumbers.getWinningNumbers();
         this.winningBonusNumber = winningNumbersList.remove(winningNumbersList.size() - 1);
-        this.lottoTicket = lottoTicket;
+        this.lottoTicket = lottoTicket.getLottoTicket();
         winningResult = new LinkedHashMap<>() {{
             put(Rank.FIRST, 0);
             put(Rank.SECOND, 0);
