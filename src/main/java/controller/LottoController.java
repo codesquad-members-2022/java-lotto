@@ -18,9 +18,15 @@ public class LottoController {
     public void run() {
         int userMoney = InputView.requestMoney();
         LottoTicketSeller seller = new LottoTicketSeller(new RandomTicketFactory());
-
         Person testUser = new Person("testUser", userMoney, seller);
-        testUser.buyRandomLottoTicket(userMoney);
+
+        int customTicketCount = InputView.requestCustomTicketCount();
+        InputView.requestCustomTicketNumberMessage();
+        for (int i = 0; i < customTicketCount; i++) {
+            testUser.buyCustomLottoTicket(InputView.requestCustomTicketNumber());
+        }
+
+        testUser.buyRandomLottoTicket(userMoney - customTicketCount * 1000);
 
         showLottoInfo(testUser);
 
