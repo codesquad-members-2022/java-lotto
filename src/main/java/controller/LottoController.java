@@ -8,13 +8,9 @@ import domain.factory.RandomTicketFactory;
 import view.InputView;
 import view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class LottoController {
-
-    private static final int WINNING_NUMBER_SIZE = 7;
-    private static final int BONUS_NUMBER_INDEX = 6;
     private static final int TICKET_PRICE = 1000;
 
     public void run() {
@@ -53,12 +49,6 @@ public class LottoController {
         String[] winningNumbers = InputView.requestLottoWinningNumbers();
         String bonusNumber = InputView.requestBonusNumber();
         return new WinningNumbers(winningNumbers, bonusNumber);
-    }
-
-    private String[] arrayCopy(String[] winningNumbers) {
-        String[] temp = new String[WINNING_NUMBER_SIZE];
-        System.arraycopy(winningNumbers, 0, temp, 0, winningNumbers.length);
-        return temp;
     }
 
     private void showResult(int[] results) {
