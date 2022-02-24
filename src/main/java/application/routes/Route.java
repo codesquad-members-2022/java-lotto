@@ -1,18 +1,16 @@
+package application.routes;
+
 import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
-import spark.template.handlebars.HandlebarsTemplateEngine;
+public class Route {
 
-public class SparkTest {
-    public static void main(String[] args) {
-        String path = System.getProperty("user.dir");
-        System.out.println(path);
-
-        port(8080);
+    public static void run() {
         get("/index", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -27,7 +25,7 @@ public class SparkTest {
         });
     }
 
-    public static String render(Map<String, Object> model, String templatePath) {
+    private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
