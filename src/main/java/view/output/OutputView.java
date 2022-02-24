@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class OutputView {
     public static void printLottoTickets(LottoTickets lottoTickets) {
         List<LottoTicket> tickets = lottoTickets.getLottoTickets();
-        System.out.printf("%d개를 구매했습니다.\n", tickets.size());
         System.out.println(makeLottoTicketsString(tickets));
         System.out.println();
     }
@@ -41,5 +40,11 @@ public class OutputView {
                     .sorted(Comparator.comparing(Rank::getReward))
                     .map(rank -> String.format("%s - %d개", rank, lottoGameResults.getRankCountOf(rank)))
                     .collect(Collectors.joining("\n"));
+    }
+
+    public static void printLottoTicketCounts(LottoTickets manualLottoTickets, LottoTickets randomLottoTickets) {
+        System.out.printf("수동으로 %d장, 자동으로 %d개를 구매했습니다.\n",
+                manualLottoTickets.getCountOfLottoTickets(),
+                randomLottoTickets.getCountOfLottoTickets());
     }
 }

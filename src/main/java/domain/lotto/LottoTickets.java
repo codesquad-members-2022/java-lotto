@@ -45,6 +45,10 @@ public class LottoTickets {
     }
 
     public double getPriceSum() {
-        return lottoTickets.size() * LottoTicket.LOTTO_TICKET_PRICE;
+        return getCountOfLottoTickets() * LottoTicket.LOTTO_TICKET_PRICE;
+    }
+
+    public int getCountOfLottoTickets() {
+        return lottoTickets.size();
     }
 }

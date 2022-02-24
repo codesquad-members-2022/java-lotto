@@ -8,7 +8,6 @@ public class LottoController {
 
     public void run() {
         LottoTickets lottoTickets = buyLottoTickets();
-        OutputView.printLottoTickets(lottoTickets);
 
         WinningTicket winningTicket = InputView.inputWinningTicket();
         LottoGameResults lottoGameResults = new LottoGameResults(lottoTickets, winningTicket);
@@ -22,7 +21,10 @@ public class LottoController {
         int count = InputView.inputCountOfManualLottoTicket(money);
         LottoTickets manualLottoTickets = LottoTickets.createManualTickets((InputView.inputManualLottoTickets(count)));
         LottoTickets randomLottoTickets = LottoTickets.createRandomTickets(money.numberOfBuyableLottoTickets() - count);
+        LottoTickets allLottoTickets = LottoTickets.merge(manualLottoTickets, randomLottoTickets);
 
-        return LottoTickets.merge(manualLottoTickets, randomLottoTickets);
+        OutputView.printLottoTicketCounts(manualLottoTickets, randomLottoTickets);
+        OutputView.printLottoTickets(allLottoTickets);
+        return allLottoTickets;
     }
 }
