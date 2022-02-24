@@ -25,6 +25,10 @@ public enum Rank {
         return prize;
     }
 
+    public boolean getIsBonus(){
+        return isBonus;
+    }
+
     public static Rank designateRank(int matchedNumber, boolean isBonus) {
         switch (matchedNumber) {
             case 3:

@@ -47,13 +47,6 @@ public class LottoCompany {
         OutputView.showWinningResult(this.statistics, calculateProfit());
     }
 
-    private int addMatchedForBonus(int matchedNumber, boolean isBonus){
-        if (matchedNumber == 5 && isBonus){
-            return 2;
-        }
-        return 0;
-    }
-
     public double calculateProfit() {
         int totalPrize = 0;
         for (Rank rank : this.statistics.keySet()) {
