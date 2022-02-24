@@ -1,8 +1,12 @@
 package PACKAGE_NAME.view;
 
 import PACKAGE_NAME.domain.LottoTickets;
+import PACKAGE_NAME.domain.Rank;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -25,12 +29,19 @@ public class OutputView {
     private static final String WINNING_STATISTIC = "당첨 통계";
     private static final String TOTAL_WINNING_MONEY = "당첨금액 총합: ";
     private static final String BUYING_MESSAGE = "개를 구매했습니다.";
+    private static Map<Integer, Integer> counts = new HashMap<>();
+
+    static {
+        counts.put(3, 3);
+        counts.put(4, 4);
+        counts.put(5, 5);
+        counts.put(6, 6);
+    }
 
 
-    public void printLottoResult(Map<Integer, Integer> numberMatch) {
+    public void printLottoResult(Map<Rank, Integer> numberMatch) {
         System.out.println(WINNING_STATISTIC);
         System.out.println(LINE);
-
         for (int index = THREE; index <= SIX; index++) {
             if (index == THREE) {
                 System.out.println(index + (COUNT + MATCH + FRONT_BRACKET + FOURTH__WINNING_MONEY + LAST_BRACKET + numberMatch.getOrDefault(index, DEFAULT_COUNT) + COUNT));

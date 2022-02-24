@@ -17,13 +17,14 @@ public class LottoCompany {
         this.bonusNumber = bonusNumber;
     }
 
-    public Map<Integer, Integer> numberMatch(LottoTickets lottoTickets) {
-        Map<Integer, Integer> answers = new HashMap<>();
+    public Map<Rank, Integer> numberMatch(LottoTickets lottoTickets) {
+        Map<Rank, Integer> answers = new HashMap<>();
 
         for (int index = 0; index < lottoTickets.getLottoTickets().size(); index++) {
             LottoTicket lottoTicket = lottoTickets.getLottoTickets().get(index);
             int count = lottoTicket.countAnswer(winningNumbers);
-            answers.put(count, answers.getOrDefault(count, 0) + 1);
+            Rank rank = Rank.getRank(count);
+            answers.put(rank, answers.getOrDefault(rank, 0) + 1);
         }
         lottoTickets.winningAmount(answers);
         return answers;

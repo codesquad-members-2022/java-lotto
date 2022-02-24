@@ -2,6 +2,7 @@ package PACKAGE_NAME.view;
 
 import PACKAGE_NAME.domain.BonusNumber;
 import PACKAGE_NAME.domain.LottoTickets;
+import PACKAGE_NAME.domain.Rank;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class GameManager {
             BonusNumber bonusNumber = new BonusNumber(inputView.inputBonusNumber());
             registWinningNumbersToCompany(winningNumbers, bonusNumber);
 
-            Map<Integer, Integer> numberMatch = lottoController.getWinningTickets(lottoTickets);
+            Map<Rank, Integer> numberMatch = lottoController.getWinningTickets(lottoTickets);
 
             printLottoResult(numberMatch);
             printRateOfReturn(money, lottoTickets, numberMatch);
@@ -43,11 +44,11 @@ public class GameManager {
         lottoController.registWinningNumbers(winningNumbers, bonusNumber);
     }
 
-    private void printLottoResult(Map<Integer, Integer> numberMatch) {
+    private void printLottoResult(Map<Rank, Integer> numberMatch) {
         outputView.printLottoResult(numberMatch);
     }
 
-    private void printRateOfReturn(int money, LottoTickets lottoTickets, Map<Integer, Integer> numberMatch) {
+    private void printRateOfReturn(int money, LottoTickets lottoTickets, Map<Rank, Integer> numberMatch) {
         int sum = lottoTickets.winningAmount(numberMatch);
         double rateOfReturn = lottoTickets.calculateYield(sum, money);
         outputView.printRateOfReturn(sum, rateOfReturn);

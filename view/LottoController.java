@@ -1,9 +1,6 @@
 package PACKAGE_NAME.view;
 
-import PACKAGE_NAME.domain.BonusNumber;
-import PACKAGE_NAME.domain.LottoCompany;
-import PACKAGE_NAME.domain.LottoStore;
-import PACKAGE_NAME.domain.LottoTickets;
+import PACKAGE_NAME.domain.*;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +21,7 @@ public class LottoController {
         lottoCompany.registWinningNumbers(winningNumbers, bonusNumber);
     }
 
-    public Map<Integer, Integer> getWinningTickets(LottoTickets lottoTickets) {
+    public Map<Rank, Integer> getWinningTickets(LottoTickets lottoTickets) {
         return lottoCompany.numberMatch(lottoTickets);
     }
 }

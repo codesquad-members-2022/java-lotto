@@ -16,7 +16,7 @@ public class BonusNumber {
     }
 
     private void validateNumber(int value) {
-        if (value < MIN_VALUE || value > MIN_VALUE) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalArgumentException();
         }
     }
