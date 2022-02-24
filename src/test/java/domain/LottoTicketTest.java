@@ -8,7 +8,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class LottoTicketTest {
+class LottoTicketTest {
 
     @Test
     void createTest() {
@@ -32,19 +32,19 @@ public class LottoTicketTest {
 
     @Test
     void 정답_일치_테스트() {
-        int[] winList = new int[]{1, 2, 3, 7, 8, 9};
-        int[] winList2 = new int[]{1, 2, 3, 4, 8, 9};
-        int[] winList3 = new int[]{1, 2, 3, 4, 5, 9};
-        test(winList, 3);
-        test(winList2, 4);
-        test(winList3, 5);
+        String[] winList = new String[]{"1", "2", "3", "7", "8", "9"};
+        String[] winList2 = new String[]{"1", "2", "3", "4", "8", "9"};
+        String[] winList3 = new String[]{"1", "2", "3", "4", "5", "9"};
+        test(new WinningNumbers(winList, "45"), 3);
+        test(new WinningNumbers(winList2, "45"), 4);
+        test(new WinningNumbers(winList3, "45"), 5);
     }
 
-    public void test(int[] win, int count) {
+    public void test(WinningNumbers win, int count) {
         ArrayList<LottoNumber> list = new ArrayList<>(List.of(new LottoNumber(1), new LottoNumber(2), new LottoNumber(3),
                 new LottoNumber(4), new LottoNumber(5), new LottoNumber(6)));
 
         LottoTicket lottoTicket = new LottoTicket(list);
-        //assertThat(lottoTicket.countWinningNumber(win)).isEqualTo(count);
+        assertThat(lottoTicket.countWinningNumber(win)).isEqualTo(count);
     }
 }
