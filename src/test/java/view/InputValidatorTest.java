@@ -114,4 +114,19 @@ class InputValidatorTest {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         assertThat(iv.validateBonusNumber(winningNumbers, "7")).isEqualTo(7);
     }
+
+    @Test
+    @DisplayName("구입금액으로 구매 가능한 로또 수를 초과하는 수를 입력하면\"구매한 로또 개수 내에서 입력해 주세요.\"라는 예외를 "
+        + "던진다.")
+    void validateManualLottoCount_OutOfRange() {
+        assertThatThrownBy(() -> iv.validateManualLottoCount(14000, "15"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("구매한 로또 개수 내에서 입력해 주세요.");
+    }
+
+    @Test
+    @DisplayName("구입금액으로 구매 가능한 로또 수 한도 내의 수를 입력하면 해당 입력값을 int로 변환하여 반환한다.")
+    void validateManualLottoCount() {
+        assertThat(iv.validateManualLottoCount(14000, "12")).isEqualTo(12);
+    }
 }
