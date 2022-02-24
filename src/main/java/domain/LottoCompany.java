@@ -8,13 +8,22 @@ import java.util.*;
 public class LottoCompany {
     private LottoTicket winningTicket;
     private int bonusNumber;
-    private Map<Integer, Integer> statistics = new HashMap<>();
+    private int totalPrice;
+    private final int PRICE = 1000;
+    private final Map<Integer, Integer> statistics = new HashMap<>();
     {
         statistics.put(3, 0);
         statistics.put(4, 0);
         statistics.put(5, 0);
         statistics.put(6, 0);
         statistics.put(7, 0);
+    }
+
+    public void check(List<LottoTicket> tickets){
+        setWinningTicket();
+        setBonusNumber();
+        this.totalPrice = tickets.size() * PRICE;
+        getStatistic(tickets);
     }
 
     public void setWinningTicket() {
@@ -26,35 +35,33 @@ public class LottoCompany {
     }
 
     public void getStatistic(List<LottoTicket> tickets) {
-        int matchedNumber = 0;
-        boolean isBonus = false;
+        int matchedNumber;
+        boolean isBonus;
         for (LottoTicket ticket : tickets) {
             matchedNumber = ticket.comparisonWinningTicket(this.winningTicket);
             isBonus = ticket.checkBonusNumber(this.bonusNumber);
             matchedNumber += addMatchedForBonus(matchedNumber, isBonus);
             statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
         }
-        OutputView.showWinningResult(this.statistics, calculateProfit(isBonus));
+        OutputView.showWinningResult(this.statistics, calculateProfit());
     }
 
     private int addMatchedForBonus(int matchedNumber, boolean isBonus){
-        if (matchedNumber == 5){
-            if(isBonus){
-                return 2;
-            }
+        if (matchedNumber == 5 && isBonus){
+            return 2;
         }
         return 0;
     }
 
-    public double calculateProfit(boolean isBonus) {
+    public double calculateProfit() {
         int totalPrize = 0;
-        for (Integer matchedNumber : this.statistics.keySet()) {
-            totalPrize += (switchPrize(matchedNumber, isBonus) * statistics.get(matchedNumber));
+        for (int matchedNumber : this.statistics.keySet()) {
+            totalPrize += (switchPrize(matchedNumber) * statistics.get(matchedNumber));
         }
-        return ((double) (totalPrize - TOTAL_PRICE) / TOTAL_PRICE) * 100;
+        return ((double) (totalPrize - totalPrice) / totalPrice) * 100;
     }
 
-    private int switchPrize(int matchedNumber, boolean isBonus) {
-        return Rank.designateRank(matchedNumber, isBonus).getPrize();
+    private int switchPrize(int matchedNumber) {
+        return Rank.designateRank(matchedNumber).getPrize();
     }
 }

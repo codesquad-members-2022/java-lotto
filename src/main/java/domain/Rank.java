@@ -23,7 +23,7 @@ public enum Rank {
         return prize;
     }
 
-    public static Rank designateRank(int matchedNumber, boolean isBonus) {
+    public static Rank designateRank(int matchedNumber) {
         switch (matchedNumber) {
             case 3:
                 return FIFTH;

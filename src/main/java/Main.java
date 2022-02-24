@@ -1,14 +1,16 @@
+import domain.LottoCompany;
 import domain.LottoTicket;
 import domain.TicketOffice;
+import domain.User;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        TicketOffice to = new TicketOffice();
-        List<LottoTicket> tickets = to.issueTickets();
-        to.setWinningTicket();
-        to.setBonusNumber();
-        to.getStatistic(tickets);
+        TicketOffice ticketOffice = new TicketOffice();
+        LottoCompany lottoCompany = new LottoCompany();
+        User user = new User();
+        user.purchaseTicketsFrom(ticketOffice);
+        user.checkMyTicketsFrom(lottoCompany);
     }
 }
