@@ -8,7 +8,7 @@ import java.util.Map;
 import domains.LottoMachine;
 import domains.Lottos;
 import domains.Ranking;
-import domains.Winnings;
+import domains.WinningNumbersCounter;
 
 public class Main {
 	private static final int IDX_PURCHASED_AMOUNT = 0;
@@ -34,7 +34,7 @@ public class Main {
 	}
 
 	private static void getResultOfLotto(int purchaseAmount, List<Integer> threeOrMore) {
-		Winnings winnings = new Winnings(threeOrMore);
+		WinningNumbersCounter winnings = new WinningNumbersCounter(threeOrMore);
 		Ranking ranking = new Ranking(winnings);
 
 		Map<Ranking.Rank, Integer> ranks = ranking.resultOfRanks();

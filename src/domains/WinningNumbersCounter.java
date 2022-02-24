@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Winnings {
+public class WinningNumbersCounter {
 	private final Map<Integer, Integer> counts;
 
-	public Winnings(List<Integer> threeOrMore) {
+	public WinningNumbersCounter(List<Integer> threeOrMore) {
 		this.counts = getNumberOfEachRanks(threeOrMore);
 	}
 

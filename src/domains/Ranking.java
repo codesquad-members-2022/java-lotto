@@ -7,9 +7,9 @@ import java.util.Map;
 public class Ranking {
 	public static final int TO_PERCENT = 100;
 	private Map<Rank, Integer> ranks = new LinkedHashMap<>();
-	private Winnings winnings;
+	private WinningNumbersCounter winnings;
 
-	public Ranking(Winnings winnings) {
+	public Ranking(WinningNumbersCounter winnings) {
 		this.ranks = initializeRanks();
 		this.winnings = winnings;
 	}
@@ -36,8 +36,8 @@ public class Ranking {
 
 		private Rank of(int number) {
 			return Arrays.stream(values())
-				.filter(ranks -> ranks.isSame(number))
-				.findFirst().get();
+					.filter(ranks -> ranks.isSame(number))
+					.findFirst().get();
 		}
 
 		public String getText() {
