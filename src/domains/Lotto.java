@@ -23,7 +23,7 @@ public class Lotto {
 		return this.sixNumbers;
 	}
 
-	public int numberOfWinnings(List<Integer> winningNumbers){
+	public int countNumberOfWinnings(List<Integer> winningNumbers){
 		int count = 0;
 		for (Integer winningNumber : winningNumbers) {
 			count = getCount(count, winningNumber);
@@ -36,5 +36,12 @@ public class Lotto {
 			count++;
 		}
 		return count;
+	}
+
+	public boolean getBonus(int bonusNumber) {
+		if (sixNumbers.contains(bonusNumber)){
+			return true;
+		}
+		return false;
 	}
 }

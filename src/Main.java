@@ -9,6 +9,7 @@ import domains.LottoMachine;
 import domains.Lottos;
 import domains.Ranking;
 import domains.WinningNumbersCounter;
+import domains.WinningNumbers;
 
 public class Main {
 	private static final int IDX_PURCHASED_AMOUNT = 0;
@@ -25,9 +26,14 @@ public class Main {
 		List<List<Integer>> totalLottos = lottos.getTotalLottos(tickets);
 		showLottos(totalLottos);
 
-		List<Integer> winningNumbers = inputWinningNumbers();
-		List<Integer> threeOrMore = lottos.numberOfWinningAboveThree(winningNumbers);
+		List<Integer> inputValueOfWinningNumbers = inputWinningNumbers();
 		int bonusNumber = getBonusNumber();
+		WinningNumbers winningNumbers = new WinningNumbers(inputValueOfWinningNumbers, bonusNumber);
+
+
+
+		List<Integer> threeOrMore = lottos.getNumberOfWinningAboveThree(winningNumbers);
+
 		getResultOfLotto(purchaseAmount, threeOrMore);
 
 		scanClose();
