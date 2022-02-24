@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class InputValidator {
@@ -29,6 +32,7 @@ public class InputValidator {
         String[] split = manualLottoNumber.split(", ");
         validateCount(split);
         validateRangeAboutAllNumber(split);
+        validateOverLapNumber(split);
     }
 
     private static void validateCount(String[] split) {
@@ -40,6 +44,13 @@ public class InputValidator {
     private static void validateRangeAboutAllNumber(String[] split) {
         for (String s : split) {
             validateRangeAboutSingleNumber(s);
+        }
+    }
+
+    private static void validateOverLapNumber(String[] split) {
+        List<String> list = Arrays.asList(split);
+        if(list.size() != list.stream().distinct().count()){
+            throw new IllegalArgumentException("[ERROR] 추첨 번호를 중복없이 입력해주세요.");
         }
     }
 
