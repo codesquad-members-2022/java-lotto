@@ -23,13 +23,6 @@ public class LottoAutoMachine {
         return allAutoLottoNumbers;
     }
 
-    public static List<LottoTicket> purchaseLotto(int amount, int customLottoCount) {
-        int autoLottoCount = LottoAutoMachine.getLottoCount(amount) - customLottoCount;
-        OutputView.printLottoCount(autoLottoCount, customLottoCount);
-
-        return LottoAutoMachine.getAllAutoLottoNumbers(autoLottoCount);
-    }
-
     public static int getLottoCount(int amount) {
         return amount / LOTTO_PRICE;
     }

@@ -1,11 +1,7 @@
 package app.lotto;
 
-import app.lotto.domain.LottoAutoMachine;
-import app.lotto.domain.LottoGame;
-import app.lotto.domain.LottoGameResult;
-import app.lotto.domain.LottoTicket;
+import app.lotto.domain.*;
 import app.lotto.view.InputView;
-import app.lotto.domain.LottoResult;
 import app.lotto.view.OutputView;
 
 import java.util.ArrayList;
@@ -17,9 +13,12 @@ public class Main {
         int amount = InputView.readAmount();
         int customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
 
-        List<LottoTicket> customLottoNumbers = InputView.readCustomLottoNumbers(customLottoCount);
-        List<LottoTicket> allAutoLottoNumbers = LottoAutoMachine.purchaseLotto(amount, customLottoCount);
-        List<LottoTicket> allLottoNumbers = getAllLottoNumbers(customLottoNumbers, allAutoLottoNumbers);
+        LottoTicketManager lottoTicketManager = LottoTicketManager.createWithTotalAmountAndCustomTicketCount(amount, customLottoCount);
+        List<LottoTicket> customLottoTickets = lottoTicketManager.getCustomLottoTickets();
+        List<LottoTicket> autoLottoTickets = lottoTicketManager.getAutoLottoTickets();
+
+        OutputView.printLottoCount(lottoTicketManager.getCustomTicketCount(), lottoTicketManager.getAutoTicketCount());
+        List<LottoTicket> allLottoNumbers = getAllLottoNumbers(customLottoTickets, autoLottoTickets);
         OutputView.printAllLottoNumbers(allLottoNumbers);
         System.out.println();
 
@@ -28,8 +27,8 @@ public class Main {
         System.out.println();
 
         printLottoGameResult(new LottoGameResult.Builder()
-                .setAllAutoLottoNumbers(allAutoLottoNumbers)
-                .setCustomLottoNumbers(customLottoNumbers)
+                .setAllAutoLottoNumbers(autoLottoTickets)
+                .setCustomLottoNumbers(customLottoTickets)
                 .setAmount(amount)
                 .setBonusNumber(bonusNumber)
                 .setWinningNumbers(winningNumbers)
