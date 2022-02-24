@@ -10,12 +10,18 @@ public class LottoTickets {
     private final List<LottoTicket> lottoTickets;
 
     private LottoTickets(long numberOfLottoTickets) {
+        validateNumberOfLottoTickets(numberOfLottoTickets);
         lottoTickets = new ArrayList<>();
         for (long count = 0; count < numberOfLottoTickets; count++) {
             lottoTickets.add(LottoTicket.createRandomTicket());
         }
     }
 
+    private void validateNumberOfLottoTickets(long numberOfLottoTickets) {
+        if (numberOfLottoTickets < 0) {
+            throw new IllegalArgumentException("음수의 랜덤한 로또 티켓을 생성할 수 없습니다.");
+        }
+    }
     private LottoTickets(List<LottoTicket> tickets) {
         this.lottoTickets = tickets;
     }
@@ -31,7 +37,6 @@ public class LottoTickets {
     public static LottoTickets createRandomTickets(long numberOfLottoTickets) {
         return new LottoTickets(numberOfLottoTickets);
     }
-
 
     public static LottoTickets createManualTickets(List<LottoTicket> manualLottoTickets) {
         return new LottoTickets(manualLottoTickets);
