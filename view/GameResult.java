@@ -14,4 +14,12 @@ public class GameResult {
         this.matchOfRank = matchOfRank;
         this.rateOfReturn = rateOfReturn;
     }
+
+    public Map<Rank, Integer> getMatchOfRank() {
+        return matchOfRank;
+    }
+
+    public RateOfReturn getRateOfReturn() {
+        return rateOfReturn;
+    }
 }

@@ -1,6 +1,5 @@
 package PACKAGE_NAME.domain;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ public class BonusNumber {
     private final int value;
     private static final int MIN_VALUE = 1;
     private static final int MAX_VALUE = 45;
-
 
     public BonusNumber(int value) {
         validateNumber(value);
@@ -22,8 +20,8 @@ public class BonusNumber {
         }
     }
 
-    public boolean isAnswer(List<Integer> answers) {
-        return answers.contains(this.value);
+    public boolean isElementsOf(Set<Integer> winningNumbers) {
+        return winningNumbers.contains(this.value);
     }
 
     @Override
@@ -37,9 +35,5 @@ public class BonusNumber {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public boolean isElementsOf(Set<Integer> winningNumbers) {
-        return winningNumbers.contains(this.value);
     }
 }

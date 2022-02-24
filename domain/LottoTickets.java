@@ -26,9 +26,4 @@ public class LottoTickets {
     public List<LottoTicket> getLottoTickets() {
         return lottoTickets;
     }
-
-    public double calculateRateOfReturn(int sum, int inputMoney) {
-        double rateOfReturn = (sum - inputMoney) * 100 / inputMoney;
-        return rateOfReturn;
-    }
 }

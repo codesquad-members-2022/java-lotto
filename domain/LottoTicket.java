@@ -37,4 +37,9 @@ public class LottoTicket {
         }
         return Rank.getRank(count,false);
     }
+
+    @Override
+    public String toString() {
+        return numbers.toString();
+    }
 }

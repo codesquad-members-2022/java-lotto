@@ -6,9 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class LottoCompany {
+
     private static Set<Integer> winningNumbers = new HashSet<>();
     private BonusNumber bonusNumber;
-    private RateOfReturnCalculator calculator = new RateOfReturnCalculator();
+
+    private static final int DEFAULT_VALUE = 0;
+    private static final int ONE = 1;
+
 
     public void registWinningNumbers(Set<Integer> inputWinningNumber, BonusNumber bonusNumber) {
         if (winningNumbers.size() != 0) {
@@ -18,16 +22,14 @@ public class LottoCompany {
         this.bonusNumber = bonusNumber;
     }
 
-    public Map<Rank, Integer> numberMatch(LottoTickets lottoTickets) {
+    public Map<Rank, Integer> getMatchOfRank(LottoTickets lottoTickets) {
         Map<Rank, Integer> answers = new HashMap<>();
 
         for (int index = 0; index < lottoTickets.getLottoTickets().size(); index++) {
             LottoTicket lottoTicket = lottoTickets.getLottoTickets().get(index);
             Rank rank = lottoTicket.getRank(winningNumbers,bonusNumber);
-            answers.put(rank, answers.getOrDefault(rank, 0) + 1);
+            answers.put(rank, answers.getOrDefault(rank, DEFAULT_VALUE) + ONE);
         }
-        double rateOfReturn = calculator.calculateRateOfReturn(lottoTickets, answers);
-        lottoTickets.getWinningPrize(answers);
         return answers;
     }
 }

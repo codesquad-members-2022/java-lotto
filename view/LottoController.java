@@ -1,27 +1,17 @@
 package PACKAGE_NAME.view;
 
-import PACKAGE_NAME.domain.*;
-
-import java.util.Map;
-import java.util.Set;
+import PACKAGE_NAME.domain.LottoGame;
+import PACKAGE_NAME.domain.LottoTickets;
 
 public class LottoController {
 
-    private final LottoStore lottoStore = new LottoStore();
-    private final LottoCompany lottoCompany = new LottoCompany();
+    private LottoGame lottoGame = new LottoGame();
 
     public LottoTickets getLottoTickets(int money) {
-        int ticketCount = money / 1000;
-        LottoTickets lottoTickets = new LottoTickets(lottoStore.getLottoTickets(ticketCount));
-
-        return lottoTickets;
+        return new LottoTickets(lottoGame.getLottoTickets(money));
     }
 
-    public void registWinningNumbers(Set<Integer> winningNumbers, BonusNumber bonusNumber) {
-        lottoCompany.registWinningNumbers(winningNumbers, bonusNumber);
-    }
-
-    public Map<Rank, Integer> getWinningTickets(LottoTickets lottoTickets) {
-        return lottoCompany.numberMatch(lottoTickets);
+    public GameResult getLottoGameResult(InputElements elements) {
+        return lottoGame.getResult(elements);
     }
 }

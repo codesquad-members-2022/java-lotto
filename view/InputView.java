@@ -1,23 +1,16 @@
 package PACKAGE_NAME.view;
 
-import PACKAGE_NAME.domain.LottoCompany;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class InputView {
-    private int money;
+
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private StringTokenizer st;
-
-    private static final LottoCompany lottoCompany = new LottoCompany();
-
     private static final String INPUTMONEY_MESSAGE = "구입금액을 입력해 주세요.";
     private static final String INPUTNUMBER_MESSAGE = "지난 주 당첨 번호를 입력해 주세요.\nex) 1, 2, 3, 4, 5, 6";
     private static final String INVALID_NUMBERS = "올바른 번호를 입력해 주세요.";
@@ -31,6 +24,7 @@ public class InputView {
     private static final int MINIMUM_MONEY = 1000;
 
     public int inputMoney() {
+        int money = Integer.MAX_VALUE;
         try {
             System.out.println(INPUTMONEY_MESSAGE);
             money = Integer.parseInt(br.readLine());
@@ -43,7 +37,6 @@ public class InputView {
         }
         return money;
     }
-
 
     private void validateMoney(int money) {
         if (money < MINIMUM_MONEY || (money % MINIMUM_MONEY != ZERO)) {

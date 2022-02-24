@@ -36,9 +36,10 @@ public class LottoStore {
                 .collect(Collectors.toList());
     }
 
-    public List<LottoTicket> getLottoTickets(int count) {
+    public List<LottoTicket> getLottoTickets(int money) {
+        int ticketCount = money / 1000;
         List<LottoTicket> lottoTickets = new ArrayList<>();
-        for (int index = START_INDEX; index < count; index++) {
+        for (int index = START_INDEX; index < ticketCount; index++) {
             lottoTickets.add(new LottoTicket(getLottoNumbers()));
         }
         return lottoTickets;
