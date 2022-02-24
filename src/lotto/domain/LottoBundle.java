@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import javax.naming.SizeLimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,10 @@ public class LottoBundle {
         return new LottoBundle(size);
     }
 
-    public void addManualLottoTicket(int[] numbers) {
+    public void addManualLottoTicket(int[] numbers) throws SizeLimitExceededException {
+        if (manualTicketCount >= size) {
+            throw new SizeLimitExceededException("수동 복권 번호를 더 지정할 수 없습니다.");
+        }
         lottoTickets.add(LottoFactory.issueLottoTicketWithSelectNumbers(numbers));
         manualTicketCount++;
     }

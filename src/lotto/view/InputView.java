@@ -26,9 +26,15 @@ public class InputView {
         scanner.close();
     }
 
-    public int getManualTicketCount() {
+    public int getManualTicketCount(int maxCount) {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
-        return getInt();
+        int input = getInt();
+
+        if (input > maxCount) {
+            throw new IllegalArgumentException(String.format("최대 %d까지만 입력할 수 있습니다.", maxCount));
+        }
+
+        return input;
     }
 
     public int[][] getManualLottoNumbers(int manualTicketCount) {
