@@ -26,7 +26,8 @@ public class WinningTicket {
     }
 
     private boolean isMatchBonus(LottoTicket lottoTicket) {
-        return winningNumbers.contains(bonusNumber);
+        Set<LottoNumber> lottoNumbers = lottoTicket.getLottoNumbers();
+        return lottoNumbers.contains(bonusNumber);
     }
 
     private int calculateMatchCount(LottoTicket lottoTicket) {
