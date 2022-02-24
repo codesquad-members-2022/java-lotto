@@ -32,11 +32,6 @@ public class InputView {
         return new WinningLotto(createLotto(), getBonusBall());
     }
 
-    public static void sellLottos(User user) {
-        sellCustomLottos(user);
-        sellRandomLottos(user);
-    }
-
     private static Ball getBonusBall() {
         System.out.println(BONUS_BALL_MESSAGE);
         int bonusNumber = Integer.parseInt(sc.nextLine());
@@ -48,7 +43,7 @@ public class InputView {
         sc.close();
     }
 
-    private static Lotto createLotto() {
+    public static Lotto createLotto() {
         String[] numbers = sc.nextLine().replaceAll(" ","").split(",");
         Set<Ball> balls = Arrays.stream(numbers)
                 .map(number -> new Ball(Integer.parseInt(number)))
@@ -56,18 +51,8 @@ public class InputView {
         return new Lotto(balls);
     }
 
-    private static void sellCustomLottos(User user) {
+    public static void printSellCustomLottoCount() {
         System.out.println(CUSTOM_NUMBER_MESSAGE);
-        for (int i = 0; i < user.getCountOfCustom(); i++) {
-            Lotto lotto = createLotto();
-            user.buyLotto(lotto);
-        }
-    }
-
-    private static void sellRandomLottos(User user) {
-        for (int i = 0; i < user.getCountOfAuto(); i++) {
-            user.buyLotto(LottoMachine.createRandomLotto());
-        }
     }
 
 }
