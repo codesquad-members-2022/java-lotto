@@ -7,12 +7,14 @@ import java.util.Set;
 
 public class LottoCompany {
     private static Set<Integer> winningNumbers = new HashSet<>();
+    private BonusNumber bonusNumber;
 
-    public void registWinningNumbers(Set<Integer> inputWinningNumber) {
+    public void registWinningNumbers(Set<Integer> inputWinningNumber, BonusNumber bonusNumber) {
         if (winningNumbers.size() != 0) {
             winningNumbers = new HashSet<>();
         }
         winningNumbers.addAll(inputWinningNumber);
+        this.bonusNumber = bonusNumber;
     }
 
     public Map<Integer, Integer> numberMatch(LottoTickets lottoTickets) {

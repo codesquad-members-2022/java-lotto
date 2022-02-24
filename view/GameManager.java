@@ -1,5 +1,6 @@
 package PACKAGE_NAME.view;
 
+import PACKAGE_NAME.domain.BonusNumber;
 import PACKAGE_NAME.domain.LottoTickets;
 
 import java.util.List;
@@ -20,12 +21,12 @@ public class GameManager {
     public void play() {
         while (true) {
             int money = inputView.inputMoney();
-            LottoTickets lottoTickets = lottoController.get(money);
+            LottoTickets lottoTickets = lottoController.getLottoTickets(money);
             printLottoTickets(lottoTickets);
 
             Set<Integer> winningNumbers = inputView.inputWinningNumber();
-
-            registWinningNumbersToCompany(winningNumbers);
+            BonusNumber bonusNumber = new BonusNumber(inputView.inputBonusNumber());
+            registWinningNumbersToCompany(winningNumbers, bonusNumber);
 
             Map<Integer, Integer> numberMatch = lottoController.getWinningTickets(lottoTickets);
 
@@ -38,8 +39,8 @@ public class GameManager {
         outputView.printLottoTicket(lottoTickets);
     }
 
-    private void registWinningNumbersToCompany(Set<Integer> winningNumbers) {
-        lottoController.registWinningNumbers(winningNumbers);
+    private void registWinningNumbersToCompany(Set<Integer> winningNumbers, BonusNumber bonusNumber) {
+        lottoController.registWinningNumbers(winningNumbers, bonusNumber);
     }
 
     private void printLottoResult(Map<Integer, Integer> numberMatch) {
