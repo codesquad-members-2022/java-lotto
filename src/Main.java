@@ -27,7 +27,7 @@ public class Main {
 
 		List<Integer> winningNumbers = inputWinningNumbers();
 		List<Integer> threeOrMore = lottos.numberOfWinningAboveThree(winningNumbers);
-
+		int bonusNumber = getBonusNumber();
 		getResultOfLotto(purchaseAmount, threeOrMore);
 
 		scanClose();

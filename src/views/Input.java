@@ -17,6 +17,12 @@ public class Input {
 	public Input() {
 	}
 
+	public static int getBonusNumber(){
+		println.accept("보너스 볼을 입력해주세요.");
+		int bonusNumber = nextInt();
+		return bonusNumber;
+	}
+
 	public static List<Integer> inputWinningNumbers(){
 		println.accept(OUTPUT_ASK_WINNING_NUMBER);
 		String textNumbers = nextLine();
