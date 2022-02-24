@@ -48,4 +48,13 @@ public class LottoTest {
         assertThat(winningLotto.getMatchBallCount(lotto3)).isEqualTo(3);
     }
 
+    @Test
+    @DisplayName("같은 공을 가지고 있으면 true를 반환한다.")
+    void isMatchBonusBall() {
+        Ball ball1 = new Ball(6);
+        Ball ball2 = new Ball(7);
+
+        assertThat(winningLotto.isMatchBonusBall(ball1)).isTrue();
+        assertThat(winningLotto.isMatchBonusBall(ball2)).isFalse();
+    }
 }

@@ -4,27 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+
+    private static final int LOTTO_PRICE = 1000;
+
     private final int money;
+    private final List<Lotto> lottos = new ArrayList<>();
+    private final List<Rank> ranks = new ArrayList<>();
+    private int currentMoney;
     private int profit;
-    private List<Lotto> lottos;
-    private List<Rank> ranks = new ArrayList<>();
 
     public User(int money) {
         this.money = money;
+        this.currentMoney = money;
     }
 
-    public void buy() {
-        lottos = LottoMachine.createLottos(money);
+    public boolean buyLotto(Lotto lotto) {
+        if (currentMoney < LOTTO_PRICE) {
+            return false;
+        }
+        currentMoney -= LOTTO_PRICE;
+        return lottos.add(lotto);
     }
 
-    public List<Lotto> getLottos() {
-        return lottos;
-    }
-
-    public void matchWinningLotto(Lotto winningLotto) {
+    public void matchWinningLotto(Lotto winningLotto, Ball bonusBall) {
         for (Lotto lotto : lottos) {
             int count = lotto.getMatchBallCount(winningLotto);
-            Rank status = Rank.createRank(count);
+            boolean matchBonus = lotto.isMatchBonusBall(bonusBall);
+            Rank status = Rank.createRank(count, matchBonus);
             profit += status.getPrice();
             ranks.add(status);
         }
@@ -38,5 +44,9 @@ public class User {
 
     public double calculateRateOfReturn() {
         return (profit - money) / (double) money * 100;
+    }
+
+    public List<Lotto> getLottos() {
+        return lottos;
     }
 }

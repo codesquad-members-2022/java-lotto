@@ -14,6 +14,7 @@ public class InputView {
     private static final Scanner sc = new Scanner(System.in);
     private static final String HOW_MANY_MONEY_MESSAGE = "구입금액을 입력해 주세요.";
     private static final String WINNING_NUMBER_MESSAGE = "\n당첨 번호를 입력해 주세요.";
+    private static final String BONUS_BALL_MESSAGE = "보너스 볼을 입력해 주세요.";
 
     public static User askHowManyLottos() {
         System.out.println(HOW_MANY_MONEY_MESSAGE);
@@ -33,5 +34,12 @@ public class InputView {
 
     public static void close() {
         sc.close();
+    }
+
+    public static Ball getBonusBall() {
+        System.out.println(BONUS_BALL_MESSAGE);
+        int bonusNumber = Integer.parseInt(sc.nextLine());
+        System.out.println();
+        return new Ball(bonusNumber);
     }
 }
