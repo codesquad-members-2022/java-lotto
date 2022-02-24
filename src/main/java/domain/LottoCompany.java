@@ -10,13 +10,13 @@ public class LottoCompany {
     private int bonusNumber;
     private int totalPrice;
     private final int PRICE = 1000;
-    private final Map<Integer, Integer> statistics = new HashMap<>();
-    {
-        statistics.put(3, 0);
-        statistics.put(4, 0);
-        statistics.put(5, 0);
-        statistics.put(6, 0);
-        statistics.put(7, 0);
+    private final Map<Rank, Integer> statistics = new HashMap<>();
+
+
+    public void setInitialStatistic() {
+        for (Rank rank : Rank.values()) {
+            statistics.put(rank, 0);
+        }
     }
 
     public void check(List<LottoTicket> tickets){
@@ -35,13 +35,14 @@ public class LottoCompany {
     }
 
     public void getStatistic(List<LottoTicket> tickets) {
+        setInitialStatistic();
         int matchedNumber;
         boolean isBonus;
         for (LottoTicket ticket : tickets) {
             matchedNumber = ticket.comparisonWinningTicket(this.winningTicket);
             isBonus = ticket.checkBonusNumber(this.bonusNumber);
-            matchedNumber += addMatchedForBonus(matchedNumber, isBonus);
-            statistics.computeIfPresent(matchedNumber, (k, v) -> v + 1);
+            Rank currentRank = Rank.designateRank(matchedNumber, isBonus);
+            statistics.computeIfPresent(currentRank, (k, v) -> v + 1);
         }
         OutputView.showWinningResult(this.statistics, calculateProfit());
     }
@@ -55,13 +56,10 @@ public class LottoCompany {
 
     public double calculateProfit() {
         int totalPrize = 0;
-        for (int matchedNumber : this.statistics.keySet()) {
-            totalPrize += (switchPrize(matchedNumber) * statistics.get(matchedNumber));
+        for (Rank rank : this.statistics.keySet()) {
+            totalPrize += rank.getPrize() * statistics.get(rank);
         }
         return ((double) (totalPrize - totalPrice) / totalPrice) * 100;
     }
 
-    private int switchPrize(int matchedNumber) {
-        return Rank.designateRank(matchedNumber).getPrize();
-    }
 }

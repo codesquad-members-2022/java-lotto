@@ -16,7 +16,7 @@ public class OutputView {
         }
     }
 
-    public static void showWinningResult(Map<Integer, Integer> statistics, double profitRate) {
+    public static void showWinningResult(Map<Rank, Integer> statistics, double profitRate) {
         StringBuilder sb = new StringBuilder();
         int matchedNumber;
         int prize;
