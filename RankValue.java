@@ -4,7 +4,8 @@ public enum RankValue {
     FOURTH(4, 50000),
     THIRD(5, 1500000),
     SECOND(5, 30000000),
-    FIRST(6, 2000000000);
+    FIRST(6, 2000000000),
+    NOTHING(0, 0);
 
     private int countOfMatch;
     private int winningMoney;
@@ -28,6 +29,6 @@ public enum RankValue {
         if (countOfMatch == SECOND.countOfMatch) return matchBonus ? SECOND : THIRD;
         if (countOfMatch == FIRST.countOfMatch) return FIRST;
 
-        return null;
+        return NOTHING;
     }
 }

@@ -4,8 +4,10 @@ import java.util.List;
 
 public class LottoMaker {
 
-    public List<Integer> autoMakeLotto() {
-        return selectNumbers(initNumbers());
+    private static final String SEPARATOR = ",\\s|,|\\s";
+    public List<Integer> makeManualLotto(String manualLottoNumber){ return processManualLottoNumber(manualLottoNumber); }
+    public List<Integer> makeAutoLotto() {
+        return processAutoLottoNumber(initNumbers());
     }
 
     private List<Integer> initNumbers() {
@@ -17,7 +19,18 @@ public class LottoMaker {
         return totalNumberList;
     }
 
-    private List<Integer> selectNumbers(List<Integer> totalNumberList) {
+    private List<Integer> processManualLottoNumber(String manualLottoNumber){
+        List<Integer> numberList = new ArrayList<>();
+
+        String[] numbers = manualLottoNumber.strip().split(SEPARATOR);
+        for (int i = 0; i < 6; i++) {
+            numberList.add(Integer.parseInt(numbers[i]));
+        }
+
+        return numberList;
+    }
+
+    private List<Integer> processAutoLottoNumber(List<Integer> totalNumberList) {
         Collections.shuffle(totalNumberList);
         List<Integer> lottoNumberList = new ArrayList<>();
 

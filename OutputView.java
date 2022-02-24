@@ -4,8 +4,8 @@ import java.util.Map;
 public class OutputView {
     private static final int LOTTO_NUMBER_MAX_INDEX = 5;    // 6개 로또 번호별 인덱스: [0 ~ 5]
 
-    public static void showLottoCount(int lottoCount) {
-        System.out.printf("%d개를 구매했습니다.%n", lottoCount);
+    public static void showCountOfLotto(int countOfManualLotto, int countOfAutoLotto) {
+        System.out.printf("수동으로 %d장, 자동으로 %d개를 구매했습니다.%n", countOfManualLotto, countOfAutoLotto);
     }
 
     public static void showLottoList(List<Lotto> lottoList) {

@@ -10,7 +10,7 @@ public class LottoGame {
     private List<Lotto> lottoList;
 
     public void run() {
-        int purchaseMoney = buyLotto();
+        int purchaseMoney = inputLottoInfo();
 
         List<Integer> winningNumbers = ui.inputWinningNumber();
         int bonusBall = ui.inputBonusBall(); // TODO
@@ -18,26 +18,32 @@ public class LottoGame {
         OutputView.showWinningStatistic(winningStatistic.getStatistic(), purchaseMoney);
     }
 
-    private int buyLotto() {
+    private int inputLottoInfo() {
         int purchaseMoney = ui.inputMoney();
-        int lottoCount = purchaseMoney / LOTTO_EACH_MONEY;
-        OutputView.showLottoCount(lottoCount);
+        int countOfLotto = purchaseMoney / LOTTO_EACH_MONEY;
+        int countOfManualLotto = ui.inputCountOfManualLotto();
+        int countOfAutoLotto = countOfLotto - countOfManualLotto;
+        List<String> manualLottoList = ui.inputManualLottoNumber(countOfManualLotto);
 
-        lottoList = createLottoList(lottoCount);
+        OutputView.showCountOfLotto(countOfManualLotto, countOfAutoLotto);
+
+        lottoList = createLottoList(manualLottoList, countOfManualLotto, countOfAutoLotto);
         OutputView.showLottoList(lottoList);
 
         return purchaseMoney;
     }
 
-    private List<Lotto> createLottoList(int lottoCount) {
-        // 로또 자동 생성
+    private List<Lotto> createLottoList(List<String> manualLottoList, int countOfManualLotto, int countOfAutoLotto) {
         List<Lotto> list = new ArrayList<>();
-        for (int i = 0; i < lottoCount; i++) {
-            list.add(new Lotto(lottoMaker.autoMakeLotto()));
+        // 로또 수동 생성
+        for (int i = 0; i < countOfManualLotto; i++) {
+            list.add(new Lotto(lottoMaker.makeManualLotto(manualLottoList.get(i))));
         }
 
-        // 로또 수동 생성
-        // TODO
+        // 로또 자동 생성
+        for (int i = 0; i < countOfAutoLotto; i++) {
+            list.add(new Lotto(lottoMaker.makeAutoLotto()));
+        }
 
         return list;
     }

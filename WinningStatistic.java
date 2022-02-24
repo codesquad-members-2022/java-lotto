@@ -38,19 +38,19 @@ public class WinningStatistic {
     }
 
     private int checkWinningNumber(Lotto lotto) {
-        int winningCount = 0;
+        int countOfWinningNumber = 0;
         for (int number : winningNumbers) {
-            winningCount = checkInclusion(lotto.getNumbers().contains(number), winningCount);
+            countOfWinningNumber = checkInclusion(lotto.getNumbers().contains(number), countOfWinningNumber);
         }
 
-        return winningCount;
+        return countOfWinningNumber;
     }
 
-    private int checkInclusion(boolean hasNumber, int winningCount) {
+    private int checkInclusion(boolean hasNumber, int countOfWinningNumber) {
         if (hasNumber) {
-            winningCount++;
+            countOfWinningNumber++;
         }
 
-        return winningCount;
+        return countOfWinningNumber;
     }
 }
