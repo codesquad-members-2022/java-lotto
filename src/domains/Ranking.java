@@ -11,14 +11,12 @@ import java.util.Map;
 public class Ranking {
 	public static final int TO_PERCENT = 100;
 	private Map<Rank, Integer> ranks = new LinkedHashMap<>();
-	// private WinningNumbersCounter winnings;
 
 	public Ranking() {
 		this.ranks = initializeRanks();
-		// this.winnings = winnings;
 	}
 
-	public enum Rank {
+	private enum Rank {
 		NONE(0, "0개", Money.of(0)),
 		FOURTH(3, "3개", Money.of(5000)),
 		THIRD(4,"4개", Money.of(50_000)),

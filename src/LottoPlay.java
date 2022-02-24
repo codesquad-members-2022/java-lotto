@@ -4,6 +4,8 @@ import static views.Output.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import domains.BasicWinningNumbers;
+import domains.BonusWinningNumbers;
 import domains.LottoMachine;
 import domains.Lottos;
 import domains.Ranking;
@@ -27,7 +29,7 @@ public class LottoPlay {
 		List<Integer> inputValueOfWinningNumbers = inputWinningNumbers();
 		int bonusNumber = getBonusNumber();
 
-		WinningNumbers winningNumbers = new WinningNumbers(inputValueOfWinningNumbers, bonusNumber);
+		BonusWinningNumbers winningNumbers = new BonusWinningNumbers(inputValueOfWinningNumbers, bonusNumber);
 		Ranking ranking = lottos.getNumberOfWinningAboveThree(winningNumbers);
 
 		getResultOfLotto(ranking, purchaseAmount);

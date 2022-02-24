@@ -12,11 +12,12 @@ public class Lottos {
     }
 
     public List<List<Integer>> getTotalLottos(ArrayList<ArrayList<Integer>> tickets) {
-
+        // 번호들을 로또에 담다
         for (ArrayList<Integer> ticket : tickets) {
             this.purchased(ticket);
         }
 
+        // 내가가진 로또 목록을 반환
         List<List<Integer>> purchasedLottos = new ArrayList<>();
         for (Lotto lotto : this.lottos) {
             List<Integer> numbers = lotto.numbers();
@@ -30,14 +31,14 @@ public class Lottos {
         this.lottos.add(lotto);
     }
 
-    public Ranking getNumberOfWinningAboveThree(WinningNumbers winningNumbers) {
+    public Ranking getNumberOfWinningAboveThree(AddedWinningNumbers winningNumbers) {
         Ranking ranking = new Ranking();
         List<Integer> winning = winningNumbers.getNumbers();
 
         for (Lotto lotto : lottos) {
             int winningCount = lotto.countNumberOfWinnings(winning);
             if (winningCount >= MINIMUM_NUMBER_OF_WINNING) {
-                boolean checkedBonus = lotto.getBonus(winningNumbers.getBonusBall());
+                boolean checkedBonus = lotto.getBonus(winningNumbers.getBonus());
                 ranking.record(checkedBonus, winningCount);
             }
         }
