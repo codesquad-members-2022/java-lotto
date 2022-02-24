@@ -2,37 +2,50 @@ package view;
 
 import java.util.Scanner;
 
+import utils.InputValidator;
+
 public class InputView {
     private static final Scanner sc = new Scanner(System.in);
 
     public static String requestPrice() {
         OutputView.requestPrice();
-        return sc.nextLine();
+        String price;
+        while (true) {
+            price = nextLine();
+            try {
+                InputValidator.validatePrice(price);
+                return price;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
     }
 
     public static String requestWinNumber() {
         OutputView.requestWinNumber();
-        return sc.nextLine();
+        return nextLine();
     }
 
     public static String requestBonusNumber() {
         OutputView.requestBonusNumber();
-        return sc.nextLine();
+        return nextLine();
     }
 
     public static String requestManual() {
         OutputView.requestManual();
-        return sc.nextLine();
+        return nextLine();
 
     }
 
-    // TODO
+    public static String requestManualLottoNumber() {
+        return nextLine();
+    }
+
+    private static String nextLine() {
+        return sc.nextLine();
+    }
+
     public static void scannerClose() {
-
         sc.close();
-    }
-
-    public static String requestManualLottoNumber(int count) {
-        return sc.nextLine();
     }
 }

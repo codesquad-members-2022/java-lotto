@@ -31,6 +31,8 @@ public class LottoController {
 
     public void buildLotto() {
         price = Integer.parseInt(InputView.requestPrice());
+        // price 1000 검증을. 여기서 하면 된다.
+
         int count = price / LOTTO_PRICE;
         int manualLottoEach = Integer.parseInt(InputView.requestManual());
 
@@ -38,20 +40,19 @@ public class LottoController {
             makeManualLottoPerCount(manualLottoEach);
         }
 
-
-
         while (repository.getLottoList().size() != count) {
             Set<Integer> numbers = makeRandomNumberSet();
             checkOverLap(new ArrayList<>(numbers));
         }
         OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
+        InputView.scannerClose();
     }
 
     private void makeManualLottoPerCount(int manualLottoEach) {
         String manualLottoNumber;
         OutputView.requestManualLottoNumber();
         while (manualLottoEach-- > 0) {
-            manualLottoNumber = InputView.requestManualLottoNumber(manualLottoEach);
+            manualLottoNumber = InputView.requestManualLottoNumber();
             makeManualLotto(manualLottoNumber);
         }
     }
