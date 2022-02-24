@@ -46,7 +46,7 @@ class LottoTicketTest {
 
                 LottoTicket lottoTicket = LottoTicket.createManualTicket(lottoNumbers);
 
-                assertThat(lottoTicket.getLottoNumbers().size()).isEqualTo(6);
+                assertThat(lottoTicket.toString()).hasToString("[1, 2, 3, 4, 5, 6]");
             }
         }
 
