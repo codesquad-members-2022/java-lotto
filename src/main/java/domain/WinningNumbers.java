@@ -2,16 +2,25 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class WinningNumbers {
-    private static final String LOTTO_NUMBER_ERROR_MESSAGE = "로또 숫자는 6개가 필요합니다.";
+    private static final String WINNING_NUMBER_ERROR_MESSAGE = "로또 당첨번호는 6개가 필요합니다.";
+    public static final String BONUS_NUMBER_ERROR_MESSAGE = "보너스 번호와 당첨 번호가 중복됩니다";
     private final ArrayList<LottoNumber> numbers; //
     private final LottoNumber bonusNumber;
 
     public WinningNumbers(String[] winningNumbers, String bonusNumber) {
         this.numbers = makeNumbers(winningNumbers);
         this.bonusNumber = new LottoNumber(Integer.parseInt(bonusNumber));
+        if (isDuplicatedNumber()) {
+            throw new IllegalArgumentException(BONUS_NUMBER_ERROR_MESSAGE);
+        }
+    }
+
+    private boolean isDuplicatedNumber() {
+        return numbers.contains(this.bonusNumber);
     }
 
     private ArrayList<LottoNumber> makeNumbers(String[] numbers) {
@@ -20,13 +29,13 @@ public class WinningNumbers {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         if (!isValidTicketSize(lottoNumbers)) {
-            throw new IllegalArgumentException(LOTTO_NUMBER_ERROR_MESSAGE);
+            throw new IllegalArgumentException(WINNING_NUMBER_ERROR_MESSAGE);
         }
         return lottoNumbers;
     }
 
     private boolean isValidTicketSize(ArrayList<LottoNumber> lottoNumbers) {
-        return lottoNumbers.size() == 6;
+        return new HashSet<>(lottoNumbers).size() == 6;
     }
 
     public int getSize() {

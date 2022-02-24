@@ -7,8 +7,9 @@ public class InputView {
     public static final String REQUEST_MONEY_MESSAGE = "구입금액을 입력해 주세요.";
     public static final String REQUEST_LOTTO_NUMBERS_MESSAGE = "당첨 번호를 입력해 주세요.";
     public static final String REQUEST_LOTTO_BONUS_NUMBER = "보너스 볼을 입력해주세요";
-    private static final Scanner scanner = new Scanner(System.in);
+    public static final String REQUEST_CUSTOM_TICKET_COUNT_ERROR_MESSAGE = "0 이상의 정수를 입력해주세요.";
     public static final String REQUEST_CUSTOM_TICKET_COUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요.";
+    private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
     }
@@ -31,7 +32,11 @@ public class InputView {
 
     public static int requestCustomTicketCount() {
         System.out.println(REQUEST_CUSTOM_TICKET_COUNT_MESSAGE);
-        return Integer.parseInt(scanner.nextLine());
+        int count = Integer.parseInt(scanner.nextLine());
+        if (count < 0) {
+            throw new IllegalArgumentException(REQUEST_CUSTOM_TICKET_COUNT_ERROR_MESSAGE);
+        }
+        return count;
     }
 
     public static int[] requestCustomTicketNumber() {
