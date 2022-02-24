@@ -31,6 +31,6 @@ public class LottoTickets {
 
     public double calculateRateOfReturn(int sum, int inputMoney) {
         double rateOfReturn = (sum - inputMoney) * 100 / inputMoney;
-        return Math.round(rateOfReturn * 100) / 100;
+        return rateOfReturn;
     }
 }
