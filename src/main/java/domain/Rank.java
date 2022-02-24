@@ -1,6 +1,7 @@
 package domain;
 
 public enum Rank {
+    FAIL(0, 0),
     FIFTH(3, 5_000),
     FORTH(4, 50_000),
     THIRD(5, 1_500_000),
@@ -31,8 +32,10 @@ public enum Rank {
                 return FORTH;
             case 5:
                 return checkBonus(isBonus);
-            default:
+            case 6:
                 return FIRST;
+            default:
+                return FAIL;
         }
     }
 

@@ -18,15 +18,24 @@ public class OutputView {
 
     public static void showWinningResult(Map<Rank, Integer> statistics, double profitRate) {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n당첨 통계\n").append("__________\n");
+        int matchedNumber;
+        System.out.println("\n당첨 통계\n__________");
         for (Rank rank : Rank.values()) {
-            sb.append(rank.getMatchedNumber()).append("개 일치");
+            matchedNumber = rank.getMatchedNumber();
+            sb.append(matchedNumber).append("개 일치");
             sb.append(checkBonusBall(rank));
             sb.append(" (").append(rank.getPrize()).append(")원 - ");
             sb.append(statistics.get(rank)).append("개\n");
+            initString(matchedNumber, sb);
         }
         System.out.println(sb.toString());
         System.out.printf("총 수익률은 %.2f%%입니다.", profitRate);
+    }
+
+    private static void initString(int matchedNumber, StringBuilder sb){
+        if(matchedNumber==0){
+            sb.setLength(0);
+        }
     }
 
     private static String checkBonusBall(Rank rank){

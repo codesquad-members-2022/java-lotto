@@ -38,10 +38,11 @@ public class LottoCompany {
         setInitialStatistic();
         int matchedNumber;
         boolean isBonus;
+        Rank currentRank;
         for (LottoTicket ticket : tickets) {
             matchedNumber = ticket.comparisonWinningTicket(this.winningTicket);
             isBonus = ticket.checkBonusNumber(this.bonusNumber);
-            Rank currentRank = Rank.designateRank(matchedNumber, isBonus);
+            currentRank = Rank.designateRank(matchedNumber, isBonus);
             statistics.computeIfPresent(currentRank, (k, v) -> v + 1);
         }
         OutputView.showWinningResult(this.statistics, calculateProfit());
