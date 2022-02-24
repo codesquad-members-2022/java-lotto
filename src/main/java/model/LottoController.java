@@ -65,18 +65,24 @@ public class LottoController {
             checkOverLap(new ArrayList<>(numbers));
         }
         OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
-        InputView.scannerClose();
     }
 
     private void makeManualLottoPerCount(int manualLottoEach) {
         String manualLottoNumber;
         OutputView.requestManualLottoNumber();
-        while (manualLottoEach-- > 0) {
 
-
-
-            manualLottoNumber = InputView.requestManualLottoNumber();
+        while (manualLottoEach > 0) {
+            while (true) {
+                manualLottoNumber = InputView.requestManualLottoNumber();
+                try {
+                    InputValidator.validateNumberOfLotto(manualLottoNumber);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    OutputView.printSentence(e.getMessage());
+                }
+            }
             makeManualLotto(manualLottoNumber);
+            manualLottoEach--;
         }
     }
 
@@ -102,10 +108,33 @@ public class LottoController {
     }
 
     public void checkWinNumber() {
-        String winNumber = InputView.requestWinNumber();
+        OutputView.requestWinNumber();
+        String winNumber;
+        while (true) {
+            winNumber = InputView.requestWinNumber();
+            try {
+                InputValidator.validateNumberOfLotto(winNumber);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
         String[] winNumbers = winNumber.split(", ");
-        String bonusNumber = InputView.requestBonusNumber();
+
+        String bonusNumber;
+        OutputView.requestBonusNumber();
+        while (true) {
+            bonusNumber = InputView.requestBonusNumber();
+            try {
+                InputValidator.validateRangeAboutSingleNumber(bonusNumber);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
+
         repository.checkWinNumber(winNumbers, bonusNumber, price);
+        InputView.scannerClose();
     }
 
 }

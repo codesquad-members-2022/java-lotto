@@ -21,13 +21,20 @@ public class InputView {
     }
 
     public static String requestWinNumber() {
-        OutputView.requestWinNumber();
         return nextLine();
     }
 
     public static String requestBonusNumber() {
-        OutputView.requestBonusNumber();
-        return nextLine();
+        String bonusNumber;
+        while (true) {
+            bonusNumber = nextLine();
+            try {
+                InputValidator.validateNumber(bonusNumber);
+                return bonusNumber;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
     }
 
     public static String requestManualCount() {
