@@ -1,23 +1,21 @@
 package domain;
 
+import domain.factory.TicketFactory;
+
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 
 public class LottoTicketSeller {
-    private static final int TICKET_PRICE = 1000;
+    private TicketFactory ticketFactory;
 
-    public ArrayList<LottoTicket> exchangeTicket(int money) {
-        ArrayList<LottoTicket> resultTickets = new ArrayList<>();
-        IntStream.range(0, countNumberOfTickets(money))
-                .forEach(i -> resultTickets.add(LottoTicketFactory.generateRandomTicket()));
-        return resultTickets;
+    public LottoTicketSeller(TicketFactory ticketFactory) {
+        this.ticketFactory = ticketFactory;
     }
 
     public LottoTicket exchangeTicket(ArrayList<LottoNumber> numbers) {
-        return LottoTicketFactory.generateCustomTicket(numbers);
+        return ticketFactory.generateTicket(numbers);
     }
 
-    private int countNumberOfTickets(int money) {
-        return money / TICKET_PRICE;
+    public void setFactory(TicketFactory randomTicketFactory) {
+        this.ticketFactory = randomTicketFactory;
     }
 }
