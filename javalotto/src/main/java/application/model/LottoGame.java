@@ -15,12 +15,13 @@ public class LottoGame {
         OutputView.printPurchaseQuantity(userPurchaseQuantity);
         List<Lotto> lottos = LottoTicket.makeLotto(userPurchaseQuantity);
         OutputView.printLottoList(lottos);
-        List<Integer> userWinningNumber = InputView.getWinningNumber();
+
+        Lotto userWinningNumber = new Lotto(InputView.getWinningNumber());
         int bonusBallNumber = InputView.getBonusBall();
         start(lottos, userWinningNumber, bonusBallNumber);
     }
 
-    private void start(List<Lotto> lottos, List<Integer> userWinningNumber, int bonusBallNumber) {
+    private void start(List<Lotto> lottos, Lotto userWinningNumber, int bonusBallNumber) {
         int[] counts = Statistics.makeStatistics(lottos, userWinningNumber, bonusBallNumber);
         double totalYield = Statistics.calculateYield(counts);
         OutputView.printWinningStatistics(counts, totalYield);

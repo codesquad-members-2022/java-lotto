@@ -35,9 +35,9 @@ public class Lotto {
         return numbers.contains(bonusBall);
     }
 
-    public int getTheNumberOfMatches(List<Integer> userWinningNumber) {
-        Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber);
-        Set<Integer> lottoSet = new HashSet<>(numbers);
+    public int getTheNumberOfMatches(Lotto userWinningNumber) {
+        Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber.numbers);
+        Set<Integer> lottoSet = new HashSet<>(this.numbers);
         lottoSet.addAll(new HashSet<>(userWinningNumberSet));
         return TWO_LOTTO_LENGTH_SUM - lottoSet.size();
     }

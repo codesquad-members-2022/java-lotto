@@ -31,7 +31,9 @@ class StatisticsTest {
         List<Integer> number = List.of(2, 3, 4, 5, 6, 8);
         Lotto lotto = new Lotto(number);
         List<Lotto> lottos = List.of(lotto);
-        List<Integer> winningNumber = List.of(2, 3, 4, 5, 6, 7);
+        List<Integer> winning = List.of(2, 3, 4, 5, 6, 7);
+        Lotto winningNumber = new Lotto(winning);
+
         int bonusBall = 8;
         //when
         int[] expect = Statistics.makeStatistics(lottos, winningNumber, bonusBall);
