@@ -4,6 +4,8 @@ import java.util.Map;
 
 public class WinningStatistic {
 
+    private static final int MINIMUM_WINNING_NUMBER = 3;
+
     private Map<RankValue, Integer> statistic;
     private List<Integer> winningNumbers;
 
@@ -24,20 +26,23 @@ public class WinningStatistic {
             sb.append(rankValue.getCountOfMatch() + "개 일치 (" + rankValue.getWinningMoney() + "원)- " + statistic.get(rankValue) + "개\n" );
             sum += rankValue.getWinningMoney() * statistic.get(rankValue);
         }
-        sb.append("총 수익률은 " + (((float) sum - purchaseMoney) * 100 / purchaseMoney) + "입니다.");
+        sb.append("총 수익률은 " + (((float) sum - purchaseMoney) * 100 / purchaseMoney) + "%입니다.");
+
         return sb.toString();
     }
 
     private void initStatistic() {
-        for (RankValue rankValue : RankValue.values()) {
-            statistic.put(rankValue, 0);
+        RankValue[] rankValues = RankValue.values();
+        for (int i = 1; i < rankValues.length; i++) {
+            statistic.put(rankValues[i], 0);
         }
     }
 
     private void setStatistic(int countOfMatch, boolean matchBonus) {
-        if (countOfMatch < 3) {
+        if (countOfMatch < MINIMUM_WINNING_NUMBER) {
             return;
         }
+
         RankValue key = RankValue.valueOf(countOfMatch, matchBonus);
         statistic.put(key, statistic.getOrDefault(key, 0) + 1);
     }
