@@ -1,0 +1,30 @@
+package view;
+
+import domain.Lotto;
+import domain.Rank;
+
+import java.util.List;
+
+public class OutputView {
+
+    public static void printBenefitPercentage(double percent) {
+        System.out.printf("총 수익률은 %5.2f%%입니다.", percent);
+    }
+
+    public static void printStatisticalResult(int[] result) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("당첨 통계\n");
+        sb.append("---------\n");
+        for (int index = 3; index < result.length; index++) {
+            sb.append(String.format("%d개 일치 (%d원)- %d개\n", index, Rank.getWinningMoney(index), result[index]));
+        }
+
+        System.out.println(sb);
+    }
+
+    public static void printLottos(List<Lotto> lottos) {
+        for (Lotto lotto : lottos) {
+            System.out.println(lotto);
+        }
+    }
+}
