@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static void printCountOfLotto(LottoTicket lottoTicket) {
-        System.out.println(lottoTicket.getLottosList().size() + "개를 구매했습니다.");
+    public static void printCountOfLotto(LottoTicket lottoTicket, int countOfManualLotto) {
+        System.out.println("수동으로 " + countOfManualLotto + "장, 자동으로 " + (lottoTicket.getLottosList().size() - countOfManualLotto) + "개를 구매했습니다.");
     }
 
     public static void printLottoNumbers(LottoTicket lottoTicket) {

@@ -7,10 +7,7 @@ import lotto_game.domain.LottoTicket;
 import lotto_game.domain.WinningNumbers;
 import lotto_game.util.Matcher;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,12 +16,16 @@ public class LottoIssuer {
     public static final int MIN_LOTTO_NUMBER = 1;
     public static final int MAX_LOTTO_NUMBER = 45;
 
-    public LottoTicket makeLottoTicket(int countOfLotto) {
-        List<Lotto> lottos = IntStream.range(0, countOfLotto)
-                .mapToObj(x -> new Lotto(makeRandomSixNumberList()))
-                .collect(Collectors.toList());
+    public LottoTicket makeLottoTicket(int totalCountOfLotto, List<Lotto> lottoList) {
 
-        return new LottoTicket(lottos);
+        IntStream.range(lottoList.size(), totalCountOfLotto)
+                .forEach(x -> lottoList.add(new Lotto(makeRandomSixNumberList())));
+
+        return new LottoTicket(lottoList);
+    }
+
+    public Lotto makeLotto(List<Integer> numberList) {
+        return new Lotto(numberList);
     }
 
     private List<Integer> makeRandomSixNumberList() {

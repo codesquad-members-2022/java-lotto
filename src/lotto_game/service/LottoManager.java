@@ -1,10 +1,12 @@
 package lotto_game.service;
 
+import lotto_game.domain.Lotto;
 import lotto_game.domain.LottoResult;
 import lotto_game.domain.LottoTicket;
 import lotto_game.domain.WinningNumbers;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class LottoManager {
@@ -15,8 +17,8 @@ public class LottoManager {
         this.lottoIssuer = new LottoIssuer();
     }
 
-    public LottoTicket makeLottoTicket(int purchaseMoney) {
-        return lottoIssuer.makeLottoTicket(calculateCountOfLotto(purchaseMoney));
+    public LottoTicket makeLottoTicket(int purchaseMoney, List<Lotto> lottoList) {
+        return lottoIssuer.makeLottoTicket(calculateCountOfLotto(purchaseMoney), lottoList);
     }
 
     private int calculateCountOfLotto(int purchaseMoney) {
@@ -32,5 +34,9 @@ public class LottoManager {
 
     public LottoResult makeLottoResult(LottoTicket lottoTicket, WinningNumbers winningNumbers) {
         return lottoIssuer.makeLottoResult(lottoTicket, winningNumbers);
+    }
+
+    public Lotto makeLotto(List<Integer> manualLottoNumbers) {
+        return lottoIssuer.makeLotto(manualLottoNumbers);
     }
 }
