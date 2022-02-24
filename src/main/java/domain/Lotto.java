@@ -18,10 +18,11 @@ public class Lotto {
         this.balls = balls;
     }
 
-    public Set<Integer> getBallNumbers() {
+    public List<String> getStringBalls() {
         return balls.stream()
                 .map(Ball::getNumber)
-                .collect(Collectors.toSet());
+                .map(String::valueOf)
+                .collect(Collectors.toList());
     }
 
     public int getMatchBallCount(WinningLotto winningLotto) {
