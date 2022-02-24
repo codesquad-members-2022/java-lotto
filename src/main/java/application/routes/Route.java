@@ -10,15 +10,13 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
 public class Route {
 
-    GameController controller = new GameController();
+    GameController controller = GameController.getInstance();
 
     public void run() {
         get("/index", (req, res) -> {
@@ -34,14 +32,9 @@ public class Route {
                     ParserUtil.parseNumber(inputMoney),
                     ParserUtil.parseDoubleListNumber(manualNumbers)
             );
-
             LottoShowDto lottoShowDto = controller.getUserBundle(bundleDto);
 
-            Map<String, Object> model = new HashMap<>();
-            model.put("lottosSize", lottoShowDto.getLottosSize());
-            model.put("lottos", lottoShowDto.getLottos());
-
-            return render(model, "show.html");
+            return render(lottoShowDto.toModel(), "show.html");
         });
 
         post("/matchLotto", (req, res) -> {
@@ -52,12 +45,11 @@ public class Route {
                     ParserUtil.parseListNumber(winningNumber),
                     ParserUtil.parseNumber(bonusNumber)
             );
-            controller.raffle(numberDto);
-            LottosResultDto lottosResultDto = controller.calculate();
+            LottosResultDto lottosResultDto = controller.getStatistics(numberDto);
 
-            Map<String, Object> model = ParserUtil.objectToMap(lottosResultDto);
-            return render(model, "result.html");
+            return render(lottosResultDto.toModel(), "result.html");
         });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -12,8 +12,6 @@ import static spark.Spark.*;
 public class Main {
 
     public static void main(String[] args) {
-//        GameController gameController = new GameController();
-//        gameController.run();
 
         Route route = new Route();
 

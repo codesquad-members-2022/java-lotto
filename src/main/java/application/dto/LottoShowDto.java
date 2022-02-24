@@ -26,4 +26,12 @@ public class LottoShowDto {
     public List<Map<String, List<Integer>>> getLottos() {
         return lottos;
     }
+
+    public Map<String, Object> toModel() {
+        Map<String, Object> model = new HashMap<>();
+        model.put("lottosSize", lottosSize);
+        model.put("lottos", lottos);
+
+        return model;
+    }
 }
