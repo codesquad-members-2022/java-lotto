@@ -1,6 +1,5 @@
 package lotto.domain;
 
-import javax.naming.SizeLimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +18,18 @@ public class LottoBundle {
         return new LottoBundle(size);
     }
 
-    public void addManualLottoTicket(int[] numbers) throws SizeLimitExceededException {
+    public void addManualLottoTicket(LottoTicket lottoTicket) {
         if (manualTicketCount >= size) {
-            throw new SizeLimitExceededException("수동 복권 번호를 더 지정할 수 없습니다.");
+            throw new IndexOutOfBoundsException("수동 복권을 더 발행할 수 없습니다.");
         }
-        lottoTickets.add(LottoFactory.issueLottoTicketWithSelectNumbers(numbers));
+        lottoTickets.add(lottoTicket);
         manualTicketCount++;
+    }
+
+    public void addManualLottoTickets(List<LottoTicket> lottoTicketList) {
+        for (LottoTicket lottoTicket : lottoTicketList) {
+            addManualLottoTicket(lottoTicket);
+        }
     }
 
     public void fillWithRandomLottoTickets() {
@@ -54,8 +59,8 @@ public class LottoBundle {
     }
 
     private void validateBundleSize(int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("크기가 음수가 되어서는 안됩니다.");
+        if (size < 1) {
+            throw new IllegalArgumentException("적어도 한 장은 사야 합니다.");
         }
     }
 }

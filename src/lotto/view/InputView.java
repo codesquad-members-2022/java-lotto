@@ -1,5 +1,7 @@
 package lotto.view;
 
+import lotto.domain.LottoTicket;
+
 import java.util.Scanner;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -8,7 +10,7 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public int getPaidAmount() {
-        System.out.println("구입 금액을 입력해주십시오.");
+        System.out.printf("구입 금액을 입력해주십시오. 로또는 한 장에 %,d원입니다.%n", LottoTicket.PRICE);
         return getInt();
     }
 

@@ -57,7 +57,7 @@ public class LottoNumbers {
 
     private void validateLength(int[] numbers) {
         if (numbers.length != LOTTO_NUMBER_COUNT) {
-            throw new IllegalArgumentException(String.format("%d개의 숫자가 필요합니다.", LOTTO_NUMBER_COUNT));
+            throw new IllegalArgumentException(String.format("로또 번호는 %d개의 숫자가 필요합니다.", LOTTO_NUMBER_COUNT));
         }
     }
 
