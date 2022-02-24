@@ -1,8 +1,6 @@
 package domain;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PurchasedLotteries {
 
@@ -12,20 +10,8 @@ public class PurchasedLotteries {
         this.purchasedLotteries = purchasedLotteries;
     }
 
-    public Map<Rank, Integer> getResult(WinningNumbers winningNumbers) {
-        Map<Rank, Integer> result = new HashMap<>();
-        result.put(Rank.rank1, 0);
-        result.put(Rank.rank2, 0);
-        result.put(Rank.rank3, 0);
-        result.put(Rank.rank4, 0);
-        result.put(Rank.rank5, 0);
-        result.put(Rank.noRank, 0);
-
-        for (Lotto purchasedLottery : purchasedLotteries) {
-            Rank rank = purchasedLottery.getMatchedRank(winningNumbers);
-            result.replace(rank, result.get(rank) + 1);
-        }
-        return result;
+    public Result getResult(WinningNumbers winningNumbers) {
+        return Result.compute(this, winningNumbers);
     }
 
     public int getTotalInvestment() {

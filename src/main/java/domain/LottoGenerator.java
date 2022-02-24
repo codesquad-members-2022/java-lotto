@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LottoMaker {
+public class LottoGenerator {
 
     private static final List<Integer> allNumbers;
 
@@ -15,10 +15,10 @@ public class LottoMaker {
             .collect(Collectors.toList());
     }
 
-    private LottoMaker() {
+    private LottoGenerator() {
     }
 
-    public static Lotto make() {
+    public static Lotto generate() {
         Collections.shuffle(allNumbers);
         List<Integer> randomNumbers = List.copyOf(allNumbers.subList(0, 6));
         return new Lotto(randomNumbers);

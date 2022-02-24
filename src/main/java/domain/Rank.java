@@ -1,12 +1,14 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum Rank {
-    rank1(2000000000, 6, false),
-    rank2(30000000, 5, true),
-    rank3(1500000, 5, false),
-    rank4(50000, 4, false),
-    rank5(5000, 3, false),
-    noRank(0, 0, false);
+    RANK1(2_000_000_000, 6, false),
+    RANK2(30_000_000, 5, true),
+    RANK3(1_500_000, 5, false),
+    RANK4(50_000, 4, false),
+    rank5(5_000, 3, false),
+    NO_RANK(0, 0, false);
 
     private int prize;
     private int matchedCount;
@@ -26,20 +28,13 @@ public enum Rank {
         return matchedCount;
     }
 
-    public boolean containsBonus() {
-        return containsBonus;
-    }
-
     public static Rank getMatchedRank(int matchedCount, boolean containsBonus) {
-        // TODO : 리팩토링(depth 줄이기)
-        for (Rank rank : values()) {
-            if (rank.getMatchedCount() == matchedCount) {
-                if (matchedCount == 5) {
-                    return (rank.containsBonus() == containsBonus) ? rank2 : rank3;
-                }
-                return rank;
-            }
+        if (matchedCount == 5) {
+            return (containsBonus) ? RANK2 : RANK3;
         }
-        return noRank;
+        return Arrays.stream(Rank.values())
+            .filter(r -> r.getMatchedCount() == matchedCount)
+            .findAny()
+            .orElse(Rank.NO_RANK);
     }
 }

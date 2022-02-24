@@ -18,16 +18,19 @@ class InputValidator {
         return validator;
     }
 
-    // TODO: 리팩
     int validateInteger(String input) throws IllegalArgumentException {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            if (input == null || !input.matches("\\d+")) {
-                throw new IllegalArgumentException("숫자를 입력해주세요.");
-            }
-            throw new IllegalArgumentException("int 범위 내로 입력해주세요.");
+            throw subDivideNumberFormatException(input);
         }
+    }
+
+    private IllegalArgumentException subDivideNumberFormatException(String input) {
+        if (input == null || !input.matches("\\d+")) {
+            return new IllegalArgumentException("숫자를 입력해주세요.");
+        }
+        return new IllegalArgumentException("int 범위 내로 입력해주세요.");
     }
 
     int validatePositiveInteger(String input) throws IllegalArgumentException {
@@ -40,7 +43,6 @@ class InputValidator {
 
     List<Integer> validateWinningNumber(String input) throws IllegalArgumentException {
         String[] split = input.split(",");
-
         Set<Integer> numberSet = Arrays.stream(split)
             .map(String::trim)
             .map(this::validateInteger)

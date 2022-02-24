@@ -1,9 +1,8 @@
 package view;
 
-import java.util.Map;
-
 import domain.PurchasedLotteries;
 import domain.Rank;
+import domain.Result;
 
 public class OutputView {
 
@@ -12,14 +11,14 @@ public class OutputView {
         purchasedLotteries.get().forEach(System.out::println);
     }
 
-    public void printStatistics(Map<Rank, Integer> result, float profitRate) {
+    public void printStatistics(Result result, float profitRate) {
         System.out.println("당첨 통계");
         System.out.println("---------");
-        for (int i = 0; i < Rank.noRank.ordinal(); i++) {
+        for (int i = 0; i < Rank.NO_RANK.ordinal(); i++) {
             Rank rank = Rank.values()[i];
-            String bonus = rank == Rank.rank2 ? ", 보너스 볼 일치" : "";
+            String bonus = rank == Rank.RANK2 ? ", 보너스 볼 일치" : "";
             int prize = rank.getPrize();
-            int count = result.get(rank);
+            int count = result.getCount(rank);
             System.out.printf("%d개 일치%s (%d원)- %d개%n",
                 rank.getMatchedCount(),
                 bonus,

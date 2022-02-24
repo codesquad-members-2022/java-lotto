@@ -2,12 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import domain.Lotto;
-import domain.LottoMaker;
+import domain.LottoGenerator;
 import domain.PurchasedLotteries;
-import domain.Rank;
+import domain.Result;
 import domain.WinningNumbers;
 import view.InputView;
 import view.OutputView;
@@ -28,7 +27,7 @@ public class LottoController {
 
         WinningNumbers winningNumbers =  draw();
 
-        Map<Rank, Integer> result = purchasedLotteries.getResult(winningNumbers);
+        Result result = purchasedLotteries.getResult(winningNumbers);
         outputView.printStatistics(result, purchasedLotteries.getProfitRate(winningNumbers));
     }
 
@@ -37,7 +36,7 @@ public class LottoController {
         List<Lotto> lotteries = new ArrayList<>();
         int lottoCount = userMoney / Lotto.PRICE;
         for (int i = 0; i < lottoCount; i++) {
-            lotteries.add(LottoMaker.make());
+            lotteries.add(LottoGenerator.generate());
         }
         return new PurchasedLotteries(lotteries);
     }
