@@ -53,9 +53,14 @@ public class InputView {
         }
     }
 
-    public int getManualLottoCountInput() {
+    public int getManualLottoCountInput(int userMoney) {
         System.out.println(PROMPT_MANUAL_LOTTO_COUNT);
         System.out.print(PROMPT);
-        return validator.validatePositiveInteger(sc.nextLine());
+        try {
+            return validator.validateManualLottoCount(userMoney, sc.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getManualLottoCountInput(userMoney);
+        }
     }
 }
