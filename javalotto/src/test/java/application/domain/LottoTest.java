@@ -77,4 +77,18 @@ class LottoTest {
         assertThat(expect).isEqualTo(tmp);
     }
 
+    @Test
+    @DisplayName("범위를 벗어난 로또 번호를 입력하면 예외를 발생시켜야 한다.")
+    void lottoNumberRangeTest() {
+        //given
+        List<Integer> number = List.of(2, 3, 4, 5, 6, 46);
+        //when
+        //then
+        assertThatThrownBy(() -> {
+            Lotto lotto = new Lotto(number);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("범위를 벗어났습니다.");
+
+    }
+
 }

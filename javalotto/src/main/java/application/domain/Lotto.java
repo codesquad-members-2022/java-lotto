@@ -15,6 +15,7 @@ public class Lotto {
     public Lotto(List<Integer> numbers) {
         validateSize(numbers);
         validateDuplicate(numbers);
+        validateNumberRange(numbers);
         this.numbers = numbers;
     }
 
@@ -28,6 +29,12 @@ public class Lotto {
         Set<Integer> nonDuplicateNumbers = new HashSet<>(lottoNumbers);
         if (nonDuplicateNumbers.size() != AMOUNT_LOTTO_NUMBER) {
             throw new IllegalArgumentException("로또 번호들은 중복될 수 없습니다.");
+        }
+    }
+
+    private void validateNumberRange(List<Integer> lottoNumbers) {
+        if (lottoNumbers.stream().anyMatch(i -> i < 1 || i > 45)) {
+            throw new IllegalArgumentException("범위를 벗어났습니다.");
         }
     }
 
