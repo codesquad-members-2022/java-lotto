@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AutoLottoMaker implements LottoMaker {
 
-    List<Integer> totalNumberList;
+    private List<Integer> totalNumberList;
 
     public AutoLottoMaker() {
         totalNumberList = new ArrayList<>();
