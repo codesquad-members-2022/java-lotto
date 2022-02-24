@@ -2,6 +2,7 @@ package PACKAGE_NAME.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class BonusNumber {
 
@@ -36,5 +37,9 @@ public class BonusNumber {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public boolean isElementsOf(Set<Integer> winningNumbers) {
+        return winningNumbers.contains(this.value);
     }
 }

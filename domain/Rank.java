@@ -31,9 +31,14 @@ public enum Rank {
         return winningPrize;
     }
 
-    public static Rank getRank(int matchCount) {
+    private boolean getBonus() {
+        return bonus;
+    }
+
+    public static Rank getRank(int matchCount, boolean bouns) {
         return Arrays.stream(values())
                 .filter(rank -> rank.getMatchCount() == matchCount)
+                .filter(rank -> rank.getBonus() == bouns)
                 .findAny()
                 .orElse(NO_MATCH);
     }

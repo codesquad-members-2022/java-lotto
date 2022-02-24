@@ -25,13 +25,21 @@ public class LottoTicket {
         return numbers.toString();
     }
 
-    public int countAnswer(Set<Integer> winningNumbers) {
+    public Rank getRank(Set<Integer> winningNumbers, BonusNumber bonusNumber) {
         int count = 0;
         for (int index = START_INDEX; index < winningNumbers.size(); index++) {
             if (winningNumbers.contains(numbers.get(index))) {
                 count++;
             }
         }
-        return count;
+        return calculateBonus(winningNumbers,bonusNumber,count);
+    }
+
+    private Rank calculateBonus(Set<Integer> winningNumbers, BonusNumber bonusNumber, int count) {
+        if(bonusNumber.isElementsOf(winningNumbers)){
+            count++;
+            return Rank.getRank(count,true);
+        }
+        return Rank.getRank(count,false);
     }
 }

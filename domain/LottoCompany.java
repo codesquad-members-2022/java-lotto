@@ -23,8 +23,7 @@ public class LottoCompany {
 
         for (int index = 0; index < lottoTickets.getLottoTickets().size(); index++) {
             LottoTicket lottoTicket = lottoTickets.getLottoTickets().get(index);
-            int count = lottoTicket.countAnswer(winningNumbers);
-            Rank rank = Rank.getRank(count);
+            Rank rank = lottoTicket.getRank(winningNumbers,bonusNumber);
             answers.put(rank, answers.getOrDefault(rank, 0) + 1);
         }
         int winningPrize = lottoTickets.getWinningPrize(answers);
