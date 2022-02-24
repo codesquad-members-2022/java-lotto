@@ -2,7 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class LottoTicket {
     private static final int NORMAL_TICKET_SIZE = 6;
