@@ -1,10 +1,11 @@
-package controller;
+package com.lotto.controller;
 
 import java.util.List;
 import java.util.Map;
 
-import model.Lotto;
 import model.LottoService;
+import model.LottoTickets;
+import model.Rank;
 import view.InputView;
 import view.OutputView;
 
@@ -15,13 +16,15 @@ public class Controller {
 		LottoService lottoService = new LottoService();
 
 		int purchaseAmount = inputView.getPurchaseAmount();
-		List<Lotto> lottoTickets = lottoService.publishLottoTickets(purchaseAmount);
+		LottoTickets lottoTickets = lottoService.publishLottoTickets(purchaseAmount);
 		outputView.printTickets(lottoTickets);
 
+		//당첨 번호 입력
 		List<Integer> winningNumbers = inputView.getWinningNumbers();
-		Map<Integer, Integer> result = lottoService.checkResult(lottoTickets, winningNumbers);
+		int bonusNumber = inputView.inputBonusNumber();
+		Map<Rank, Integer> result = lottoService.checkResult(lottoTickets, winningNumbers, bonusNumber);
 		double earningRate = lottoService.calculateEarningRate(purchaseAmount, result);
 
-		outputView.printResult(result, lottoService.getWinningAmount(), earningRate);
+		outputView.printResult(result, earningRate);
 	}
 }
