@@ -1,7 +1,7 @@
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
+
     private static final int LOTTO_NUMBER_MAX_INDEX = 5;    // 6개 로또 번호별 인덱스: [0 ~ 5]
 
     public static void showCountOfLotto(int countOfManualLotto, int countOfAutoLotto) {
@@ -14,21 +14,15 @@ public class OutputView {
         }
     }
 
-    public static void showWinningStatistic(Map<RankValue, Integer> statistic, int purchaseMoney) {
-        int sum = 0;
-        System.out.printf("당첨 통계%n---------%n");
-        for (RankValue rankValue : statistic.keySet()) {
-            System.out.printf("%d개 일치 (%d원)- %d개%n", rankValue.getCountOfMatch(), rankValue.getWinningMoney(), statistic.get(rankValue));
-            sum += rankValue.getWinningMoney() * statistic.get(rankValue);
-        }
-        System.out.printf("총 수익률은 %.2f%%입니다.", (((float) sum - purchaseMoney) * 100 / purchaseMoney));
+    public static void showWinningStatistic(String result) {
+        System.out.println(result);
     }
 
     private static void showLottoNumber(Lotto lotto) {
         System.out.print("[");
         for (int i = 0; i < LOTTO_NUMBER_MAX_INDEX; i++) {
-            System.out.printf("%d,", lotto.getNumbers().get(i));
+            System.out.printf("%d,", lotto.getNumber(i));
         }
-        System.out.println(lotto.getNumbers().get(LOTTO_NUMBER_MAX_INDEX) + "]");
+        System.out.println(lotto.getNumber(LOTTO_NUMBER_MAX_INDEX) + "]");
     }
 }

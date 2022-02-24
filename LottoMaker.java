@@ -5,7 +5,11 @@ import java.util.List;
 public class LottoMaker {
 
     private static final String SEPARATOR = ",\\s|,|\\s";
-    public List<Integer> makeManualLotto(String manualLottoNumber){ return processManualLottoNumber(manualLottoNumber); }
+
+    public List<Integer> makeManualLotto(String manualLottoNumber) {
+        return processManualLottoNumber(manualLottoNumber);
+    }
+
     public List<Integer> makeAutoLotto() {
         return processAutoLottoNumber(initNumbers());
     }
@@ -19,7 +23,7 @@ public class LottoMaker {
         return totalNumberList;
     }
 
-    private List<Integer> processManualLottoNumber(String manualLottoNumber){
+    private List<Integer> processManualLottoNumber(String manualLottoNumber) {
         List<Integer> numberList = new ArrayList<>();
 
         String[] numbers = manualLottoNumber.strip().split(SEPARATOR);

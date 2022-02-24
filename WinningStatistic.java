@@ -3,20 +3,29 @@ import java.util.List;
 import java.util.Map;
 
 public class WinningStatistic {
+
     private Map<RankValue, Integer> statistic;
     private List<Integer> winningNumbers;
 
     public WinningStatistic(List<Lotto> lottoList, List<Integer> winningNumbers, int bonusBall) {
         statistic = new LinkedHashMap<>();
-        initStatistic();
         this.winningNumbers = winningNumbers;
+        initStatistic();
         for (int i = 0; i < lottoList.size(); i++) {
             setStatistic(checkWinningNumber(lottoList.get(i)), checkBonus(lottoList.get(i), bonusBall));
         }
     }
 
-    public Map<RankValue, Integer> getStatistic() {
-        return statistic;
+    public String getResult(int purchaseMoney) {
+        StringBuilder sb = new StringBuilder();
+        int sum = 0;
+        sb.append("당첨 통계\n---------\n");
+        for (RankValue rankValue : statistic.keySet()) {
+            sb.append(rankValue.getCountOfMatch() + "개 일치 (" + rankValue.getWinningMoney() + "원)- " + statistic.get(rankValue) + "개\n" );
+            sum += rankValue.getWinningMoney() * statistic.get(rankValue);
+        }
+        sb.append("총 수익률은 " + (((float) sum - purchaseMoney) * 100 / purchaseMoney) + "입니다.");
+        return sb.toString();
     }
 
     private void initStatistic() {
@@ -34,13 +43,13 @@ public class WinningStatistic {
     }
 
     private boolean checkBonus(Lotto lotto, int bonusBall) {
-        return lotto.getNumbers().contains(bonusBall);
+        return lotto.containNumber(bonusBall);
     }
 
     private int checkWinningNumber(Lotto lotto) {
         int countOfWinningNumber = 0;
         for (int number : winningNumbers) {
-            countOfWinningNumber = checkInclusion(lotto.getNumbers().contains(number), countOfWinningNumber);
+            countOfWinningNumber = checkInclusion(lotto.containNumber(number), countOfWinningNumber);
         }
 
         return countOfWinningNumber;
