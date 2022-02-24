@@ -36,7 +36,10 @@ public class LottoController {
         int manualLottoCount = inputView.getManualLottoCountInput(userMoney);
         List<Lotto> lotteries = new ArrayList<>();
         int lottoCount = userMoney / Lotto.PRICE;
-        getLottoNumbersInput -> Lotto(~) -> lotteries.add(~)
+        List<List<Integer>> manualNumbersList = inputView.getManualNumbersInput(manualLottoCount);
+        for (List<Integer> manualNumbers : manualNumbersList) {
+            lotteries.add(LottoGenerator.generateManualLotto(manualNumbers));
+        }
         for (int i = 0; i < lottoCount - manualLottoCount; i++) {
             lotteries.add(LottoGenerator.generateRandomLotto());
         }
@@ -44,7 +47,7 @@ public class LottoController {
     }
 
     private WinningNumbers draw() {
-        List<Integer> winningNumberInput = inputView.getLottoNumbersInput();
+        List<Integer> winningNumberInput = inputView.getWinningNumbersInput();
         int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
         return new WinningNumbers(winningNumberInput, bonusNumberInput);
     }

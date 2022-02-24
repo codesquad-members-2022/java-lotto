@@ -50,7 +50,7 @@ class InputValidator {
         return count;
     }
 
-    List<Integer> validateWinningNumber(String input) throws IllegalArgumentException {
+    List<Integer> validateLottoNumbers(String input) throws IllegalArgumentException {
         String[] split = input.split(",");
         Set<Integer> numberSet = Arrays.stream(split)
             .map(String::trim)
