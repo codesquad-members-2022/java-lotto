@@ -1,6 +1,9 @@
 package application.domain;
 
+import application.dto.LottoShowDto;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserBundle {
 
@@ -15,6 +18,13 @@ public class UserBundle {
 
         count = money / PRICE;
         userLotteries = new UserLotteries(count - manualLotteries.size(), manualLotteries);
+    }
+
+    public LottoShowDto getLottos() {
+        List<List<Integer>> lottos = userLotteries.get().stream()
+                .map(Lottery::getNumbers)
+                .collect(Collectors.toList());
+        return new LottoShowDto(lottos.size(), lottos);
     }
 
     public int getMoney() {
