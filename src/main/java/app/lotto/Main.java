@@ -17,29 +17,26 @@ public class Main {
         List<LottoTicket> customLottoTickets = lottoTicketManager.getCustomLottoTickets();
         List<LottoTicket> autoLottoTickets = lottoTicketManager.getAutoLottoTickets();
 
-        OutputView.printLottoCount(lottoTicketManager.getCustomTicketCount(), lottoTicketManager.getAutoTicketCount());
-        List<LottoTicket> allLottoNumbers = getAllLottoNumbers(customLottoTickets, autoLottoTickets);
-        OutputView.printAllLottoNumbers(allLottoNumbers);
-        System.out.println();
+        printAllLottoTickets(lottoTicketManager);
 
         LottoTicket winningNumbers = InputView.readWinningNumbers();
         int bonusNumber = InputView.readBonusNumber();
         System.out.println();
 
         printLottoGameResult(new LottoGameResult.Builder()
-                .setAllAutoLottoNumbers(autoLottoTickets)
-                .setCustomLottoNumbers(customLottoTickets)
+                .addAllLottoTickets(customLottoTickets)
+                .addAllLottoTickets(autoLottoTickets)
                 .setAmount(amount)
-                .setBonusNumber(bonusNumber)
                 .setWinningNumbers(winningNumbers)
+                .setBonusNumber(bonusNumber)
                 .build());
     }
 
-    private static List<LottoTicket> getAllLottoNumbers(List<LottoTicket> customLottoNumbers, List<LottoTicket> allAutoLottoNumbers) {
-        List<LottoTicket> allLottoNumbers = new ArrayList<>();
-        allLottoNumbers.addAll(customLottoNumbers);
-        allLottoNumbers.addAll(allAutoLottoNumbers);
-        return allLottoNumbers;
+    private static void printAllLottoTickets(LottoTicketManager lottoTicketManager) {
+        OutputView.printLottoCount(lottoTicketManager.getCustomTicketCount(), lottoTicketManager.getAutoTicketCount());
+        OutputView.printAllLottoNumbers(lottoTicketManager.getCustomLottoTickets());
+        OutputView.printAllLottoNumbers(lottoTicketManager.getAutoLottoTickets());
+        System.out.println();
     }
 
     private static void printLottoGameResult(LottoGameResult lottoGameResult) {

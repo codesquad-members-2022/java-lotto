@@ -1,29 +1,25 @@
 package app.lotto.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LottoGameResult {
 
-    private final List<LottoTicket> allAutoLottoNumbers;
-    private final List<LottoTicket> customLottoNumbers;
+    private final List<LottoTicket> allLottoTickets;
     private final int amount;
     private final int bonusNumber;
     private final LottoTicket winningNumbers;
 
-    private LottoGameResult(List<LottoTicket> allAutoLottoNumbers, List<LottoTicket> customLottoNumbers, int amount, int bonusNumber, LottoTicket winningNumbers) {
-        this.allAutoLottoNumbers = allAutoLottoNumbers;
-        this.customLottoNumbers = customLottoNumbers;
+    public LottoGameResult(List<LottoTicket> allLottoTickets, int amount, int bonusNumber, LottoTicket winningNumbers) {
+        this.allLottoTickets = allLottoTickets;
         this.amount = amount;
         this.bonusNumber = bonusNumber;
         this.winningNumbers = winningNumbers;
     }
 
-    public List<LottoTicket> getAllAutoLottoNumbers() {
-        return allAutoLottoNumbers;
-    }
-
-    public List<LottoTicket> getCustomLottoNumbers() {
-        return customLottoNumbers;
+    public List<LottoTicket> getAllLottoTickets() {
+        return Collections.unmodifiableList(allLottoTickets);
     }
 
     public int getAmount() {
@@ -39,19 +35,13 @@ public class LottoGameResult {
     }
 
     public static class Builder {
-        private List<LottoTicket> allAutoLottoNumbers;
-        private List<LottoTicket> customLottoNumbers;
+        private final List<LottoTicket> allLottoTickets = new ArrayList<>();
         private int amount;
         private int bonusNumber;
         private LottoTicket winningNumbers;
 
-        public Builder setAllAutoLottoNumbers(List<LottoTicket> allAutoLottoNumbers) {
-            this.allAutoLottoNumbers = allAutoLottoNumbers;
-            return this;
-        }
-
-        public Builder setCustomLottoNumbers(List<LottoTicket> customLottoNumbers) {
-            this.customLottoNumbers = customLottoNumbers;
+        public Builder addAllLottoTickets(List<LottoTicket> lottoTickets) {
+            this.allLottoTickets.addAll(lottoTickets);
             return this;
         }
 
@@ -71,7 +61,7 @@ public class LottoGameResult {
         }
 
         public LottoGameResult build() {
-            return new LottoGameResult(allAutoLottoNumbers, customLottoNumbers, amount, bonusNumber, winningNumbers);
+            return new LottoGameResult(allLottoTickets, amount, bonusNumber, winningNumbers);
         }
     }
 

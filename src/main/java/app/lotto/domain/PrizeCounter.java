@@ -10,9 +10,7 @@ public class PrizeCounter {
     public static Map<LottoPrize, Integer> getStatistics(LottoGameResult lottoGameResult) {
         Map<LottoPrize, Integer> statistics = new HashMap<>();
 
-        List<LottoTicket> allLottoTicket = new ArrayList<>();
-        allLottoTicket.addAll(lottoGameResult.getAllAutoLottoNumbers());
-        allLottoTicket.addAll(lottoGameResult.getCustomLottoNumbers());
+        List<LottoTicket> allLottoTicket = lottoGameResult.getAllLottoTickets();
 
         for (LottoTicket lottoTicket : allLottoTicket) {
             int sameNumberCount = getSameNumberCount(lottoTicket, lottoGameResult.getWinningNumbers());
