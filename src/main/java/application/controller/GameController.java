@@ -5,6 +5,7 @@ import application.dto.BundleDto;
 import application.dto.LottoShowDto;
 import application.dto.LottosResultDto;
 import application.dto.NumberDto;
+import application.view.OutputView;
 
 import java.util.List;
 import java.util.Map;

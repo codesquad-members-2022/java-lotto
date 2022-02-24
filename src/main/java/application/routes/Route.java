@@ -1,6 +1,6 @@
 package application.routes;
 
-import application.ParserUtil;
+import application.view.InputUtil;
 import application.controller.GameController;
 import application.dto.BundleDto;
 import application.dto.LottoShowDto;
@@ -19,7 +19,7 @@ public class Route {
     GameController controller = GameController.getInstance();
 
     public void run() {
-        get("/index", (req, res) -> {
+        get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
@@ -29,8 +29,8 @@ public class Route {
             String manualNumbers = req.queryParams("manualNumber");
 
             BundleDto bundleDto = new BundleDto(
-                    ParserUtil.parseNumber(inputMoney),
-                    ParserUtil.parseDoubleListNumber(manualNumbers)
+                    InputUtil.parseNumber(inputMoney),
+                    InputUtil.parseDoubleListNumber(manualNumbers)
             );
             LottoShowDto lottoShowDto = controller.getUserBundle(bundleDto);
 
@@ -42,8 +42,8 @@ public class Route {
             String bonusNumber = req.queryParams("bonusNumber");
 
             NumberDto numberDto = new NumberDto(
-                    ParserUtil.parseListNumber(winningNumber),
-                    ParserUtil.parseNumber(bonusNumber)
+                    InputUtil.parseListNumber(winningNumber),
+                    InputUtil.parseNumber(bonusNumber)
             );
             LottosResultDto lottosResultDto = controller.getStatistics(numberDto);
 
