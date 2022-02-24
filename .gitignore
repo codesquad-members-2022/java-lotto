@@ -56,3 +56,6 @@ hs_err_pid*
 *.iml
 out
 gen
+
+out
+Lotto_Mission_Pair.iml
