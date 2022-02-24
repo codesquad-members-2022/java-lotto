@@ -32,6 +32,10 @@ public class Output {
 		println.accept(rateOfReturn);
 	}
 
-
+	public static void getResultOfLotto(Ranking ranking, int purchaseAmount) {
+		String winningStatistics = ranking.getWinningStatistics();
+		String rateOfReturn = ranking.getRateOfReturn(purchaseAmount);
+		printResultOfLottoAndYield(winningStatistics, rateOfReturn);
+	}
 
 }

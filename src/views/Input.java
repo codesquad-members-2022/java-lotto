@@ -36,10 +36,10 @@ public class Input {
 				.collect(toList());
 	}
 
-	public static int[] purchaseLotto() {
+	public static PurchasedLotto purchaseLotto() {
 		int purchaseAmount = getPurchaseAmount();
 		int numberOfTicket = getTicketAccount(purchaseAmount);
-		return new int[] {purchaseAmount, numberOfTicket};
+		return new PurchasedLotto(purchaseAmount, numberOfTicket);
 	}
 
 	public static int getPurchaseAmount() {
