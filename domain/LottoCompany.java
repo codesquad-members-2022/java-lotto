@@ -26,9 +26,7 @@ public class LottoCompany {
             Rank rank = lottoTicket.getRank(winningNumbers,bonusNumber);
             answers.put(rank, answers.getOrDefault(rank, 0) + 1);
         }
-        int winningPrize = lottoTickets.getWinningPrize(answers);
-        int purchaseAmount = lottoTickets.getLottoTickets().size() * 1000;
-        System.out.println(calculator.calculateRateOfReturn(winningPrize, purchaseAmount));
+        double rateOfReturn = calculator.calculateRateOfReturn(lottoTickets, answers);
         lottoTickets.getWinningPrize(answers);
         return answers;
     }

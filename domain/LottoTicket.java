@@ -20,11 +20,6 @@ public class LottoTicket {
         }
     }
 
-    @Override
-    public String toString() {
-        return numbers.toString();
-    }
-
     public Rank getRank(Set<Integer> winningNumbers, BonusNumber bonusNumber) {
         int count = 0;
         for (int index = START_INDEX; index < winningNumbers.size(); index++) {

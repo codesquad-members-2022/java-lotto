@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 public class LottoTickets {
+
     private final List<LottoTicket> lottoTickets;
 
     private static final int DEFAULT_VALUE = 0;
-    private static final int ONE_HUNDRED = 100;
 
     public LottoTickets(List<LottoTicket> lottoTickets) {
         this.lottoTickets = lottoTickets;
@@ -22,8 +22,6 @@ public class LottoTickets {
         }
         return sum;
     }
-
-
 
     public List<LottoTicket> getLottoTickets() {
         return lottoTickets;
