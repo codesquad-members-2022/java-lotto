@@ -2,9 +2,7 @@ package domain;
 
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Lottos {
     private static final int LOTTO_SIZE = 6;
@@ -29,23 +27,34 @@ public class Lottos {
         OutputView.printLottos(lottos);
     }
 
-    public int[] checkWiningNumber(int[] winingNumber) {
+    public Map<Rank, Integer> checkWiningNumber(int[] winingNumber) {
         // 로또번호가 일치한 개수와 배열 인덱스가 일치하도록 배열사이즈를 정함
-        int[] numberOfWins = new int[LOTTO_SIZE + 1];
+        //int[] numberOfWins = new int[LOTTO_SIZE + 1];
+        Map<Rank, Integer> numberOfWins = new EnumMap<>(Rank.class);
+        numberOfWins.put(Rank.FIFTH, 0);
+        numberOfWins.put(Rank.FOURTH, 0);
+        numberOfWins.put(Rank.THIRD, 0);
+        numberOfWins.put(Rank.SECOND, 0);
+        numberOfWins.put(Rank.FIRST, 0);
 
         for (Lotto lotto : lottos) {
-            int rank = lotto.check(winingNumber);
-            numberOfWins[rank]++;
+            int count = lotto.check(winingNumber);
+            Rank rank = Rank.aaa(count);
+            if (numberOfWins.containsKey(rank)) {
+                numberOfWins.put(rank, numberOfWins.get(rank) + 1);
+            }
         }
 
         return numberOfWins;
     }
 
-    public double calculateRateBenefit(int[] numberOfWins, int money) {
+    public double calculateRateBenefit(Map<Rank, Integer> winingResult, int money) {
         double benefit = 0;
 
-        for (int index = RANK_MINIMAL_NUMBER; index < numberOfWins.length; index++) {
-            benefit += Rank.getWinningMoney(index) * numberOfWins[index];
+        Set<Rank> ranks = winingResult.keySet();
+
+        for (Rank rank : ranks) {
+            benefit += rank.getWinningMoney() * winingResult.get(rank);
         }
 
         return ((benefit / money) - 1) * 100;

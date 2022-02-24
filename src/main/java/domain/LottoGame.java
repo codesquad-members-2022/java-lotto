@@ -5,6 +5,7 @@ import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LottoGame {
     private static final int LOTTO_SIZE = 6;
@@ -24,11 +25,11 @@ public class LottoGame {
         lottos.createLotto(purchasePrice, createLottoBalls());
         lottos.print();
         createWiningNumber();
-        int[] winingResult = lottos.checkWiningNumber(winingNumber);
+        Map<Rank, Integer> winingResult = lottos.checkWiningNumber(winingNumber);
         printGameResult(winingResult);
     }
 
-    private void printGameResult(int[] winingResult) {
+    private void printGameResult(Map<Rank, Integer> winingResult) {
         OutputView.printStatisticalResult(winingResult);
         OutputView.printBenefitPercentage(lottos.calculateRateBenefit(winingResult, purchasePrice));
     }
