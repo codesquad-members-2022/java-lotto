@@ -24,19 +24,28 @@ public class InputView {
     }
 
     public static List<Integer> getWinningNumber() {
-        removeNewLine();
         OutputView.printPleaseEnterYourWinningNumber();
-        return stringConversion();
+        return stringConversion(scanner.nextLine());
     }
 
-    private static List<Integer> stringConversion() {
-        return Stream.of(scanner.nextLine().split(","))
+    public static int getNumberOfManualLotto() {
+        OutputView.printEnterNumberOfManualLotto();
+        return scanner.nextInt();
+    }
+
+    public static List<Integer> getManualLotto() {
+        List<Integer> lotto = stringConversion(scanner.nextLine());
+        return lotto;
+    }
+
+    private static List<Integer> stringConversion(String lottoString) {
+        return Stream.of(lottoString.split(","))
                 .map(String::trim)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
     }
 
-    private static void removeNewLine() {
+    public static void removeNewLine() {
         if (scanner.hasNextLine()) {
             scanner.nextLine();
         }

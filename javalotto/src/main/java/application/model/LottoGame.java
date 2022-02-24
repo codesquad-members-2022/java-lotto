@@ -1,5 +1,6 @@
 package application.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import application.domain.Lotto;
@@ -11,9 +12,16 @@ public class LottoGame {
 
     public void init() {
         int userPurchaseAmount = InputView.getPurchaseAmount();
-        int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE;
-        OutputView.printPurchaseQuantity(userPurchaseQuantity);
-        List<Lotto> lottos = LottoTicket.makeLotto(userPurchaseQuantity);
+        int numberOfManualLotto = InputView.getNumberOfManualLotto();
+        int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE - numberOfManualLotto;
+        List<Lotto> lottos = new ArrayList<>();
+        OutputView.printPleaseEnterYourManualNumbers();
+        InputView.removeNewLine();
+        for (int i = 0; i < numberOfManualLotto; i++) {
+            lottos.add(new Lotto(InputView.getManualLotto()));
+        }
+        lottos.addAll(LottoTicket.makeLotto(userPurchaseQuantity));
+        OutputView.printPurchaseQuantity(numberOfManualLotto, userPurchaseQuantity);
         OutputView.printLottoList(lottos);
 
         Lotto userWinningNumber = new Lotto(InputView.getWinningNumber());
