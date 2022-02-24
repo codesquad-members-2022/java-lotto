@@ -1,22 +1,29 @@
 package application.dto;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LottoShowDto {
 
-    private int lottoSize;
-    private List<List<Integer>> lottos;
+    private int lottosSize;
+    private List<Map<String, List<Integer>>> lottos;
 
-    public LottoShowDto(int lottoSize, List<List<Integer>> lottos) {
-        this.lottoSize = lottoSize;
-        this.lottos = lottos;
+    public LottoShowDto(int lottosSize, List<List<Integer>> lottos) {
+        this.lottosSize = lottosSize;
+        this.lottos = lottos.stream()
+                .map(numbers -> new HashMap<String, List<Integer>>() {{
+                    put("numbers", numbers);
+                }})
+                .collect(Collectors.toList());
     }
 
-    public int getLottoSize() {
-        return lottoSize;
+    public int getLottosSize() {
+        return lottosSize;
     }
 
-    public List<List<Integer>> getLottos() {
+    public List<Map<String, List<Integer>>> getLottos() {
         return lottos;
     }
 }
