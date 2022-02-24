@@ -1,6 +1,8 @@
 import java.util.List;
 
-public interface LottoMaker {
+public abstract class LottoMaker {
 
-    List<Lotto> getLottoList(int countOfLotto);
+    public abstract List<Lotto> getLottoList(int countOfLotto);
+
+    protected abstract List<Integer> makeLottoNumber();
 }

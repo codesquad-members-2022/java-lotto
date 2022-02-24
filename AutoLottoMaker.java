@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AutoLottoMaker implements LottoMaker {
+public class AutoLottoMaker extends LottoMaker {
 
     private List<Integer> totalNumberList;
 
@@ -23,7 +23,8 @@ public class AutoLottoMaker implements LottoMaker {
         return list;
     }
 
-    private List<Integer> makeLottoNumber() {
+    @Override
+    protected List<Integer> makeLottoNumber() {
         Collections.shuffle(totalNumberList);
         List<Integer> lottoNumberList = new ArrayList<>();
 

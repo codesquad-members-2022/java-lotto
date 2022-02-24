@@ -10,25 +10,25 @@ public class UserInterface {
     Validation validation = new Validation();
 
     public int inputMoney() {
-        int money;
+        String money;
         while (true) {
             InputView.guideInputMoney();
-            money = validation.validateMoney(scanner.nextLine());
-            if (money > -1) break;
+            money = scanner.nextLine();
+            if (validation.validateMoney(money)) break;
         }
 
-        return money;
+        return Integer.parseInt(money);
     }
 
     public int inputCountOfManualLotto(int countOfLotto) {
-        int countOfManualLotto;
+        String countOfManualLotto;
         while (true) {
             InputView.guideInputCountOfManualLotto();
-            countOfManualLotto = validation.validateCountOfManualLotto(scanner.nextLine(), countOfLotto);
-            if (countOfManualLotto > -1 ? true : false) break;
+            countOfManualLotto = scanner.nextLine();
+            if (validation.validateCountOfManualLotto(countOfManualLotto, countOfLotto)) break;
         }
 
-        return countOfManualLotto;
+        return Integer.parseInt(countOfManualLotto);
     }
 
     public List<String> inputManualLottoNumber(int countOfManualLotto) {
@@ -51,8 +51,8 @@ public class UserInterface {
 
         while (true) {
             InputView.guideInputWinningNumber();
-            userInput = validation.validateLottoNumber(scanner.nextLine());
-            if (userInput == null) continue;
+            userInput = scanner.nextLine();
+            if (validation.validateLottoNumber(userInput)) continue;
             winningNumbers = createLottoNumberList(userInput);
             if (validation.validateRepetition(winningNumbers) == false) break;
         }
@@ -61,24 +61,27 @@ public class UserInterface {
     }
 
     public int inputBonusNumber() {
-        int bonusNumber;
+        String bonusNumber;
         while (true) {
             InputView.guideInputBonusNumber();
-            bonusNumber = validation.validateBonusNumber(scanner.nextLine());
-            if (bonusNumber > -1 ? true : false) break;
+            bonusNumber = scanner.nextLine();
+            if (validation.validateBonusNumber(bonusNumber)) break;
         }
 
-        return bonusNumber;
+        return Integer.parseInt(bonusNumber);
     }
 
     private List<String> createManualLottoNumberList(int countOfManualLotto) {
         String userInput;
         List<String> manualLottoNumberList = new ArrayList<>();
 
-        for (int i = 0; i < countOfManualLotto; i++) {
-            userInput = validation.validateLottoNumber(scanner.nextLine());
-            if (userInput == null || checkRepetition(userInput)) return null;
+        int i = 0;
+        while (true) {
+            userInput = scanner.nextLine();
+            if (validation.validateLottoNumber(userInput)) continue;
+            if (checkRepetition(userInput)) continue;
             manualLottoNumberList.add(userInput);
+            if (++i == countOfManualLotto) break;
         }
 
         return manualLottoNumberList;

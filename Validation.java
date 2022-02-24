@@ -7,47 +7,45 @@ public class Validation {
 
     private static final int LOTTO_EACH_MONEY = 1000;
 
-    public int validateMoney(String userInput) {
-        int money;
+    public boolean validateMoney(String userInput) {
         try {
-            money = Integer.parseInt(userInput);
+            int money = Integer.parseInt(userInput);
             if (money % LOTTO_EACH_MONEY != 0) {
                 throw new Exception();
             }
         } catch (Exception e) {
             InputView.informError();
-            return -1;
+            return false;
         }
-        return money;
+        return true;
     }
 
-    public int validateCountOfManualLotto(String userInput, int countOfLotto) {
-        int countOfManualLotto;
+    public boolean validateCountOfManualLotto(String userInput, int countOfLotto) {
         try {
-            countOfManualLotto = Integer.parseInt(userInput);
+            int countOfManualLotto = Integer.parseInt(userInput);
             if (countOfManualLotto > countOfLotto || countOfManualLotto < 0) {
                 throw new Exception();
             }
         } catch (Exception e) {
             InputView.informError();
-            return -1;
+            return false;
         }
 
-        return countOfManualLotto;
+        return true;
     }
 
-    public String validateLottoNumber(String userInput) {
+    public boolean validateLottoNumber(String userInput) {
         String inputPattern = "([1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-5])((,(\s)?)([1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-5])){5}(\s)?$";
         if (!Pattern.matches(inputPattern, userInput)) {
             InputView.informError();
-            return null;
+            return true;
         }
 
-        return userInput;
+        return false;
     }
 
-    public int validateBonusNumber(String userInput) {
-        int bonusNumber = -1;
+    public boolean validateBonusNumber(String userInput) {
+        int bonusNumber;
         try {
             bonusNumber = Integer.parseInt(userInput);
             if (bonusNumber < 1 || bonusNumber > 45) {
@@ -55,10 +53,10 @@ public class Validation {
             }
         } catch (Exception e) {
             InputView.informError();
-            return -1;
+            return false;
         }
 
-        return bonusNumber;
+        return true;
     }
 
     public boolean validateRepetition(List<Integer> lottoNumberList) {
