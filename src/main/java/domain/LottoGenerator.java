@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import domain.Lotto.ManualLotto;
+import domain.Lotto.RandomLotto;
+
 public class LottoGenerator {
 
     private static final List<Integer> allNumbers;
@@ -18,9 +21,13 @@ public class LottoGenerator {
     private LottoGenerator() {
     }
 
-    public static Lotto generate() {
+    public static RandomLotto generateRandomLotto() {
         Collections.shuffle(allNumbers);
         List<Integer> randomNumbers = List.copyOf(allNumbers.subList(0, 6));
-        return new Lotto(randomNumbers);
+        return new RandomLotto(randomNumbers);
+    }
+
+    public static ManualLotto generateManualLotto(List<Integer> lottoNumbers) {
+        return new ManualLotto(lottoNumbers);
     }
 }

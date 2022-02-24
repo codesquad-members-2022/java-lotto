@@ -31,14 +31,14 @@ public class InputView {
         }
     }
 
-    public List<Integer> getWinningNumberInput() {
+    public List<Integer> getLottoNumbersInput() {
         System.out.println(PROMPT_ANSWER);
         System.out.print(PROMPT);
         try {
             return validator.validateWinningNumber(sc.nextLine());
         } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
-            return getWinningNumberInput();
+            return getLottoNumbersInput();
         }
     }
 

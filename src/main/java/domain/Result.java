@@ -3,6 +3,8 @@ package domain;
 import java.util.HashMap;
 import java.util.Map;
 
+import domain.Lotto.Lotto;
+
 public class Result {
 
     private final Map<Rank, Integer> result;

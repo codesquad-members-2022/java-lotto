@@ -1,6 +1,9 @@
-package domain;
+package domain.Lotto;
 
 import java.util.List;
+
+import domain.Rank;
+import domain.WinningNumbers;
 
 public class Lotto {
 

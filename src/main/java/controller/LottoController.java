@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.Lotto;
+import domain.Lotto.Lotto;
 import domain.LottoGenerator;
 import domain.PurchasedLotteries;
 import domain.Result;
@@ -33,17 +33,18 @@ public class LottoController {
 
     private PurchasedLotteries purchase() {
         int userMoney = inputView.getMoneyInput();
-        int manualLottoCount = inputView.getManualLottoCountInput();
+        int manualLottoCount = inputView.getManualLottoCountInput(userMoney);
         List<Lotto> lotteries = new ArrayList<>();
         int lottoCount = userMoney / Lotto.PRICE;
-        for (int i = 0; i < lottoCount; i++) {
-            lotteries.add(LottoGenerator.generate());
+        getLottoNumbersInput -> Lotto(~) -> lotteries.add(~)
+        for (int i = 0; i < lottoCount - manualLottoCount; i++) {
+            lotteries.add(LottoGenerator.generateRandomLotto());
         }
         return new PurchasedLotteries(lotteries);
     }
 
     private WinningNumbers draw() {
-        List<Integer> winningNumberInput = inputView.getWinningNumberInput();
+        List<Integer> winningNumberInput = inputView.getLottoNumbersInput();
         int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
         return new WinningNumbers(winningNumberInput, bonusNumberInput);
     }
