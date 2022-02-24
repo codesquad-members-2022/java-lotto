@@ -8,13 +8,10 @@ public class LottoController {
 
     public void run() {
         LottoTickets lottoTickets = buyLottoTickets();
-
-        WinningTicket winningTicket = InputView.inputWinningTicket();
-        LottoGameResults lottoGameResults = new LottoGameResults(lottoTickets, winningTicket);
-        OutputView.printLottoGameResults(lottoGameResults);
-        InputView.close();
+        WinningTicket winningTicket = prepareWinningTicket();
+        matchLottoTicketsWithWinningTicket(lottoTickets, winningTicket);
+        closeController();
     }
-
 
     private LottoTickets buyLottoTickets() {
         Money money = InputView.inputMoney();
@@ -26,5 +23,18 @@ public class LottoController {
         OutputView.printLottoTicketCounts(manualLottoTickets, randomLottoTickets);
         OutputView.printLottoTickets(allLottoTickets);
         return allLottoTickets;
+    }
+
+    private WinningTicket prepareWinningTicket() {
+        return InputView.inputWinningTicket();
+    }
+
+    private void matchLottoTicketsWithWinningTicket(LottoTickets lottoTickets, WinningTicket winningTicket) {
+        LottoGameResults lottoGameResults = new LottoGameResults(lottoTickets, winningTicket);
+        OutputView.printLottoGameResults(lottoGameResults);
+    }
+
+    private void closeController() {
+        InputView.close();
     }
 }
