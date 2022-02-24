@@ -10,26 +10,27 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     public static final String REQUEST_CUSTOM_TICKET_COUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요.";
 
-    private InputView() {}
+    private InputView() {
+    }
 
     public static int requestMoney() {
-        System.err.println(REQUEST_MONEY_MESSAGE);
+        System.out.println(REQUEST_MONEY_MESSAGE);
         return Integer.parseInt(scanner.nextLine());
     }
 
     public static String[] requestLottoWinningNumbers() {
-        System.err.println(REQUEST_LOTTO_NUMBERS_MESSAGE);
+        System.out.println(REQUEST_LOTTO_NUMBERS_MESSAGE);
         String numbers = scanner.nextLine();
         return numbers.split(",");
     }
 
     public static String requestBonusNumber() {
-        System.err.println(REQUEST_LOTTO_BONUS_NUMBER);
+        System.out.println(REQUEST_LOTTO_BONUS_NUMBER);
         return scanner.nextLine();
     }
 
     public static int requestCustomTicketCount() {
-        System.err.println(REQUEST_CUSTOM_TICKET_COUNT_MESSAGE);
+        System.out.println(REQUEST_CUSTOM_TICKET_COUNT_MESSAGE);
         return Integer.parseInt(scanner.nextLine());
     }
 
@@ -38,6 +39,10 @@ public class InputView {
     }
 
     public static void requestCustomTicketNumberMessage() {
-        System.err.println("수동으로 구매할 번호를 입력해 주세요.");
+        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
+    }
+
+    public static void close() {
+        scanner.close();
     }
 }
