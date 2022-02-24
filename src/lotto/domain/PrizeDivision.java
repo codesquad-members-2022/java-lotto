@@ -28,10 +28,6 @@ public enum PrizeDivision {
                 .orElse(null);
     }
 
-    public int getMatchCount() {
-        return matchCount;
-    }
-
     public int getPrizeValue() {
         return prizeValue;
     }

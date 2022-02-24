@@ -48,5 +48,4 @@ public class LottoNumber {
             throw new IllegalArgumentException(String.format("로또 번호는 %d보다 커야 합니다.", MINIMUM_NUMBER));
         }
     }
-
 }

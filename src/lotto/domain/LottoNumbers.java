@@ -34,7 +34,7 @@ public class LottoNumbers {
         return lottoNumberList.toString();
     }
 
-    private static List<LottoNumber> parseNumbers(int[] numbers) {
+    private List<LottoNumber> parseNumbers(int[] numbers) {
         return Arrays.stream(numbers)
                 .sorted()
                 .mapToObj(LottoNumber::new)
@@ -55,19 +55,19 @@ public class LottoNumbers {
                 .toArray();
     }
 
-    private static void validateLength(int[] numbers) {
+    private void validateLength(int[] numbers) {
         if (numbers.length != LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException(String.format("%d개의 숫자가 필요합니다.", LOTTO_NUMBER_COUNT));
         }
     }
 
-    private static void validateNoDuplicate(int[] numbers) {
+    private void validateNoDuplicate(int[] numbers) {
         if (hasDuplicate(numbers)) {
             throw new IllegalArgumentException("로또 번호는 각각 달라야 합니다.");
         }
     }
 
-    private static boolean hasDuplicate(int[] numbers) {
+    private boolean hasDuplicate(int[] numbers) {
         int lengthWithoutDuplicate = (int) Arrays.stream(numbers)
                 .distinct()
                 .count();

@@ -9,12 +9,13 @@ public class LottoBundle {
     private final List<LottoTicket> lottoTickets = new ArrayList<>();
 
     public LottoBundle(int size) {
-        validatePositiveInt(size);
+        validateBundleSize(size);
         this.size = size;
     }
 
     public static LottoBundle createByCashValue(int cashValue) {
-        return new LottoBundle(cashValue / LottoTicket.PRICE);
+        int size = Math.max(cashValue / LottoTicket.PRICE, 0);
+        return new LottoBundle(size);
     }
 
     public void addManualLottoTicket(int[] numbers) {
@@ -48,9 +49,9 @@ public class LottoBundle {
         return size * LottoTicket.PRICE;
     }
 
-    private void validatePositiveInt(int paidAmount) {
-        if (paidAmount <= 0) {
-            throw new IllegalArgumentException("돈의 금액은 양의 정수여야 합니다.");
+    private void validateBundleSize(int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("크기가 음수가 되어서는 안됩니다.");
         }
     }
 }
