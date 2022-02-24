@@ -49,8 +49,8 @@ public class GameManager {
     }
 
     private void printRateOfReturn(int money, LottoTickets lottoTickets, Map<Rank, Integer> numberMatch) {
-        int sum = lottoTickets.winningAmount(numberMatch);
-        double rateOfReturn = lottoTickets.calculateYield(sum, money);
+        int sum = lottoTickets.getWinningPrize(numberMatch);
+        double rateOfReturn = lottoTickets.calculateRateOfReturn(sum, money);
         outputView.printRateOfReturn(sum, rateOfReturn);
     }
 }

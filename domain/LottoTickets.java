@@ -13,7 +13,7 @@ public class LottoTickets {
         this.lottoTickets = lottoTickets;
     }
 
-    public int winningAmount(Map<Rank, Integer> answers) {
+    public int getWinningPrize(Map<Rank, Integer> answers) {
         int sum = 0;
         for (Rank rank : answers.keySet()) {
             int winningPrize = rank.getWinningPrize().getValue();
@@ -23,12 +23,14 @@ public class LottoTickets {
         return sum;
     }
 
-    public double calculateYield(int sum, int inputMoney) {
-        double yield = (sum - inputMoney) * ONE_HUNDRED / inputMoney;
-        return Math.round(yield * ONE_HUNDRED) / ONE_HUNDRED;
-    }
+
 
     public List<LottoTicket> getLottoTickets() {
         return lottoTickets;
+    }
+
+    public double calculateRateOfReturn(int sum, int inputMoney) {
+        double rateOfReturn = (sum - inputMoney) * 100 / inputMoney;
+        return Math.round(rateOfReturn * 100) / 100;
     }
 }

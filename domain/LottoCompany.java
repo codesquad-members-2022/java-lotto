@@ -8,6 +8,7 @@ import java.util.Set;
 public class LottoCompany {
     private static Set<Integer> winningNumbers = new HashSet<>();
     private BonusNumber bonusNumber;
+    private RateOfReturnCalculator calculator = new RateOfReturnCalculator();
 
     public void registWinningNumbers(Set<Integer> inputWinningNumber, BonusNumber bonusNumber) {
         if (winningNumbers.size() != 0) {
@@ -26,7 +27,10 @@ public class LottoCompany {
             Rank rank = Rank.getRank(count);
             answers.put(rank, answers.getOrDefault(rank, 0) + 1);
         }
-        lottoTickets.winningAmount(answers);
+        int winningPrize = lottoTickets.getWinningPrize(answers);
+        int purchaseAmount = lottoTickets.getLottoTickets().size() * 1000;
+        System.out.println(calculator.calculateRateOfReturn(winningPrize, purchaseAmount));
+        lottoTickets.getWinningPrize(answers);
         return answers;
     }
 }
