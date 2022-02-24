@@ -26,7 +26,7 @@ public class InputViewValidator {
         }
     }
 
-    private static void validateRange(int min, int max, int num) {
+    public static void validateRange(int min, int max, int num) {
         if (num < min || num > max) {
             throw new IllegalArgumentException("1부터 45까지의 숫자만 입력해주세요.");
         }

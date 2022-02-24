@@ -1,57 +1,42 @@
 package app.lotto;
 
+import app.lotto.domain.LottoController;
+import app.lotto.domain.LottoGame;
+import app.lotto.domain.LottoTicket;
 import app.lotto.view.InputView;
+import app.lotto.view.LottoResult;
 import app.lotto.view.OutputView;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
 
         int amount = InputView.readAmount();
-        int lottoCount = getLottoCount(amount);
-        List<List<Integer>> allShuffledNumbers = getAllShuffledNumbers(lottoCount);
+        List<LottoTicket> allShuffledNumbers = purchaseLotto(amount);
+
         List<Integer> winningNumbers = InputView.readWinningNumbers();
-        OutputView.winStatistics(allShuffledNumbers, winningNumbers, amount);
+        int bonusNumber = InputView.readBonusNumber();
+
+        printLottoGameResult(amount, allShuffledNumbers, winningNumbers, bonusNumber);
     }
 
-    private static int getLottoCount(int amount) {
-        return amount / 1000;
+    private static void printLottoGameResult(int amount, List<LottoTicket> allShuffledNumbers, List<Integer> winningNumbers, int bonusNumber) {
+        List<LottoResult> lottoResults = LottoGame.processLottoGame(allShuffledNumbers, winningNumbers, bonusNumber);
+        long totalProfit = LottoGame.getTotalProfit(lottoResults);
+
+        OutputView.printWinStatistics(lottoResults);
+        double result = (totalProfit - amount) / (double) amount * 100.0;
+        OutputView.printTotalProfit(result);
     }
 
-    private static List<Integer> getShuffledNumbers() {
-        List<Integer> lottoNumbers = getLottoNumbers();
+    private static List<LottoTicket> purchaseLotto(int amount) {
+        OutputView.printLottoCount(LottoController.getLottoCount(amount));
 
-        Collections.shuffle(lottoNumbers);
+        List<LottoTicket> allShuffledNumbers = LottoController.getAllShuffledNumbers(amount);
 
-        List<Integer> shuffledNumbers = new ArrayList<>();
-
-        for (int i = 0; i < 6; i++) {
-            shuffledNumbers.add(lottoNumbers.get(i));
-        }
-
-        return shuffledNumbers;
-    }
-
-    private static List<Integer> getLottoNumbers() {
-        return IntStream.rangeClosed(1,45)
-                .boxed()
-                .collect(Collectors.toList());
-    }
-
-    private static List<List<Integer>> getAllShuffledNumbers(int lottoCount) {
-        List<List<Integer>> allShuffledNumbers = new ArrayList<>();
-        System.out.printf("%d개를 구매했습니다.\n", lottoCount);
-
-        for (int i = 0; i < lottoCount; i++) {
-            List<Integer> shuffledNumbers = getShuffledNumbers();
-            allShuffledNumbers.add(shuffledNumbers);
-            Collections.sort(shuffledNumbers);
-            System.out.println(shuffledNumbers);
-        }
+        OutputView.printAllSuffledNumbers(allShuffledNumbers);
 
         return allShuffledNumbers;
     }

@@ -44,6 +44,18 @@ public class InputView {
         }
     }
 
+    public static int readBonusNumber() {
+        try {
+            System.out.println("보너스 볼을 입력해 주세요.");
+            int bonusNumber = Integer.parseInt(sc.nextLine());
+            validateRange(LOTTERY_NUMBER_MIN, LOTTERY_NUMBER_MAX, bonusNumber);
+            return bonusNumber;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readBonusNumber();
+        }
+    }
+
     private static List<Integer> getWinningNumbers(String[] input) {
         return Arrays.stream(input)
                 .map(String::trim)
