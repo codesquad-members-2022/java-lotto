@@ -24,9 +24,9 @@ public class ParserUtil {
     }
 
     public static List<List<Integer>> parseDoubleListNumber(String str) {
-    return Arrays.stream(str.split("\n"))
-                .map(ParserUtil::parseListNumber)
-                .collect(Collectors.toList());
+        return Arrays.stream(str.split("\n"))
+                    .map(ParserUtil::parseListNumber)
+                    .collect(Collectors.toList());
     }
 
     public static Map objectToMap(Object obj){
