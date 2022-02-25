@@ -3,24 +3,34 @@ package domain;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
     private int purchasedAmount;
     private int change;
     private int amount;
-    private List<LottoTicket> tickets;
+    private int totalNumberOfTickets;
+    private List<LottoTicket> tickets = new ArrayList<>();
 
-    public void purchaseTicketsFrom(TicketOffice to) {
+    public void goTicketOffice(){
         this.amount = InputView.getAmount();
-        int pricePerTicket = to.getPrice();
-        int numberOfTickets = this.amount / pricePerTicket;
+        int pricePerTicket = TicketOffice.getPrice();
+        int numberOfManualTicket = InputView.getNumberOfManualTicket();
+        int numberOfAutoTicket = (this.amount / pricePerTicket) - numberOfManualTicket;
+        this.totalNumberOfTickets = numberOfAutoTicket + numberOfManualTicket;
 
-        this.tickets = to.issueTickets(numberOfTickets);
-        this.purchasedAmount = pricePerTicket * numberOfTickets;
-        this.change = this.amount - purchasedAmount;
+        purchaseTicketsFrom(new ManualTicketOffice(), numberOfManualTicket);
+        purchaseTicketsFrom(new AutoTicketOffice(), numberOfAutoTicket);
 
-        OutputView.completePurchase(numberOfTickets, change, tickets);
+        this.purchasedAmount = pricePerTicket * totalNumberOfTickets;
+        this.change += this.amount - purchasedAmount;
+        OutputView.printPurchase(totalNumberOfTickets, change, tickets);
+
+    }
+
+    private void purchaseTicketsFrom(TicketOffice to, int numberOfTickets) {
+        this.tickets.addAll(to.issueTickets(numberOfTickets));
     }
 
     public void checkMyTicketsFrom(LottoCompany lottoCompany){

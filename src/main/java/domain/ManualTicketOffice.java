@@ -7,10 +7,9 @@ import java.util.*;
 public class ManualTicketOffice extends TicketOffice {
 
     @Override
-    public List<LottoTicket> issueTickets(int numberOfTickets) {
+    public List<LottoTicket> issueTickets(int numberOfManualTicket) {
         List<LottoTicket> tickets = new ArrayList<>();
-        int numberOfManualTicket = InputView.getNumberOfManualTicket();
-        if (numberOfManualTicket>0) {
+        if (numberOfManualTicket > 0) {
             tickets.addAll(makeManualTickets(numberOfManualTicket));
         }
         return tickets;
