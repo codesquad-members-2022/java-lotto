@@ -1,29 +1,33 @@
 package com.lotto.controller;
 
 import java.util.List;
-import java.util.Map;
 
-import model.LottoService;
-import model.LottoTickets;
-import model.Rank;
-import view.InputView;
-import view.OutputView;
+import com.lotto.model.LottoGame;
+import com.lotto.model.LottoResult;
+import com.lotto.model.LottoTickets;
+import com.lotto.model.WinningLotto;
+import com.lotto.view.InputView;
+import com.lotto.view.OutputView;
 
 public class Controller {
+	private InputView inputView = new InputView();
+	private OutputView outputView = new OutputView();
+	private LottoGame lottoGame = new LottoGame();
+
 	public void run() {
-		InputView inputView = new InputView();
-		OutputView outputView = new OutputView();
-		LottoService lottoService = new LottoService();
+		inputView.initScanner();
 
 		int purchaseAmount = inputView.getPurchaseAmount();
-		LottoTickets lottoTickets = lottoService.publishLottoTickets(purchaseAmount);
+		LottoTickets lottoTickets = new LottoTickets(purchaseAmount);
 		outputView.printTickets(lottoTickets);
 
-		//당첨 번호 입력
 		List<Integer> winningNumbers = inputView.getWinningNumbers();
 		int bonusNumber = inputView.inputBonusNumber();
-		Map<Rank, Integer> result = lottoService.checkResult(lottoTickets, winningNumbers, bonusNumber);
-		double earningRate = lottoService.calculateEarningRate(purchaseAmount, result);
+		WinningLotto winningLotto = new WinningLotto(winningNumbers,bonusNumber);
+		inputView.closeScanner();
+
+		LottoResult result = lottoGame.checkResult(lottoTickets, winningLotto);
+		double earningRate = lottoGame.calculateEarningRate(purchaseAmount, result);
 
 		outputView.printResult(result, earningRate);
 	}
