@@ -12,12 +12,9 @@ public class Main {
         WinningLottoNumbers winningLottoNumbers = WinningLottoNumbers.readWinningNumbersAndCreate();
         System.out.println();
 
-        LottoGameDto result = new LottoGameDto.Builder()
-                .addAllLottoTickets(lottoCashier.getAllLottoTickets())
-                .setWinningLottoNumbers(winningLottoNumbers)
-                .build();
+        LottoGameDto lottoGameDto = new LottoGameDto(lottoCashier.getAllLottoTickets(), winningLottoNumbers);
 
-        LottoGame lottoGame = LottoGame.createWithLottoGameDtoAndAmount(result, lottoCashier.getAmount());
+        LottoGame lottoGame = LottoGame.createWithLottoGameDtoAndAmount(lottoGameDto, lottoCashier.getAmount());
         lottoGame.printLottoGameResult();
     }
 }
