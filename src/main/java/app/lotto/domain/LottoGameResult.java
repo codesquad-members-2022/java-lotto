@@ -8,14 +8,12 @@ public class LottoGameResult {
 
     private final List<LottoTicket> allLottoTickets;
     private final int amount;
-    private final int bonusNumber;
-    private final LottoTicket winningNumbers;
+    private final WinningLottoNumbers winningLottoNumbers;
 
-    public LottoGameResult(List<LottoTicket> allLottoTickets, int amount, int bonusNumber, LottoTicket winningNumbers) {
+    public LottoGameResult(List<LottoTicket> allLottoTickets, int amount, WinningLottoNumbers winningLottoNumbers) {
         this.allLottoTickets = allLottoTickets;
         this.amount = amount;
-        this.bonusNumber = bonusNumber;
-        this.winningNumbers = winningNumbers;
+        this.winningLottoNumbers = winningLottoNumbers;
     }
 
     public List<LottoTicket> getAllLottoTickets() {
@@ -26,20 +24,14 @@ public class LottoGameResult {
         return amount;
     }
 
-    public int getBonusNumber() {
-        return bonusNumber;
-    }
-
-    public LottoTicket getWinningNumbers() {
-        return winningNumbers;
+    public WinningLottoNumbers getWinningLottoNumbers() {
+        return winningLottoNumbers;
     }
 
     public static class Builder {
         private final List<LottoTicket> allLottoTickets = new ArrayList<>();
         private int amount;
-        private int bonusNumber;
-        private LottoTicket winningNumbers;
-
+        private WinningLottoNumbers winningLottoNumbers;
         public Builder addAllLottoTickets(List<LottoTicket> lottoTickets) {
             this.allLottoTickets.addAll(lottoTickets);
             return this;
@@ -50,18 +42,13 @@ public class LottoGameResult {
             return this;
         }
 
-        public Builder setBonusNumber(int bonusNumber) {
-            this.bonusNumber = bonusNumber;
-            return this;
-        }
-
-        public Builder setWinningNumbers(LottoTicket winningNumbers) {
-            this.winningNumbers = winningNumbers;
+        public Builder setWinningLottoNumbers(WinningLottoNumbers winningLottoNumbers) {
+            this.winningLottoNumbers = winningLottoNumbers;
             return this;
         }
 
         public LottoGameResult build() {
-            return new LottoGameResult(allLottoTickets, amount, bonusNumber, winningNumbers);
+            return new LottoGameResult(allLottoTickets, amount, winningLottoNumbers);
         }
     }
 

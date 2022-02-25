@@ -4,7 +4,6 @@ import app.lotto.domain.*;
 import app.lotto.view.InputView;
 import app.lotto.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -14,21 +13,19 @@ public class Main {
         int customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
 
         LottoTicketManager lottoTicketManager = LottoTicketManager.createWithTotalAmountAndCustomTicketCount(amount, customLottoCount);
-        List<LottoTicket> customLottoTickets = lottoTicketManager.getCustomLottoTickets();
-        List<LottoTicket> autoLottoTickets = lottoTicketManager.getAutoLottoTickets();
+        List<LottoTicket> customLottoTickets = lottoTicketManager.createCustomLottoTickets();
+        List<LottoTicket> autoLottoTickets = lottoTicketManager.createAutoLottoTickets();
 
         printAllLottoTickets(lottoTicketManager);
 
-        LottoTicket winningNumbers = InputView.readWinningNumbers();
-        int bonusNumber = InputView.readBonusNumber();
+        WinningLottoNumbers winningLottoNumbers = new WinningLottoNumbers(InputView.readWinningNumbers(), InputView.readBonusNumber());
         System.out.println();
 
         printLottoGameResult(new LottoGameResult.Builder()
                 .addAllLottoTickets(customLottoTickets)
                 .addAllLottoTickets(autoLottoTickets)
                 .setAmount(amount)
-                .setWinningNumbers(winningNumbers)
-                .setBonusNumber(bonusNumber)
+                .setWinningLottoNumbers(winningLottoNumbers)
                 .build());
     }
 

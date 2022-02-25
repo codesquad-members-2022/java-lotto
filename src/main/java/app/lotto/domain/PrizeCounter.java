@@ -13,8 +13,8 @@ public class PrizeCounter {
         List<LottoTicket> allLottoTicket = lottoGameResult.getAllLottoTickets();
 
         for (LottoTicket lottoTicket : allLottoTicket) {
-            int sameNumberCount = getSameNumberCount(lottoTicket, lottoGameResult.getWinningNumbers());
-            boolean isBonus = lottoTicket.contains(lottoGameResult.getBonusNumber());
+            int sameNumberCount = getSameNumberCount(lottoTicket, lottoGameResult.getWinningLottoNumbers().getWinningNumbers());
+            boolean isBonus = lottoTicket.contains(lottoGameResult.getWinningLottoNumbers().getBonusNumber());
 
             addCountToStatistics(statistics, sameNumberCount, isBonus);
         }
