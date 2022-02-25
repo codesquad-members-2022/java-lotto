@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class InputValidator {
 
-    private static final String NUMBER_REGEX = "^[0-9]*$"; //숫자만
+    private static final String NUMBER_REGEX = "^[0-9]*$";
     private static final Pattern NUMBER_PATTERN = Pattern.compile(NUMBER_REGEX);
 
     public static void validateNumber(String price) {

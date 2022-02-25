@@ -57,10 +57,9 @@ public class ManualLottoMakerTest {
         assertThat(exception.getMessage()).isEqualTo("[ERROR] 적합하지 않은 갯수입니다. 6개를 입력하세요.");
     }
 
-
     @DisplayName("사용자 매뉴얼 로또 입력 테스트")
     @ParameterizedTest
-    @ValueSource(strings = {"1, 2, 3, 4, 5, 6", "7, 8, 9, 10, 11, 12"})
+    @ValueSource(strings = {"1, 2, 3, 4, 5, 6\n", "7, 8, 9, 10, 11, 12"})
     void test(String input) {
         InputStream in = generateUserInput(input);
         System.setIn(in);
@@ -76,7 +75,6 @@ public class ManualLottoMakerTest {
     @ParameterizedTest
     @MethodSource("provideContinuousInput")
     void usingMethodSource(String input) {
-        // InputStream in = generateUserInput(input);
         InputStream in = createInputStream(input);
         System.setIn(in);
         sc = new Scanner(System.in);
