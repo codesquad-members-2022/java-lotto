@@ -1,12 +1,16 @@
 Main.java
  Main
+domain/Rank.java
+ domain.Rank
 view/OutputView.java
  view.OutputView
 domain/LottoTicket.java
  domain.LottoTicket
 view/InputView.java
  view.InputView
-domain/ProfitAmount.java
- domain.ProfitAmount
+domain/User.java
+ domain.User
 domain/TicketOffice.java
  domain.TicketOffice
+domain/LottoCompany.java
+ domain.LottoCompany
