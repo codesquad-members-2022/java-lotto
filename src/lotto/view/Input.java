@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import lotto.domain.Validator;
+import lotto.validate.Validator;
 
 public class Input {
 

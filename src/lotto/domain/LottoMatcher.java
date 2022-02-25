@@ -60,6 +60,21 @@ public class LottoMatcher {
 		}
 	}
 
+	public double getEarningRate(int numberOfLottos) {
+		int total = getTotalEarning();
+		int pay = numberOfLottos * Lotto.PRICE;
+		return
+			((total - pay) / (double) pay) * 100;
+	}
+
+	private int getTotalEarning() {
+		int total = 0;
+		for (Rank rank : rankResult.keySet()) {
+			total += rankResult.get(rank) * rank.getWinningMoney();
+		}
+		return total;
+	}
+
 	public Map<Rank, Integer> getRankResult() {
 		return rankResult;
 	}

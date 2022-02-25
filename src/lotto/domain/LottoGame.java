@@ -7,18 +7,18 @@ import lotto.view.Output;
 
 public class LottoGame {
 
-    private final LottoBundle lottos;
+    private final LottoBundle lottoBundle;
     private final LottoMatcher lottoMatcher;
 
     public LottoGame() {
-        this.lottos = new LottoBundle();
+        this.lottoBundle = new LottoBundle();
         this.lottoMatcher = new LottoMatcher();
     }
 
     public void start() {
         getLottos();
         LuckyLotto luckyLotto = setLuckyNumbers();
-        getResult(lottos.getLottoBundle(), luckyLotto);
+        getResult(lottoBundle.getLottoBundle(), luckyLotto);
         printResult();
     }
 
@@ -27,12 +27,12 @@ public class LottoGame {
         int numOfMaunalLottos = getManualLottoBundle(inputMoney);
         int numOfAutoLottos = inputMoney / Lotto.PRICE - numOfMaunalLottos;
         try {
-            lottos.buyLotto(numOfAutoLottos);
+            lottoBundle.buyLotto(numOfAutoLottos);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             getLottos();
         }
-        Output.printLottoNum(lottos.getLottoBundle(), numOfMaunalLottos);
+        Output.printLottoNum(lottoBundle.getLottoBundle(), numOfMaunalLottos);
     }
 
     private int getManualLottoBundle(int inputMoney) {
@@ -52,7 +52,7 @@ public class LottoGame {
     private void buyManualLotto() {
         try {
             List<Integer> lottoNumbers = Input.getLottoNumbers();
-            lottos.buyLotto(lottoNumbers);
+            lottoBundle.buyLotto(lottoNumbers);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             buyManualLotto();
@@ -77,21 +77,6 @@ public class LottoGame {
 
     private void printResult() {
         Map<Rank, Integer> rankResult = lottoMatcher.getRankResult();
-        Output.printResult(rankResult, getEarningRate(lottos.getNumberOfLotto(), rankResult));
-    }
-
-    private double getEarningRate(int numOfLottos, Map<Rank, Integer> rankResult) {
-        int total = getTotalEarning(rankResult);
-        int pay = numOfLottos * Lotto.PRICE;
-        return
-            ((total - pay) / (double) pay) * 100;
-    }
-
-    private int getTotalEarning(Map<Rank, Integer> rankResult) {
-        int total = 0;
-        for (Rank rank : rankResult.keySet()) {
-            total += rankResult.get(rank) * rank.getWinningMoney();
-        }
-        return total;
+        Output.printResult(rankResult, lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos()));
     }
 }

@@ -15,7 +15,6 @@ public class Output {
     }
 
     public static void printLottoNum(List<Lotto> lotteries, int numOfMaunalLottos) {
-//        수동으로 3장, 자동으로 11개를 구매했습니다.
         int numOfAutoLottos = lotteries.size() - numOfMaunalLottos;
         sb.append("수동으로 ").append(numOfMaunalLottos).append("장, ");
         sb.append("자동으로 ").append(numOfAutoLottos).append("개를 구매했습니다.").append(lineSeparator());
@@ -38,7 +37,6 @@ public class Output {
 
     private static void appendMatchedInfo(Map<Rank, Integer> map, double earningRate) {
         boolean isSecond = false;
-
         for (Rank rank : map.keySet()) {
             isSecond = Rank.SECOND.equals(rank);
             sb.append(rank.getCountOfMatch())

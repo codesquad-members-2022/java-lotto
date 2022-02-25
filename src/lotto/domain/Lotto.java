@@ -1,6 +1,6 @@
 package lotto.domain;
 
-import static lotto.domain.Validator.isValidLottoNumbers;
+import static lotto.validate.Validator.isValidLottoNumbers;
 
 import java.util.ArrayList;
 import java.util.Collections;

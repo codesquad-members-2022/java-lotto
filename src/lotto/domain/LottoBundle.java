@@ -5,7 +5,7 @@ import java.util.List;
 
 public class LottoBundle {
 
-    private List<Lotto> lottoBundle = new ArrayList<>();
+    private final List<Lotto> lottoBundle = new ArrayList<>();
 
     public void buyLotto(int numOfLotto) throws IllegalArgumentException {
         for (int i = 0; i < numOfLotto; i++) {
@@ -21,7 +21,7 @@ public class LottoBundle {
         return lottoBundle;
     }
 
-    public int getNumberOfLotto() {
+    public int getNumberOfLottos() {
         return lottoBundle.size();
     }
 }
