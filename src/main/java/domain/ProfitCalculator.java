@@ -1,13 +1,13 @@
 package domain;
 
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ProfitCalculator {
 
     private int purchasingAmount;
-    private LinkedHashMap<Rank,Integer> winningResult;
+    private Map<Rank,Integer> winningResult;
 
-    public ProfitCalculator(int purchasingAmount, LinkedHashMap<Rank,Integer> winningResult) {
+    public ProfitCalculator(int purchasingAmount, Map<Rank,Integer> winningResult) {
         this.purchasingAmount = purchasingAmount;
         this.winningResult = winningResult;
     }

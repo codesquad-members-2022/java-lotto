@@ -25,12 +25,8 @@ public class LottoGenerator {
         Collections.shuffle(shuffledNumbers);
     }
 
-    public static List<Integer> getNumbers() {
+    public static List<Integer> getShuffledNumbers() {
         shuffle();
-        List<Integer> numbers = new ArrayList<>();
-        for (int i = 0; i <LOTTO_NUMBER_SIZE; i++) {
-            numbers.add(shuffledNumbers.get(i));
-        }
-        return numbers;
+        return List.copyOf(shuffledNumbers.subList(0, LOTTO_NUMBER_SIZE));
     }
 }
