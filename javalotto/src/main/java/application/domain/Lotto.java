@@ -1,6 +1,5 @@
 package application.domain;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -63,7 +62,6 @@ public class Lotto {
         }
         return count;
     }
-
 
     public String lottoNumbersToString() {
         return numbers.stream().map(String::valueOf)

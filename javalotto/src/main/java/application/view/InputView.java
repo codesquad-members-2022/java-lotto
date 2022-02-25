@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import application.domain.Lotto;
 import application.model.Validation;
 
 public class InputView {
@@ -17,9 +18,14 @@ public class InputView {
 
     }
 
-    public static int getBonusBall() {
+    public static int getBonusBall(Lotto winningNumber) {
         OutputView.printEnterBonusBall();
-        return scanner.nextInt();
+        int bonusBall = scanner.nextInt();
+        while (!validation.validateBonusBallNumberRange(bonusBall, winningNumber)) {
+            OutputView.printInvalidFormatPleaseReEnter();
+            bonusBall = scanner.nextInt();
+        }
+        return bonusBall;
     }
 
 

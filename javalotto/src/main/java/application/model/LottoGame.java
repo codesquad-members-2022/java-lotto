@@ -25,7 +25,7 @@ public class LottoGame {
 
     private void start(List<Lotto> lottos) {
         Lotto userWinningNumber = new Lotto(InputView.getWinningNumber());
-        int bonusBallNumber = InputView.getBonusBall();
+        int bonusBallNumber = InputView.getBonusBall(userWinningNumber);
         int[] counts = Statistics.makeStatistics(lottos, userWinningNumber, bonusBallNumber);
         double totalYield = Statistics.calculateYield(counts);
         OutputView.printWinningStatistics(counts, totalYield);
