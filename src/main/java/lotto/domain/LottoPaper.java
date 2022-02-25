@@ -25,16 +25,12 @@ public class LottoPaper {
         return sb.toString();
     }
 
-    public List<Integer> judgeWinning(List<Integer> winningNumbers) {
+    public List<WinningStrategy> checkWinning(WinningLotto winningLotto) {
         return lottos.stream()
-                .mapToInt(lotto -> lotto.getCorrectNumberCount(winningNumbers))
-                .boxed()
-                .collect(Collectors.toList());
-    }
-
-    public List<Boolean> hasBonusNumbers(int bonusNumber) {
-        return lottos.stream()
-                .map(lotto -> lotto.hasBonusNumber(bonusNumber))
+                .map(lotto -> lotto.match(winningLotto))
+                .map(result -> WinningStrategy.convertMatchNumberToWinningStrategy(
+                        result.getMatchNumberCount(),
+                        result.hasBonus()))
                 .collect(Collectors.toList());
     }
 }

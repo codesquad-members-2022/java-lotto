@@ -6,7 +6,7 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final String PURCHASED_COUNT_MESSAGE = "개를 구매했습니다.";
+    private static final String PURCHASED_COUNT_MESSAGE = "수동으로 %d장, 자동으로 %d개를 구매했습니다.";
     private static final String WINNING_STATS = "당첨 통계";
     private static final String DIVISION_LINE = "---------";
     private static final String CORRECT_THREE_NUMBER = "3개 일치 (5000원) - %d개";
@@ -16,8 +16,8 @@ public class OutputView {
     private static final String CORRECT_SIX_NUMBER = "6개 일치 (2000000000원) - %d개";
     private static final String TOTAL_PROFIT_MESSAGE = "총 수익률은 %.2f%%입니다.";
 
-    public static void printPurchaseCount(int lottoSize) {
-        System.out.println(lottoSize + PURCHASED_COUNT_MESSAGE);
+    public static void printPurchaseCount(int manualLottoCount, int autoLottoCount) {
+        System.out.printf(PURCHASED_COUNT_MESSAGE + System.lineSeparator(),manualLottoCount, autoLottoCount);
     }
 
     public static void printLottoPaper(String lottoPaper) {

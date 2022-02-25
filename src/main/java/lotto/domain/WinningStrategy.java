@@ -26,4 +26,29 @@ public enum WinningStrategy {
     public int getCorrectNumber() {
         return this.correctNumber;
     }
+
+    public static WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber, boolean hasBonusNumber) {
+        if (matchNumber == WinningStrategy.ZERO_MATCHES.getCorrectNumber()) {
+            return WinningStrategy.ZERO_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.ONE_MATCHES.getCorrectNumber()) {
+            return WinningStrategy.ONE_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.TWO_MATCHES.getCorrectNumber()) {
+            return WinningStrategy.TWO_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.THREE_MATCHES.getCorrectNumber()) {
+            return WinningStrategy.THREE_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.FOUR_MATCHES.getCorrectNumber()) {
+            return WinningStrategy.FOUR_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber() && hasBonusNumber) {
+            return WinningStrategy.FIVE_WITH_BONUS_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber()) {
+            return WinningStrategy.FIVE_MATCHES;
+        }
+        return WinningStrategy.SIX_MATCHES;
+    }
 }
