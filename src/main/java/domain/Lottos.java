@@ -27,7 +27,7 @@ public class Lottos {
         OutputView.printLottos(lottos);
     }
 
-    public Map<Rank, Integer> checkWiningNumber(int[] winingNumber) {
+    public Map<Rank, Integer> checkWiningNumber(int[] winingNumber, int bonusNumber) {
         // 로또번호가 일치한 개수와 배열 인덱스가 일치하도록 배열사이즈를 정함
         //int[] numberOfWins = new int[LOTTO_SIZE + 1];
         Map<Rank, Integer> numberOfWins = new EnumMap<>(Rank.class);
@@ -38,8 +38,10 @@ public class Lottos {
         numberOfWins.put(Rank.FIRST, 0);
 
         for (Lotto lotto : lottos) {
-            int count = lotto.check(winingNumber);
-            Rank rank = Rank.aaa(count);
+            int matchedCount = lotto.check(winingNumber);
+            Boolean isMatchBonusNumber = lotto.isMatchBonusNumber(bonusNumber);
+
+            Rank rank = Rank.checkRank(matchedCount, isMatchBonusNumber);
             if (numberOfWins.containsKey(rank)) {
                 numberOfWins.put(rank, numberOfWins.get(rank) + 1);
             }

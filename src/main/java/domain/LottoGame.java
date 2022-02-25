@@ -25,7 +25,7 @@ public class LottoGame {
         lottos.createLotto(purchasePrice, createLottoBalls());
         lottos.print();
         createWiningNumber();
-        Map<Rank, Integer> winingResult = lottos.checkWiningNumber(winingNumber);
+        Map<Rank, Integer> winingResult = lottos.checkWiningNumber(winingNumber, bonusNumber);
         printGameResult(winingResult);
     }
 

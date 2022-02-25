@@ -18,7 +18,7 @@ public class OutputView {
         Set<Rank> ranks = winingResult.keySet();
 
         for (Rank rank : ranks) {
-            sb.append(String.format("%d개 일치 (%d원)- %d개\n", rank.getMatchCount(), rank.getWinningMoney(), winingResult.get(rank)));
+            sb.append(rank.toString() + " - " + winingResult.get(rank) + "개\n");
         }
 
         System.out.println(sb);
