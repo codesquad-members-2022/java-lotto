@@ -1,6 +1,5 @@
 public enum RankValue {
 
-    NOTHING(0, 0),
     FIFTH(3, 5000),
     FOURTH(4, 50000),
     THIRD(5, 1500000),
@@ -29,6 +28,6 @@ public enum RankValue {
         if (countOfMatch == SECOND.countOfMatch) return matchBonus ? SECOND : THIRD;
         if (countOfMatch == FIRST.countOfMatch) return FIRST;
 
-        return NOTHING;
+        return null;
     }
 }

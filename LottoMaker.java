@@ -1,8 +1,31 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public abstract class LottoMaker {
+public class LottoMaker {
 
-    public abstract List<Lotto> getLottoList(int countOfLotto);
+    public List<Integer> autoMakeLotto() {
+        return selectNumbers(initNumbers());
+    }
 
-    protected abstract List<Integer> makeLottoNumber();
+    private List<Integer> initNumbers() {
+        List<Integer> totalNumberList = new ArrayList<>();
+        for (int i = 1; i < 46; i++) {
+            totalNumberList.add(i);
+        }
+
+        return totalNumberList;
+    }
+
+    private List<Integer> selectNumbers(List<Integer> totalNumberList) {
+        Collections.shuffle(totalNumberList);
+        List<Integer> lottoNumberList = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++) {
+            lottoNumberList.add(totalNumberList.get(i));
+        }
+        Collections.sort(lottoNumberList);
+
+        return lottoNumberList;
+    }
 }
