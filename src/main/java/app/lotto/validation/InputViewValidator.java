@@ -24,6 +24,10 @@ public class InputViewValidator {
     }
 
     public static void validateNumbersRange(LottoTicket winningNumbers, int min, int max) {
+        if (min > max) {
+            throw new IllegalArgumentException("최대값보다 최소값이 크면 안 됩니다.");
+        }
+
         for (int i = 0; i < winningNumbers.getSize(); i++) {
             validateRange(min, max, winningNumbers.getNumber(i));
         }
