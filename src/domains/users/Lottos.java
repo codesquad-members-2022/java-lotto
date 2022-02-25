@@ -15,11 +15,15 @@ public class Lottos {
     }
 
     public List<List<Integer>> getTotalLottos(ArrayList<ArrayList<Integer>> tickets) {
+        toLottos(tickets);
+
+        return getPurchasedLottos();
+    }
+
+    private void toLottos(ArrayList<ArrayList<Integer>> tickets) {
         for (ArrayList<Integer> ticket : tickets) {
             this.purchased(ticket);
         }
-
-        return getPurchasedLottos();
     }
 
     private List<List<Integer>> getPurchasedLottos() {
