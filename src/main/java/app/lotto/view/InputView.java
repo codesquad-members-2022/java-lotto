@@ -41,7 +41,7 @@ public class InputView {
             return count;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return readAmount();
+            return readCustomLottoCount(totalCount);
         }
     }
 
