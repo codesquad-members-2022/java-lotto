@@ -1,12 +1,16 @@
 package application.view;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import application.model.Validation;
+
 public class InputView {
 
+    private static Validation validation = new Validation();
     private static Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -18,9 +22,20 @@ public class InputView {
         return scanner.nextInt();
     }
 
+
     public static int getPurchaseAmount() {
-        OutputView.printEnterPurchaseAmount();
-        return scanner.nextInt();
+        while (true) {
+            OutputView.printEnterPurchaseAmount();
+            try {
+                int purchaseAmount = scanner.nextInt();
+                if (validation.validatePurchaseAmount(purchaseAmount)) {
+                    return purchaseAmount;
+                }
+            } catch (InputMismatchException e) {
+                e.printStackTrace();
+                removeNewLine();
+            }
+        }
     }
 
     public static List<Integer> getWinningNumber() {
