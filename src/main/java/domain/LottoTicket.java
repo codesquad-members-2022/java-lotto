@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class LottoTicket {
     private static final int NORMAL_TICKET_SIZE = 6;
@@ -52,5 +53,18 @@ public class LottoTicket {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LottoTicket that = (LottoTicket) o;
+        return Objects.equals(lottoNumbers, that.lottoNumbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lottoNumbers);
     }
 }
