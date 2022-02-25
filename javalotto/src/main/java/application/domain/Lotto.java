@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class Lotto {
 
     private static final int AMOUNT_LOTTO_NUMBER = 6;
-    private static final int TWO_LOTTO_LENGTH_SUM = 12;
+
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -43,10 +43,10 @@ public class Lotto {
     }
 
     public int getTheNumberOfMatches(Lotto userWinningNumber) {
-        Set<Integer> userWinningNumberSet = new HashSet<>(userWinningNumber.numbers);
-        Set<Integer> lottoSet = new HashSet<>(this.numbers);
-        lottoSet.addAll(new HashSet<>(userWinningNumberSet));
-        return TWO_LOTTO_LENGTH_SUM - lottoSet.size();
+        long count = numbers.stream()
+                .filter(userWinningNumber.numbers::contains)
+                .count();
+        return (int) count;
     }
 
 
