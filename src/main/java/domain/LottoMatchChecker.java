@@ -2,28 +2,28 @@ package domain;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LottoMatchChecker {
 
     private int winningBonusNumber;
     private List<Integer> winningNumbersList;
     private List<LottoSheet> lottoTicket;
-    private LinkedHashMap<Rank, Integer> winningResult;
+    private Map<Rank, Integer> winningResult;
 
-    public LottoMatchChecker(WinningNumbers winningNumbers, LottoTicket lottoTicket) {
+    public LottoMatchChecker(WinningSheet winningNumbers, LottoTicket lottoTicket) {
         this.winningNumbersList = winningNumbers.getWinningNumbers();
         this.winningBonusNumber = winningNumbersList.remove(winningNumbersList.size() - 1);
         this.lottoTicket = lottoTicket.getLottoTicket();
-        winningResult = new LinkedHashMap<>() {{
-            put(Rank.FIRST, 0);
-            put(Rank.SECOND, 0);
-            put(Rank.THIRD, 0);
-            put(Rank.FOURTH, 0);
-            put(Rank.FIFTH, 0);
-        }};
+        this.winningResult = new LinkedHashMap<>();
+        winningResult.put(Rank.FIRST, 0);
+        winningResult.put(Rank.SECOND, 0);
+        winningResult.put(Rank.THIRD, 0);
+        winningResult.put(Rank.FOURTH, 0);
+        winningResult.put(Rank.FIFTH, 0);
     }
 
-    public LinkedHashMap<Rank, Integer> getWinningResult() {
+    public Map<Rank, Integer> getWinningResult() {
         lottoTicket.stream()
                 .map(LottoSheet::getLottoNumbers)
                 .forEach(lottoNumbers -> {
