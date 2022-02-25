@@ -3,9 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -15,7 +13,6 @@ import view.OutputView;
 
 public class LottoController {
     private static final int LOTTO_PRICE = 1000;
-    private static final int MAX_NUMBER_COUNT = 6;
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 45;
 
@@ -31,6 +28,7 @@ public class LottoController {
     }
 
     public void buildLotto() {
+        //처음 입력 검증단계
         OutputView.requestPrice();
         while (true) {
             price = Integer.parseInt(InputView.requestPrice());
@@ -45,6 +43,7 @@ public class LottoController {
         int count = price / LOTTO_PRICE;
 
         int manualLottoEach;
+        //수동 로또 입력 검증 단계
         OutputView.requestManual();
         while (true) {
             manualLottoEach = Integer.parseInt(InputView.requestManualCount());
@@ -60,10 +59,12 @@ public class LottoController {
             makeManualLottoPerCount(manualLottoEach);
         }
 
+        //로또 번호 중복 체크 단계
         while (repository.getLottoList().size() != count) {
-            Set<Integer> numbers = makeRandomNumberSet();
-            checkOverLap(new ArrayList<>(numbers));
+            checkOverLap(makeRandomNumberSet());
         }
+
+        //로또 번호 출력 단계
         OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
     }
 
@@ -94,13 +95,10 @@ public class LottoController {
         checkOverLap(collect);
     }
 
-    private Set<Integer> makeRandomNumberSet() {
-        Set<Integer> numbers = new HashSet<>();
-        while (numbers.size() != MAX_NUMBER_COUNT) {
-            Collections.shuffle(range);
-            numbers.add(range.get(0));
-        }
-        return numbers;
+    private List<Integer> makeRandomNumberSet() {
+        Collections.shuffle(range);
+        List<Integer> shuffleNumbers = new ArrayList<>(range.subList(0, 6));
+        return shuffleNumbers;
     }
 
     private void checkOverLap(List<Integer> lists) {
