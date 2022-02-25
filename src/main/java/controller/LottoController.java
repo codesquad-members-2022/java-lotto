@@ -13,12 +13,12 @@ public class LottoController {
     private static final int TICKET_PRICE = 1000;
 
     public void run() {
-        int userMoney = InputView.requestMoney();
-        LottoTicketSeller lottoTicketSeller = new LottoTicketSeller(new RandomTicketFactory());
         Person customer = new Person();
-        int customTicketCount = buyManualLottery(customer, new LottoTicketSeller(new CustomTicketFactory()));
+        int userMoney = InputView.requestMoney();
 
-        buyRandomLottoTicket(customer, lottoTicketSeller, discharge(userMoney, customTicketCount));
+        int customTicketCount = buyManualLottery(customer);
+
+        buyRandomLottoTicket(customer, discharge(userMoney, customTicketCount));
 
         showLottoInfo(customer);
 
@@ -30,28 +30,35 @@ public class LottoController {
         return userMoney - customTicketCount * TICKET_PRICE;
     }
 
-    private void buyRandomLottoTicket(Person customer, LottoTicketSeller lottoTicketSeller, int money) {
-        lottoTicketSeller.setFactory(new RandomTicketFactory());
+    private void buyRandomLottoTicket(Person customer, int money) {
+        LottoTicketSeller lottoTicketSeller = new LottoTicketSeller(new RandomTicketFactory());
+
         int ticketCount = money / TICKET_PRICE;
+
         for (int i = 0; i < ticketCount; i++) {
             customer.buyRandomLottoTicket(lottoTicketSeller.exchangeTicket(new ArrayList<>()));
         }
     }
 
-    private int buyManualLottery(Person customer, LottoTicketSeller lottoTicketSeller) {
-        lottoTicketSeller.setFactory(new CustomTicketFactory());
+    private int buyManualLottery(Person customer) {
+        LottoTicketSeller lottoTicketSeller = new LottoTicketSeller(new CustomTicketFactory());
+
         int customTicketCount = InputView.requestCustomTicketCount();
         InputView.requestCustomTicketNumberMessage();
 
         for (int i = 0; i < customTicketCount; i++) {
-            int[] numbers = InputView.requestCustomTicketNumber();
-            ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
-            for (int number : numbers) {
-                lottoNumbers.add(new LottoNumber(number));
-            }
-            customer.buyCustomLottoTicket(lottoTicketSeller.exchangeTicket(lottoNumbers));
+            customer.buyCustomLottoTicket(lottoTicketSeller.exchangeTicket(getLottoNumbers()));
         }
         return customTicketCount;
+    }
+
+    private ArrayList<LottoNumber> getLottoNumbers() {
+        int[] numbers = InputView.requestCustomTicketNumber();
+        ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
+        for (int number : numbers) {
+            lottoNumbers.add(new LottoNumber(number));
+        }
+        return lottoNumbers;
     }
 
     private int[] makeResult(Person customer) {
