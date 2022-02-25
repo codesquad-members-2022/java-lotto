@@ -1,5 +1,6 @@
 package application.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import application.domain.Lotto;
@@ -9,20 +10,25 @@ import application.view.OutputView;
 public class LottoGame {
     private static final int LOTTO_TICKET_PRICE = 1000;
 
-    public void init() {
-        int userPurchaseAmount = InputView.getPurchaseAmount();
-        int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE;
-        OutputView.printPurchaseQuantity(userPurchaseQuantity);
-        List<Lotto> lottos = LottoTicket.makeLotto(userPurchaseQuantity);
+    public void init(int userPurchaseAmount) {
+        int numberOfManualLotto = InputView.getNumberOfManualLotto(userPurchaseAmount);
+        int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE - numberOfManualLotto;
+
+        List<Lotto> lottos = new ArrayList<>();
+        lottos.addAll(LottoTicket.makeManualLotto(numberOfManualLotto));
+        lottos.addAll(LottoTicket.makeAutoLotto(userPurchaseQuantity));
+
+        OutputView.printPurchaseQuantity(numberOfManualLotto, userPurchaseQuantity);
         OutputView.printLottoList(lottos);
-        List<Integer> userWinningNumber = InputView.getWinningNumber();
-        int bonusBallNumber = InputView.getBonusBall();
-        start(lottos, userWinningNumber, bonusBallNumber);
+        start(lottos);
     }
 
-    private void start(List<Lotto> lottos, List<Integer> userWinningNumber, int bonusBallNumber) {
+    private void start(List<Lotto> lottos) {
+        Lotto userWinningNumber = new Lotto(InputView.getWinningNumber());
+        int bonusBallNumber = InputView.getBonusBall(userWinningNumber);
         int[] counts = Statistics.makeStatistics(lottos, userWinningNumber, bonusBallNumber);
         double totalYield = Statistics.calculateYield(counts);
         OutputView.printWinningStatistics(counts, totalYield);
     }
+
 }

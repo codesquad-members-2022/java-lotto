@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import application.domain.Lotto;
+import application.view.InputView;
+import application.view.OutputView;
 
 public class LottoTicket {
 
@@ -16,11 +18,21 @@ public class LottoTicket {
     private LottoTicket() {
     }
 
-    public static List<Lotto> makeLotto(int userPurchaseQuantity) {
+    public static List<Lotto> makeAutoLotto(int userPurchaseQuantity) {
         List<Lotto> lottos = new ArrayList<>();
         for (int i = 0; i < userPurchaseQuantity; i++) {
             Lotto tempLotto = new Lotto(createNumbers());
             lottos.add(tempLotto);
+        }
+        return lottos;
+    }
+
+    public static List<Lotto> makeManualLotto(int userPurchaseQuantity) {
+        List<Lotto> lottos = new ArrayList<>();
+        OutputView.printPleaseEnterYourManualNumbers();
+        InputView.removeNewLine();
+        for (int i = 0; i < userPurchaseQuantity; i++) {
+            lottos.add(new Lotto(InputView.getManualLotto()));
         }
         return lottos;
     }

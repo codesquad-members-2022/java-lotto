@@ -13,6 +13,10 @@ public class OutputView {
     private static final String WINNING_STATISTICS = "당첨통계";
     private static final String DIVISION = "---------";
     private static final String ENTER_BONUS_BALL = "보너스 볼을 입력해 주세요.";
+    private static final String ENTER_NUMBER_OF_MANUAL_LOTTO = "수동으로 구매할 로또 수를 입력해 주세요.";
+    private static final String PLEASE_ENTER_YOUR_MANUAL_NUMBERS = "수동으로 구매할 번호를 입력해 주세요.";
+    private static final String INVALID_FORMAT_PLEASE_RE_ENTER = "유효하지 않은 형식입니다. 다시 입력하세요.";
+
 
     private static final int MINIMUM_NUMBER_OF_WINS = 3;
     private static final int MAXIMUM_NUMBER_OF_WINS = 6;
@@ -24,6 +28,10 @@ public class OutputView {
 
     private static void printTotalYield(double totalYield) {
         System.out.printf("총 수익율은 %.2f%%입니다.", totalYield);
+    }
+
+    public static void printInvalidFormatPleaseReEnter() {
+        System.out.println(INVALID_FORMAT_PLEASE_RE_ENTER);
     }
 
     public static void printEnterBonusBall() {
@@ -38,12 +46,24 @@ public class OutputView {
         System.out.println(userPurchaseQuantity + PURCHASE_QUANTITY);
     }
 
+    public static void printPurchaseQuantity(int manualQuantity, int autoQuantity) {
+        System.out.printf("수동으로 %d장, 자동으로 %d개를 구매했습니다.\n", manualQuantity, autoQuantity);
+    }
+
     private static void printLottoNumbers(String lottoString) {
         System.out.println(lottoString);
     }
 
     public static void printPleaseEnterYourWinningNumber() {
         System.out.println(PLEASE_ENTER_YOUR_WINNING_NUMBER);
+    }
+
+    public static void printEnterNumberOfManualLotto() {
+        System.out.println(ENTER_NUMBER_OF_MANUAL_LOTTO);
+    }
+
+    public static void printPleaseEnterYourManualNumbers() {
+        System.out.println(PLEASE_ENTER_YOUR_MANUAL_NUMBERS);
     }
 
     public static void printWinningStatistics(int[] counts, double totalYield) {

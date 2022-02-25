@@ -25,7 +25,7 @@ public class Statistics {
         return (currentYield - userPurchaseAmount) / userPurchaseAmount * 100;
     }
 
-    public static int[] makeStatistics(List<Lotto> lottos, List<Integer> userWinningNumber, int bonusBallNumber) {
+    public static int[] makeStatistics(List<Lotto> lottos, Lotto userWinningNumber, int bonusBallNumber) {
         int[] counts = new int[SIZE_OF_ANSWER_ARRAY];
         for (var lotto : lottos) {
             int count = lotto.getTheNumberOfMatches(userWinningNumber);
