@@ -1,12 +1,11 @@
 package controller;
 
 import domain.*;
+import view.InputView;
+import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import view.InputView;
-import view.OutputView;
 
 public class Controller {
 
@@ -21,7 +20,7 @@ public class Controller {
 
         LinkedHashMap<Rank, Integer> winningResult = new LottoMatchChecker(winningNumbers, lottoTicket).getWinningResult();
 
-        Double profitPercent = new ProfitCalculator(purchasingAmount, winningResult).calculate();
+        double profitPercent = new ProfitCalculator(purchasingAmount, winningResult).calculate();
 
         OutputView.printProfitTable(winningResult);
         OutputView.printProfit(profitPercent);
@@ -31,7 +30,7 @@ public class Controller {
         try {
             return InputView.getPurchasingAmount();
         } catch (NumberFormatException e) {
-            System.out.println("잘못된 값을 입력하셨습니다!!");
+            System.out.println("숫자 형태로 입력해주세요!!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -42,9 +41,9 @@ public class Controller {
         try {
             List<Integer> winningNumbers = InputView.getWinningNumber();
             int bonusNumber = InputView.getBonusNumber();
-            return new WinningNumbers(winningNumbers,bonusNumber);
+            return new WinningNumbers(winningNumbers, bonusNumber);
         } catch (NumberFormatException e) {
-            System.out.println("잘못된 값을 입력하셨습니다!!");
+            System.out.println("숫자 형태로 입력해주세요!!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
