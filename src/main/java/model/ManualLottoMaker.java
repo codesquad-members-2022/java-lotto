@@ -10,7 +10,7 @@ import view.OutputView;
 
 public class ManualLottoMaker implements LottoMaker {
     @Override
-    public List<Integer> createRandomLotto() {
+    public List<Integer> createLotto() {
         String manualLottoNumber;
         while (true) {
             manualLottoNumber = InputView.requestManualLottoNumber();
