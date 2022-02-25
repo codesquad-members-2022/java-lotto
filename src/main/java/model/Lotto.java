@@ -15,13 +15,17 @@ public class Lotto {
         return numbers.containsAll(lists);
     }
 
-    public List<Integer> getNumbers() {
-        return numbers;
-    }
-
     public int countCollectNumber(String[] winNumbers) {
         return (int) Arrays.stream(winNumbers)
                 .map(Integer::parseInt)
                 .filter(numbers::contains).count();
+    }
+
+    public boolean hasBonusNumber(String bonusNumber) {
+        return numbers.contains(Integer.parseInt(bonusNumber));
+    }
+
+    public List<Integer> getNumbers() {
+        return numbers;
     }
 }

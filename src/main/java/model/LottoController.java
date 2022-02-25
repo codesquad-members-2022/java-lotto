@@ -1,12 +1,18 @@
 package model;
 
-import view.InputView;
-import view.OutputView;
-
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import view.InputView;
+import view.OutputView;
 
 public class LottoController {
     private static final int LOTTO_PRICE = 1000;
@@ -14,22 +20,28 @@ public class LottoController {
     private static final int MIN_WINNING_NUMBER = 3;
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 45;
-    private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER).boxed().collect(Collectors.toList());
+    private static final int BONUS_COUNT = 7;
+    private static final int BONUS_TARGET_COUNT = 5;
+
+    private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
+        .boxed()
+        .collect(Collectors.toList());
 
     private final List<Lotto> lottoList;
-    private Map<Integer, Integer> map;
+    private final Map<Integer, Integer> map;
     private int price;
 
     public LottoController(List<Lotto> lottoList) {
         this.lottoList = lottoList;
+        this.map = new LinkedHashMap<>();
         initMap();
     }
 
     private void initMap() {
-        map = new HashMap<>();
         map.put(3, 0);
         map.put(4, 0);
         map.put(5, 0);
+        map.put(BONUS_COUNT, 0);
         map.put(6, 0);
     }
 
@@ -38,18 +50,24 @@ public class LottoController {
         int count = price / LOTTO_PRICE;
 
         while (lottoList.size() != count) {
-            Set<Integer> numbers = new HashSet<>();
-            makeRandomNumberSet(numbers);
+            Set<Integer> numbers = makeRandomNumberSet();
             checkOverLap(new ArrayList<>(numbers));
         }
         OutputView.printPurchaseCount(count, lottoList);
     }
 
+    private Set<Integer> makeRandomNumberSet() {
+        Set<Integer> numbers = new HashSet<>();
+        while (numbers.size() != MAX_NUMBER_COUNT) {
+            Collections.shuffle(range);
+            numbers.add(range.get(0));
+        }
+        return numbers;
+    }
+
     private void checkOverLap(List<Integer> lists) {
-        int size = lottoList.stream()
-                .filter(l -> l.sameList(lists))
-                .collect(Collectors.toList())
-                .size();
+        int size = (int)lottoList.stream()
+            .filter(l -> l.sameList(lists)).count();
         sortingNumber(lists, size);
     }
 
@@ -60,24 +78,23 @@ public class LottoController {
         }
     }
 
-    private void makeRandomNumberSet(Set<Integer> numbers) {
-        while (numbers.size() != MAX_NUMBER_COUNT) {
-            Collections.shuffle(range);
-            numbers.add(range.get(0));
-        }
-    }
-
     public void checkWinNumber() {
         String winNumber = InputView.requestWinNumber();
         String[] winNumbers = winNumber.split(", ");
+        String bonusNumber = InputView.requestBonusNumber();
         for (Lotto lotto : lottoList) {
-            countHowManyLotto(winNumbers, lotto);
+            countMatchLotto(winNumbers, lotto, bonusNumber);
         }
         rateOfReturn();
+        InputView.ScannerClose();
     }
 
-    private void countHowManyLotto(String[] winNumbers, Lotto lotto) {
+    private void countMatchLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
         int tempCount = lotto.countCollectNumber(winNumbers);
+        if (tempCount == BONUS_TARGET_COUNT && lotto.hasBonusNumber(bonusNumber)) {
+            map.put(BONUS_COUNT, map.get(BONUS_COUNT) + 1);
+            return;
+        }
         if (tempCount >= MIN_WINNING_NUMBER) {
             map.put(tempCount, map.get(tempCount) + 1);
         }
@@ -86,9 +103,9 @@ public class LottoController {
     private void rateOfReturn() {
         int revenue = 0;
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            revenue += ValueMap.valueMap.get(entry.getKey()) * entry.getValue();
+            revenue += CollectCalculator.getCalculator(entry.getKey(), entry.getValue());
         }
-        double temp = (double) (revenue - price) / (price) * 100;
+        double temp = (double)(revenue - price) / (price) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
         String result = df.format(temp);
         OutputView.printResult(map, result);

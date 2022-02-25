@@ -1,7 +1,7 @@
 package view;
 
+import model.CollectCalculator;
 import model.Lotto;
-import model.ValueMap;
 
 import java.util.List;
 import java.util.Map;
@@ -13,17 +13,24 @@ public class OutputView {
     }
 
     public static void requestWinNumber() {
-        System.out.println("당첨번호를 입력해 주세요.");
+        System.out.println("지난 주 당첨번호를 입력해 주세요.");
     }
 
     public static void printResult(Map<Integer, Integer> map, String result) {
         System.out.println("당첨 통계");
         System.out.println("-----------");
-
         for (Integer key : map.keySet()) {
-            System.out.println(key + "개 일치 (" + ValueMap.valueMap.get(key) + "원) - " + map.get(key) + "개");
+            String tempValue = makeResultTemplate(key);
+            System.out.println(tempValue + CollectCalculator.getWinningMoney(key) + "원) - " + map.get(key) + "개");
         }
         System.out.println("총 수익률은 " + result + "%입니다.");
+    }
+
+    private static String makeResultTemplate(Integer key) {
+        if (key == 7) {
+            return "5개 일치, 보너스 볼 일치 (";
+        }
+        return key + "개 일치 (";
     }
 
     public static void printPurchaseCount(int count, List<Lotto> lottoList) {
@@ -34,5 +41,9 @@ public class OutputView {
                     .collect(Collectors.joining(", ", "[", "]"));
             System.out.println(collect);
         }
+    }
+
+    public static void requestBonusNumber() {
+        System.out.println("보너스 볼을 입력해주세요.");
     }
 }
