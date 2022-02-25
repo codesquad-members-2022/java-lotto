@@ -6,21 +6,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.Comparator.comparing;
+
 public class LottoStore {
 
-    private static final List<Integer> lottoNumbers;
+    private static final List<LottoNumber> lottoNumbers;
     private static final int START_INDEX = 0;
+    private static final int SIX = 6;
     private static final int START = 1;
     private static final int END = 45;
-    private static final int LIMIT = 6;
+    private static final int TICKET_PER_PRICE = 1000;
 
     static {
         lottoNumbers = IntStream.rangeClosed(START, END)
-                .boxed()
+                .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getLottoNumbers() {
+    public List<LottoNumber> getLottoNumbers() {
         shuffle();
         return getSixNumbers();
     }
@@ -29,19 +32,24 @@ public class LottoStore {
         Collections.shuffle(lottoNumbers);
     }
 
-    private List<Integer> getSixNumbers() {
-        return lottoNumbers.stream()
-                .limit(LIMIT)
-                .sorted()
-                .collect(Collectors.toList());
+    private List<LottoNumber> getSixNumbers() {
+        return new ArrayList<>(lottoNumbers.stream()
+                .limit(SIX)
+                .sorted(comparing(LottoNumber::getValue))
+                .collect(Collectors.toUnmodifiableList()));
     }
 
-    public List<LottoTicket> getLottoTickets(int money) {
-        int ticketCount = money / 1000;
+    public List<LottoTicket> getLottoTickets(Money money) {
+        int ticketCount = getTicketCount(money);
         List<LottoTicket> lottoTickets = new ArrayList<>();
+
         for (int index = START_INDEX; index < ticketCount; index++) {
             lottoTickets.add(new LottoTicket(getLottoNumbers()));
         }
         return lottoTickets;
+    }
+
+    private int getTicketCount(Money money){
+        return money.getValue() / TICKET_PER_PRICE;
     }
 }

@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class BonusNumber {
 
-    private final int value;
+    private final int bonusNumber;
     private static final int MIN_VALUE = 1;
     private static final int MAX_VALUE = 45;
 
-    public BonusNumber(int value) {
-        validateNumber(value);
-        this.value = value;
+    public BonusNumber(int bonusNumber) {
+        validateNumber(bonusNumber);
+        this.bonusNumber = bonusNumber;
     }
 
     private void validateNumber(int value) {
@@ -20,8 +20,8 @@ public class BonusNumber {
         }
     }
 
-    public boolean isElementsOf(Set<Integer> winningNumbers) {
-        return winningNumbers.contains(this.value);
+    public boolean isElementsOf(Set<LottoNumber> winningNumbers) {
+        return winningNumbers.contains(bonusNumber);
     }
 
     @Override
@@ -29,11 +29,11 @@ public class BonusNumber {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BonusNumber that = (BonusNumber) o;
-        return value == that.value;
+        return bonusNumber == that.bonusNumber;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(bonusNumber);
     }
 }

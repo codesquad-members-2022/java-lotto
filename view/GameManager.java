@@ -1,15 +1,9 @@
 package PACKAGE_NAME.view;
 
-import PACKAGE_NAME.domain.BonusNumber;
-import PACKAGE_NAME.domain.LottoTickets;
-import PACKAGE_NAME.domain.Rank;
-import PACKAGE_NAME.domain.RateOfReturn;
+import PACKAGE_NAME.domain.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class GameManager {
 
@@ -17,26 +11,23 @@ public class GameManager {
     private OutputView outputView = new OutputView();
     private LottoController lottoController = new LottoController();
 
-    private static final List<Integer> lottoNumbers = IntStream.rangeClosed(1, 45)
-            .boxed()
-            .collect(Collectors.toList());
-
     public void play() {
         while (true) {
-            int money = inputView.inputMoney();
-            InputElements elements = getLottoGameElements(money);
+            Money money = new Money(inputView.inputMoney());
+            LottoGameElements elements = getLottoGameElements(money);
             GameResult gameResult = lottoController.getLottoGameResult(elements);
             printResults(gameResult);
+            askContinuously();
         }
     }
 
-    private InputElements getLottoGameElements(int money) {
+    private LottoGameElements getLottoGameElements(Money money) {
         LottoTickets lottoTickets = lottoController.getLottoTickets(money);
         printLottoTickets(lottoTickets);
 
-        Set<Integer> winningNumbers = inputView.inputWinningNumber();
+        Set<LottoNumber> winningNumbers = inputView.inputWinningNumber();
         BonusNumber bonusNumber = new BonusNumber(inputView.inputBonusNumber());
-        return new InputElements(lottoTickets, winningNumbers, bonusNumber);
+        return new LottoGameElements(lottoTickets, winningNumbers, bonusNumber);
     }
 
     private void printLottoTickets(LottoTickets lottoTickets) {
@@ -54,5 +45,9 @@ public class GameManager {
 
     private void printRateOfReturn(RateOfReturn rateOfReturn) {
         outputView.printRateOfReturn(rateOfReturn);
+    }
+
+    private void askContinuously() {
+
     }
 }

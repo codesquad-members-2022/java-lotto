@@ -1,5 +1,7 @@
 package PACKAGE_NAME.view;
 
+import PACKAGE_NAME.domain.LottoNumber;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,8 +46,8 @@ public class InputView {
         }
     }
 
-    public Set<Integer> inputWinningNumber() {
-        Set<Integer> winningNumber = new HashSet<>();
+    public Set<LottoNumber> inputWinningNumber() {
+        Set<LottoNumber> winningNumber = new HashSet<>();
         System.out.println(INPUTNUMBER_MESSAGE);
         String inputWinningNumber;
         try {
@@ -62,19 +64,20 @@ public class InputView {
         return winningNumber;
     }
 
-    private Set<Integer> getCollect(String inputWinningNumber) {
+    private Set<LottoNumber> getCollect(String inputWinningNumber) {
         return Arrays.stream(inputWinningNumber.split(DELIMETER_COMMA))
                 .map(String::trim)
                 .map(Integer::parseInt)
+                .map(LottoNumber::new)
                 .collect(Collectors.toSet());
     }
 
-    private void validateNumbers(Set<Integer> winningNumber) {
+    private void validateNumbers(Set<LottoNumber> winningNumber) {
         if (winningNumber.size() != VALID_LOTTO_COUNT) {
             throw new IllegalArgumentException();
         }
 
-        Set<Integer> set = new HashSet<>(winningNumber);
+        Set<LottoNumber> set = new HashSet<>(winningNumber);
         if (set.size() != winningNumber.size()) {
             throw new IllegalArgumentException();
         }

@@ -13,12 +13,12 @@ public class LottoTickets {
         this.lottoTickets = lottoTickets;
     }
 
-    public int getWinningPrize(Map<Rank, Integer> answers) {
-        int sum = 0;
+    public Money getWinningPrize(Map<Rank, Integer> answers) {
+        Money sum = Money.ZERO;
         for (Rank rank : answers.keySet()) {
-            int winningPrize = rank.getWinningPrize().getValue();
+            Money winningPrize = rank.getWinningPrize();
             int count = answers.getOrDefault(rank, DEFAULT_VALUE);
-            sum += winningPrize * count;
+            sum = sum.add(winningPrize.multiply(count));
         }
         return sum;
     }

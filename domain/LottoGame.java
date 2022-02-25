@@ -1,7 +1,7 @@
 package PACKAGE_NAME.domain;
 
 import PACKAGE_NAME.view.GameResult;
-import PACKAGE_NAME.view.InputElements;
+import PACKAGE_NAME.view.LottoGameElements;
 
 import java.util.List;
 import java.util.Map;
@@ -12,23 +12,24 @@ public class LottoGame {
     private LottoStore lottoStore = new LottoStore();
     private LottoCompany lottoCompany = new LottoCompany();
 
-    public GameResult getResult(InputElements elements){
+    public List<LottoTicket> getLottoTickets(Money money) {
+        return lottoStore.getLottoTickets(money);
+    }
+
+    public GameResult getResult(LottoGameElements elements){
         LottoTickets lottoTickets = elements.getLottoTickets();
-        Set<Integer> winningNumbers = elements.getWinningNumbers();
+        Set<LottoNumber> winningNumbers = elements.getWinningNumbers();
         BonusNumber bonusNumber = elements.getBonusNumber();
 
         registWinningNumbersToCompany(winningNumbers, bonusNumber);
 
-        Map<Rank, Integer> ranksResults = lottoCompany.getMatchOfRank(lottoTickets);
-        RateOfReturn rateOfReturn = new RateOfReturn(ranksResults, lottoTickets);
-        return new GameResult(ranksResults, rateOfReturn);
+        Map<Rank, Integer> rankResults = lottoCompany.getMatchOfRank(lottoTickets);
+        RateOfReturn rateOfReturn = new RateOfReturn(rankResults, lottoTickets);
+        return new GameResult(rankResults, rateOfReturn);
     }
 
-    private void registWinningNumbersToCompany(Set<Integer> winningNumbers, BonusNumber bonusNumber) {
+    private void registWinningNumbersToCompany(Set<LottoNumber> winningNumbers, BonusNumber bonusNumber) {
         lottoCompany.registWinningNumbers(winningNumbers, bonusNumber);
     }
 
-    public List<LottoTicket> getLottoTickets(int money) {
-        return lottoStore.getLottoTickets(money);
-    }
 }

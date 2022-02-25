@@ -1,12 +1,15 @@
 package PACKAGE_NAME.domain;
 
 import java.util.Map;
+import java.util.Objects;
+
+import static java.lang.Math.round;
 
 public class RateOfReturn {
 
-    private Map<Rank, Integer> answer;
-    private LottoTickets lottoTickets;
-    private double rateOfReturn;
+    private final Map<Rank, Integer> answer;
+    private final LottoTickets lottoTickets;
+    private final double rateOfReturn;
 
     public RateOfReturn(Map<Rank, Integer> ranksResult, LottoTickets lottoTickets) {
         this.answer = ranksResult;
@@ -19,14 +22,27 @@ public class RateOfReturn {
     }
 
     private double calculateRateOfReturn(Map<Rank, Integer> ranksResult, LottoTickets lottoTickets) {
-        int winningPrize = lottoTickets.getWinningPrize(ranksResult);
+        Money winningPrize = lottoTickets.getWinningPrize(ranksResult);
         int purchaseAmount = lottoTickets.getLottoTickets().size() * 1000;
         return calculateRateOfReturn(winningPrize, purchaseAmount);
     }
 
-    private double calculateRateOfReturn(int sum, int inputMoney) {
-        double rateOfReturn = (sum - inputMoney) * 100 / inputMoney;
-        return Math.round(rateOfReturn * 100) / 100;
+    private double calculateRateOfReturn(Money sum, int inputMoney) {
+        double rateOfReturn = (double) (sum.getValue() - inputMoney) * 100 / inputMoney;
+        return (double) round(rateOfReturn * 100) / 100;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RateOfReturn that = (RateOfReturn) o;
+        return Double.compare(that.rateOfReturn, rateOfReturn) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rateOfReturn);
     }
 
     @Override
