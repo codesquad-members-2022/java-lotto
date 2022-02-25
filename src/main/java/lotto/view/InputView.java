@@ -1,6 +1,6 @@
 package lotto.view;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class InputView {
     private static Scanner sc;
@@ -12,24 +12,42 @@ public class InputView {
 
 
     public static int getPurchaseAmount() {
-        System.out.println(PURCHASE_AMOUNT_MESSAGE);
-        int purchaseAmount = sc.nextInt();
-        sc.nextLine();
+        try {
+            System.out.println(PURCHASE_AMOUNT_MESSAGE);
+            String input = sc.nextLine();
+            if (InputValidator.validateInputAllNumber(input)) {
+                return Integer.parseInt(input);
+            }
+        } catch (IllegalArgumentException ne) {
+            System.err.println(ne.getMessage());
+        }
 
-        return purchaseAmount;
+        return getPurchaseAmount();
     }
 
     public static int getManualLottoCount() {
-        System.out.println(MANUAL_LOTTO_COUNT_MESSAGE);
-        int manualLottoCount = sc.nextInt();
-        sc.nextLine();
+        try {
+            System.out.println(MANUAL_LOTTO_COUNT_MESSAGE);
+            String input = sc.nextLine();
+            if (InputValidator.validateInputManualLottoCount(input)) {
+                return Integer.parseInt(input);
+            }
+        } catch (IllegalArgumentException ne) {
+            System.err.println(ne.getMessage());
+        }
 
-        return manualLottoCount;
+        return getManualLottoCount();
     }
 
-    public static String getManualLottoNumbers() {
+    public static Map<Integer, String>  getManualLottoNumbers(int manualLottoCount) {
         System.out.println(MANUAL_LOTTO_NUMBERS_MESSAGE);
-        return sc.nextLine();
+        Map<Integer,String> manualLottoNumbers = new HashMap<>();
+
+        for (int i = 0; i < manualLottoCount; i++) {
+            manualLottoNumbers.put(i, sc.nextLine());
+        }
+
+        return manualLottoNumbers;
     }
 
     public static String getRequiredWinningNumber() {
@@ -37,9 +55,19 @@ public class InputView {
         return sc.nextLine();
     }
 
-    public static String getBonusBallNumber() {
-        System.out.println(BONUS_BALL_NUMBER_MESSAGE);
-        return sc.nextLine();
+    public static String getBonusBallNumber(List<Integer> winningNumbers) {
+        try {
+            System.out.println(BONUS_BALL_NUMBER_MESSAGE);
+            String bonusBall = sc.nextLine();
+            InputValidator.validateIsNumber(bonusBall);
+            InputValidator.validateDuplicateWinningNumber(winningNumbers, bonusBall);
+
+            return bonusBall;
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return getBonusBallNumber(winningNumbers);
     }
 
     public static void init() {
