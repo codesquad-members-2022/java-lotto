@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class LottoTickets {
 	private static final List<Integer> numbers;
-	private static final int TICKET_PRICE = 1_000;
 	private final List<Lotto> tickets;
 
 	static {
@@ -17,14 +16,12 @@ public class LottoTickets {
 		}
 	}
 
-	public LottoTickets(int purchaseAmount) {
-		int ticketCount = calculateTicketAmounts(purchaseAmount);
+	public LottoTickets(int ticketCount) {
 		this.tickets = new ArrayList<>();
 		addAutoTickets(ticketCount);
 	}
 
-	public LottoTickets(int purchaseAmount, List<List<Integer>> manualTickets) {
-		int ticketCount = calculateTicketAmounts(purchaseAmount);
+	public LottoTickets(int ticketCount, List<List<Integer>> manualTickets) {
 		this.tickets = new ArrayList<>();
 		setManualTickets(manualTickets);
 		addAutoTickets(ticketCount- manualTickets.size());
@@ -59,7 +56,5 @@ public class LottoTickets {
 		return numbers.stream().limit(6).collect(Collectors.toList());
 	}
 
-	private int calculateTicketAmounts(int purchaseAmount) {
-		return purchaseAmount / TICKET_PRICE;
-	}
+
 }
