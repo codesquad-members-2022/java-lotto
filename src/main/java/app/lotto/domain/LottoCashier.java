@@ -9,22 +9,18 @@ import java.util.List;
 public class LottoCashier {
 
     private final LottoTicketManager lottoTicketManager;
+    private final int amount;
 
-    private int amount;
-    private int customLottoCount;
-
-    private LottoCashier() {
-        receiveOrder();
+    private LottoCashier(int amount, int customLottoCount) {
+        this.amount = amount;
         this.lottoTicketManager = LottoTicketManager.createWithTotalAmountAndCustomTicketCount(amount, customLottoCount);
     }
 
-    private void receiveOrder() {
-        this.amount = InputView.readAmount();
-        this.customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
-    }
-
     public static LottoCashier receiveOrderAndCreate() {
-        return new LottoCashier();
+        int amount = InputView.readAmount();
+        int customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
+
+        return new LottoCashier(amount, customLottoCount);
     }
 
     public int getAmount() {
