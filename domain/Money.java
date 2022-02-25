@@ -16,8 +16,8 @@ public class Money {
         return value;
     }
 
-    public Money add(Money multiply) {
-        return new Money(this.value+ multiply.getValue());
+    public Money add(Money money) {
+        return new Money(this.value+ money.getValue());
     }
 
     public Money multiply(int count) {
