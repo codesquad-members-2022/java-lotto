@@ -19,19 +19,20 @@ public enum Rank {
         this.matchMessage = matchMessage;
     }
 
-    // TODO: 2022/02/25 메서드 이름 바꿔야함
-    public static Rank checkRank(int count, boolean isMatchBonusNumber) {
+    public static Rank checkRank(int matchedCount, boolean isMatchBonusNumber) {
         for (Rank rank : RANK_ARR) {
-            if (rank.getMatchCount() == count) {
-                if(5 == count) {
-                    if(isMatchBonusNumber) {
-                        return SECOND;
-                    }
-                }
-                return rank;
+            if (rank.getMatchCount() == matchedCount) {
+                return getRank(matchedCount, isMatchBonusNumber, rank);
             }
         }
         return null;
+    }
+
+    private static Rank getRank(int matchedCount, boolean isMatchBonusNumber, Rank rank) {
+        if(5 == matchedCount && isMatchBonusNumber) {
+            return SECOND;
+        }
+        return rank;
     }
 
     public int getWinningMoney() {

@@ -3,14 +3,10 @@ package domain;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class LottoGame {
     private static final int LOTTO_SIZE = 6;
-    private static final int LOTTO_FIRST_NUMBER = 1;
-    private static final int LOTTO_LAST_NUMBER = 45;
 
     private final int purchasePrice;
     private final int[] winingNumber = new int[LOTTO_SIZE];
@@ -22,7 +18,7 @@ public class LottoGame {
     }
 
     public void start() {
-        lottos.createLotto(purchasePrice, createLottoBalls());
+        lottos.createLotto(purchasePrice);
         lottos.print();
         createWiningNumber();
         Map<Rank, Integer> winingResult = lottos.checkWiningNumber(winingNumber, bonusNumber);
@@ -35,23 +31,13 @@ public class LottoGame {
     }
 
     private void createWiningNumber() {
-        String[] split = InputView.winningNumber().split(", ");
+        String[] winningNumber = InputView.winningNumber();
 
         for (int index = 0; index < winingNumber.length; index++) {
-            winingNumber[index] = Integer.parseInt(split[index]);
+            winingNumber[index] = Integer.parseInt(winningNumber[index]);
         }
 
          bonusNumber = Integer.parseInt(InputView.bonusNumber());
-    }
-
-    private List<Integer> createLottoBalls() {
-        List<Integer> lottoBalls = new ArrayList<>();
-
-        for (int lottoBall = LOTTO_FIRST_NUMBER; lottoBall <= LOTTO_LAST_NUMBER; lottoBall++) {
-            lottoBalls.add(lottoBall);
-        }
-
-        return lottoBalls;
     }
 
 }

@@ -13,9 +13,9 @@ public class InputView {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public static String winningNumber() {
+    public static String[] winningNumber() {
         System.out.println(WINNING_NUMBER_MESSAGE);
-        return scanner.nextLine();
+        return scanner.nextLine().split(", ");
     }
 
     public static String bonusNumber() {
