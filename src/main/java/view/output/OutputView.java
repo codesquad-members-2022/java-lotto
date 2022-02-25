@@ -27,9 +27,9 @@ public class OutputView {
                     .collect(Collectors.joining("\n"));
     }
 
-    public static void printLottoTicketCounts(LottoTickets manualLottoTickets, LottoTickets randomLottoTickets) {
+    public static void printLottoTicketCounts(long countOfManualLottoTicket, long countOfRandomLottoTicket) {
         System.out.printf("수동으로 %d장, 자동으로 %d개를 구매했습니다.\n",
-                manualLottoTickets.getCountOfLottoTickets(),
-                randomLottoTickets.getCountOfLottoTickets());
+                countOfManualLottoTicket,
+                countOfRandomLottoTicket);
     }
 }

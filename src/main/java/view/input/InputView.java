@@ -62,15 +62,15 @@ public class InputView {
         return lottoNumbers;
     }
 
-    public static int inputCountOfManualLottoTicket(Money money) {
+    public static long inputCountOfManualLottoTicket(Money money) {
         System.out.print(REQUEST_INPUT_MANUAL_LOTTOTICKET_NUMBER_MESSAGE);
-        int inputCountOfManualLottoTicket = Integer.parseInt(scanner.nextLine());
+        long inputCountOfManualLottoTicket = Integer.parseInt(scanner.nextLine());
         validatePurchaseCount(inputCountOfManualLottoTicket, money);
         System.out.println();
         return inputCountOfManualLottoTicket;
     }
 
-    private static void validatePurchaseCount(int countOfManualLottoTicket, Money money) {
+    private static void validatePurchaseCount(long countOfManualLottoTicket, Money money) {
         long buyableLottoTicketCount = money.numberOfBuyableLottoTickets();
         if (0 <= countOfManualLottoTicket  && countOfManualLottoTicket <= buyableLottoTicketCount) {
             return;
@@ -78,11 +78,11 @@ public class InputView {
         throw new IllegalArgumentException("유효한 수동 구매 개수가 아닙니다.");
     }
 
-    public static List<LottoTicket> inputManualLottoTickets(int count) {
+    public static List<LottoTicket> inputManualLottoTickets(long count) {
         return isManualTicketCountZero(count) ? new ArrayList<>() : createManualLottoTickets(count);
     }
 
-    private static List<LottoTicket> createManualLottoTickets(int count) {
+    private static List<LottoTicket> createManualLottoTickets(long count) {
         System.out.print(REQUEST_INPUT_MANUAL_LOTTO_NUMBERS);
         List<LottoTicket> tickets = new ArrayList<>();
         for (int i = 0; i< count; i++) {
@@ -92,7 +92,7 @@ public class InputView {
         return tickets;
     }
 
-    private static boolean isManualTicketCountZero(int count) {
+    private static boolean isManualTicketCountZero(long count) {
         return count == 0;
     }
 

@@ -16,12 +16,13 @@ public class LottoController {
     private LottoTickets buyLottoTickets() {
         try {
             Money money = InputView.inputMoney();
-            int count = InputView.inputCountOfManualLottoTicket(money);
-            LottoTickets manualLottoTickets = LottoTickets.createManualTickets((InputView.inputManualLottoTickets(count)));
-            LottoTickets randomLottoTickets = LottoTickets.createRandomTickets(money.numberOfBuyableLottoTickets() - count);
+            long countOfManualLottoTicket = InputView.inputCountOfManualLottoTicket(money);
+            long countOfRandomlLottoTicket = money.numberOfBuyableLottoTickets() - countOfManualLottoTicket;
+            LottoTickets manualLottoTickets = LottoTickets.createManualTickets((InputView.inputManualLottoTickets(countOfManualLottoTicket)));
+            LottoTickets randomLottoTickets = LottoTickets.createRandomTickets(countOfRandomlLottoTicket);
             LottoTickets allLottoTickets = LottoTickets.merge(manualLottoTickets, randomLottoTickets);
 
-            OutputView.printLottoTicketCounts(manualLottoTickets, randomLottoTickets);
+            OutputView.printLottoTicketCounts(countOfManualLottoTicket, countOfRandomlLottoTicket);
             OutputView.printLottoTickets(allLottoTickets);
             return allLottoTickets;
         } catch (IllegalArgumentException e) {
