@@ -14,8 +14,4 @@ public class LottoTicketSeller {
     public LottoTicket exchangeTicket(ArrayList<LottoNumber> numbers) {
         return ticketFactory.generateTicket(numbers);
     }
-
-    public void setFactory(TicketFactory randomTicketFactory) {
-        this.ticketFactory = randomTicketFactory;
-    }
 }
