@@ -5,7 +5,11 @@ import java.util.Scanner;
 import utils.InputValidator;
 
 public class InputView {
-    private static final Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
+
+    public static void setSc(Scanner sc) {
+        InputView.sc = sc;
+    }
 
     public static String requestPrice() {
         String price;
