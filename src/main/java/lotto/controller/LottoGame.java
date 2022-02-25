@@ -6,8 +6,10 @@ import lotto.domain.WinningStrategy;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class LottoGame {
 
@@ -37,30 +39,32 @@ public class LottoGame {
     }
 
     private List<WinningStrategy> checkWinning(LottoPaper lottoPaper) {
-        String stringWinningNumbers = InputView.getRequiredWinningNumber();
-        List<Integer> winningNumbers = getWinningNumbers(stringWinningNumbers);
+        String inputWinningNumbers = InputView.getRequiredWinningNumber();
+        String inputBonusNumber = InputView.getBonusBallNumber();
+
+        List<Integer> winningNumbers = getWinningNumbers(inputWinningNumbers);
+        int bonusNumber = getBonusNumber(inputBonusNumber);
+
         List<Integer> correctNumberCounts = lottoPaper.judgeWinning(winningNumbers);
+        List<Boolean> hasBonusNumbers = lottoPaper.hasBonusNumbers(bonusNumber);
 
-        List<WinningStrategy> winningStrategies = new ArrayList<>();
-        for (int eachNumber : correctNumberCounts) {
-            winningStrategies.add(convertMatchNumberToWinningStrategy(eachNumber));
-        }
-
-        return winningStrategies;
+        return IntStream.range(0, correctNumberCounts.size())
+                .mapToObj(index -> convertMatchNumberToWinningStrategy(correctNumberCounts.get(index), hasBonusNumbers.get(index)))
+                .collect(Collectors.toList());
     }
 
-    private List<Integer> getWinningNumbers(String stringWinningNumbers) {
-        List<Integer> winningNumbers = new ArrayList<>();
-        String[] eachNumber = stringWinningNumbers.split(NUMBER_DELIMITER);
-
-        for (String number : eachNumber) {
-            winningNumbers.add(Integer.parseInt(number));
-        }
-
-        return winningNumbers;
+    private List<Integer> getWinningNumbers(String inputWinningNumbers) {
+        return Arrays.stream(inputWinningNumbers.split(NUMBER_DELIMITER))
+                .mapToInt(Integer::parseInt)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
-    private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber) {
+    private int getBonusNumber(String inputBonusNumber) {
+        return Integer.parseInt(inputBonusNumber);
+    }
+
+    private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber, boolean hasBonusNumber) {
         if (matchNumber == WinningStrategy.ZERO_MATCHES.getCorrectNumber()) {
             return WinningStrategy.ZERO_MATCHES;
         }
@@ -75,6 +79,9 @@ public class LottoGame {
         }
         if (matchNumber == WinningStrategy.FOUR_MATCHES.getCorrectNumber()) {
             return WinningStrategy.FOUR_MATCHES;
+        }
+        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber() && hasBonusNumber) {
+            return WinningStrategy.FIVE_WITH_BONUS_MATCHES;
         }
         if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber()) {
             return WinningStrategy.FIVE_MATCHES;

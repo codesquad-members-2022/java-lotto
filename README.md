@@ -30,3 +30,14 @@
 > ![1_테스트결과](https://user-images.githubusercontent.com/29879110/155083466-bb4a9962-af05-4f6d-9179-f9368c7b5d77.JPG)
 - - -
 <br>
+
+## Mission2 - 보너스번호 추가
+### 기능요구사항
+- [x] 2등을 위해 추가 번호를 하나 더 추첨한다. 당첨 통계에 2등도 추가해야 한다.
+
+### 프로그래밍 요구사항
+- [x] enum을 적용해 프로그래밍을 구현한다.
+
+### 결과출력
+> ![1_결과출력](https://user-images.githubusercontent.com/29879110/155278106-3f5717ed-1885-43ba-a2ec-dcb4f10c6c4a.JPG)
+<br>
