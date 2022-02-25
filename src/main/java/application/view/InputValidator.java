@@ -1,6 +1,6 @@
 package application.view;
 
-import application.domain.UserBundle;
+import application.domain.User;
 
 public class InputValidator {
 
@@ -15,7 +15,7 @@ public class InputValidator {
     }
 
     public static void validateManualCount(int money, int manualCount) {
-        if (money < manualCount * UserBundle.PRICE) {
+        if (money < manualCount * User.PRICE) {
             throw new IllegalArgumentException("금액이 부족합니다.");
         }
     }
