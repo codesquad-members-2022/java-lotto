@@ -4,9 +4,9 @@ import java.util.List;
 
 public class NumberDto {
 
-    private int userId;
-    private List<Integer> winningNumber;
-    private int bonusNumber;
+    private final int userId;
+    private final List<Integer> winningNumber;
+    private final int bonusNumber;
 
     public NumberDto(int userId, List<Integer> winningNumber, int bonusNumber) {
         this.userId = userId;

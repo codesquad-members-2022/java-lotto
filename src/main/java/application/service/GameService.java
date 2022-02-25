@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 public class GameService {
 
     private static GameService gameService;
-    private UserLotteriesRepository userLotteriesRepository = UserLotteriesRepository.getInstance();
-    private UserRepository userRepository = UserRepository.getInstance();
+    private final UserLotteriesRepository userLotteriesRepository = UserLotteriesRepository.getInstance();
+    private final UserRepository userRepository = UserRepository.getInstance();
 
     private GameService() {}
 
