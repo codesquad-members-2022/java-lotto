@@ -17,7 +17,6 @@ public class LottoController {
     }
 
     public void buildLotto() {
-        //처음 입력 검증단계
         OutputView.requestPrice();
         while (true) {
             price = Integer.parseInt(InputView.requestPrice());
@@ -30,9 +29,7 @@ public class LottoController {
         }
 
         int count = price / LOTTO_PRICE;
-
         int manualLottoEach;
-        //수동 로또 입력 검증 단계
         OutputView.requestManual();
         while (true) {
             manualLottoEach = Integer.parseInt(InputView.requestManualCount());
@@ -47,10 +44,7 @@ public class LottoController {
         if (manualLottoEach != 0) {
             LottoMaker manualLottoMaker = LottoMakerFactory.getLottoMaker("manual");
             OutputView.requestManualLottoNumber();
-            for (int i = 0; i < manualLottoEach; i++) {
-                List<Integer> randomLotto = manualLottoMaker.createLotto();
-                checkOverLap(randomLotto);
-            }
+            createManualLottoByNumber(manualLottoEach, manualLottoMaker);
         }
 
 
@@ -61,6 +55,13 @@ public class LottoController {
         }
 
         OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
+    }
+
+    private void createManualLottoByNumber(int manualLottoEach, LottoMaker manualLottoMaker) {
+        for (int i = 0; i < manualLottoEach; i++) {
+            List<Integer> randomLotto = manualLottoMaker.createLotto();
+            checkOverLap(randomLotto);
+        }
     }
 
     private void checkOverLap(List<Integer> lists) {
