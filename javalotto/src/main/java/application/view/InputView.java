@@ -32,7 +32,7 @@ public class InputView {
                     return purchaseAmount;
                 }
             } catch (InputMismatchException e) {
-                e.printStackTrace();
+                OutputView.printInvalidFormatPleaseReEnter();
                 removeNewLine();
             }
         }
@@ -49,7 +49,12 @@ public class InputView {
     }
 
     public static List<Integer> getManualLotto() {
-        List<Integer> lotto = stringConversion(scanner.nextLine());
+        String manualLottoString = scanner.nextLine();
+        while (!validation.validateGetManualLotto(manualLottoString)) {
+            OutputView.printInvalidFormatPleaseReEnter();
+            manualLottoString = scanner.nextLine();
+        }
+        List<Integer> lotto = stringConversion(manualLottoString);
         return lotto;
     }
 
