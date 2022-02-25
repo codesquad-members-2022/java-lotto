@@ -24,17 +24,8 @@ public class LottoGame {
         int manualTicketCount = repeatSupplierUntilSuccessful(
                 () -> inputView.getManualTicketCount(lottoBundle.count()));
 
-        // 수동 번호를 입력받아 복권을 생성한다. 성공할 때까지 반복한다.
-        List<LottoTicket> lottoTicketList = repeatSupplierUntilSuccessful(() -> {
-            int[][] numbers = inputView.getManualLottoNumbers(manualTicketCount);
-            return Stream.of(numbers)
-                    .map(LottoFactory::issueLottoTicketWithSelectNumbers)
-                    .collect(Collectors.toList());
-        });
-
-        // 수동 복권 수가 복권 뭉치의 한도를 넘으려고 하면 중단하고 다음으로 넘어간다.
-        // 수동으로 입력할 복권 장수를 입력받을 때 입력값이 복권 뭉치 크기보다 작게 제한하기 때문에 실제로 중단이 일어나는 경우는 없다.
-        tryConsumer(lottoBundle::addManualLottoTickets, lottoTicketList);
+        // 복권 장수가 1장 이상이라면 수동 복권을 생성하여 로또 뭉치에 더한다.
+        addManualLottoTicketsIfAny(lottoBundle, manualTicketCount);
 
         // 복권 뭉치의 남은 복권 수를 자동 복권으로 채운다.
         lottoBundle.fillWithRandomLottoTickets();
@@ -59,6 +50,27 @@ public class LottoGame {
         inputView.close();
     }
 
+    private void addManualLottoTicketsIfAny(LottoBundle lottoBundle, int manualTicketCount) {
+        if (manualTicketCount < 1) {
+            return;
+        }
+
+        // 수동 번호를 입력받아 복권을 생성한다. 성공할 때까지 반복한다.
+        List<LottoTicket> lottoTicketList = repeatSupplierUntilSuccessful(() ->
+                getManualLottoTickets(manualTicketCount));
+
+        // 수동 복권 수가 복권 뭉치의 한도를 넘으려고 하면 중단하고 다음으로 넘어간다.
+        // 수동으로 입력할 복권 장수를 입력받을 때 입력값이 복권 뭉치 크기보다 작게 제한하기 때문에 실제로 중단이 일어나는 경우는 없다.
+        tryConsumer(lottoBundle::addManualLottoTickets, lottoTicketList);
+    }
+
+    private List<LottoTicket> getManualLottoTickets(int manualTicketCount) {
+        int[][] numbers = inputView.getManualLottoNumbers(manualTicketCount);
+        return Stream.of(numbers)
+                .map(LottoFactory::issueLottoTicketWithSelectNumbers)
+                .collect(Collectors.toList());
+    }
+
     private <T> T repeatSupplierUntilSuccessful(Supplier<T> supplier) {
         T result = null;
 
@@ -73,7 +85,7 @@ public class LottoGame {
         try {
             return supplier.get();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.printMessage(e.getMessage());
         }
 
         return null;
@@ -83,7 +95,7 @@ public class LottoGame {
         try {
             consumer.accept(t);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.printMessage(e.getMessage());
         }
     }
 }

@@ -27,4 +27,8 @@ public class OutputView {
                 .forEach(System.out::println);
         System.out.printf("총 수익률은 %,4.2f%%입니다.%n", lottoResult.getProfitRate());
     }
+
+    public void printMessage(String message) {
+        System.out.println(message);
+    }
 }
