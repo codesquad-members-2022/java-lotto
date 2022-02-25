@@ -5,7 +5,7 @@ import java.util.List;
 import domain.Rank;
 import domain.WinningNumbers;
 
-public class Lotto {
+public abstract class Lotto {
 
     public static final int PRICE = 1_000;
     public static final int LOTTO_NUMBER_COUNT = 6;

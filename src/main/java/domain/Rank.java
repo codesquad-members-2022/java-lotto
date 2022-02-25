@@ -7,7 +7,7 @@ public enum Rank {
     RANK2(30_000_000, 5, true),
     RANK3(1_500_000, 5, false),
     RANK4(50_000, 4, false),
-    rank5(5_000, 3, false),
+    RANK5(5_000, 3, false),
     NO_RANK(0, 0, false);
 
     private int prize;
