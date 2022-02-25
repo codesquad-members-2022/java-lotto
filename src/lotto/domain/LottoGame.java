@@ -10,7 +10,7 @@ import lotto.view.Output;
 
 public class LottoGame {
 
-    private final Lottos lottos = new Lottos();
+    private final LottoBundle lottos = new LottoBundle();
     private final Map<Lotto, Integer> numOfMatchingResult = new HashMap<>();
     private Map<Rank, Integer> rankResult;
     private LuckyLotto luckyLotto;

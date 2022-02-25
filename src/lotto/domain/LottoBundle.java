@@ -3,19 +3,19 @@ package lotto.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lottos {
+public class LottoBundle {
 
-    private List<Lotto> lottos = new ArrayList<>();
+    private List<Lotto> lottoBundle = new ArrayList<>();
 
     public List<Lotto> buyLotto(int numOfLotto) {
         for (int i = 0; i < numOfLotto; i++) {
-            lottos.add(Lotto.create());
+            lottoBundle.add(Lotto.create());
         }
-        return lottos;
+        return lottoBundle;
     }
 
     public List<Lotto> buyLotto(List<Integer> lottoNumbers) {
-        lottos.add(Lotto.create(lottoNumbers));
-        return lottos;
+        lottoBundle.add(Lotto.create(lottoNumbers));
+        return lottoBundle;
     }
 }
