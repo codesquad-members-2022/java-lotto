@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.Lotto.Lotto;
-import domain.Lotto.LottoGenerator;
 
 class LottoGeneratorTest {
 
