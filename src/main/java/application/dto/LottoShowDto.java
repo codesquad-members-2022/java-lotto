@@ -1,5 +1,8 @@
 package application.dto;
 
+import application.domain.Lottery;
+import application.domain.UserLotteries;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,24 +10,22 @@ import java.util.stream.Collectors;
 
 public class LottoShowDto {
 
+    private int userId;
     private int lottosSize;
     private List<Map<String, List<Integer>>> lottos;
 
-    public LottoShowDto(int lottosSize, List<List<Integer>> lottos) {
-        this.lottosSize = lottosSize;
-        this.lottos = lottos.stream()
+    public LottoShowDto(int userId, UserLotteries userLotteries) {
+        List<List<Integer>> numbersList = userLotteries.get().stream()
+                .map(Lottery::getNumbers)
+                .collect(Collectors.toList());
+
+        this.userId = userId;
+        this.lottosSize = numbersList.size();
+        this.lottos = numbersList.stream()
                 .map(numbers -> new HashMap<String, List<Integer>>() {{
                     put("numbers", numbers);
                 }})
                 .collect(Collectors.toList());
-    }
-
-    public int getLottosSize() {
-        return lottosSize;
-    }
-
-    public List<Map<String, List<Integer>>> getLottos() {
-        return lottos;
     }
 
     public Map<String, Object> toModel() {
@@ -33,5 +34,9 @@ public class LottoShowDto {
         model.put("lottos", lottos);
 
         return model;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

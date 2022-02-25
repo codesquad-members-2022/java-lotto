@@ -2,7 +2,7 @@ package application.routes;
 
 import application.view.InputUtil;
 import application.controller.GameController;
-import application.dto.BundleDto;
+import application.dto.LottoInputDto;
 import application.dto.LottoShowDto;
 import application.dto.LottosResultDto;
 import application.dto.NumberDto;
@@ -28,11 +28,12 @@ public class Route {
             String inputMoney = req.queryParams("inputMoney");
             String manualNumbers = req.queryParams("manualNumber");
 
-            BundleDto bundleDto = new BundleDto(
+            LottoInputDto lottoInputDto = new LottoInputDto(
                     InputUtil.parseNumber(inputMoney),
                     InputUtil.parseDoubleListNumber(manualNumbers)
             );
-            LottoShowDto lottoShowDto = controller.getUserBundle(bundleDto);
+            LottoShowDto lottoShowDto = controller.postBuyLotto(lottoInputDto);
+            res.cookie("userId", String.valueOf(lottoShowDto.getUserId()));
 
             return render(lottoShowDto.toModel(), "show.html");
         });
@@ -40,12 +41,15 @@ public class Route {
         post("/matchLotto", (req, res) -> {
             String winningNumber = req.queryParams("winningNumber");
             String bonusNumber = req.queryParams("bonusNumber");
+            int userId = Integer.parseInt(req.cookie("userId"));
 
             NumberDto numberDto = new NumberDto(
+                    userId,
                     InputUtil.parseListNumber(winningNumber),
                     InputUtil.parseNumber(bonusNumber)
             );
-            LottosResultDto lottosResultDto = controller.getStatistics(numberDto);
+            LottosResultDto lottosResultDto = controller.postMatchLotto(numberDto);
+            res.cookie("userId", null);
 
             return render(lottosResultDto.toModel(), "result.html");
         });

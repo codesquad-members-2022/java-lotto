@@ -2,12 +2,12 @@ package application.dto;
 
 import java.util.List;
 
-public class BundleDto {
+public class LottoInputDto {
 
     private int inputMoney;
     private List<List<Integer>> manualNumbers;
 
-    public BundleDto(int inputMoney, List<List<Integer>> manualNumbers) {
+    public LottoInputDto(int inputMoney, List<List<Integer>> manualNumbers) {
         this.inputMoney = inputMoney;
         this.manualNumbers = manualNumbers;
     }

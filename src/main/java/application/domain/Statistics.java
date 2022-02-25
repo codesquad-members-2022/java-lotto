@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.dto.LottosResultDto;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
@@ -10,9 +12,8 @@ public class Statistics {
     private final Map<Prize, Integer> counts = new EnumMap<>(Prize.class);
     private final int money;
 
-    public Statistics(User userBundle) {
-        UserLotteries userLotteries = userBundle.getUserLotteries();
-        money = userBundle.getMoney();
+    public Statistics(User user, UserLotteries userLotteries) {
+        money = user.getMoney();
 
         Arrays.stream(Prize.values())
             .forEach(prize -> counts.put(prize, 0));
@@ -35,5 +36,9 @@ public class Statistics {
 
     public Map<Prize, Integer> getCounts() {
         return counts;
+    }
+
+    public LottosResultDto toLottosResultDto() {
+        return new LottosResultDto(counts, getEarningsRate());
     }
 }

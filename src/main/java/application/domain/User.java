@@ -9,23 +9,18 @@ public class User {
 
     public static final int PRICE = 1_000;
 
+    private final int userId;
     private final int money;
     private final int count;
-    private final UserLotteries userLotteries;
 
-    public User(int money, List<UserLottery> manualLotteries) {
+    public User(int userId, int money) {
+        this.userId = userId;
         this.money = money;
 
         count = money / PRICE;
-        userLotteries = new UserLotteries(count - manualLotteries.size(), manualLotteries);
     }
 
-    public LottoShowDto getLottoShowDto() {
-        List<List<Integer>> numbersList = userLotteries.get().stream()
-                .map(Lottery::getNumbers)
-                .collect(Collectors.toList());
-        return new LottoShowDto(numbersList.size(), numbersList);
-    }
+    public int getUserId() { return userId; }
 
     public int getMoney() {
         return money;
@@ -35,7 +30,4 @@ public class User {
         return count;
     }
 
-    public UserLotteries getUserLotteries() {
-        return userLotteries;
-    }
 }

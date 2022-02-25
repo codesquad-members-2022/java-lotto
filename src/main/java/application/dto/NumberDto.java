@@ -4,10 +4,12 @@ import java.util.List;
 
 public class NumberDto {
 
+    private int userId;
     private List<Integer> winningNumber;
     private int bonusNumber;
 
-    public NumberDto(List<Integer> winningNumber, int bonusNumber) {
+    public NumberDto(int userId, List<Integer> winningNumber, int bonusNumber) {
+        this.userId = userId;
         this.winningNumber = winningNumber;
         this.bonusNumber = bonusNumber;
     }
@@ -18,5 +20,9 @@ public class NumberDto {
 
     public int getBonusNumber() {
         return bonusNumber;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }
