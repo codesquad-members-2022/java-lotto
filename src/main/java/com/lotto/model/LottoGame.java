@@ -1,53 +1,24 @@
 package com.lotto.model;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LottoService {
-	public LottoTickets publishLottoTickets(int purchaseAmount){
-		return new LottoTickets(purchaseAmount);
-	}
-	public LottoTickets publishLottoTickets(int purchaseAmount, List<List<Integer>> manualNumbers){
-		return new LottoTickets(purchaseAmount, manualNumbers);
-	}
-	public Map<Rank, Integer> checkResult(LottoTickets tickets, List<Integer> winningNumbers, int bonusNumber) {
+public class LottoGame {
+	public LottoResult checkResult(LottoTickets tickets, WinningLotto winningNumbers) {
 		List<Lotto> ticketList = tickets.getTickets();
-		Map<Rank, Integer> result = new LinkedHashMap<>() {{
-			put(Rank.FIFTH, 0);
-			put(Rank.FOURTH, 0);
-			put(Rank.THIRD, 0);
-			put(Rank.SECOND, 0);
-			put(Rank.FIRST, 0);
-		}};
-		for (Lotto lotto : ticketList) {
-			int ticketResult = checkTicket(lotto.getTicket(), winningNumbers);
-			boolean isWinningBonusNumber = checkBonusNumber(lotto.getTicket(), bonusNumber);
+		LottoResult result = new LottoResult();
 
-			if (isWinning(ticketResult)) {
-				Rank rank = Rank.checkRank(ticketResult, isWinningBonusNumber);
-				result.put(rank, result.get(rank) + 1);
-			}
+		for (Lotto lotto : ticketList) {
+			int ticketResult = winningNumbers.compareTicket(lotto.getTicket());
+			boolean bonusResult = winningNumbers.compareBonusNumber(lotto.getTicket());
+			result.check(ticketResult, bonusResult);
 		}
 		return result;
 	}
 
-	public double calculateEarningRate(int purchaseAmount, Map<Rank, Integer> result) {
-		return (double)calculateWinningAmount(result) / purchaseAmount * 100 - 100;
-	}
+	public double calculateEarningRate(int purchaseAmount, LottoResult result) {
 
-	private boolean isWinning(int ticketResult) {
-		return ticketResult >= 3;
-	}
-
-	private int checkTicket(List<Integer> ticket, List<Integer> winningNumbers) {
-		return (int)winningNumbers.stream()
-			.filter(ticket::contains)
-			.count();
-	}
-
-	private boolean checkBonusNumber(List<Integer> ticket, int bonusNumber) {
-		return ticket.contains(bonusNumber);
+		return (double)calculateWinningAmount(result.getResult()) / purchaseAmount * 100 - 100;
 	}
 
 	private int calculateWinningAmount(Map<Rank, Integer> result) {
@@ -57,9 +28,4 @@ public class LottoService {
 		}
 		return winningAmount;
 	}
-
-	private int calculateAmount(int purchaseAmount) {
-		return purchaseAmount / TICKET_PRICE;
-	}
-
 }
