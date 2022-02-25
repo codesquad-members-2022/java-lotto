@@ -1,26 +1,16 @@
 package lotto.domain;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Lotto {
+public abstract class Lotto {
+
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
-        this.numbers = pickSixNumbers(numbers);
+        this.numbers = createLotto(numbers);
     }
 
-    private List<Integer> pickSixNumbers(List<Integer> numbers) {
-        int pickNumberLength = 6;
-
-        Collections.shuffle(numbers);
-
-        return numbers.stream()
-                .limit(pickNumberLength)
-                .sorted()
-                .collect(Collectors.toList());
-    }
+    public abstract List<Integer> createLotto(List<Integer> numbers);
 
     public String showLottoNumbers() {
         return numbers.toString();
