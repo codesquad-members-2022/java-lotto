@@ -1,5 +1,7 @@
 package view;
 
+import domain.Lotto.ManualLotto;
+import domain.Lotto.RandomLotto;
 import domain.PurchasedLotteries;
 import domain.Rank;
 import domain.Result;
@@ -8,8 +10,8 @@ public class OutputView {
 
     public void printPurchasedLotteries(PurchasedLotteries purchasedLotteries) {
         System.out.printf("수동으로 %d장, 자동으로 %d장을 구매했습니다.%n"
-            , purchasedLotteries.countManualLotto()
-            , purchasedLotteries.countRandomLotto());
+            , purchasedLotteries.countTypeOf(ManualLotto.class)
+            , purchasedLotteries.countTypeOf(RandomLotto.class));
         purchasedLotteries.get().forEach(System.out::println);
     }
 

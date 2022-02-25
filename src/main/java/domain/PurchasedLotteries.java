@@ -3,8 +3,6 @@ package domain;
 import java.util.List;
 
 import domain.Lotto.Lotto;
-import domain.Lotto.ManualLotto;
-import domain.Lotto.RandomLotto;
 
 public class PurchasedLotteries {
 
@@ -37,15 +35,9 @@ public class PurchasedLotteries {
         return purchasedLotteries.size();
     }
 
-    public int countManualLotto() {
+    public int countTypeOf(Class<? extends Lotto> lottoType) {
         return (int)purchasedLotteries.stream()
-            .filter(ManualLotto.class::isInstance)
-            .count();
-    }
-
-    public int countRandomLotto() {
-        return (int)purchasedLotteries.stream()
-            .filter(RandomLotto.class::isInstance)
+            .filter(lottoType::isInstance)
             .count();
     }
 
