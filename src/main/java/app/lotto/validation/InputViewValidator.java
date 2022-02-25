@@ -15,7 +15,7 @@ public class InputViewValidator {
 
     public static void validateNumbersCount(String[] numbers, int count) {
         for (String num : numbers) {
-            Integer.parseInt(num.trim());
+            parseIntTrim(num);
         }
 
         if (numbers.length != count) {
@@ -39,11 +39,15 @@ public class InputViewValidator {
         Set<Integer> numberSet = new HashSet<>();
 
         for (String num : numbers) {
-            numberSet.add(Integer.parseInt(num.trim()));
+            numberSet.add(parseIntTrim(num));
         }
 
         if (numbers.length != numberSet.size()) {
             throw new IllegalArgumentException("중복되지 않은 번호를 입력해주세요.");
         }
+    }
+
+    private static int parseIntTrim(String num) {
+        return Integer.parseInt(num.trim());
     }
 }
