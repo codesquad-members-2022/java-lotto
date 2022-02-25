@@ -3,22 +3,23 @@ package domain.lotto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class LottoGameResults {
 
-    private final LottoTickets lottoTickets;
-    private final WinningTicket winningTicket;
+    private final double returnToInvestment;
+
     private final Map<Rank, Integer> rankCounts;
 
     public LottoGameResults(LottoTickets lottoTickets, WinningTicket winningTicket) {
-        this.lottoTickets = lottoTickets;
-        this.winningTicket = winningTicket;
-        this.rankCounts = setupRankCounts();
+
+        this.rankCounts = setupRankCounts(lottoTickets, winningTicket);
+        returnToInvestment = calculateReturnToInvestment(lottoTickets);
     }
 
-    private Map<Rank, Integer> setupRankCounts() {
+    private Map<Rank, Integer> setupRankCounts(LottoTickets lottoTickets, WinningTicket winningTicket) {
         Map<Rank, Integer> rankCounts = initRankCounts();
-        calculateRankCounts(rankCounts);
+        calculateRankCounts(rankCounts, lottoTickets, winningTicket);
         return rankCounts;
     }
 
@@ -30,7 +31,7 @@ public class LottoGameResults {
         return rankCounts;
     }
 
-    private void calculateRankCounts(Map<Rank, Integer> rankCounts) {
+    private void calculateRankCounts(Map<Rank, Integer> rankCounts, LottoTickets lottoTickets, WinningTicket winningTicket) {
         List<LottoTicket> tickets = lottoTickets.getLottoTickets();
         for (LottoTicket ticket : tickets) {
             Rank resultRank = winningTicket.match(ticket);
@@ -39,6 +40,10 @@ public class LottoGameResults {
     }
 
     public double getReturnToInvestment() {
+        return returnToInvestment;
+    }
+
+    private double calculateReturnToInvestment(LottoTickets lottoTickets) {
         long totalRewards = getTotalRewards();
         double profit = totalRewards - lottoTickets.getPriceSum();
         double returnOfInvestment = (profit) / lottoTickets.getPriceSum() * 100;
@@ -46,14 +51,14 @@ public class LottoGameResults {
     }
 
     private long getTotalRewards() {
-        long totalRewards = 0;
-        for (Map.Entry<Rank, Integer> entry : rankCounts.entrySet()) {
-            long reward = entry.getKey().getReward();
-            int count = entry.getValue();
-            long totalReward = reward * count;
-            totalRewards += totalReward;
-        }
-        return totalRewards;
+        return Stream.of(Rank.values())
+                .mapToLong(this::getRankReward)
+                .sum();
+    }
+
+    private long getRankReward(Rank rank) {
+        long rankReward = rank.getReward();
+        return rankReward * getRankCountOf(rank);
     }
 
     public int getRankCountOf(Rank rank) {
