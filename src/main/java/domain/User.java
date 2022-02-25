@@ -30,9 +30,9 @@ public class User {
         for (Lotto lotto : lottos) {
             int count = lotto.getMatchBallCount(winningLotto);
             boolean matchBonus = lotto.isMatchBonusBall(winningLotto);
-            Rank status = Rank.createRank(count, matchBonus);
-            profit += status.getPrice();
-            ranks.add(status);
+            Rank rank = Rank.of(count, matchBonus);
+            profit += rank.getPrice();
+            ranks.add(rank);
         }
     }
 
