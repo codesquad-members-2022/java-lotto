@@ -2,45 +2,56 @@ package controller;
 
 import domain.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
 public class LottoGame {
 
     public static final int LOTTO_PRICE = 1_000;
+    private InputView inputView;
+    private OutputView outputView;
+
+    public LottoGame() {
+        inputView = new InputView();
+        outputView = new OutputView();
+    }
 
     public void run() {
-        int purchasingMoney = getValidatedPurchaseMoney();
-        int purchaseQuantity = purchasingMoney / LOTTO_PRICE;
+        int purchaseMoney = getValidatedPurchaseMoney();
+        int purchaseQuantity = purchaseMoney / LOTTO_PRICE;
 
+        LottoTicket lottoTicket = makeLottoTicket(purchaseQuantity);
+
+        WinningSheet winningNumbers = getValidatedWinningSheet();
+
+        Map<Rank, Integer> winningResult = new LottoMatchChecker(winningNumbers, lottoTicket).getWinningResult();
+        double profitPercent = new ProfitCalculator(purchaseMoney, winningResult).calculate();
+
+        outputView.printProfitTable(winningResult);
+        outputView.printProfit(profitPercent);
+    }
+
+    private LottoTicket makeLottoTicket(int purchaseQuantity) {
         int manualLottoQuantity = getValidatedManualLottoQuantity(purchaseQuantity);
 
-        List<LottoSheet> manualLottoNumbers = InputView.getManualLottoNumbers(manualLottoQuantity);
+        ManualLottoSheet manualLottoNumbers = getValidatedManualLottoNumber(manualLottoQuantity);
 
         LottoTicket lottoTicket = new LottoTicket();
-        lottoTicket.addManualSheets(manualLottoNumbers);
+        lottoTicket.addManualSheets(manualLottoNumbers.getManualNumbers());
         lottoTicket.issue(purchaseQuantity - manualLottoQuantity);
-        OutputView.printPurchaseConfirmMessage(purchaseQuantity, manualLottoQuantity);
-        OutputView.printLotto(lottoTicket);
 
-        WinningNumbers winningNumbers = getValidatedWinningNumbers();
-
-        LinkedHashMap<Rank, Integer> winningResult = new LottoMatchChecker(winningNumbers, lottoTicket).getWinningResult();
-
-        Double profitPercent = new ProfitCalculator(purchasingMoney, winningResult).calculate();
-
-        OutputView.printProfitTable(winningResult);
-        OutputView.printProfit(profitPercent);
+        outputView.printPurchaseConfirmMessage(purchaseQuantity, manualLottoQuantity);
+        outputView.printLotto(lottoTicket);
+        return lottoTicket;
     }
 
     public int getValidatedPurchaseMoney() {
         try {
-            return InputView.getPurchasingMoney();
+            return inputView.getPurchaseMoney();
         } catch (NumberFormatException e) {
-            System.out.println("잘못된 값을 입력하셨습니다!!");
+            System.out.println("숫자를 입력해주세요!!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -49,25 +60,38 @@ public class LottoGame {
 
     public int getValidatedManualLottoQuantity(int purchaseQuantity) {
         try {
-            return InputView.getManualLottoQuantity(purchaseQuantity);
+            return inputView.getManualLottoQuantity(purchaseQuantity);
         } catch (NumberFormatException e) {
-            System.out.println("잘못된 값을 입력하셨습니다!!");
+            System.out.println("숫자를 입력해주세요!!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
         return getValidatedManualLottoQuantity(purchaseQuantity);
     }
 
-    public WinningNumbers getValidatedWinningNumbers() {
+    public ManualLottoSheet getValidatedManualLottoNumber(int manualLottoQuantity) {
         try {
-            List<Integer> winningNumbers = InputView.getWinningNumber();
-            int bonusNumber = InputView.getBonusNumber();
-            return new WinningNumbers(winningNumbers,bonusNumber);
+            List<LottoSheet> manualLottoNumbers = inputView.getManualLottoNumbers(manualLottoQuantity);
+            ManualLottoSheet manualLottoSheet = new ManualLottoSheet(manualLottoNumbers);
+            return manualLottoSheet;
         } catch (NumberFormatException e) {
-            System.out.println("잘못된 값을 입력하셨습니다!!");
+            System.out.println("숫자를 입력해주세요!!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return getValidatedWinningNumbers();
+        return getValidatedManualLottoNumber(manualLottoQuantity);
+    }
+
+    public WinningSheet getValidatedWinningSheet() {
+        try {
+            List<Integer> winningNumbers = inputView.getWinningNumber();
+            int bonusNumber = inputView.getBonusNumber();
+            return new WinningSheet(winningNumbers, bonusNumber);
+        } catch (NumberFormatException e) {
+            System.out.println("숫자를 입력해주세요!!");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return getValidatedWinningSheet();
     }
 }
