@@ -7,13 +7,12 @@ import java.util.stream.Stream;
 
 public class LottoGameResults {
 
-    private final double returnToInvestment;
-
     private final Map<Rank, Integer> rankCounts;
+    private final double returnToInvestment;
 
     public LottoGameResults(LottoTickets lottoTickets, WinningTicket winningTicket) {
         this.rankCounts = setupRankCounts(lottoTickets, winningTicket);
-        returnToInvestment = calculateReturnToInvestment(lottoTickets);
+        this.returnToInvestment = calculateReturnToInvestment(lottoTickets);
     }
 
     private Map<Rank, Integer> setupRankCounts(LottoTickets lottoTickets, WinningTicket winningTicket) {
