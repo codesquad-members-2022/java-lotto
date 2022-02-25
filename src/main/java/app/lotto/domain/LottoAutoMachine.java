@@ -1,7 +1,5 @@
 package app.lotto.domain;
 
-import app.lotto.view.OutputView;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
