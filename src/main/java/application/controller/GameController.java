@@ -5,13 +5,15 @@ import application.dto.LottoShowDto;
 import application.dto.LottosResultDto;
 import application.dto.NumberDto;
 import application.service.GameService;
+import spark.Request;
+import spark.Response;
 
 import java.util.List;
 
 public class GameController {
 
     private static GameController controller;
-    private static GameService service = GameService.getInstance();
+    private static final GameService service = GameService.getInstance();
 
     private GameController() {}
 
@@ -26,11 +28,12 @@ public class GameController {
         int money = dto.getInputMoney();
         List<List<Integer>> manualNumbers = dto.getManualNumbers();
 
-        return service.createUser(money, manualNumbers);
+        LottoShowDto lottoShowDto = service.createUser(money, manualNumbers);
+
+        return lottoShowDto;
     }
 
-    public LottosResultDto postMatchLotto(NumberDto numberDto) {
-        int userId = numberDto.getUserId();
+    public LottosResultDto postMatchLotto(int userId, NumberDto numberDto) {
         List<Integer> winningNumber = numberDto.getWinningNumber();
         int bonusNumber = numberDto.getBonusNumber();
 

@@ -9,6 +9,7 @@ import application.dto.NumberDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -26,13 +27,9 @@ public class Route {
         });
 
         post("/buyLotto", (req, res) -> {
-
-            String inputMoney = req.queryParams("inputMoney");
-            String manualNumbers = req.queryParams("manualNumber");
-
             LottoInputDto lottoInputDto = new LottoInputDto(
-                    InputUtil.parseNumber(inputMoney),
-                    InputUtil.parseDoubleListNumber(manualNumbers)
+                    InputUtil.parseNumber(req.queryParams("inputMoney")),
+                    InputUtil.parseDoubleListNumber(req.queryParams("manualNumber"))
             );
             LottoShowDto lottoShowDto = controller.postBuyLotto(lottoInputDto);
             res.cookie("userId", String.valueOf(lottoShowDto.getUserId()));
@@ -41,28 +38,22 @@ public class Route {
         });
 
         post("/matchLotto", (req, res) -> {
-            String winningNumber = req.queryParams("winningNumber");
-            String bonusNumber = req.queryParams("bonusNumber");
             int userId = Integer.parseInt(req.cookie("userId"));
-
             NumberDto numberDto = new NumberDto(
                     userId,
-                    InputUtil.parseListNumber(winningNumber),
-                    InputUtil.parseNumber(bonusNumber)
+                    InputUtil.parseListNumber(req.queryParams("winningNumber")),
+                    InputUtil.parseNumber(req.queryParams("bonusNumber"))
             );
-            LottosResultDto lottosResultDto = controller.postMatchLotto(numberDto);
+            LottosResultDto lottosResultDto = controller.postMatchLotto(userId, numberDto);
 
             return render(lottosResultDto.toModel(), "result.html");
         });
 
         post("/clearLotto", (req, res) -> {
             int userId = Integer.parseInt(req.cookie("userId"));
-
-            controller.deleteUserInfo(userId);
             res.removeCookie("userId");
-
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            controller.deleteUserInfo(userId);
+            return render(Collections.emptyMap(), "index.html");
         });
 
         exception(IllegalArgumentException.class, (((err, req, res) -> {
@@ -78,7 +69,6 @@ public class Route {
         exception(RuntimeException.class, (err, req, res) -> {
             err.printStackTrace();
         });
-
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

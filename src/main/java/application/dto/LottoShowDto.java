@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 public class LottoShowDto {
 
-    private int userId;
-    private int lottosSize;
-    private List<Map<String, List<Integer>>> lottos;
+    private final int userId;
+    private final int lottosSize;
+    private final List<Map<String, List<Integer>>> lottos;
 
     public LottoShowDto(int userId, UserLotteries userLotteries) {
         List<List<Integer>> numbersList = userLotteries.get().stream()
