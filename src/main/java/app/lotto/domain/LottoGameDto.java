@@ -4,24 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LottoGameResult {
+public class LottoGameDto {
 
     private final List<LottoTicket> allLottoTickets;
-    private final int amount;
     private final WinningLottoNumbers winningLottoNumbers;
 
-    public LottoGameResult(List<LottoTicket> allLottoTickets, int amount, WinningLottoNumbers winningLottoNumbers) {
+    public LottoGameDto(List<LottoTicket> allLottoTickets, WinningLottoNumbers winningLottoNumbers) {
         this.allLottoTickets = allLottoTickets;
-        this.amount = amount;
         this.winningLottoNumbers = winningLottoNumbers;
     }
 
     public List<LottoTicket> getAllLottoTickets() {
         return Collections.unmodifiableList(allLottoTickets);
-    }
-
-    public int getAmount() {
-        return amount;
     }
 
     public WinningLottoNumbers getWinningLottoNumbers() {
@@ -30,15 +24,9 @@ public class LottoGameResult {
 
     public static class Builder {
         private final List<LottoTicket> allLottoTickets = new ArrayList<>();
-        private int amount;
         private WinningLottoNumbers winningLottoNumbers;
         public Builder addAllLottoTickets(List<LottoTicket> lottoTickets) {
             this.allLottoTickets.addAll(lottoTickets);
-            return this;
-        }
-
-        public Builder setAmount(int amount) {
-            this.amount = amount;
             return this;
         }
 
@@ -47,8 +35,8 @@ public class LottoGameResult {
             return this;
         }
 
-        public LottoGameResult build() {
-            return new LottoGameResult(allLottoTickets, amount, winningLottoNumbers);
+        public LottoGameDto build() {
+            return new LottoGameDto(allLottoTickets, winningLottoNumbers);
         }
     }
 

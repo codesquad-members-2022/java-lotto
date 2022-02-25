@@ -21,12 +21,15 @@ public class Main {
         WinningLottoNumbers winningLottoNumbers = new WinningLottoNumbers(InputView.readWinningNumbers(), InputView.readBonusNumber());
         System.out.println();
 
-        printLottoGameResult(new LottoGameResult.Builder()
+        LottoGameDto result = new LottoGameDto.Builder()
                 .addAllLottoTickets(customLottoTickets)
                 .addAllLottoTickets(autoLottoTickets)
-                .setAmount(amount)
                 .setWinningLottoNumbers(winningLottoNumbers)
-                .build());
+                .build();
+
+        LottoGame lottoGame = LottoGame.createWithLottoGameDtoAndAmount(result, amount);
+
+        lottoGame.printLottoGameResult();
     }
 
     private static void printAllLottoTickets(LottoTicketManager lottoTicketManager) {
@@ -34,14 +37,5 @@ public class Main {
         OutputView.printAllLottoNumbers(lottoTicketManager.getCustomLottoTickets());
         OutputView.printAllLottoNumbers(lottoTicketManager.getAutoLottoTickets());
         System.out.println();
-    }
-
-    private static void printLottoGameResult(LottoGameResult lottoGameResult) {
-        List<LottoResult> lottoResults = LottoGame.processLottoGame(lottoGameResult);
-        long totalProfit = LottoGame.getTotalProfit(lottoResults);
-
-        OutputView.printWinStatistics(lottoResults);
-        double result = (totalProfit - lottoGameResult.getAmount()) / (double) lottoGameResult.getAmount() * 100.0;
-        OutputView.printTotalProfit(result);
     }
 }

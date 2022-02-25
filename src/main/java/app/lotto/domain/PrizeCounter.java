@@ -1,20 +1,19 @@
 package app.lotto.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PrizeCounter {
 
-    public static Map<LottoPrize, Integer> getStatistics(LottoGameResult lottoGameResult) {
+    public static Map<LottoPrize, Integer> getStatistics(LottoGameDto lottoGameDto) {
         Map<LottoPrize, Integer> statistics = new HashMap<>();
 
-        List<LottoTicket> allLottoTicket = lottoGameResult.getAllLottoTickets();
+        List<LottoTicket> allLottoTicket = lottoGameDto.getAllLottoTickets();
 
         for (LottoTicket lottoTicket : allLottoTicket) {
-            int sameNumberCount = getSameNumberCount(lottoTicket, lottoGameResult.getWinningLottoNumbers().getWinningNumbers());
-            boolean isBonus = lottoTicket.contains(lottoGameResult.getWinningLottoNumbers().getBonusNumber());
+            int sameNumberCount = getSameNumberCount(lottoTicket, lottoGameDto.getWinningLottoNumbers().getWinningNumbers());
+            boolean isBonus = lottoTicket.contains(lottoGameDto.getWinningLottoNumbers().getBonusNumber());
 
             addCountToStatistics(statistics, sameNumberCount, isBonus);
         }
