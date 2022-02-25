@@ -9,7 +9,7 @@ import domains.winnings.Ranking;
 import domains.users.UserLotto;
 import views.PurchasedLotto;
 
-public class LottoPlay {
+public class LottoApplication {
 	private static LottoMachine lottoMachine = new LottoMachine();
 	private static Lottos lottos = new Lottos();
 	private static UserLotto userLotto = new UserLotto(lottoMachine, lottos);
