@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.domain.*;
 import application.dto.LottoInputDto;
 import application.dto.LottoShowDto;
 import application.dto.LottosResultDto;

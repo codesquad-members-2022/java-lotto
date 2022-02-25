@@ -11,6 +11,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static spark.Spark.*;
 
@@ -25,6 +26,7 @@ public class Route {
         });
 
         post("/buyLotto", (req, res) -> {
+
             String inputMoney = req.queryParams("inputMoney");
             String manualNumbers = req.queryParams("manualNumber");
 
@@ -53,6 +55,17 @@ public class Route {
 
             return render(lottosResultDto.toModel(), "result.html");
         });
+
+        exception(IllegalArgumentException.class, (((err, req, res) -> {
+            res.status(400);
+            res.body(err.getMessage());
+        })));
+
+        exception(NoSuchElementException.class, ((err, req, res) -> {
+            res.status(404);
+            res.body(err.getMessage());
+        }));
+
 
     }
 

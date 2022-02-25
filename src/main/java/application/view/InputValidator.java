@@ -14,7 +14,7 @@ public class InputValidator {
         return true;
     }
 
-    public static void validateManualCount(int money, int manualCount) {
+    public static void validateManualCount(int money, int manualCount) throws IllegalArgumentException {
         if (money < manualCount * User.PRICE) {
             throw new IllegalArgumentException("금액이 부족합니다.");
         }

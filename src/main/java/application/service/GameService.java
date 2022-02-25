@@ -7,6 +7,7 @@ import application.repository.UserLotteriesRepository;
 import application.repository.UserRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class GameService {
@@ -24,7 +25,7 @@ public class GameService {
         return gameService;
     }
 
-    public LottoShowDto createUser(int money, List<List<Integer>> manualNumbers) {
+    public LottoShowDto createUser(int money, List<List<Integer>> manualNumbers) throws NoSuchElementException {
         List<UserLottery> manualLotteries = manualNumbers.stream()
                 .map(UserLottery::new)
                 .collect(Collectors.toList());
@@ -41,7 +42,7 @@ public class GameService {
         return new LottoShowDto(user.getUserId(), userLotteries);
     }
 
-    public LottosResultDto createStatistics(int userId, List<Integer> winningNumber, int bonusNumber) {
+    public LottosResultDto createStatistics(int userId, List<Integer> winningNumber, int bonusNumber) throws NoSuchElementException{
         UserLotteries userLotteries = userLotteriesRepository.findByUserId(userId);
         User user = userRepository.findByUserId(userId);
         userLotteries.compareEach(new WinningLottery(winningNumber, bonusNumber));

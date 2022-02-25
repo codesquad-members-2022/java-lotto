@@ -30,6 +30,6 @@ public class UserLotteriesRepository {
         return userLotteriesList.stream()
                 .filter(userLotteries -> userLotteries.getUserId() == userId)
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new NoSuchElementException("해당 유저의 로또 정보가 존재하지 않습니다"));
     }
 }
