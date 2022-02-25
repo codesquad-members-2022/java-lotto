@@ -13,7 +13,7 @@ public class LottoTicketIssuer {
 
     public static void issue(int purchaseQuantity) {
         for (int i = 0; i < purchaseQuantity; i++) {
-            LottoSheet lottoSheet = new LottoSheet(LottoGenerator.getNumbers());
+            LottoSheet lottoSheet = new LottoSheet(LottoGenerator.getShuffledNumbers());
             lottoTicket.add(lottoSheet);
         }
     }
