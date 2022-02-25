@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Lotto {
 
-    private List<Integer> numbers;
+    private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
         this.numbers = numbers;
@@ -16,20 +16,20 @@ public class Lotto {
         Collections.sort(numbers);
     }
 
-    public int check(int[] winingNumber) {
+    public int check(List<Integer> winingNumber) {
         int count = 0;
 
-        for (int index = 0; index < winingNumber.length; index++) {
+        for (int index = 0; index < winingNumber.size(); index++) {
             count += countContainNumber(winingNumber, index);
         }
 
         return count;
     }
 
-    private int countContainNumber(int[] winingNumber, int index) {
+    private int countContainNumber(List<Integer> winingNumber, int index) {
         int count = 0;
 
-        if (numbers.contains(winingNumber[index])) {
+        if (numbers.contains(winingNumber.get(index))) {
             count++;
         }
 

@@ -29,7 +29,7 @@ public class Lottos {
         OutputView.printLottos(lottos);
     }
 
-    public Map<Rank, Integer> checkWiningNumber(int[] winingNumber, int bonusNumber) {
+    public Map<Rank, Integer> checkWiningNumber(List<Integer> winingNumber, int bonusNumber) {
         Map<Rank, Integer> numberOfWins = createNumberOfWinsMap();
 
         for (Lotto lotto : lottos) {

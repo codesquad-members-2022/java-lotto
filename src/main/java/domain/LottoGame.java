@@ -3,13 +3,15 @@ package domain;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class LottoGame {
     private static final int LOTTO_SIZE = 6;
 
     private final int purchasePrice;
-    private final int[] winingNumber = new int[LOTTO_SIZE];
+    private final List<Integer> winingNumber = new ArrayList<>();
     private final Lottos lottos = new Lottos();
     private int bonusNumber;
 
@@ -33,11 +35,11 @@ public class LottoGame {
     private void createWiningNumber() {
         String[] winningNumber = InputView.winningNumber();
 
-        for (int index = 0; index < winingNumber.length; index++) {
-            winingNumber[index] = Integer.parseInt(winningNumber[index]);
+        for (int index = 0; index < LOTTO_SIZE; index++) {
+            winingNumber.add(Integer.parseInt(winningNumber[index]));
         }
 
-         bonusNumber = Integer.parseInt(InputView.bonusNumber());
+        bonusNumber = Integer.parseInt(InputView.bonusNumber());
     }
 
 }
