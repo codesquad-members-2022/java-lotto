@@ -59,7 +59,6 @@ public class Route {
             int userId = Integer.parseInt(req.cookie("userId"));
 
             controller.deleteUserInfo(userId);
-
             res.removeCookie("userId");
 
             Map<String, Object> model = new HashMap<>();

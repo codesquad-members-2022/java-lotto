@@ -29,7 +29,7 @@ class LotteryTest {
     @Test
     @DisplayName("유저 로또 개수 입력 받아 랜덤으로 생성한다.")
     void userLotteryCountTest() {
-        UserLotteries userLottery = new UserLotteries(1,14);
+        UserLotteries userLottery = new UserLotteries(14);
         assertThat(userLottery.get().size()).isEqualTo(14);
     }
 

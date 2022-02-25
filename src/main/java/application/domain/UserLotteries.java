@@ -23,8 +23,7 @@ public class UserLotteries {
     }
 
     public void compareEach(WinningLottery winningLottery) {
-        lotteries.stream()
-                .forEach(lottery -> lottery.compareLottery(winningLottery));
+        lotteries.forEach(lottery -> lottery.compareLottery(winningLottery));
     }
 
     public void addUserLottery(List<Integer> numbers) {

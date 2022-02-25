@@ -22,7 +22,7 @@ public class UserRepository {
 
     Map<Integer, User> userMap = new HashMap<>();
 
-    private AtomicInteger userId = new AtomicInteger(0);
+    private final AtomicInteger userId = new AtomicInteger(0);
 
     public User create(int money) {
         int id = userId.incrementAndGet();
