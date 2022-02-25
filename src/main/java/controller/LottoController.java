@@ -1,13 +1,12 @@
 package controller;
 
-import domain.LottoTicket;
-import domain.LottoTicketSeller;
-import domain.Person;
-import domain.WinningNumbers;
+import domain.*;
+import domain.factory.CustomTicketFactory;
 import domain.factory.RandomTicketFactory;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LottoController {
@@ -15,15 +14,15 @@ public class LottoController {
 
     public void run() {
         int userMoney = InputView.requestMoney();
-        LottoTicketSeller seller = new LottoTicketSeller(new RandomTicketFactory());
-        Person testUser = new Person(userMoney, seller);
-        int customTicketCount = buyManualLottery(testUser);
+        LottoTicketSeller lottoTicketSeller = new LottoTicketSeller(new RandomTicketFactory());
+        Person customer = new Person();
+        int customTicketCount = buyManualLottery(customer, new LottoTicketSeller(new CustomTicketFactory()));
 
-        testUser.buyRandomLottoTicket(discharge(userMoney, customTicketCount));
+        buyRandomLottoTicket(customer, lottoTicketSeller, discharge(userMoney, customTicketCount));
 
-        showLottoInfo(testUser);
+        showLottoInfo(customer);
 
-        showResult(makeResult(testUser));
+        showResult(makeResult(customer));
         InputView.close();
     }
 
@@ -31,18 +30,33 @@ public class LottoController {
         return userMoney - customTicketCount * TICKET_PRICE;
     }
 
-    private int buyManualLottery(Person testUser) {
+    private void buyRandomLottoTicket(Person customer, LottoTicketSeller lottoTicketSeller, int money) {
+        lottoTicketSeller.setFactory(new RandomTicketFactory());
+        int ticketCount = money / TICKET_PRICE;
+        for (int i = 0; i < ticketCount; i++) {
+            customer.buyRandomLottoTicket(lottoTicketSeller.exchangeTicket(new ArrayList<>()));
+        }
+    }
+
+    private int buyManualLottery(Person customer, LottoTicketSeller lottoTicketSeller) {
+        lottoTicketSeller.setFactory(new CustomTicketFactory());
         int customTicketCount = InputView.requestCustomTicketCount();
         InputView.requestCustomTicketNumberMessage();
+
         for (int i = 0; i < customTicketCount; i++) {
-            testUser.buyCustomLottoTicket(InputView.requestCustomTicketNumber());
+            int[] numbers = InputView.requestCustomTicketNumber();
+            ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
+            for (int number : numbers) {
+                lottoNumbers.add(new LottoNumber(number));
+            }
+            customer.buyCustomLottoTicket(lottoTicketSeller.exchangeTicket(lottoNumbers));
         }
         return customTicketCount;
     }
 
-    private int[] makeResult(Person testUser) {
+    private int[] makeResult(Person customer) {
         WinningNumbers winningNumbers = getWinningNumbersWithBonusNumber();
-        return testUser.checkLottoTickets(winningNumbers);
+        return customer.checkLottoTickets(winningNumbers);
     }
 
     private WinningNumbers getWinningNumbersWithBonusNumber() {
@@ -57,8 +71,8 @@ public class LottoController {
         OutputView.showStatistics();
     }
 
-    private void showLottoInfo(Person user) {
-        List<LottoTicket> ticketList = user.getMyLottoTicketList();
+    private void showLottoInfo(Person customer) {
+        List<LottoTicket> ticketList = customer.getMyLottoTicketList();
         for (LottoTicket lottoTicket : ticketList) {
             lottoTicket.showLottoNumbers();
         }
