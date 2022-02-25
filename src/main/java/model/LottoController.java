@@ -56,11 +56,18 @@ public class LottoController {
         }
 
         if (manualLottoEach != 0) {
-            makeManualLottoPerCount(manualLottoEach);
+            LottoMaker manualLottoMaker = LottoMakerFactory.getLottoMaker("manual");
+            OutputView.requestManualLottoNumber();
+            for (int i = 0; i < manualLottoEach; i++) {
+                List<Integer> randomLotto = manualLottoMaker.createRandomLotto();
+                checkOverLap(randomLotto);
+            }
         }
 
         //로또 번호 중복 체크 단계
         while (repository.getLottoList().size() != count) {
+            LottoMaker autoLottoMaker = LottoMakerFactory.getLottoMaker("auto");
+            autoLottoMaker.createRandomLotto();
             checkOverLap(makeRandomNumberSet());
         }
 
@@ -68,37 +75,36 @@ public class LottoController {
         OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
     }
 
-    private void makeManualLottoPerCount(int manualLottoEach) {
-        String manualLottoNumber;
-        OutputView.requestManualLottoNumber();
+    // private void makeManualLottoPerCount(int manualLottoEach) {
+    //     String manualLottoNumber;
+    //     OutputView.requestManualLottoNumber();
+    //
+    //     while (manualLottoEach > 0) {
+    //         while (true) {
+    //             manualLottoNumber = InputView.requestManualLottoNumber();
+    //             try {
+    //                 InputValidator.validateNumberOfLotto(manualLottoNumber);
+    //                 break;
+    //             } catch (IllegalArgumentException e) {
+    //                 OutputView.printSentence(e.getMessage());
+    //             }
+    //         }
+    //         makeManualLotto(manualLottoNumber);
+    //         manualLottoEach--;
+    //     }
+    // }
 
-        while (manualLottoEach > 0) {
-            while (true) {
-                manualLottoNumber = InputView.requestManualLottoNumber();
-                try {
-                    InputValidator.validateNumberOfLotto(manualLottoNumber);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    OutputView.printSentence(e.getMessage());
-                }
-            }
-            makeManualLotto(manualLottoNumber);
-            manualLottoEach--;
-        }
-    }
-
-    private void makeManualLotto(String manualLottoNumber) {
-        String[] split = manualLottoNumber.split(", ");
-        List<Integer> collect = Arrays.stream(split)
-            .map(Integer::valueOf)
-            .collect(Collectors.toList());
-        checkOverLap(collect);
-    }
+    // private void makeManualLotto(String manualLottoNumber) {
+    //     String[] split = manualLottoNumber.split(", ");
+    //     List<Integer> collect = Arrays.stream(split)
+    //         .map(Integer::valueOf)
+    //         .collect(Collectors.toList());
+    //     checkOverLap(collect);
+    // }
 
     private List<Integer> makeRandomNumberSet() {
         Collections.shuffle(range);
-        List<Integer> shuffleNumbers = new ArrayList<>(range.subList(0, 6));
-        return shuffleNumbers;
+        return new ArrayList<>(range.subList(0, 6));
     }
 
     private void checkOverLap(List<Integer> lists) {
