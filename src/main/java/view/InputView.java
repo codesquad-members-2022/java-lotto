@@ -22,21 +22,15 @@ public class InputView {
                 .map(Integer::parseInt).collect(Collectors.toList());
     }
 
-    public static boolean askIsAuto() {
+    public static int getNumberOfManualTicket() {
         sc = new Scanner(System.in);
-        System.out.println("자동을 원하시면 'a', 수동을 원하시면 'm'을 입력해주세요.");
-        char input = sc.nextLine().charAt(0);
-        while (input != 'a' && input != 'm') {
-            System.out.println("올바르지 않은 명령입니다. 'a'와 'm'으로 입력하세요.");
-            input = sc.nextLine().charAt(0);
-        }
-        return Objects.equals(input, 'a');
+        System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
+        return Integer.parseInt(sc.nextLine());
     }
 
     public static List<Integer> getManualNumber() {
         List<Integer> manualNumber = new ArrayList<>();
         sc = new Scanner(System.in);
-        System.out.println("응모할 번호 6자리를 입력해 주세요.");
         String[] userInput = sc.nextLine().split(",");
         for (String number : userInput)
             manualNumber.add(Integer.parseInt(number));

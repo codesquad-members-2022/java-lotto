@@ -1,7 +1,6 @@
 package domain;
 
 import view.InputView;
-import view.OutputView;
 
 import java.util.*;
 
@@ -22,9 +21,16 @@ public class TicketOffice {
         }
     }
 
-    private LottoTicket makeLottoTicket(boolean isAuto) {
-        if (!isAuto)
-            return new LottoTicket(InputView.getManualNumber());
+    private List<LottoTicket> makeManualTickets(int numberOfManualTicket) {
+        List<LottoTicket> manualLottoTickets = new ArrayList<>();
+        System.out.println("수동으로 구매할 번호를 입력해 주세요. (응모할 번호 6자리)");
+        for (int i = 0; i < numberOfManualTicket; i++) {
+            manualLottoTickets.add(new LottoTicket(InputView.getManualNumber()));
+        }
+        return manualLottoTickets;
+    }
+
+    private LottoTicket makeAutoTicket() {
         List<Integer> ticketNumber = new ArrayList<>();
         Collections.shuffle(lottoNumber);
         for (int i = 0; i < SELECTED_NUMBER; i++) {
@@ -36,9 +42,13 @@ public class TicketOffice {
 
     public List<LottoTicket> issueTickets(int numberOfTickets) {
         List<LottoTicket> tickets = new ArrayList<>();
-        boolean isAuto = InputView.askIsAuto();
-        for (int i = 0; i < numberOfTickets; i++)
-            tickets.add(makeLottoTicket(isAuto));
+        int numberOfManualTicket = InputView.getNumberOfManualTicket();
+        if (numberOfManualTicket>0) {
+            tickets.addAll(makeManualTickets(numberOfManualTicket));
+        }
+        for (int j = 0; j < numberOfTickets - numberOfManualTicket; j++){
+            tickets.add(makeAutoTicket());
+        }
         return tickets;
     }
 
