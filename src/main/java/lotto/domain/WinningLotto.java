@@ -3,10 +3,13 @@ package lotto.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ManualLotto extends Lotto {
+public class WinningLotto extends Lotto {
 
-    public ManualLotto(List<Integer> numbers) {
+    private final int bonusNumber;
+
+    public WinningLotto(List<Integer> numbers, int bonusNumber) {
         super(numbers);
+        this.bonusNumber = bonusNumber;
     }
 
     @Override
@@ -14,5 +17,9 @@ public class ManualLotto extends Lotto {
         return numbers.stream()
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public int getBonusNumber() {
+        return bonusNumber;
     }
 }
