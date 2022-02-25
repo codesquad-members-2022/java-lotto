@@ -9,14 +9,15 @@ public class LottoGame {
 
     public void run() {
         int paidAmount = inputView.getPaidAmount();
-        LottoBundle lottoBundle = new LottoBundle(paidAmount);
-        lottoBundle.issueLottoTicketsWithRandomNumbers();
+        LottoBundle lottoBundle = LottoBundle.createByCashValue(paidAmount);
+        lottoBundle.fillWithRandomLottoTickets();
 
         outputView.printPurchaseResult(lottoBundle);
 
-        int[] winningNumber = inputView.getWinningNumber();
-        LottoTicket winningTicket = new LottoTicket(winningNumber);
-        LottoResult lottoResult = new LottoResult(lottoBundle, winningTicket);
+        int[] winningNumberInput = inputView.getWinningNumber();
+        int bonusNumberInput = inputView.getBonusNumber();
+        WinningNumber winningNumber = LottoFactory.selectWinningNumber(winningNumberInput, bonusNumberInput);
+        LottoResult lottoResult = LottoResult.of(lottoBundle, winningNumber);
 
         outputView.printLottoResult(lottoResult);
 

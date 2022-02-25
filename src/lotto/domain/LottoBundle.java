@@ -4,33 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LottoBundle {
-    private final int ticketCount;
-    private final int paidAmount;
+    private final int size;
 
     private final List<LottoTicket> lottoTickets = new ArrayList<>();
 
-    public LottoBundle(int paidAmount) {
-        validatePositiveInt(paidAmount);
-        this.paidAmount = paidAmount;
-        this.ticketCount = paidAmount / LottoTicket.PRICE;
+    public LottoBundle(int size) {
+        validatePositiveInt(size);
+        this.size = size;
     }
 
-    public void issueLottoTicketsWithRandomNumbers() {
-        for (int i = 0; i < ticketCount; i++){
-            lottoTickets.add(new LottoTicket());
+    public static LottoBundle createByCashValue(int cashValue) {
+        return new LottoBundle(cashValue / LottoTicket.PRICE);
+    }
+
+    public void fillWithRandomLottoTickets() {
+        for (int i = 0; i < size; i++){
+            lottoTickets.add(LottoFactory.issueLottoTicketWithRandomNumbers());
         }
     }
 
     public int count() {
-        return ticketCount;
+        return size;
     }
 
     public LottoTicket getTicket(int index) {
         return lottoTickets.get(index);
     }
 
-    public int getPaidAmount() {
-        return paidAmount;
+    public int getCashValue() {
+        return size * LottoTicket.PRICE;
     }
 
     private void validatePositiveInt(int paidAmount) {
