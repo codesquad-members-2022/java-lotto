@@ -18,7 +18,15 @@ public class Controller {
 		inputView.initScanner();
 
 		int purchaseAmount = inputView.getPurchaseAmount();
-		LottoTickets lottoTickets = new LottoTickets(purchaseAmount);
+		int manualCount = inputView.inputManualCount();
+		LottoTickets lottoTickets;
+		if(manualCount > 0){
+			List<List<Integer>> manualNumbers = inputView.inputManualNumbers(manualCount);
+			lottoTickets = new LottoTickets(purchaseAmount, manualNumbers);
+		} else {
+			lottoTickets = new LottoTickets(purchaseAmount);
+		}
+
 		outputView.printTickets(lottoTickets);
 
 		List<Integer> winningNumbers = inputView.getWinningNumbers();

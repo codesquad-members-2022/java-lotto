@@ -27,7 +27,7 @@ public class LottoTickets {
 		int ticketCount = calculateTicketAmounts(purchaseAmount);
 		this.tickets = new ArrayList<>();
 		setManualTickets(manualTickets);
-		addAutoTickets(ticketCount);
+		addAutoTickets(ticketCount- manualTickets.size());
 	}
 
 	public List<Lotto> getTickets() {
