@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class InputView {
 
     private static InputView inputView;

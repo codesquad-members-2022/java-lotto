@@ -51,9 +51,19 @@ public class Route {
                     InputUtil.parseNumber(bonusNumber)
             );
             LottosResultDto lottosResultDto = controller.postMatchLotto(numberDto);
-            res.cookie("userId", null);
 
             return render(lottosResultDto.toModel(), "result.html");
+        });
+
+        post("/clearLotto", (req, res) -> {
+            int userId = Integer.parseInt(req.cookie("userId"));
+
+            controller.deleteUserInfo(userId);
+
+            res.removeCookie("userId");
+
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
         });
 
         exception(IllegalArgumentException.class, (((err, req, res) -> {
@@ -66,6 +76,9 @@ public class Route {
             res.body(err.getMessage());
         }));
 
+        exception(RuntimeException.class, (err, req, res) -> {
+            err.printStackTrace();
+        });
 
     }
 

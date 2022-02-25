@@ -30,14 +30,8 @@ public class GameService {
                 .map(UserLottery::new)
                 .collect(Collectors.toList());
 
-        User user = userRepository.add(new User(userRepository.size() + 1, money));
-        UserLotteries userLotteries = userLotteriesRepository.add(
-                new UserLotteries(
-                        user.getUserId(),
-                        user.getCount() - manualLotteries.size(),
-                        manualLotteries
-                )
-        );
+        User user = userRepository.create(money);
+        UserLotteries userLotteries = userLotteriesRepository.create(user.getUserId(), manualLotteries);
 
         return new LottoShowDto(user.getUserId(), userLotteries);
     }
@@ -49,5 +43,10 @@ public class GameService {
 
         Statistics statistics = new Statistics(user, userLotteries);
         return statistics.toLottosResultDto();
+    }
+
+    public void removeUser(int userId) {
+        userRepository.deleteById(userId);
+        userLotteriesRepository.deleteById(userId);
     }
 }

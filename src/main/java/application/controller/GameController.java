@@ -36,4 +36,8 @@ public class GameController {
 
         return service.createStatistics(userId, winningNumber, bonusNumber);
     }
+
+    public void deleteUserInfo(int userId) {
+        service.removeUser(userId);
+    }
 }

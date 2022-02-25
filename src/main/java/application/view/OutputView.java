@@ -6,6 +6,7 @@ import application.domain.UserLottery;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 public class OutputView {
     private static OutputView outputView;
 

@@ -6,11 +6,9 @@ import java.util.stream.IntStream;
 
 public class UserLotteries {
 
-    private int userId;
     private final List<UserLottery> lotteries = new ArrayList<>();
 
-    public UserLotteries(int userId, int count) {
-        this.userId = userId;
+    public UserLotteries(int count) {
         IntStream.range(0, count)
                 .forEach((ind) -> lotteries.add(new UserLottery()));
     }
@@ -19,8 +17,8 @@ public class UserLotteries {
         lotteries.add(new UserLottery(numbers));
     }
 
-    public UserLotteries(int userId, int count, List<UserLottery> manualLotteries) {
-        this(userId, count);
+    public UserLotteries(int count, List<UserLottery> manualLotteries) {
+        this(count);
         lotteries.addAll(manualLotteries);
     }
 
@@ -35,10 +33,6 @@ public class UserLotteries {
 
     public List<UserLottery> get() {
         return lotteries;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
 }

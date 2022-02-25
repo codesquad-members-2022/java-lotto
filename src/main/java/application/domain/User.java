@@ -11,7 +11,6 @@ public class User {
     public User(int userId, int money) {
         this.userId = userId;
         this.money = money;
-
         count = money / PRICE;
     }
 
@@ -22,9 +21,4 @@ public class User {
     public int getMoney() {
         return money;
     }
-
-    public int getCount() {
-        return count;
-    }
-
 }
