@@ -66,6 +66,7 @@ public class InputView {
         try {
             String[] input = sc.nextLine().split(",");
             validateNumbersCount(input, LOTTERY_NUMBER_COUNT);
+            validateDuplicatedNumber(input);
 
             LottoTicket lottoNumbers = LottoTicket.createWithStringNumbers(input);
             validateNumbersRange(lottoNumbers, LOTTERY_NUMBER_MIN, LOTTERY_NUMBER_MAX);
