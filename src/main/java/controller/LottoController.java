@@ -14,15 +14,21 @@ public class LottoController {
     }
 
     private LottoTickets buyLottoTickets() {
-        Money money = InputView.inputMoney();
-        int count = InputView.inputCountOfManualLottoTicket(money);
-        LottoTickets manualLottoTickets = LottoTickets.createManualTickets((InputView.inputManualLottoTickets(count)));
-        LottoTickets randomLottoTickets = LottoTickets.createRandomTickets(money.numberOfBuyableLottoTickets() - count);
-        LottoTickets allLottoTickets = LottoTickets.merge(manualLottoTickets, randomLottoTickets);
+        try {
+            Money money = InputView.inputMoney();
+            int count = InputView.inputCountOfManualLottoTicket(money);
+            LottoTickets manualLottoTickets = LottoTickets.createManualTickets((InputView.inputManualLottoTickets(count)));
+            LottoTickets randomLottoTickets = LottoTickets.createRandomTickets(money.numberOfBuyableLottoTickets() - count);
+            LottoTickets allLottoTickets = LottoTickets.merge(manualLottoTickets, randomLottoTickets);
 
-        OutputView.printLottoTicketCounts(manualLottoTickets, randomLottoTickets);
-        OutputView.printLottoTickets(allLottoTickets);
-        return allLottoTickets;
+            OutputView.printLottoTicketCounts(manualLottoTickets, randomLottoTickets);
+            OutputView.printLottoTickets(allLottoTickets);
+            return allLottoTickets;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println();
+        }
+        return buyLottoTickets();
     }
 
     private WinningTicket prepareWinningTicket() {
