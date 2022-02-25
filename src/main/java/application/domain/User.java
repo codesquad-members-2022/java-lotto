@@ -21,4 +21,8 @@ public class User {
     public int getMoney() {
         return money;
     }
+
+    public int getCount() {
+        return count;
+    }
 }

@@ -31,7 +31,11 @@ public class GameService {
                 .collect(Collectors.toList());
 
         User user = userRepository.create(money);
-        UserLotteries userLotteries = userLotteriesRepository.create(user.getUserId(), manualLotteries);
+        UserLotteries userLotteries = userLotteriesRepository.create(
+                user.getUserId(),
+                user.getCount() - manualLotteries.size(),
+                manualLotteries
+        );
 
         return new LottoShowDto(user.getUserId(), userLotteries);
     }

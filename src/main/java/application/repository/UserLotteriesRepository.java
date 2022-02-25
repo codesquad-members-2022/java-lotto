@@ -22,8 +22,8 @@ public class UserLotteriesRepository {
 
     Map<Integer, UserLotteries> userLotteriesMap = new HashMap<>();
 
-    public UserLotteries create(int userId, List<UserLottery> manualLotteries) {
-        UserLotteries userLotteries = new UserLotteries(userId, manualLotteries);
+    public UserLotteries create(int userId, int count, List<UserLottery> manualLotteries) {
+        UserLotteries userLotteries = new UserLotteries(count, manualLotteries);
         userLotteriesMap.put(userId, userLotteries);
         return userLotteries;
     }
