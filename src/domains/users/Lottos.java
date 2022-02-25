@@ -15,12 +15,14 @@ public class Lottos {
     }
 
     public List<List<Integer>> getTotalLottos(ArrayList<ArrayList<Integer>> tickets) {
-        // 번호들을 로또에 담다
         for (ArrayList<Integer> ticket : tickets) {
             this.purchased(ticket);
         }
 
-        // 내가가진 로또 목록을 반환
+        return getPurchasedLottos();
+    }
+
+    private List<List<Integer>> getPurchasedLottos() {
         List<List<Integer>> purchasedLottos = new ArrayList<>();
         for (Lotto lotto : this.lottos) {
             List<Integer> numbers = lotto.numbers();
