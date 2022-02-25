@@ -3,6 +3,7 @@ package application.domain;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,10 +44,24 @@ public class Lotto {
     }
 
     public int getTheNumberOfMatches(Lotto userWinningNumber) {
-        long count = numbers.stream()
-                .filter(userWinningNumber.numbers::contains)
-                .count();
-        return (int) count;
+        int count = 0;
+        List<Integer> thisNumbers = this.numbers;
+        int thisNumbersPointer = 0;
+        List<Integer> userWinningNumbers = userWinningNumber.numbers;
+        int userWinningNumbersPointer = 0;
+
+        while (thisNumbersPointer < AMOUNT_LOTTO_NUMBER && userWinningNumbersPointer < AMOUNT_LOTTO_NUMBER) {
+            if (Objects.equals(thisNumbers.get(thisNumbersPointer), userWinningNumbers.get(userWinningNumbersPointer))) {
+                count++;
+                thisNumbersPointer++;
+                userWinningNumbersPointer++;
+            } else if (thisNumbers.get(thisNumbersPointer) > userWinningNumbers.get(userWinningNumbersPointer)) {
+                userWinningNumbersPointer++;
+            } else if (thisNumbers.get(thisNumbersPointer) < userWinningNumbers.get(userWinningNumbersPointer)) {
+                thisNumbersPointer++;
+            }
+        }
+        return count;
     }
 
 
