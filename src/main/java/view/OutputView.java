@@ -1,6 +1,6 @@
 package view;
 
-import domain.Lotto;
+import domain.PurchasedLotto;
 import domain.Rank;
 
 import java.util.*;
@@ -24,8 +24,8 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void printLottos(List<Lotto> lottos) {
-        for (Lotto lotto : lottos) {
+    public static void printLottos(List<PurchasedLotto> lottos) {
+        for (PurchasedLotto lotto : lottos) {
             System.out.println(lotto);
         }
     }

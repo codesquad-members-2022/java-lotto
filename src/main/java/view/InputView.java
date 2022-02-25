@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,9 +15,14 @@ public class InputView {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public static String[] winningNumber() {
+    public static List<Integer> winningNumber() {
         System.out.println(WINNING_NUMBER_MESSAGE);
-        return scanner.nextLine().split(", ");
+        String[] split = scanner.nextLine().split(", ");
+        List<Integer> winningNumber = new ArrayList<>();
+        for (String s: split) {
+            winningNumber.add(Integer.parseInt(s));
+        }
+        return winningNumber;
     }
 
     public static String bonusNumber() {
