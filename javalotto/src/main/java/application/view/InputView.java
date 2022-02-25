@@ -13,6 +13,11 @@ public class InputView {
 
     }
 
+    public static int getBonusBall() {
+        OutputView.printEnterBonusBall();
+        return scanner.nextInt();
+    }
+
     public static int getPurchaseAmount() {
         OutputView.printEnterPurchaseAmount();
         return scanner.nextInt();
