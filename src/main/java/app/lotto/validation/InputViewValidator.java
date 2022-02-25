@@ -9,7 +9,7 @@ public class InputViewValidator {
 
     public static void validateAmountUnit(int amount, int unit) {
         if (amount % unit != 0) {
-            throw new IllegalArgumentException("1000원 단위로 입력해주세요.");
+            throw new IllegalArgumentException(String.format("%d 단위로 입력해주세요.", unit));
         }
     }
 
