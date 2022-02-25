@@ -8,7 +8,11 @@ public class Lotto {
         numbers = lottoNumberList;
     }
 
-    public List<Integer> getNumbers() {
-        return numbers;
+    public int getNumber(int index) {
+        return numbers.get(index);
+    }
+
+    public boolean containNumber(int number) {
+        return numbers.contains(number);
     }
 }
