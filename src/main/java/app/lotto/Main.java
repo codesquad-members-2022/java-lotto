@@ -9,7 +9,7 @@ public class Main {
         LottoCashier lottoCashier = LottoCashier.receiveOrderAndCreate();
         lottoCashier.showAllLottoTickets();
 
-        WinningLottoNumbers winningLottoNumbers = new WinningLottoNumbers(InputView.readWinningNumbers(), InputView.readBonusNumber());
+        WinningLottoNumbers winningLottoNumbers = WinningLottoNumbers.readWinningNumbersAndCreate();
         System.out.println();
 
         LottoGameDto result = new LottoGameDto.Builder()
