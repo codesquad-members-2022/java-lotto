@@ -11,7 +11,7 @@ import java.util.List;
 public class GameController {
 
     private static GameController controller;
-    private static GameService service = GameService.getInstance();
+    private static final GameService service = GameService.getInstance();
 
     private GameController() {}
 

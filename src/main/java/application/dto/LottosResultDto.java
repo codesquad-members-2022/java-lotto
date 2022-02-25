@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LottosResultDto {
-    private List<String> message;
-    private double totalRateOfReturn;
+    private final List<String> message;
+    private final double totalRateOfReturn;
 
     public LottosResultDto(Map<Prize, Integer> prizes, double totalRateOfReturn) {
         this.message = getMessage(prizes);

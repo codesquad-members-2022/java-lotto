@@ -4,8 +4,8 @@ import java.util.List;
 
 public class LottoInputDto {
 
-    private int inputMoney;
-    private List<List<Integer>> manualNumbers;
+    private final int inputMoney;
+    private final List<List<Integer>> manualNumbers;
 
     public LottoInputDto(int inputMoney, List<List<Integer>> manualNumbers) {
         this.inputMoney = inputMoney;
