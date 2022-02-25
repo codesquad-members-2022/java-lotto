@@ -17,7 +17,7 @@ public class InputView {
 
     public static int getPurchasingAmount() {
         System.out.println(ASK_PURCHASING_AMOUNT);
-        int purchasingAmount =  Integer.parseInt(scanner.nextLine());
+        int purchasingAmount = Integer.parseInt(scanner.nextLine());
         validatePurchasingAmount(purchasingAmount);
         return purchasingAmount;
     }
@@ -26,10 +26,10 @@ public class InputView {
         System.out.println(ASK_WINNING_NUMBER_MESSAGE);
         String winningValue = scanner.nextLine();
         return Arrays.stream(winningValue.split(","))
-                     .map(String::trim)
-                     .mapToInt(Integer::parseInt)
-                     .boxed()
-                     .collect(Collectors.toList());
+                .map(String::trim)
+                .mapToInt(Integer::parseInt)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     public static int getBonusNumber() {

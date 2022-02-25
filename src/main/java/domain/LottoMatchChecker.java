@@ -24,11 +24,13 @@ public class LottoMatchChecker {
     }
 
     public LinkedHashMap<Rank, Integer> getWinningResult() {
-        lottoTicket.stream().map(LottoSheet::getLottoNumbers).forEach(integerList -> {
-            int count = countDuplication(integerList);
-            Rank rank = Rank.valueOf(count, integerList.contains(winningBonusNumber));
-            pushWinningResult(rank);
-        });
+        lottoTicket.stream()
+                .map(LottoSheet::getLottoNumbers)
+                .forEach(lottoNumbers -> {
+                    int count = countWinningNumbers(lottoNumbers);
+                    Rank rank = Rank.valueOf(count, lottoNumbers.contains(winningBonusNumber));
+                    pushWinningResult(rank);
+                });
         return winningResult;
     }
 
@@ -38,9 +40,9 @@ public class LottoMatchChecker {
         }
     }
 
-    private int countDuplication(List<Integer> integerList) {
+    private int countWinningNumbers(List<Integer> integerList) {
         return (int) integerList.stream()
-                                .filter(integer -> winningNumbersList.contains(integer))
-                                .count();
+                .filter(integer -> winningNumbersList.contains(integer))
+                .count();
     }
 }

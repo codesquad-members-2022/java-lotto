@@ -2,7 +2,6 @@ package view;
 
 import domain.LottoSheet;
 import domain.Rank;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class OutputView {
         }
     }
 
-    public static void printProfitTable(LinkedHashMap<Rank,Integer> winningResult) {
+    public static void printProfitTable(LinkedHashMap<Rank, Integer> winningResult) {
         System.out.println("당첨 통계");
         System.out.println("----------");
 
