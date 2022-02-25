@@ -29,12 +29,7 @@ public class Result {
         }
 
         Result result = (Result) object;
-
-        if (result.getBonus() == null) {
-            return matchCount == result.getMatchCount();
-        } else {
-            return matchCount == result.getMatchCount() && bonus == result.getBonus();
-        }
+        return bonus == result.getBonus() && matchCount == result.getMatchCount();
     }
 
     @Override

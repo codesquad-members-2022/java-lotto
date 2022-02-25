@@ -1,10 +1,5 @@
 package application.domain;
 
-import application.dto.LottoShowDto;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class User {
 
     public static final int PRICE = 1_000;
@@ -20,7 +15,9 @@ public class User {
         count = money / PRICE;
     }
 
-    public int getUserId() { return userId; }
+    public int getUserId() {
+        return userId;
+    }
 
     public int getMoney() {
         return money;

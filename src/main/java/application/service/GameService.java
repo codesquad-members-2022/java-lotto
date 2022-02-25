@@ -1,7 +1,6 @@
 package application.service;
 
 import application.domain.*;
-import application.dto.LottoInputDto;
 import application.dto.LottoShowDto;
 import application.dto.LottosResultDto;
 import application.repository.UserLotteriesRepository;
@@ -30,9 +29,14 @@ public class GameService {
                 .map(UserLottery::new)
                 .collect(Collectors.toList());
 
-        User user = userRepository.add(new User(1, money));
+        User user = userRepository.add(new User(userRepository.size() + 1, money));
         UserLotteries userLotteries = userLotteriesRepository.add(
-                new UserLotteries(user.getUserId(), user.getCount() - manualLotteries.size(), manualLotteries));
+                new UserLotteries(
+                        user.getUserId(),
+                        user.getCount() - manualLotteries.size(),
+                        manualLotteries
+                )
+        );
 
         return new LottoShowDto(user.getUserId(), userLotteries);
     }

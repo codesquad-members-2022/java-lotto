@@ -1,7 +1,6 @@
 package application.repository;
 
 import application.domain.User;
-import application.domain.UserLotteries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +31,9 @@ public class UserRepository {
                 .filter(user -> user.getUserId() == userId)
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
+    }
+
+    public int size() {
+        return users.size();
     }
 }

@@ -17,7 +17,7 @@ public class UserLottery extends Lottery {
 
     public void compareLottery(WinningLottery winningLottery) {
         int matchCount = compareNumbers(winningLottery.getNumbers());
-        boolean bonus = compareBonus(winningLottery.getBonusBall());
+        Boolean bonus = compareBonus(matchCount, winningLottery.getBonusBall());
 
         result = new Result(matchCount, bonus);
     }
@@ -29,8 +29,11 @@ public class UserLottery extends Lottery {
             .count();
     }
 
-    public boolean compareBonus(int bonusBall) {
-        return numbers.contains(bonusBall);
+    public Boolean compareBonus(int matchCount, int bonusBall) {
+        if (matchCount == Lottery.COUNT - 1) {
+            return numbers.contains(bonusBall);
+        }
+        return false;
     }
 
     public Result getResult() {
