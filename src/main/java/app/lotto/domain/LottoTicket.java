@@ -15,12 +15,13 @@ public class LottoTicket {
                 .map(String::trim)
                 .mapToInt(Integer::parseInt)
                 .boxed()
+                .sorted()
                 .collect(Collectors.toList()));
     }
 
     public LottoTicket(List<Integer> lottoNumbers) {
         this.lottoNumbers.addAll(lottoNumbers);
-        Collections.sort(lottoNumbers);
+        Collections.sort(this.lottoNumbers);
     }
 
     public int getNumber(int index) {
