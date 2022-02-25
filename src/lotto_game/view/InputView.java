@@ -1,5 +1,7 @@
 package lotto_game.view;
 
+import lotto_game.exception.MyException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,8 +21,11 @@ public class InputView {
     }
 
     public static List<Integer> inputManualLottoNumbers() {
-        return Arrays.stream(sc.nextLine().split(", "))
+        String[] manualNumbers = sc.nextLine().split(", ");
+        MyException.sixMoreThanManualNumber(manualNumbers);
+        return Arrays.stream(manualNumbers)
                 .mapToInt(Integer::parseInt)
+                .filter(i -> MyException.numberException(i))
                 .boxed()
                 .collect(Collectors.toList());
     }

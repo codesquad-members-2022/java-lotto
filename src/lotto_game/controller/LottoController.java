@@ -1,6 +1,7 @@
 package lotto_game.controller;
 
 import lotto_game.domain.Lotto;
+import lotto_game.exception.MyException;
 import lotto_game.service.LottoManager;
 import lotto_game.util.LottoStatistic;
 import lotto_game.domain.LottoResult;
@@ -18,10 +19,10 @@ public class LottoController {
         LottoManager lottoManager = new LottoManager();
 
         // 구입 금액 입력
-        int purchaseMoney = InputView.inputPrice();
+        int purchaseMoney = MyException.priceException(InputView.inputPrice());
 
         // 수동 로또 입력
-        int countOfManualLotto = InputView.inputCountOfManualLotto();
+        int countOfManualLotto = MyException.priceMoreThanManual(InputView.inputCountOfManualLotto(), purchaseMoney);
         InputView.removeBlank();
         List<Lotto> lottoList = new ArrayList<>();
         InputView.messageManualLottoNumbers();
@@ -39,7 +40,7 @@ public class LottoController {
 
         // 당첨 번호, 보너스 번호 입력
         String winNumbers = InputView.inputWinNumbers();
-        int bonusNumber = InputView.inputBonusNumber();
+        int bonusNumber = MyException.bonusNumberException(InputView.inputBonusNumber());
 
         // 로또 당첨 번호 객체 생성
         WinningNumbers winningNumbers = lottoManager.makeWinningNumbers(winNumbers, bonusNumber);

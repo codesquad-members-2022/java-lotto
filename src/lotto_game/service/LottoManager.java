@@ -4,6 +4,7 @@ import lotto_game.domain.Lotto;
 import lotto_game.domain.LottoResult;
 import lotto_game.domain.LottoTicket;
 import lotto_game.domain.WinningNumbers;
+import lotto_game.exception.MyException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,10 @@ public class LottoManager {
     }
 
     public WinningNumbers makeWinningNumbers(String winNumbers, int bonusNumber) {
+        String[] winNumbersArray = winNumbers.split(", ");
         return new WinningNumbers(Arrays.stream(winNumbers.split(", "))
                 .mapToInt(Integer::parseInt)
+                .filter(i -> MyException.numberException(i))
                 .boxed()
                 .collect(Collectors.toList()), bonusNumber);
     }
