@@ -24,6 +24,10 @@ public class LottoTicket {
         throw new IllegalArgumentException(String.format("서로 다른 로또 번호가 %d개 존재하지 않습니다.", LIMIT_LOTTO_NUMBERS));
     }
 
+    public static LottoTicket createManualTicket(Set<LottoNumber> lottoNumbers) {
+        return new LottoTicket(lottoNumbers);
+    }
+
     public static LottoTicket createRandomTicket() {
         Set<LottoNumber> lottoNumbers = new HashSet<>();
         while (lottoNumbers.size() != LIMIT_LOTTO_NUMBERS) {
@@ -33,8 +37,8 @@ public class LottoTicket {
         return new LottoTicket(lottoNumbers);
     }
 
-    public static LottoTicket createManualTicket(Set<LottoNumber> lottoNumbers) {
-        return new LottoTicket(lottoNumbers);
+    public boolean contains(LottoNumber bonusNumber) {
+        return lottoNumbers.contains(bonusNumber);
     }
 
     public Set<LottoNumber> getLottoNumbers() {
@@ -53,7 +57,4 @@ public class LottoTicket {
                 .collect(Collectors.joining(", ", "[", "]"));
     }
 
-    public boolean contains(LottoNumber bonusNumber) {
-        return lottoNumbers.contains(bonusNumber);
-    }
 }
