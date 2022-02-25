@@ -14,7 +14,6 @@ public class OutputView {
 
     public static void printAllLottoNumbers(List<LottoTicket> allShuffledNumbers) {
         for (LottoTicket shuffledNumbers : allShuffledNumbers) {
-            shuffledNumbers.sort();
             System.out.println(shuffledNumbers);
         }
     }

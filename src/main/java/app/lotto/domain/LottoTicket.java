@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class LottoTicket {
 
-    private final List<Integer> lottoNumbers;
+    private final List<Integer> lottoNumbers = new ArrayList<>();
 
     public static LottoTicket createWithStringNumbers(String[] numbers) {
         return new LottoTicket(Arrays.stream(numbers)
@@ -18,17 +18,9 @@ public class LottoTicket {
                 .collect(Collectors.toList()));
     }
 
-    public LottoTicket() {
-        lottoNumbers = new ArrayList<>();
-    }
-
     public LottoTicket(List<Integer> lottoNumbers) {
-        this();
         this.lottoNumbers.addAll(lottoNumbers);
-    }
-
-    public void addNumber(int number) {
-        lottoNumbers.add(number);
+        Collections.sort(lottoNumbers);
     }
 
     public int getNumber(int index) {
@@ -41,10 +33,6 @@ public class LottoTicket {
 
     public boolean contains(int number) {
         return lottoNumbers.contains(number);
-    }
-
-    public void sort() {
-        Collections.sort(lottoNumbers);
     }
 
     @Override

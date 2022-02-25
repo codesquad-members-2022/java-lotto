@@ -30,13 +30,7 @@ public class LottoAutoMachine {
     private static LottoTicket getAutoLottoNumbers() {
         List<Integer> lottoNumbers = getLottoNumbers();
         Collections.shuffle(lottoNumbers);
-        LottoTicket shuffledNumbers = new LottoTicket();
-
-        for (int i = 0; i < 6; i++) {
-            shuffledNumbers.addNumber(lottoNumbers.get(i));
-        }
-
-        return shuffledNumbers;
+        return new LottoTicket(lottoNumbers.subList(0, 6));
     }
 
     private static List<Integer> getLottoNumbers() {
