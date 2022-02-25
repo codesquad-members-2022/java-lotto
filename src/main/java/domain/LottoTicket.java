@@ -34,10 +34,16 @@ public class LottoTicket {
     }
 
     private int checkWinningNumber(WinningNumbers winningNumbers, LottoNumber myNumber) {
+        int result = 0;
         for (int i = 0; i < winningNumbers.getSize(); i++) {
-            if (myNumber.isSameNumber(winningNumbers.getNumberOfIndex(i))) {
-                return 1;
-            }
+            result += check(winningNumbers.getNumberOfIndex(i), myNumber);
+        }
+        return result;
+    }
+
+    private int check(LottoNumber numberOfIndex, LottoNumber myNumber) {
+        if (myNumber.isSameNumber(numberOfIndex)) {
+            return 1;
         }
         return 0;
     }
@@ -47,12 +53,11 @@ public class LottoTicket {
     }
 
     public boolean checkBonusNumber(LottoNumber bonusNumber) {
-        for (LottoNumber lottoNumber : lottoNumbers) {
-            if (lottoNumber.isSameNumber(bonusNumber)) {
-                return true;
-            }
-        }
-        return false;
+        return lottoNumbers.stream().anyMatch(i -> matchBonusNumber(bonusNumber, i));
+    }
+
+    private boolean matchBonusNumber(LottoNumber bonusNumber, LottoNumber lottoNumber) {
+        return lottoNumber.isSameNumber(bonusNumber);
     }
 
     @Override
