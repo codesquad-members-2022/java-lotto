@@ -5,7 +5,7 @@ import application.dto.LottoShowDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserBundle {
+public class User {
 
     public static final int PRICE = 1_000;
 
@@ -13,7 +13,7 @@ public class UserBundle {
     private final int count;
     private final UserLotteries userLotteries;
 
-    public UserBundle(int money, List<UserLottery> manualLotteries) {
+    public User(int money, List<UserLottery> manualLotteries) {
         this.money = money;
 
         count = money / PRICE;

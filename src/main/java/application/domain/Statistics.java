@@ -10,7 +10,7 @@ public class Statistics {
     private final Map<Prize, Integer> counts = new EnumMap<>(Prize.class);
     private final int money;
 
-    public Statistics(UserBundle userBundle) {
+    public Statistics(User userBundle) {
         UserLotteries userLotteries = userBundle.getUserLotteries();
         money = userBundle.getMoney();
 

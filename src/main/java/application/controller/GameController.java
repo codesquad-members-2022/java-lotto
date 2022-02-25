@@ -5,7 +5,6 @@ import application.dto.BundleDto;
 import application.dto.LottoShowDto;
 import application.dto.LottosResultDto;
 import application.dto.NumberDto;
-import application.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 public class GameController {
 
     private static GameController controller;
-    private UserBundle userBundle;
+    private User userBundle;
 
     private GameController() {}
 
@@ -29,7 +28,7 @@ public class GameController {
         int money = dto.getInputMoney();
         List<List<Integer>> manualNumbers = dto.getManualNumbers();
 
-        userBundle = new UserBundle(money, getManualLotteries(manualNumbers));
+        userBundle = new User(money, getManualLotteries(manualNumbers));
         return userBundle.getLottoShowDto();
     }
 
