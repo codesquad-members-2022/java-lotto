@@ -13,11 +13,11 @@ class LottoTicketTest {
 
     @Test
     @DisplayName("입력 개수에 맞는 로또 개수를 담은 리스트를 반환한다.")
-    void makeLotto() {
+    void makeAutoLottoTest() {
         //given
         int userPurchaseQuantity = 14;
         //when
-        List<Lotto> lottos = LottoTicket.makeLotto(userPurchaseQuantity);
+        List<Lotto> lottos = LottoTicket.makeAutoLotto(userPurchaseQuantity);
         //then
         assertThat(lottos.size()).isEqualTo(userPurchaseQuantity);
     }
