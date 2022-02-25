@@ -1,15 +1,14 @@
 package lotto.controller;
 
-import lotto.domain.LottoPaper;
-import lotto.domain.LottoStore;
-import lotto.domain.WinningStrategy;
+import lotto.domain.*;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class LottoGame {
 
@@ -19,74 +18,53 @@ public class LottoGame {
         InputView.init();
 
         int purchaseAmount = InputView.getPurchaseAmount();
-        LottoPaper lottoPaper = purchase(purchaseAmount);
+        int manualLottoCount = InputView.getManualLottoCount();
 
-        List<WinningStrategy> winningStrategies = checkWinning(lottoPaper);
+        LottoPaper lottoPaper = purchase(
+                purchaseAmount,
+                manualLottoCount,
+                getManualNumbers(InputView.getManualLottoNumbers(manualLottoCount)));
 
-        calculateWinningStats(winningStrategies, purchaseAmount);
+        calculateWinningStats(checkWinning(lottoPaper), purchaseAmount);
 
         InputView.close();
     }
 
-    private LottoPaper purchase(int purchaseAmount) {
-        LottoStore lottoStore = new LottoStore();
-        LottoPaper lottoPaper = lottoStore.purchase(purchaseAmount);
+    private LottoPaper purchase(int purchaseAmount, int manualLottoCount, Map<Integer, List<Integer>> numbers) {
+        LottoPaper lottoPaper = new LottoStore().purchase(purchaseAmount, manualLottoCount, numbers);
 
-        OutputView.printPurchaseCount(lottoPaper.getLottoSize());
+        OutputView.printPurchaseCount(manualLottoCount, lottoPaper.getLottoSize() - manualLottoCount);
         OutputView.printLottoPaper(lottoPaper.showLottoPaper());
 
         return lottoPaper;
     }
 
     private List<WinningStrategy> checkWinning(LottoPaper lottoPaper) {
-        String inputWinningNumbers = InputView.getRequiredWinningNumber();
-        String inputBonusNumber = InputView.getBonusBallNumber();
+        List<Integer> winningNumbers = getNumbers(InputView.getRequiredWinningNumber());
+        int bonusNumber = getBonusNumber(InputView.getBonusBallNumber(winningNumbers));
 
-        List<Integer> winningNumbers = getWinningNumbers(inputWinningNumbers);
-        int bonusNumber = getBonusNumber(inputBonusNumber);
-
-        List<Integer> correctNumberCounts = lottoPaper.judgeWinning(winningNumbers);
-        List<Boolean> hasBonusNumbers = lottoPaper.hasBonusNumbers(bonusNumber);
-
-        return IntStream.range(0, correctNumberCounts.size())
-                .mapToObj(index -> convertMatchNumberToWinningStrategy(correctNumberCounts.get(index), hasBonusNumbers.get(index)))
-                .collect(Collectors.toList());
+        return lottoPaper.checkWinning(new WinningLotto(winningNumbers, bonusNumber));
     }
 
-    private List<Integer> getWinningNumbers(String inputWinningNumbers) {
-        return Arrays.stream(inputWinningNumbers.split(NUMBER_DELIMITER))
+    private List<Integer> getNumbers(String inputNumbers) {
+        return Arrays.stream(inputNumbers.split(NUMBER_DELIMITER))
                 .mapToInt(Integer::parseInt)
                 .boxed()
                 .collect(Collectors.toList());
     }
 
-    private int getBonusNumber(String inputBonusNumber) {
-        return Integer.parseInt(inputBonusNumber);
+    private Map<Integer, List<Integer>> getManualNumbers(Map<Integer, String> inputNumbers) {
+        Map<Integer, List<Integer>> manualNumbers = new HashMap<>();
+
+        for (int i = 0; i < inputNumbers.size(); i++) {
+             manualNumbers.put(i, getNumbers(inputNumbers.get(i)));
+        }
+
+        return manualNumbers;
     }
 
-    private WinningStrategy convertMatchNumberToWinningStrategy(int matchNumber, boolean hasBonusNumber) {
-        if (matchNumber == WinningStrategy.ZERO_MATCHES.getCorrectNumber()) {
-            return WinningStrategy.ZERO_MATCHES;
-        }
-        if (matchNumber == WinningStrategy.ONE_MATCHES.getCorrectNumber()) {
-            return WinningStrategy.ONE_MATCHES;
-        }
-        if (matchNumber == WinningStrategy.TWO_MATCHES.getCorrectNumber()) {
-            return WinningStrategy.TWO_MATCHES;
-        }
-        if (matchNumber == WinningStrategy.THREE_MATCHES.getCorrectNumber()) {
-            return WinningStrategy.THREE_MATCHES;
-        }
-        if (matchNumber == WinningStrategy.FOUR_MATCHES.getCorrectNumber()) {
-            return WinningStrategy.FOUR_MATCHES;
-        }
-        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber() && hasBonusNumber) {
-            return WinningStrategy.FIVE_WITH_BONUS_MATCHES;
-        }
-        if (matchNumber == WinningStrategy.FIVE_MATCHES.getCorrectNumber()) {
-            return WinningStrategy.FIVE_MATCHES;
-        }
-        return WinningStrategy.SIX_MATCHES;
+    private int getBonusNumber(String inputBonusNumber) {
+        return Integer.parseInt(inputBonusNumber);
     }
 
     private void calculateWinningStats(List<WinningStrategy> winningStrategies, int purchaseAmount) {
