@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import static lotto.domain.Validator.isValidLottoNumbers;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,17 +16,18 @@ public class Lotto {
 
     private final List<Integer> numbers;
 
-    private Lotto(List<Integer> numbers) {
+    private Lotto(List<Integer> numbers) throws IllegalArgumentException {
+        isValidLottoNumbers(numbers);
         this.numbers = new ArrayList<>(numbers);
         Collections.sort(this.numbers);
     }
 
-    public static Lotto create() {
+    public static Lotto create() throws IllegalArgumentException {
         Collections.shuffle(allNumbers);
         return new Lotto(allNumbers.subList(0, 6));
     }
 
-    public static Lotto create(List<Integer> lottoNumbers) {
+    public static Lotto create(List<Integer> lottoNumbers) throws IllegalArgumentException {
         return new Lotto(lottoNumbers);
     }
 

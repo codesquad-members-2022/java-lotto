@@ -7,15 +7,17 @@ public class LottoBundle {
 
     private List<Lotto> lottoBundle = new ArrayList<>();
 
-    public List<Lotto> buyLotto(int numOfLotto) {
+    public void buyLotto(int numOfLotto) throws IllegalArgumentException {
         for (int i = 0; i < numOfLotto; i++) {
             lottoBundle.add(Lotto.create());
         }
-        return lottoBundle;
     }
 
-    public List<Lotto> buyLotto(List<Integer> lottoNumbers) {
+    public void buyLotto(List<Integer> lottoNumbers) throws IllegalArgumentException {
         lottoBundle.add(Lotto.create(lottoNumbers));
+    }
+
+    public List<Lotto> getLottoBundle() {
         return lottoBundle;
     }
 }

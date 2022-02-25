@@ -25,31 +25,55 @@ public class LottoGame {
 
     private List<Lotto> getLottos() {
         int inputMoney = Input.getInputMoney();
-        int numOfMaunalLottos = getManualLottoNumbers();
+        int numOfMaunalLottos = getManualLottoBundle(inputMoney);
         int numOfAutoLottos = inputMoney / Lotto.PRICE - numOfMaunalLottos;
         if (numOfAutoLottos < 0) {
             throw new IllegalArgumentException("돈보다 더 많은 수동 번호를 입력하셨습니다.");
         }
-        List<Lotto> buyedLottos = lottos.buyLotto(numOfAutoLottos);
+
+        try {
+            lottos.buyLotto(numOfAutoLottos);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getLottos();
+        }
+
+        List<Lotto> buyedLottos = lottos.getLottoBundle();
         Output.printLottoNum(buyedLottos, numOfMaunalLottos);
         return buyedLottos;
     }
 
-    private int getManualLottoNumbers() {
-        int numOfManualLottos = Input.getInputNumbOfLottos();
-        Input.getLottoNumbersInfo();
-        for (int i = 0; i < numOfManualLottos; i++) {
-            List<Integer> lottoNumbers = Input.getLottoNumbers();
-            lottos.buyLotto(lottoNumbers);
+    private int getManualLottoBundle(int inputMoney) {
+        int numOfManualLottos = Input.getInputNumbOfLottos(inputMoney);
+        if (numOfManualLottos != 0) {
+            getManualLottoNumbers(numOfManualLottos);
         }
         return numOfManualLottos;
+    }
+
+    private void getManualLottoNumbers(int numOfManualLottos) {
+        Input.getLottoNumbersInfo();
+        for (int i = 0; i < numOfManualLottos; i++) {
+            try {
+                List<Integer> lottoNumbers = Input.getLottoNumbers();
+                lottos.buyLotto(lottoNumbers);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                getManualLottoNumbers(numOfManualLottos);
+            }
+        }
     }
 
 
     private void setLuckyNumbers() {
         List<Integer> luckyNumbers = Input.getLuckyNumbers();
         int bonusNumber = Input.getBonusNumber();
-        luckyLotto = new LuckyLotto(luckyNumbers, bonusNumber);
+        try {
+            luckyLotto = new LuckyLotto(luckyNumbers, bonusNumber);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            setLuckyNumbers();
+        }
     }
 
     private double getEarningRate(int numOfLottos) {
