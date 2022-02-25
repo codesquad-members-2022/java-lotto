@@ -25,8 +25,9 @@ class LottoGameResultsTest {
         @BeforeEach
         void setUpWinningTicket() {
             Set<LottoNumber> winningNumbers = IntStream.rangeClosed(1,6).mapToObj(LottoNumber::of).collect(Collectors.toSet());
+            LottoTicket winningLottoTicket = LottoTicket.createManualTicket(winningNumbers);
             LottoNumber bonusNumber = LottoNumber.of(7);
-            this.winningTicket = new WinningTicket(winningNumbers, bonusNumber);
+            this.winningTicket = new WinningTicket(winningLottoTicket, bonusNumber);
         }
 
         @Nested

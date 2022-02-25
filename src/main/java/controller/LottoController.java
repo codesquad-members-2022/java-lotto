@@ -32,7 +32,13 @@ public class LottoController {
     }
 
     private WinningTicket prepareWinningTicket() {
-        return InputView.inputWinningTicket();
+        try {
+            return InputView.inputWinningTicket();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println();
+        }
+        return prepareWinningTicket();
     }
 
     private void matchLottoTicketsWithWinningTicket(LottoTickets lottoTickets, WinningTicket winningTicket) {

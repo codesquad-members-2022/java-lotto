@@ -12,7 +12,6 @@ public class LottoGameResults {
     private final Map<Rank, Integer> rankCounts;
 
     public LottoGameResults(LottoTickets lottoTickets, WinningTicket winningTicket) {
-
         this.rankCounts = setupRankCounts(lottoTickets, winningTicket);
         returnToInvestment = calculateReturnToInvestment(lottoTickets);
     }

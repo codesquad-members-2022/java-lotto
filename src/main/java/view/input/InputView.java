@@ -25,17 +25,18 @@ public class InputView {
     }
 
     public static WinningTicket inputWinningTicket() {
-        Set<LottoNumber> lottoNumbers = inputWinnnigNumbers();
+        LottoTicket winningLottoTicket = inputWinningLottoTicket();
         LottoNumber bonusNumber = inputBonusNumber();
 
-        return new WinningTicket(lottoNumbers, bonusNumber);
+        return new WinningTicket(winningLottoTicket, bonusNumber);
     }
 
-    private static Set<LottoNumber> inputWinnnigNumbers() {
+    private static LottoTicket inputWinningLottoTicket() {
         System.out.print(REQUEST_INPUT_WINNING_NUMBERS_MESSAGE);
         Set<LottoNumber> winningNumbers = inputLottoNumbers();
+        LottoTicket winningLottoTicket = LottoTicket.createManualTicket(winningNumbers);
         System.out.println();
-        return winningNumbers;
+        return winningLottoTicket;
     }
 
     private static Set<LottoNumber> inputLottoNumbers() {

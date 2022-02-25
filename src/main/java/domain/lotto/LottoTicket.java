@@ -52,4 +52,8 @@ public class LottoTicket {
                 .mapToObj(String::valueOf)
                 .collect(Collectors.joining(", ", "[", "]"));
     }
+
+    public boolean contains(LottoNumber bonusNumber) {
+        return lottoNumbers.contains(bonusNumber);
+    }
 }

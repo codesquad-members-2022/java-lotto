@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,20 +20,18 @@ class WinningTicketTest {
         @DisplayName("만약 당첨번호와 보너스번호가 겹친다면")
         class Context_with_Duplicate_WinningNumbers_and_BonusNumber {
 
-            Set<LottoNumber> winningNumbers;
+            LottoTicket winningLottoTicket;
 
             @BeforeEach
             void setUpWinningNumber() {
-                this.winningNumbers = Stream.of(LottoNumber.of(1), LottoNumber.of(2), LottoNumber.of(3),
-                                LottoNumber.of(4), LottoNumber.of(5), LottoNumber.of(6))
-                        .collect(Collectors.toSet());
+                this.winningLottoTicket = LottoTicket.createManualTicket(IntStream.rangeClosed(1, 6).mapToObj(LottoNumber::of).collect(Collectors.toSet()));
             }
 
             @Test
             @DisplayName("IllegalArgumentException을 던진다.")
             void it_throws_exception() {
                 LottoNumber bonusNumber = LottoNumber.of(6);
-                assertThatThrownBy(() -> new WinningTicket(winningNumbers, bonusNumber))
+                assertThatThrownBy(() -> new WinningTicket(winningLottoTicket, bonusNumber))
                         .isInstanceOf(IllegalArgumentException.class);
             }
         }
@@ -50,8 +49,9 @@ class WinningTicketTest {
             Set<LottoNumber> winningNumbers = Stream.of(LottoNumber.of(1), LottoNumber.of(2), LottoNumber.of(3),
                             LottoNumber.of(4), LottoNumber.of(5), LottoNumber.of(6))
                     .collect(Collectors.toSet());
+            LottoTicket winningLottoTicket = LottoTicket.createManualTicket(winningNumbers);
             LottoNumber bonusNumber = LottoNumber.of(7);
-            winningTicket = new WinningTicket(winningNumbers, bonusNumber);
+            winningTicket = new WinningTicket(winningLottoTicket, bonusNumber);
         }
 
         @Nested
