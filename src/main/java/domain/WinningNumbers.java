@@ -1,13 +1,14 @@
 package domain;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 public class WinningNumbers {
 
     private final List<Integer> winningNumbers;
 
-    public WinningNumbers(List<Integer> winningNumbers, int bonusNumber)  throws IllegalArgumentException {
+    public WinningNumbers(List<Integer> winningNumbers, int bonusNumber) throws IllegalArgumentException {
         winningNumbers.add(bonusNumber);
         validate(winningNumbers);
         this.winningNumbers = winningNumbers;
@@ -21,22 +22,21 @@ public class WinningNumbers {
         }
     }
 
-    private void checkAmount(int amount) throws IllegalArgumentException{
+    private void checkAmount(int amount) throws IllegalArgumentException {
         if (amount != LottoGenerator.LOTTO_NUMBER_SIZE + 1) {
             throw new IllegalArgumentException("적절한 당첨 번호 개수가 아닙니다!!");
         }
     }
 
     private void checkDuplicatedNumber(List<Integer> list) throws IllegalArgumentException {
-        HashSet<Integer> hashSet = new HashSet<>(list);
-        if (hashSet.size() != list.size()) {
+        Set<Integer> set = new HashSet<>(list);
+        if (set.size() != list.size()) {
             throw new IllegalArgumentException("중복된 당첨번호는 입력할 수 없습니다!!");
         }
     }
 
-    private void checkNumberRange(int number)  throws IllegalArgumentException{
-        if ((LottoGenerator.LOTTO_NUMBER_MIN > number) || (number
-            > LottoGenerator.LOTTO_NUMBER_MAX)) {
+    private void checkNumberRange(int number) throws IllegalArgumentException {
+        if ((LottoGenerator.LOTTO_NUMBER_MIN > number) || (number > LottoGenerator.LOTTO_NUMBER_MAX)) {
             throw new IllegalArgumentException("적절한 당첨 번호가 아닙니다!!");
         }
     }
