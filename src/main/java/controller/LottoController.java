@@ -11,19 +11,28 @@ import java.util.List;
 
 public class LottoController {
     private static final int TICKET_PRICE = 1000;
+    public static final String NOT_ENOUGH_MONEY_MESSAGE = "돈이 부족합니다.";
 
     public void run() {
         Person customer = new Person();
         int userMoney = InputView.requestMoney();
+        int customTicketCount = InputView.requestCustomTicketCount();
 
-        int customTicketCount = buyManualLottery(customer);
+        validateEnoughMoney(userMoney, customTicketCount);
 
+        buyManualLottery(customer, customTicketCount);
         buyRandomLottoTicket(customer, discharge(userMoney, customTicketCount));
 
         showLottoInfo(customer);
 
         showResult(makeResult(customer));
         InputView.close();
+    }
+
+    private void validateEnoughMoney(int userMoney, int ticketCount) {
+        if (userMoney < ticketCount * TICKET_PRICE) {
+            throw new IllegalArgumentException(NOT_ENOUGH_MONEY_MESSAGE);
+        }
     }
 
     private int discharge(int userMoney, int customTicketCount) {
@@ -40,16 +49,14 @@ public class LottoController {
         }
     }
 
-    private int buyManualLottery(Person customer) {
+    private void buyManualLottery(Person customer, int customTicketCount) {
         LottoTicketSeller lottoTicketSeller = new LottoTicketSeller(new CustomTicketFactory());
 
-        int customTicketCount = InputView.requestCustomTicketCount();
         InputView.requestCustomTicketNumberMessage();
 
         for (int i = 0; i < customTicketCount; i++) {
             customer.buyCustomLottoTicket(lottoTicketSeller.exchangeTicket(getLottoNumbers()));
         }
-        return customTicketCount;
     }
 
     private ArrayList<LottoNumber> getLottoNumbers() {
