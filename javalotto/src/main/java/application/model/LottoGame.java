@@ -10,7 +10,8 @@ import application.view.OutputView;
 public class LottoGame {
     private static final int LOTTO_TICKET_PRICE = 1000;
 
-    public void init(int userPurchaseAmount, int numberOfManualLotto) {
+    public void init(int userPurchaseAmount) {
+        int numberOfManualLotto = InputView.getNumberOfManualLotto(userPurchaseAmount);
         int userPurchaseQuantity = userPurchaseAmount / LOTTO_TICKET_PRICE - numberOfManualLotto;
 
         List<Lotto> lottos = new ArrayList<>();

@@ -40,22 +40,31 @@ public class InputView {
 
     public static List<Integer> getWinningNumber() {
         OutputView.printPleaseEnterYourWinningNumber();
-        return stringConversion(scanner.nextLine());
+        String winningNumberString = scanner.nextLine();
+        while (!validation.validateLottoString(winningNumberString)) {
+            OutputView.printInvalidFormatPleaseReEnter();
+            winningNumberString = scanner.nextLine();
+        }
+        return stringConversion(winningNumberString);
     }
 
-    public static int getNumberOfManualLotto() {
+    public static int getNumberOfManualLotto(int money) {
         OutputView.printEnterNumberOfManualLotto();
-        return scanner.nextInt();
+        int numberOfManualLotto = scanner.nextInt();
+        while (!validation.validateNumberOfManualLotto(numberOfManualLotto, money)) {
+            OutputView.printInvalidFormatPleaseReEnter();
+            numberOfManualLotto = scanner.nextInt();
+        }
+        return numberOfManualLotto;
     }
 
     public static List<Integer> getManualLotto() {
         String manualLottoString = scanner.nextLine();
-        while (!validation.validateGetManualLotto(manualLottoString)) {
+        while (!validation.validateLottoString(manualLottoString)) {
             OutputView.printInvalidFormatPleaseReEnter();
             manualLottoString = scanner.nextLine();
         }
-        List<Integer> lotto = stringConversion(manualLottoString);
-        return lotto;
+        return stringConversion(manualLottoString);
     }
 
     private static List<Integer> stringConversion(String lottoString) {

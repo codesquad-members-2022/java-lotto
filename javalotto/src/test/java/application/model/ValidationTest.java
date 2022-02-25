@@ -39,19 +39,38 @@ class ValidationTest {
 
     @Test
     @DisplayName("정확한 형식의 로또 스트링이 주어졌을 때 true를, 부정확할 때 false를 반환해야 한다.")
-    void validateGetManualLottoTest() {
+    void validateLottoStringTest() {
         //given
         String manualLottoStringA = "1, 2, 3, 4, 5, 6";
         String manualLottoStringB = "1; 2, 3, 4, 5, 6;";
         //when
-        boolean resultA = validation.validateGetManualLotto(manualLottoStringA);
-        boolean resultB = validation.validateGetManualLotto(manualLottoStringB);
+        boolean resultA = validation.validateLottoString(manualLottoStringA);
+        boolean resultB = validation.validateLottoString(manualLottoStringB);
 
         //then
         assertSoftly(
                 softAssertions -> {
                     assertThat(resultA).as("정확한 형식일 때 true를 반환해야 한다.").isTrue();
                     assertThat(resultB).as("부정한 형식일 때 false를 반환해야 한다.").isFalse();
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("지불한 금액보다 구매할 로또의 개수가 많거나 개수를 음수로 입력하면 false를 반환해야 한다.")
+    void validateNumberOfManualLottoTest() {
+        //given
+        int numberOfManualLottoA = -1;
+        int numberOfManualLottoB = 2;
+        int money = 1000;
+        //when
+        boolean resultA = validation.validateNumberOfManualLotto(numberOfManualLottoA, money);
+        boolean resultB = validation.validateNumberOfManualLotto(numberOfManualLottoB, money);
+        //then
+        assertSoftly(
+                softAssertions -> {
+                    assertThat(resultA).as("입력된 개수가 음수이면 false를 반환해야 한다.").isFalse();
+                    assertThat(resultB).as("돈이 부족할 때 false를 반환해야 한다.").isFalse();
                 }
         );
     }
