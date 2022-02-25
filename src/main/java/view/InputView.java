@@ -11,6 +11,7 @@ public class InputView {
     private static final String REQUEST_CUSTOM_TICKET_COUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요.";
     private static final Scanner scanner = new Scanner(System.in);
     private static final String REQUEST_MINIMUM_PRICE_MESSAGE = "Lotto의 최소 가격은 1000원부터 입니다.";
+    private static final String DELIMITER = ",";
 
     private InputView() {
     }
@@ -27,7 +28,7 @@ public class InputView {
     public static String[] requestLottoWinningNumbers() {
         System.out.println(REQUEST_LOTTO_NUMBERS_MESSAGE);
         String numbers = scanner.nextLine();
-        return numbers.split(",");
+        return numbers.split(DELIMITER);
     }
 
     public static String requestBonusNumber() {
@@ -45,7 +46,7 @@ public class InputView {
     }
 
     public static int[] requestCustomTicketNumber() {
-        return Arrays.stream(scanner.nextLine().split(", ")).mapToInt(Integer::parseInt).toArray();
+        return Arrays.stream(scanner.nextLine().split(DELIMITER)).mapToInt(Integer::parseInt).toArray();
     }
 
     public static void requestCustomTicketNumberMessage() {
