@@ -18,6 +18,8 @@ public class LottoTicketManager {
     private LottoTicketManager(int customTicketCount, int autoTicketCount) {
         this.customTicketCount = customTicketCount;
         this.autoTicketCount = autoTicketCount;
+        createCustomLottoTickets();
+        createAutoLottoTickets();
     }
 
     public static LottoTicketManager createWithTotalAmountAndCustomTicketCount(int totalAmount, int customTicketCount) {
@@ -32,23 +34,19 @@ public class LottoTicketManager {
         return autoTicketCount;
     }
 
-    // 수동 발행 요청
-    public List<LottoTicket> createCustomLottoTickets() {
-        this.customLottoTickets.addAll(InputView.readCustomLottoNumbers(this.customTicketCount));
-        return getCustomLottoTickets();
-    }
-
-    // 자동 발행 요청
-    public List<LottoTicket> createAutoLottoTickets() {
-        this.autoLottoTickets.addAll(LottoAutoMachine.getAllAutoLottoNumbers(autoTicketCount));
-        return getAutoLottoTickets();
-    }
-
     public List<LottoTicket> getCustomLottoTickets() {
         return Collections.unmodifiableList(customLottoTickets);
     }
 
     public List<LottoTicket> getAutoLottoTickets() {
         return Collections.unmodifiableList(autoLottoTickets);
+    }
+
+    private void createCustomLottoTickets() {
+        this.customLottoTickets.addAll(InputView.readCustomLottoNumbers(this.customTicketCount));
+    }
+
+    private void createAutoLottoTickets() {
+        this.autoLottoTickets.addAll(LottoAutoMachine.getAllAutoLottoNumbers(autoTicketCount));
     }
 }

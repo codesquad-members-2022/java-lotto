@@ -13,22 +13,18 @@ public class Main {
         int customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
 
         LottoTicketManager lottoTicketManager = LottoTicketManager.createWithTotalAmountAndCustomTicketCount(amount, customLottoCount);
-        List<LottoTicket> customLottoTickets = lottoTicketManager.createCustomLottoTickets();
-        List<LottoTicket> autoLottoTickets = lottoTicketManager.createAutoLottoTickets();
-
         printAllLottoTickets(lottoTicketManager);
 
         WinningLottoNumbers winningLottoNumbers = new WinningLottoNumbers(InputView.readWinningNumbers(), InputView.readBonusNumber());
         System.out.println();
 
         LottoGameDto result = new LottoGameDto.Builder()
-                .addAllLottoTickets(customLottoTickets)
-                .addAllLottoTickets(autoLottoTickets)
+                .addAllLottoTickets(lottoTicketManager.getCustomLottoTickets())
+                .addAllLottoTickets(lottoTicketManager.getAutoLottoTickets())
                 .setWinningLottoNumbers(winningLottoNumbers)
                 .build();
 
         LottoGame lottoGame = LottoGame.createWithLottoGameDtoAndAmount(result, amount);
-
         lottoGame.printLottoGameResult();
     }
 
