@@ -1,29 +1,21 @@
 package domain;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
-public class WinningNumbers {
+public class LottoSheetValidator {
 
-    private final List<Integer> winningNumbers;
-
-    public WinningNumbers(List<Integer> winningNumbers, int bonusNumber) throws IllegalArgumentException {
-        winningNumbers.add(bonusNumber);
-        validate(winningNumbers);
-        this.winningNumbers = winningNumbers;
-    }
-
-    private void validate(List<Integer> winningNumbers) throws IllegalArgumentException {
-        checkAmount(winningNumbers.size());
-        checkDuplicatedNumber(winningNumbers);
-        for (int number : winningNumbers) {
+    public void validate(List<Integer> lottoNumbers, int standardLottoSize) throws IllegalArgumentException {
+        checkSize(lottoNumbers.size(), standardLottoSize);
+        checkDuplicatedNumber(lottoNumbers);
+        for (int number : lottoNumbers) {
             checkNumberRange(number);
         }
     }
 
-    private void checkAmount(int amount) throws IllegalArgumentException {
-        if (amount != LottoGenerator.LOTTO_NUMBER_SIZE + 1) {
+    private void checkSize(int lottoNumberSize, int standardLottoSize) throws IllegalArgumentException {
+        if (lottoNumberSize != standardLottoSize) {
             throw new IllegalArgumentException("적절한 당첨 번호 개수가 아닙니다!!");
         }
     }
@@ -39,9 +31,5 @@ public class WinningNumbers {
         if ((LottoGenerator.LOTTO_NUMBER_MIN > number) || (number > LottoGenerator.LOTTO_NUMBER_MAX)) {
             throw new IllegalArgumentException("적절한 당첨 번호가 아닙니다!!");
         }
-    }
-
-    public List<Integer> getWinningNumbers() {
-        return winningNumbers;
     }
 }
