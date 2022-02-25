@@ -33,6 +33,7 @@ public class GameController {
         return lottoShowDto;
     }
 
+
     public LottosResultDto postMatchLotto(int userId, NumberDto numberDto) {
         List<Integer> winningNumber = numberDto.getWinningNumber();
         int bonusNumber = numberDto.getBonusNumber();

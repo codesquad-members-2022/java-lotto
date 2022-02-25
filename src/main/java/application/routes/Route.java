@@ -53,6 +53,7 @@ public class Route {
             int userId = Integer.parseInt(req.cookie("userId"));
             res.removeCookie("userId");
             controller.deleteUserInfo(userId);
+
             return render(Collections.emptyMap(), "index.html");
         });
 
