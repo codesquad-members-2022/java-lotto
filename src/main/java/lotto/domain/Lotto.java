@@ -16,10 +16,8 @@ public abstract class Lotto {
         return numbers.toString();
     }
 
-    public int getCorrectNumberCount(List<Integer> winningNumbers) {
-        return winningNumbers.stream()
-                .mapToInt(this::correctNumber)
-                .sum();
+    public boolean hasNumber(int number) {
+        return numbers.contains(number);
     }
 
     private int correctNumber(int number) {
@@ -29,7 +27,11 @@ public abstract class Lotto {
         return 0;
     }
 
-    public boolean hasBonusNumber(int bonusNumber) {
-        return numbers.contains(bonusNumber);
+    public MatchLottoResult match(WinningLotto winningLotto) {
+        int matchCount = (int)numbers.stream()
+                .filter(value -> winningLotto.hasNumber(value))
+                .count();
+
+        return new MatchLottoResult(matchCount, numbers.contains(winningLotto.getBonusNumber()));
     }
 }
