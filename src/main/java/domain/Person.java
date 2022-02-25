@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Person {
-    public static final int TICKET_PRICE = 1000;
+    private static final int TICKET_PRICE = 1000;
+    private static final int SECOND_WINNING_COUNT = 5;
+    private static final int BONUS_NUMBER_INDEX = 6;
+    private static final int SECOND_WITH_BONUS_WINNING_COUNT = 7;
+    private static final int NUMBER_OF_RANKS = 8;
     private final String name;
     private final LottoTicketSeller lottoTicketSeller;
     private int money;
@@ -18,11 +22,10 @@ public class Person {
         myLottoTicketList = new ArrayList<>();
     }
 
-    public ArrayList<LottoTicket> buyRandomLottoTicket(int money) {
+    public void buyRandomLottoTicket(int money) {
         isValidInputMoney(money);
         myLottoTicketList = lottoTicketSeller.exchangeTicket(money);
         this.money -= money;
-        return null;
     }
 
     private void isValidInputMoney(int money) {
@@ -42,13 +45,42 @@ public class Person {
         return this.money - money >= 0;
     }
 
-
     public int getBoughtTicketNumber() {
         return myLottoTicketList.size();
     }
 
     public int getRestMoney() {
         return money;
+    }
+
+    public List<LottoTicket> getMyLottoTicketList() {
+        return myLottoTicketList;
+    }
+
+    public void buyCustomLottoTicket(int[] numbers) {
+        ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
+        for (int number : numbers) {
+            lottoNumbers.add(new LottoNumber(number));
+        }
+        myLottoTicketList.add(lottoTicketSeller.exchangeTicket(lottoNumbers));
+        this.money -= TICKET_PRICE;
+    }
+
+    public int[] checkLottoTickets(int[] numbers) {
+        int[] result = new int[NUMBER_OF_RANKS];
+        for (LottoTicket lottoTicket : myLottoTicketList) {
+            checkThisTicket(numbers, result, lottoTicket);
+        }
+        return result;
+    }
+
+    private void checkThisTicket(int[] numbers, int[] result, LottoTicket lottoTicket) {
+        int count = lottoTicket.countWinningNumber(numbers);
+        if (count == SECOND_WINNING_COUNT && lottoTicket.checkBonusNumber(numbers[BONUS_NUMBER_INDEX])) {
+            result[SECOND_WITH_BONUS_WINNING_COUNT]++;
+            return;
+        }
+        result[count]++;
     }
 
     @Override
@@ -62,27 +94,5 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public void buyCustomLottoTicket(int[] numbers) {
-        ArrayList<LottoNumber> lottoNumbers = new ArrayList<>();
-        for (int i = 0; i < numbers.length; i++) {
-            lottoNumbers.add(new LottoNumber(numbers[i]));
-        }
-        myLottoTicketList.add(lottoTicketSeller.exchangeTicket(lottoNumbers));
-        this.money -= TICKET_PRICE;
-    }
-
-    public int[] checkLottoTickets(int[] numbers) {
-        int[] result = new int[7];
-        for (int i = 0; i < myLottoTicketList.size(); i++) {
-            int count = myLottoTicketList.get(i).countWinningNumber(numbers);
-            result[count]++;
-        }
-        return result;
-    }
-
-    public List<LottoTicket> getMyLottoTicketList() {
-        return myLottoTicketList;
     }
 }
