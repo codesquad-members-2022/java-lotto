@@ -2,22 +2,15 @@ package domains.winnings;
 
 import java.util.List;
 
-public class BonusWinningNumbers implements AddedWinningNumbers{
-	private final List<Integer> winningNumbers;
-	private final int bonusBall;
+public class BonusWinningNumbers extends WinningNumbers{
+	private final int bonus;
 
-	public BonusWinningNumbers(List<Integer> winningNumbers, int bonusBall) {
-		this.winningNumbers = winningNumbers;
-		this.bonusBall = bonusBall;
+	public BonusWinningNumbers(List<Integer> winningNumbers, int bonus) {
+		super(winningNumbers);
+		this.bonus = bonus;
 	}
 
-	@Override
 	public int getBonus() {
-		return this.bonusBall;
-	}
-
-	@Override
-	public List<Integer> getNumbers() {
-		return this.winningNumbers;
+		return bonus;
 	}
 }

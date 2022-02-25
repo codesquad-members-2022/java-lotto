@@ -3,7 +3,7 @@ package domains.users;
 import java.util.ArrayList;
 import java.util.List;
 
-import domains.winnings.AddedWinningNumbers;
+import domains.winnings.BonusWinningNumbers;
 import domains.winnings.Ranking;
 
 public class Lottos {
@@ -34,7 +34,7 @@ public class Lottos {
         this.lottos.add(lotto);
     }
 
-    public Ranking getNumberOfWinningAboveThree(AddedWinningNumbers winningNumbers) {
+    public Ranking getNumberOfWinningAboveThree(BonusWinningNumbers winningNumbers) {
         Ranking ranking = new Ranking();
         List<Integer> winning = winningNumbers.getNumbers();
 

@@ -2,10 +2,10 @@ package domains.winnings;
 
 import java.util.List;
 
-public class WinningNumbers implements BasicWinningNumbers{
+public class WinningNumbers {
     private final List<Integer> winningNumbers;
 
-    public WinningNumbers(List<Integer> winningNumbers, int bonusBall) {
+    public WinningNumbers(List<Integer> winningNumbers) {
         this.winningNumbers = winningNumbers;
     }
 
