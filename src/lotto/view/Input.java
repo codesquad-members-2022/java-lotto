@@ -39,13 +39,12 @@ public class Input {
     }
 
     public static List<Integer> getLottoNumbers() throws IllegalArgumentException {
-        List<Integer> lottoNumbers = Arrays.stream(scanner.nextLine().split(",")).map(String::trim)
+        System.out.println(REQUEST_LOTTO_NUMBERS_INFO);
+        return Arrays.stream(scanner.nextLine().split(",")).map(String::trim)
             .mapToInt(Integer::parseInt)
             .sorted()
             .boxed()
             .collect(Collectors.toList());
-
-        return lottoNumbers;
     }
 
     public static List<Integer> getLuckyNumbers() {
@@ -64,10 +63,5 @@ public class Input {
         }
         scanner.nextLine();
         return numOfLotto;
-    }
-
-    public static void getLottoNumbersInfo() {
-        System.out.println(REQUEST_LOTTO_NUMBERS_INFO);
-
     }
 }

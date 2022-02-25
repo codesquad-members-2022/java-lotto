@@ -20,4 +20,8 @@ public class LottoBundle {
     public List<Lotto> getLottoBundle() {
         return lottoBundle;
     }
+
+    public int getNumberOfLotto() {
+        return lottoBundle.size();
+    }
 }
