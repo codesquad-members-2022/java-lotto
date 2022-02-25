@@ -14,17 +14,11 @@ public class LottoFactory {
     }
 
     public static LottoTicket issueLottoTicketWithRandomNumbers() {
-        shuffleNumberPool();
         return new LottoTicket(getLottoNumbers());
     }
 
     public static LottoTicket issueLottoTicketWithSelectNumbers(int[] numbers) {
         return new LottoTicket(new LottoNumbers(numbers));
-    }
-
-    public static WinningNumber drawWinningNumber() {
-        shuffleNumberPool();
-        return new WinningNumber(getLottoNumbers(), getBonusNumber());
     }
 
     public static WinningNumber selectWinningNumber(int[] numbers, int bonusNumber) {
@@ -35,8 +29,6 @@ public class LottoFactory {
         IntStream.rangeClosed(LottoNumber.MINIMUM_NUMBER, LottoNumber.MAXIMUM_NUMBER)
                 .boxed()
                 .forEach(lottoNumberPool::add);
-
-        shuffleNumberPool();
     }
 
     private static void shuffleNumberPool() {
@@ -44,16 +36,12 @@ public class LottoFactory {
     }
 
     private static LottoNumbers getLottoNumbers() {
-        List<LottoNumber> numbers = lottoNumberPool.stream()
+        shuffleNumberPool();
+
+        return new LottoNumbers(lottoNumberPool.stream()
                 .limit(LottoNumbers.LOTTO_NUMBER_COUNT)
                 .sorted()
                 .map(LottoNumber::new)
-                .collect(Collectors.toUnmodifiableList());
-
-        return new LottoNumbers(numbers);
-    }
-
-    private static LottoNumber getBonusNumber() {
-        return new LottoNumber(lottoNumberPool.get(LottoNumbers.LOTTO_NUMBER_COUNT));
+                .collect(Collectors.toUnmodifiableList()));
     }
 }
