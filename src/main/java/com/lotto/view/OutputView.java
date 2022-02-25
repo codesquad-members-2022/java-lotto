@@ -3,9 +3,10 @@ package com.lotto.view;
 import java.util.List;
 import java.util.Map;
 
-import model.Lotto;
-import model.LottoTickets;
-import model.Rank;
+import com.lotto.model.Lotto;
+import com.lotto.model.LottoResult;
+import com.lotto.model.LottoTickets;
+import com.lotto.model.Rank;
 
 public class OutputView {
 	private static final String TICKET_AMOUNT_MESSAGE = "%d개를 구매했습니다.%n";
@@ -20,10 +21,12 @@ public class OutputView {
 		}
 	}
 
-	public void printResult(Map<Rank, Integer> result, double earningRate) {
+	public void printResult(LottoResult result, double earningRate) {
+		Map<Rank, Integer> lottoResult = result.getResult();
+
 		System.out.println(WINNING_RESULT_MESSAGE);
-		for (Rank rank : result.keySet()) {
-			System.out.printf("%d개 일치 (%d원)- %d개%n", rank.getCount(), rank.getWinningAmount(), result.get(rank));
+		for (Rank rank : lottoResult.keySet()) {
+			System.out.printf("%d개 일치 (%d원)- %d개%n", rank.getCount(), rank.getWinningAmount(), lottoResult.get(rank));
 		}
 		System.out.printf("총 수익률은 %s%%입니다", String.format("%.2f",earningRate));
 	}

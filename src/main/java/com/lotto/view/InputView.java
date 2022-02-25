@@ -10,7 +10,7 @@ public class InputView {
 	private static final String REQUEST_WINNING_NUMBERS_MESSAGE = "당첨 번호를 입력해 주세요.";
 	private static final String REQUEST_BONUS_NUMBER_MESSAGE = "보너스 번호를 입력해 주세요.";
 
-	private static final Scanner scanner = new Scanner(System.in);
+	private Scanner scanner;
 
 	public int getPurchaseAmount() {
 		System.out.println(REQUEST_AMOUNT_MESSAGE);
@@ -26,5 +26,13 @@ public class InputView {
 	public int inputBonusNumber() {
 		System.out.println(REQUEST_BONUS_NUMBER_MESSAGE);
 		return scanner.nextInt();
+	}
+
+	public void initScanner(){
+		this.scanner = new Scanner(System.in);
+	}
+
+	public void closeScanner(){
+		this.scanner.close();
 	}
 }
