@@ -1,4 +1,4 @@
-package domains;
+package domains.user;
 
 public class Money {
 	private static final String WON = "원";

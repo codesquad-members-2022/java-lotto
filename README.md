@@ -1,28 +1,32 @@
 # java-lotto
 마스터즈 멤버스 2022 로또 게임 프로젝트
 
+- ✍️ from reviewer
+  - countNumberOfWinnings() for문 대신 stream으로 개선
+  - boolean 함수형 반환 이용한 결과 리턴시 불필요한 조건문을 쓰지 않기
+  - 패키지명에 복수형을 잘 쓰지 않습니다. 
+  - Lotto 객체가 직접 Ranking 결과값을 주는 방식으로 개선해야 하지 않을까요?
+  - 당첨번호 리스트를 보관할 만한 객체를 설계해서 그 객체의 리스트로 전달해주면 더 좋을텐데요?
+  - java.util.ArrayList 에만 존재하는 메서드나 로직에 애플리케이션이 강결합되어야 할 특별한 이유가 있을까요?
+    그렇지 않다면 항상 List<T> 를 사용하는 것이 좋습니다.
+    - [link](https://stackoverflow.com/questions/9852831/polymorphism-why-use-list-list-new-arraylist-instead-of-arraylist-list-n)
 
+<details>
+<summary>🌱 step2. 자바 로또 2단계 - 보너스 번호 추가</summary>
 - pair programming (hanse, sally)
 
 #### 기능요구사항
 
-- [x] 로또 구입 금액을 입력하면 구입 금액에 해당하는 로또를 발급해야 한다.
-- [x] 로또 1장의 가격은 1000원이다.
-- [x] 당첨 번호를 입력받아서 수익률을 출력한다.
-- [x] 기대 수익은 동작 예시를 참고하자.
+- [x] 2등을 위해 추가 번호를 하나 더 추첨한다. 당첨 통계에 2등도 추가해야 한다.
 
 
 
 #### 프로그래밍 요구사항
 
-- [x] indent(인덴트, 들여쓰기) depth를 1단계로 구현한다.
-- [x] depth의 경우 if문을 사용하는 경우 1단계의 depth가 증가한다. if문 안에 while문을 사용한다면 depth가 2단계가 된다.
-- [x] else를 사용하지 마라.
-- [x] 메소드의 크기가 최대 10라인을 넘지 않도록 구현한다.
-- [x] method가 한 가지 일만 하도록 최대한 작게 만들어라.
-- [x] ArrayList를 사용해서 구현한다.
-
+- [x] enum을 적용해 프로그래밍을 구현한다.
 
 #### 출력 결과
 
-<img src="https://user-images.githubusercontent.com/92699009/155276313-d1260c5c-de96-4875-9a05-bf43b59c10b9.png">
+<img src="https://user-images.githubusercontent.com/92699009/155632776-f8de735e-2021-4985-8104-3e79c7f7317c.PNG">
+
+</details>

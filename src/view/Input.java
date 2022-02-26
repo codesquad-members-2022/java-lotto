@@ -1,11 +1,11 @@
-package views;
+package view;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import static java.util.stream.Collectors.toList;
-import static views.Output.println;
+import static view.Output.println;
 
 public class Input {
 	private static final Scanner scanner = new Scanner(System.in);
@@ -15,6 +15,12 @@ public class Input {
 	public static final String OUTPUT_ASK_WINNING_NUMBER = "당첨 번호를 입력해 주세요.";
 
 	public Input() {
+	}
+
+	public static int getBonusNumber(){
+		println.accept("보너스 볼을 입력해주세요.");
+		int bonusNumber = nextInt();
+		return bonusNumber;
 	}
 
 	public static List<Integer> inputWinningNumbers(){
@@ -30,10 +36,10 @@ public class Input {
 				.collect(toList());
 	}
 
-	public static int[] purchaseLotto() {
+	public static PurchasedLotto purchaseLotto() {
 		int purchaseAmount = getPurchaseAmount();
 		int numberOfTicket = getTicketAccount(purchaseAmount);
-		return new int[] {purchaseAmount, numberOfTicket};
+		return new PurchasedLotto(purchaseAmount, numberOfTicket);
 	}
 
 	public static int getPurchaseAmount() {
