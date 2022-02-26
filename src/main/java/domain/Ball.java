@@ -4,10 +4,13 @@ import java.util.Objects;
 
 public class Ball {
 
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 45;
+
     private final int number;
 
     public Ball(int number) {
-        if (1 > number || number > 45) {
+        if (MIN_NUMBER > number || number > MAX_NUMBER) {
             throw new IllegalArgumentException("범위를 벗어났습니다.");
         }
         this.number = number;

@@ -2,6 +2,7 @@ package domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -12,10 +13,10 @@ public class LottoMachine {
 
     public static Lotto createRandomLotto() {
         Collections.shuffle(lottoNumbers);
-        List<Ball> balls = lottoNumbers.stream()
-                .limit(6)
-                .map(number -> new Ball(number))
-                .collect(Collectors.toList());
+        Set<Ball> balls = lottoNumbers.stream()
+                .limit(BALL_COUNT)
+                .map(Ball::new)
+                .collect(Collectors.toSet());
         return new Lotto(balls);
     }
 }

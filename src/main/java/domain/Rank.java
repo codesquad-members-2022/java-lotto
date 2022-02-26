@@ -24,7 +24,7 @@ public enum Rank {
         return price;
     }
 
-    public static Rank createRank(int matchCount, boolean matchBonus) {
+    public static Rank of(int matchCount, boolean matchBonus) {
         if (matchCount == FIRST.matchCount) {
             return FIRST;
         }

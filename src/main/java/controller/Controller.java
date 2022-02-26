@@ -1,9 +1,6 @@
 package controller;
 
-import domain.Ball;
-import domain.Lotto;
-import domain.LottoMachine;
-import domain.User;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
@@ -11,16 +8,26 @@ public class Controller {
 
     public void play() {
         User user = InputView.askHowManyLottos();
-        boolean check = true;
-        while (check) {
-            Lotto lotto = LottoMachine.createRandomLotto();
-            check = user.buyLotto(lotto);
-        }
-        OutputView.printLottos(user.getLottos());
-        Lotto winningLotto = InputView.createWinningLotto();
-        Ball bonusBall = InputView.getBonusBall();
-        user.matchWinningLotto(winningLotto, bonusBall);
+        InputView.printSellCustomLottoCount();
+        buyCustomLotto(user);
+        buyRandomLotto(user);
+        OutputView.printLottos(user);
+        WinningLotto winningLotto = InputView.createWinningLotto();
+        user.matchWinningLotto(winningLotto);
         OutputView.printResult(user);
         InputView.close();
+    }
+
+    private void buyCustomLotto(User user) {
+        for (int i = 0; i < user.getCountOfCustom(); i++) {
+            Lotto lotto = InputView.createLotto();
+            user.buyLotto(lotto);
+        }
+    }
+
+    private void buyRandomLotto(User user) {
+        for (int i = 0; i < user.getCountOfAuto(); i++) {
+            user.buyLotto(LottoMachine.createRandomLotto());
+        }
     }
 }
