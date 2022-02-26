@@ -21,8 +21,8 @@ public class LottoGame {
 
     public void start() {
         getLottos();
-        LuckyLotto luckyLotto = setLuckyNumbers();
-        getResult(lottoBundle.getLottoBundle(), luckyLotto);
+        WinningLotto winningLotto = setWinningNumbers();
+        getResult(lottoBundle.getLottoBundle(), winningLotto);
         printResult();
     }
 
@@ -63,24 +63,25 @@ public class LottoGame {
         }
     }
 
-    private LuckyLotto setLuckyNumbers() {
-        List<Integer> luckyNumbers = input.getLottoNumbers(Input.LUCKY_NUMBERS_INFO);
+    private WinningLotto setWinningNumbers() {
+        List<Integer> luckyNumbers = input.getLottoNumbers(Input.WINNING_NUMBERS_INFO);
         int bonusNumber = input.getBonusNumber();
         try {
-            return new LuckyLotto(luckyNumbers, bonusNumber);
+            return new WinningLotto(luckyNumbers, bonusNumber);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return setLuckyNumbers();
+            return setWinningNumbers();
         }
     }
 
-    private void getResult(List<Lotto> buyedLottos, LuckyLotto luckyLotto) {
-        lottoMatcher.getResult(buyedLottos, luckyLotto);
-        lottoMatcher.matchRank(luckyLotto);
+    private void getResult(List<Lotto> buyedLottos, WinningLotto winningLotto) {
+        lottoMatcher.getResult(buyedLottos, winningLotto);
+        lottoMatcher.matchRank(winningLotto);
     }
 
     private void printResult() {
         Map<Rank, Integer> rankResult = lottoMatcher.getRankResult();
-        output.printResult(rankResult, lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos()));
+        output.printResult(rankResult,
+            lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos()));
     }
 }

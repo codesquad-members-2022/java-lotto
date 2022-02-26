@@ -11,7 +11,8 @@ public class Validator {
     private static final String ERROR_MESSAGE_FOR_LOTTO_NUMBER_RANGE = "로또번호는 1~45 범위의 숫자로 입력해주세요.";
     private static final String ERROR_MESSAGE_FOR_LOTTO_NUMBER_DUPLICATION = "로또번호는 서로 다른 숫자로 입력해주세요.";
     private static final String ERROR_MESSAGE_FOR_LOTTO_BONUS_DUPLICATION = "보너스 번호는 로또번호와 다른 숫자로 입력해주세요.";
-    private static final String ERROR_MESSAGE_FOR_INVALID_LOTTO_PRICE = Lotto.PRICE + "원의 배수로 입력해주세요";
+    private static final String ERROR_MESSAGE_FOR_INVALID_LOTTO_PRICE =
+        Lotto.PRICE + "원의 배수로 입력해주세요";
     private static final String ERROR_MESSAGE_FOR_INVALID_NUM_OF_LOTTO = "투입한 돈보다 더 많은 로또번호를 입력할 수 없습니다.";
     private static final String ERROR_MESSAGE_FOR_CANNOT_CONVERT_TO_INTEGER = "숫자로 입력해주세요.";
     private static final int LOTTO_NUMBERS_LENGTH = 6;
@@ -24,7 +25,7 @@ public class Validator {
         validateDuplication(lottoNumbers);
     }
 
-    public static void isValidLuckyNumber(List<Integer> lottoNumbers, int bonusNumber) {
+    public static void isValidWinningNumber(List<Integer> lottoNumbers, int bonusNumber) {
         isValidLottoNumbers(lottoNumbers);
         validateRange(bonusNumber);
         if (lottoNumbers.contains(bonusNumber)) {

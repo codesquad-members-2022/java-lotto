@@ -8,7 +8,7 @@ import lotto.validate.Validator;
 
 public class Input {
 
-    public static final String LUCKY_NUMBERS_INFO = "당첨 번호를 입력해 주세요.";
+    public static final String WINNING_NUMBERS_INFO = "당첨 번호를 입력해 주세요.";
     public static final String REQUEST_LOTTO_NUMBERS_INFO = "수동으로 구매할 번호를 입력해 주세요.";
     private static final String REQUEST_MONET_INFO = "구입금액을 입력해 주세요.";
     private static final String BONUS_NUMBER_INFO = "보너스 번호를 입력해주세요.";
