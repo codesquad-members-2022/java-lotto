@@ -1,13 +1,14 @@
-import static views.Input.*;
-import static views.Output.*;
+import static view.Input.*;
+import static view.Output.*;
 
 import java.util.List;
 
-import domains.users.LottoMachine;
-import domains.users.Lottos;
-import domains.winnings.Ranking;
-import domains.users.UserLotto;
-import views.PurchasedLotto;
+import domains.user.LottoMachine;
+import domains.user.Lottos;
+import domains.user.Tickets;
+import domains.winning.Ranking;
+import domains.user.UserLotto;
+import view.PurchasedLotto;
 
 public class LottoApplication {
 	private static LottoMachine lottoMachine = new LottoMachine();
@@ -17,13 +18,10 @@ public class LottoApplication {
 	public static void main(String[] args) {
 		PurchasedLotto purchasedLotto = purchaseLotto();
 
-		List<List<Integer>> totalLottos = userLotto.getTickets(purchasedLotto);
+		Tickets totalLottos = userLotto.getTickets(purchasedLotto);
 		showLottos(totalLottos);
 
-		List<Integer> inputValueOfWinningNumbers = inputWinningNumbers();
-		int bonusNumber = getBonusNumber();
-
-		Ranking ranking = userLotto.getRankingFromWinningNumbers(inputValueOfWinningNumbers, bonusNumber);
+		Ranking ranking = userLotto.getRankingFromWinningNumbers(inputWinningNumbers(), getBonusNumber());
 		getResultOfLotto(ranking, purchasedLotto.getPurchaseAmount());
 
 		scanClose();
