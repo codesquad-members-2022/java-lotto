@@ -11,12 +11,12 @@ import java.util.stream.IntStream;
 public class Lotto {
 
     public static final int PRICE = 1000;
-    private static final List<Integer> allNumbers = IntStream.rangeClosed(1, 45).boxed()
+    private static final List<LottoNumber> allNumbers = IntStream.rangeClosed(1, 45).boxed().map(LottoNumber::new)
         .collect(Collectors.toList());
 
-    private final List<Integer> numbers;
+    private final List<LottoNumber> numbers;
 
-    private Lotto(List<Integer> numbers) throws IllegalArgumentException {
+    private Lotto(List<LottoNumber> numbers) throws IllegalArgumentException {
         isValidLottoNumbers(numbers);
         this.numbers = new ArrayList<>(numbers);
         Collections.sort(this.numbers);
@@ -27,7 +27,7 @@ public class Lotto {
         return new Lotto(allNumbers.subList(0, 6));
     }
 
-    public static Lotto create(List<Integer> lottoNumbers) throws IllegalArgumentException {
+    public static Lotto create(List<LottoNumber> lottoNumbers) throws IllegalArgumentException {
         return new Lotto(lottoNumbers);
     }
 
@@ -35,7 +35,7 @@ public class Lotto {
         return numbers.contains(bonusNumber);
     }
 
-    public List<Integer> getNumbers() {
+    public List<LottoNumber> getNumbers() {
         return Collections.unmodifiableList(numbers);
     }
 }

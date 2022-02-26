@@ -55,7 +55,7 @@ public class LottoGame {
 
     private void buyManualLotto() {
         try {
-            List<Integer> lottoNumbers = input.getLottoNumbers(Input.REQUEST_LOTTO_NUMBERS_INFO);
+            List<LottoNumber> lottoNumbers = input.getLottoNumbers(Input.REQUEST_LOTTO_NUMBERS_INFO);
             lottoBundle.buyLotto(lottoNumbers);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -64,7 +64,7 @@ public class LottoGame {
     }
 
     private WinningLotto setWinningNumbers() {
-        List<Integer> luckyNumbers = input.getLottoNumbers(Input.WINNING_NUMBERS_INFO);
+        List<LottoNumber> luckyNumbers = input.getLottoNumbers(Input.WINNING_NUMBERS_INFO);
         int bonusNumber = input.getBonusNumber();
         try {
             return new WinningLotto(luckyNumbers, bonusNumber);

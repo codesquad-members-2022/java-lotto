@@ -25,13 +25,13 @@ public class LottoMatcher {
 
     private int matchWithWinningNumber(Lotto lotto, WinningLotto winningLotto) {
         int count = 0;
-        for (int luckyNumber : winningLotto.getNumbers()) {
+        for (LottoNumber luckyNumber : winningLotto.getNumbers()) {
             count = getNumOfMatch(lotto, count, luckyNumber);
         }
         return count;
     }
 
-    private int getNumOfMatch(Lotto lotto, int count, int luckyNumber) {
+    private int getNumOfMatch(Lotto lotto, int count, LottoNumber luckyNumber) {
         if (lotto.getNumbers().contains(luckyNumber)) {
             count++;
         }

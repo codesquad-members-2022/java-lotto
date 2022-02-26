@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import lotto.domain.LottoNumber;
 import lotto.validate.Validator;
 
 public class Input {
@@ -39,12 +40,13 @@ public class Input {
         }
     }
 
-    public List<Integer> getLottoNumbers(String message) throws IllegalArgumentException {
+    public List<LottoNumber> getLottoNumbers(String message) throws IllegalArgumentException {
         System.out.println(message);
         return Arrays.stream(scanner.nextLine().split(",")).map(String::trim)
             .mapToInt(Integer::parseInt)
             .sorted()
             .boxed()
+            .map(LottoNumber::new)
             .collect(Collectors.toList());
     }
 

@@ -13,7 +13,7 @@ public class LottoBundle {
         }
     }
 
-    public void buyLotto(List<Integer> lottoNumbers) throws IllegalArgumentException {
+    public void buyLotto(List<LottoNumber> lottoNumbers) throws IllegalArgumentException {
         lottoBundle.add(Lotto.create(lottoNumbers));
     }
 
