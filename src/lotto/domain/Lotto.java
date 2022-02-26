@@ -31,6 +31,10 @@ public class Lotto {
         return new Lotto(lottoNumbers);
     }
 
+    public boolean hasBonusNumber(int bonusNumber) {
+        return numbers.contains(bonusNumber);
+    }
+
     public List<Integer> getNumbers() {
         return Collections.unmodifiableList(numbers);
     }

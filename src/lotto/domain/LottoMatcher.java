@@ -41,7 +41,7 @@ public class LottoMatcher {
     public void matchRank(WinningLotto winningLotto) {
         initRankResult();
         for (Lotto lotto : numOfMatchingResult.keySet()) {
-            boolean isMatchBonusNumber = lotto.getNumbers().contains(winningLotto.getBonusNumber());
+            boolean isMatchBonusNumber = lotto.hasBonusNumber(winningLotto.getBonusNumber());
             Rank rank = Rank.create(numOfMatchingResult.get(lotto), isMatchBonusNumber);
             putOnlyWinningLottery(rank);
         }
