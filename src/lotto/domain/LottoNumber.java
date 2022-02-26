@@ -7,8 +7,8 @@ public class LottoNumber implements Comparable<LottoNumber> {
 	private final int number;
 
 	private static final String ERROR_MESSAGE_FOR_LOTTO_NUMBER_RANGE = "로또번호는 1~45 범위의 숫자로 입력해주세요.";
-	private static final int MIN_VALUE = 1;
-	private static final int MAX_VALUE = 45;
+	public static final int MIN_VALUE = 1;
+	public static final int MAX_VALUE = 45;
 
 	public LottoNumber(int number) throws IllegalArgumentException {
 		validateRange(number);

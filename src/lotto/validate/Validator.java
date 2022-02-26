@@ -14,7 +14,6 @@ public class Validator {
     private static final String ERROR_MESSAGE_FOR_INVALID_LOTTO_PRICE = Lotto.PRICE + "원의 배수로 입력해주세요";
     private static final String ERROR_MESSAGE_FOR_INVALID_NUM_OF_LOTTO = "투입한 돈보다 더 많은 로또번호를 입력할 수 없습니다.";
     private static final String ERROR_MESSAGE_FOR_CANNOT_CONVERT_TO_INTEGER = "숫자로 입력해주세요.";
-    private static final int LOTTO_NUMBERS_LENGTH = 6;
 
 	public static void isValidLottoNumbers(List<LottoNumber> lottoNumbers) {
         validateLength(lottoNumbers);
@@ -30,13 +29,13 @@ public class Validator {
 
 	private static void validateDuplication(List<LottoNumber> lottoNumbers) {
 		Set<LottoNumber> lottoSet = new HashSet<>(lottoNumbers);
-        if (lottoSet.size() != LOTTO_NUMBERS_LENGTH) {
+        if (lottoSet.size() != Lotto.NUM_OF_LOTTO_NUMBER) {
             throw new IllegalArgumentException(ERROR_MESSAGE_FOR_LOTTO_NUMBER_DUPLICATION);
         }
     }
 
 	private static void validateLength(List<LottoNumber> lottoNumbers) {
-        if (lottoNumbers.size() != LOTTO_NUMBERS_LENGTH) {
+        if (lottoNumbers.size() != Lotto.NUM_OF_LOTTO_NUMBER) {
             throw new IllegalArgumentException(ERROR_MESSAGE_FOR_LOTTO_NUMBERS_LENGTH);
         }
     }

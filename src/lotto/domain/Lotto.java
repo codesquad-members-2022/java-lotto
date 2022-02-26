@@ -11,7 +11,10 @@ import java.util.stream.IntStream;
 public class Lotto {
 
     public static final int PRICE = 1000;
-    private static final List<LottoNumber> allNumbers = IntStream.rangeClosed(1, 45).boxed().map(LottoNumber::new)
+    public static final int NUM_OF_LOTTO_NUMBER = 6;
+    private static final List<LottoNumber> allNumbers = IntStream.rangeClosed(LottoNumber.MIN_VALUE, LottoNumber.MAX_VALUE)
+        .boxed()
+        .map(LottoNumber::new)
         .collect(Collectors.toList());
 
     private final List<LottoNumber> numbers;
@@ -24,7 +27,7 @@ public class Lotto {
 
     public static Lotto create() throws IllegalArgumentException {
         Collections.shuffle(allNumbers);
-        return new Lotto(allNumbers.subList(0, 6));
+        return new Lotto(allNumbers.subList(0, NUM_OF_LOTTO_NUMBER));
     }
 
     public static Lotto create(List<LottoNumber> lottoNumbers) throws IllegalArgumentException {
