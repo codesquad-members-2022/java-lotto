@@ -6,24 +6,34 @@ import java.util.Map;
 import java.util.Set;
 
 public class LottoCompany {
-    private static Set<Integer> winningNumbers = new HashSet<>();
 
-    public void registWinningNumbers(Set<Integer> inputWinningNumber) {
+    private static Set<LottoNumber> winningNumbers = new HashSet<>();
+    private BonusNumber bonusNumber;
+
+    private static final int DEFAULT_VALUE = 0;
+    private static final int ONE = 1;
+
+    public void registWinningNumbers(Set<LottoNumber> inputWinningNumber, BonusNumber bonusNumber) {
         if (winningNumbers.size() != 0) {
             winningNumbers = new HashSet<>();
         }
         winningNumbers.addAll(inputWinningNumber);
+        this.bonusNumber = bonusNumber;
     }
 
-    public Map<Integer, Integer> numberMatch(LottoTickets lottoTickets) {
-        Map<Integer, Integer> answers = new HashMap<>();
+    public Map<Rank, Integer> getMatchOfRank(LottoTickets lottoTickets) {
+        Map<Rank, Integer> answers = new HashMap<>();
+        int totalSize = lottoTickets.getLottoTickets().size();
 
-        for (int index = 0; index < lottoTickets.getLottoTickets().size(); index++) {
-            LottoTicket lottoTicket = lottoTickets.getLottoTickets().get(index);
-            int count = lottoTicket.countAnswer(winningNumbers);
-            answers.put(count, answers.getOrDefault(count, 0) + 1);
+        for (int index = 0; index < totalSize; index++) {
+            LottoTicket lottoTicket = getLottoTicketByIndex(lottoTickets, index);
+            Rank rank = lottoTicket.getRank(winningNumbers,bonusNumber);
+            answers.put(rank, answers.getOrDefault(rank, DEFAULT_VALUE) + ONE);
         }
-        lottoTickets.winningAmount(answers);
         return answers;
+    }
+
+    private LottoTicket getLottoTicketByIndex(LottoTickets lottoTickets, int index) {
+        return lottoTickets.getLottoTickets().get(index);
     }
 }

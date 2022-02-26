@@ -1,50 +1,32 @@
 package PACKAGE_NAME.view;
 
 import PACKAGE_NAME.domain.LottoTickets;
+import PACKAGE_NAME.domain.Rank;
+import PACKAGE_NAME.domain.RateOfReturn;
 
 import java.util.Map;
 
 public class OutputView {
 
     private static final int DEFAULT_COUNT = 0;
-    private static final int THREE = 3;
-    private static final int FOUR = 4;
-    private static final int FIVE = 5;
-    private static final int SIX = 6;
-
-    private static final String COUNT = "개";
-    private static final String MATCH = " 일치 ";
-    private static final int FOURTH__WINNING_MONEY = 5000;
-    private static final int THIRD_WINNING_MONEY = 50000;
-    private static final int SECOND_WINNING_MONEY = 1500000;
-    private static final int FIRST_WINNING_MONEY = 2000000000;
-
-    private static final String FRONT_BRACKET = "(";
-    private static final String LAST_BRACKET = ")";
     private static final String LINE = "----------";
     private static final String WINNING_STATISTIC = "당첨 통계";
-    private static final String TOTAL_WINNING_MONEY = "당첨금액 총합: ";
     private static final String BUYING_MESSAGE = "개를 구매했습니다.";
+    private static final String TOTAL_RATE_OF_RETURN = "총 수익률은 ";
+    private static final String PERCENT = "% 입니다.";
 
-
-    public void printLottoResult(Map<Integer, Integer> numberMatch) {
+    public void printLottoResult(Map<Rank, Integer> matchOfRank) {
         System.out.println(WINNING_STATISTIC);
         System.out.println(LINE);
+        printResults(matchOfRank);
+    }
 
-        for (int index = THREE; index <= SIX; index++) {
-            if (index == THREE) {
-                System.out.println(index + (COUNT + MATCH + FRONT_BRACKET + FOURTH__WINNING_MONEY + LAST_BRACKET + numberMatch.getOrDefault(index, DEFAULT_COUNT) + COUNT));
-            }
-            if (index == FOUR) {
-                System.out.println(index + (COUNT + MATCH + FRONT_BRACKET + THIRD_WINNING_MONEY + LAST_BRACKET + numberMatch.getOrDefault(index, DEFAULT_COUNT) + COUNT));
-            }
-            if (index == FIVE) {
-                System.out.println(index + (COUNT + MATCH + FRONT_BRACKET + SECOND_WINNING_MONEY + LAST_BRACKET + numberMatch.getOrDefault(index, DEFAULT_COUNT) + COUNT));
-            }
-            if (index == SIX) {
-                System.out.println(index + (COUNT + MATCH + FRONT_BRACKET + FIRST_WINNING_MONEY + LAST_BRACKET + numberMatch.getOrDefault(index, DEFAULT_COUNT) + COUNT));
-            }
-        }
+    private void printResults(Map<Rank, Integer> numberMatch){
+        System.out.println(Rank.FOURTH.getDescription() + numberMatch.getOrDefault(Rank.FOURTH, DEFAULT_COUNT));
+        System.out.println(Rank.THIRD.getDescription() + numberMatch.getOrDefault(Rank.THIRD, DEFAULT_COUNT));
+        System.out.println(Rank.SECOND.getDescription() + numberMatch.getOrDefault(Rank.SECOND, DEFAULT_COUNT));
+        System.out.println(Rank.BONUS.getDescription() + numberMatch.getOrDefault(Rank.BONUS, DEFAULT_COUNT));
+        System.out.println(Rank.FIRST.getDescription() + numberMatch.getOrDefault(Rank.FIRST, DEFAULT_COUNT));
     }
 
     public void printLottoTicket(LottoTickets lottoTickets) {
@@ -55,8 +37,7 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    public void printRateOfReturn(int sum, double rateOfReturn) {
-        System.out.println(TOTAL_WINNING_MONEY + sum);
-        System.out.print("총 수익률은" + rateOfReturn + "% 입니다.");
+    public void printRateOfReturn(RateOfReturn rateOfReturn) {
+        System.out.println(TOTAL_RATE_OF_RETURN + rateOfReturn + PERCENT);
     }
 }
