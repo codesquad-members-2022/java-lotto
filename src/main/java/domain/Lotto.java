@@ -15,11 +15,6 @@ public class Lotto {
         this.lottoNumbers = lottoNumbers;
     }
 
-    @Override
-    public String toString() {
-        return lottoNumbers.toString();
-    }
-
     public int size() {
         return lottoNumbers.size();
     }
@@ -34,5 +29,10 @@ public class Lotto {
             .count();
         boolean containsBonus = contains(winningNumbers.getBonusNumber());
         return Rank.getMatchedRank(matchedCount, containsBonus);
+    }
+
+    @Override
+    public String toString() {
+        return lottoNumbers.toString();
     }
 }
