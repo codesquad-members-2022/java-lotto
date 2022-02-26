@@ -1,9 +1,9 @@
 package view;
 
-import domain.Lotto;
+import domain.PurchasedLotto;
 import domain.Rank;
 
-import java.util.List;
+import java.util.*;
 
 public class OutputView {
 
@@ -11,20 +11,23 @@ public class OutputView {
         System.out.printf("총 수익률은 %5.2f%%입니다.", percent);
     }
 
-    public static void printStatisticalResult(int[] result) {
+    public static void printStatisticalResult(Map<Rank, Integer> winingResult) {
         StringBuilder sb = new StringBuilder();
         sb.append("당첨 통계\n");
         sb.append("---------\n");
-        for (int index = 3; index < result.length; index++) {
-            sb.append(String.format("%d개 일치 (%d원)- %d개\n", index, Rank.getWinningMoney(index), result[index]));
+        Set<Rank> ranks = winingResult.keySet();
+
+        for (Rank rank : ranks) {
+            sb.append(rank.toString() + " - " + winingResult.get(rank) + "개\n");
         }
 
         System.out.println(sb);
     }
 
-    public static void printLottos(List<Lotto> lottos) {
-        for (Lotto lotto : lottos) {
+    public static void printLottos(List<PurchasedLotto> lottos) {
+        for (PurchasedLotto lotto : lottos) {
             System.out.println(lotto);
         }
     }
+
 }
