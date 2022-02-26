@@ -14,23 +14,25 @@ class InputValidator {
     private InputValidator() {
     }
 
-    public static InputValidator getInstance() {
+    static InputValidator getInstance() {
         return validator;
     }
 
     int validateInteger(String input) throws IllegalArgumentException {
+        int integer = 0;
         try {
-            return Integer.parseInt(input);
+            integer = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw subDivideNumberFormatException(input);
+            subDivideNumberFormatException(input);
         }
+        return integer;
     }
 
-    private IllegalArgumentException subDivideNumberFormatException(String input) {
+    private void subDivideNumberFormatException(String input) throws IllegalArgumentException{
         if (input == null || !input.matches("\\d+")) {
-            return new IllegalArgumentException("숫자를 입력해주세요.");
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
-        return new IllegalArgumentException("int 범위 내로 입력해주세요.");
+        throw new IllegalArgumentException("int 범위 내로 입력해주세요.");
     }
 
     int validatePositiveInteger(String input) throws IllegalArgumentException {
