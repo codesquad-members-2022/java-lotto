@@ -9,9 +9,9 @@ public class Lottos {
 
     public List<Lotto> buyLotto(int inputMoney) {
         lottos = new ArrayList<>();
-        int numOfLotto = inputMoney / Lotto.LOTTO_PRICE;
+        int numOfLotto = inputMoney / Lotto.PRICE;
         for (int i = 0; i < numOfLotto; i++) {
-            lottos.add(new Lotto());
+            lottos.add(Lotto.create());
         }
         return lottos;
     }

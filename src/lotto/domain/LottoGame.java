@@ -1,12 +1,10 @@
 package lotto.domain;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import lotto.view.Input;
 import lotto.view.Output;
 
@@ -14,8 +12,8 @@ public class LottoGame {
 
     private final Lottos lottos = new Lottos();
     private final Map<Lotto, Integer> numOfMatchingResult = new HashMap<>();
-    private List<Integer> luckyNumbers;
     private Map<Rank, Integer> rankResult;
+    private LuckyLotto luckyLotto;
 
     public void start() {
         List<Lotto> buyedLottos = lottos.buyLotto(Input.getInputMoney());
@@ -26,15 +24,16 @@ public class LottoGame {
         printResult();
     }
 
+
     private void setLuckyNumbers() {
-        this.luckyNumbers = Arrays.stream(Input.getLuckyNumbers())
-            .boxed()
-            .collect(Collectors.toList());
+        int[] luckyNumbers = Input.getLuckyNumbers();
+        int bonusNumber = Input.getBonusNumber();
+        luckyLotto = new LuckyLotto(luckyNumbers, bonusNumber);
     }
 
     private double getEarningRate(int numOfLottos) {
         int total = getTotalEarning(rankResult);
-        int pay = numOfLottos * Lotto.LOTTO_PRICE;
+        int pay = numOfLottos * Lotto.PRICE;
         return
             ((total - pay) / (double) pay) * 100;
     }
@@ -56,7 +55,7 @@ public class LottoGame {
 
     private int matchWithLuckyNumber(Lotto lotto) {
         int count = 0;
-        for (int luckyNumber : luckyNumbers) {
+        for (int luckyNumber : luckyLotto.getNumbers()) {
             count = getNumOfMatch(lotto, count, luckyNumber);
         }
         return count;
@@ -71,9 +70,9 @@ public class LottoGame {
 
     private void matchRank() {
         initRankResult();
-
-        for (int numOfMatch : numOfMatchingResult.values()) {
-            Rank rank = Rank.create(numOfMatch);
+        for (Lotto lotto : numOfMatchingResult.keySet()) {
+            boolean isMatchBonusNumber = lotto.getNumbers().contains(luckyLotto.getBonusNumber());
+            Rank rank = Rank.create(numOfMatchingResult.get(lotto), isMatchBonusNumber);
             putOnlyWinningLottery(rank);
         }
     }
@@ -86,10 +85,10 @@ public class LottoGame {
 
     private void initRankResult() {
         rankResult = new EnumMap<>(Rank.class);
-        rankResult.put(Rank.FIRST, 0);
-        rankResult.put(Rank.SECOND, 0);
-        rankResult.put(Rank.THIRD, 0);
-        rankResult.put(Rank.FORTH, 0);
+        Rank[] values = Rank.values();
+        for (Rank value : values) {
+            rankResult.put(value, 0);
+        }
     }
 
     private void printResult() {

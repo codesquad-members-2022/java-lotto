@@ -7,6 +7,7 @@ public class Input {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String REQUEST_MONET_INFO = "구입금액을 입력해 주세요.";
     private static final String LUCKY_NUMBERS_INFO = "당첨 번호를 입력해 주세요.";
+    private static final String BONUS_NUMBER_INFO = "보너스 번호를 입력해주세요.";
 
     private Input() {}
 
@@ -15,6 +16,13 @@ public class Input {
         int money = scanner.nextInt();
         scanner.nextLine();
         return money;
+    }
+
+    public static int getBonusNumber() {
+        System.out.println(BONUS_NUMBER_INFO);
+        int bonusNumber = scanner.nextInt();
+        scanner.nextLine();
+        return bonusNumber;
     }
 
     public static int[] getLuckyNumbers() {
