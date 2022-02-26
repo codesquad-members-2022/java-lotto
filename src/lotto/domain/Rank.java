@@ -37,4 +37,11 @@ public enum Rank {
                 return null;
         }
     }
+
+    public static boolean isSecond(Rank rank) {
+        if (rank.equals(Rank.SECOND)) {
+            return true;
+        }
+        return false;
+    }
 }

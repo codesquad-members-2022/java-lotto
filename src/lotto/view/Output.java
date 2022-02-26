@@ -38,7 +38,8 @@ public class Output {
     private static void appendMatchedInfo(Map<Rank, Integer> map, double earningRate) {
         boolean isSecond = false;
         for (Rank rank : map.keySet()) {
-            isSecond = Rank.SECOND.equals(rank);
+            isSecond = Rank.isSecond(rank);
+//            isSecond = Rank.SECOND.equals(rank);
             sb.append(rank.getCountOfMatch())
                 .append("개 일치")
                 .append(isSecond ? ", 보너스 볼 일치" : "")
