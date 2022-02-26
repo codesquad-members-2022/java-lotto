@@ -29,3 +29,33 @@ ___
 - 사용자가 입력한 값에 대한 예외 처리를 철저히 한다.
 - 상속과 인터페이스를 통해 구현을 간결히 할 수 없는지 고민해 본다.
     - 상속(inheritance)과 구현(implementation), 합성(composition)에 대해 고민해 본다.
+
+## 2단계 Dion리뷰에 따른 리팩토링
+
+- getResult()와 matchRank()가 있는 목적은 무엇인가요? 게임을 실행하기 위한 목적에 부합하나요? 아니라면 분리하는 것이 맞습니다.
+- Lucky는 조금 애매한 네이밍이네요. -> winningNumber
+- 입력을 Game에서 컨트롤 하는 구조군요.
+- LottoGame : int pay -> price
+    - total : 축약
+- Input
+    - public static int getBonusNumber() { System.out.println(BONUS_NUMBER_INFO); int bonusNumber =
+      scanner.nextInt(); scanner.nextLine()
+
+- 디미터 법칙 LottoGame, 73라인
+    - 객체지향에서 중요하게 다뤄지는 법칙중 하나가 데메테르(디미터) 법칙인데요. 이것에 대해선 학습해보시구요. 예를 들자면, lotto.haveBonusNumber(
+      bonusNumber) 같은식으로 작성되는게 훨씬 더 읽기 좋지 않나요?
+
+- Lotto에서 Integer조차 일급객체로 생성.
+    - Number에 대한 객체를 만들어보는건 어떨까요?
+    - 그런다음 Numbers에 대한 객체를 만들어주면 좋을 것 같아요. 이를 일급 컬렉션이라고 부릅니다.
+
+- 왜 copyOf를 써주셨나요?
+    - return List.copyOf(luckyNumbers);
+
+- Input 이나 Output도 충분히 객체로 만들어 줄 수 있습니다.
+    - input,output이 LottoGame에만 있는지 확인
+
+- Output()
+    - private Output() { }
+- [x] Rank 에게 직접 물어보죠. 너 2등이니?
+
