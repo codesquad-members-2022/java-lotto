@@ -1,11 +1,11 @@
-package views;
+package view;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import static java.util.stream.Collectors.toList;
-import static views.Output.println;
+import static view.Output.println;
 
 public class Input {
 	private static final Scanner scanner = new Scanner(System.in);

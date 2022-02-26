@@ -1,9 +1,10 @@
-package views;
+package view;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import domains.winnings.Ranking;
+import domains.user.Tickets;
+import domains.winning.Ranking;
 
 public class Output {
 	public static final String PATTERN_ROUND_DOWN = "0.00";
@@ -19,7 +20,8 @@ public class Output {
 	public static Consumer<String> println = (text) -> System.out.println(text);
 	public static Consumer<Object> prints = (obj) -> System.out.println(obj);
 
-	public static void showLottos(List<List<Integer>> purchasedLottos) {
+	public static void showLottos(Tickets tickets) {
+		List<List<Integer>> purchasedLottos = tickets.getTotalLottos();
 		for (List<Integer> lotto : purchasedLottos) {
 			prints.accept(lotto);
 		}

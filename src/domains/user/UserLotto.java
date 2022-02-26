@@ -1,11 +1,10 @@
-package domains.users;
+package domains.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import domains.winnings.BonusWinningNumbers;
-import domains.winnings.Ranking;
-import views.PurchasedLotto;
+import domains.winning.BonusWinningNumbers;
+import domains.winning.Ranking;
+import view.PurchasedLotto;
 
 public class UserLotto {
 	private final LottoMachine lottoMachine;
@@ -16,9 +15,10 @@ public class UserLotto {
 		this.lottos = lottos;
 	}
 
-	public List<List<Integer>> getTickets(PurchasedLotto purchasedLotto) {
-		ArrayList<ArrayList<Integer>> tickets = lottoMachine.getTicket(purchasedLotto.getNumberOfTicket());
-		return lottos.getTotalLottos(tickets);
+	public Tickets getTickets(PurchasedLotto purchasedLotto) {
+		Tickets tickets = lottoMachine.getTicket(purchasedLotto.getNumberOfTicket());
+		lottos.of(tickets);
+		return tickets;
 	}
 
 	public Ranking getRankingFromWinningNumbers(List<Integer> inputValueOfWinningNumbers, int bonusNumber) {

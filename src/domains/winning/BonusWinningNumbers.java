@@ -1,4 +1,4 @@
-package domains.winnings;
+package domains.winning;
 
 import java.util.List;
 
