@@ -8,17 +8,15 @@ import lotto.validate.Validator;
 
 public class Input {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    public static final String LUCKY_NUMBERS_INFO = "당첨 번호를 입력해 주세요.";
+    public static final String REQUEST_LOTTO_NUMBERS_INFO = "수동으로 구매할 번호를 입력해 주세요.";
     private static final String REQUEST_MONET_INFO = "구입금액을 입력해 주세요.";
-    private static final String LUCKY_NUMBERS_INFO = "당첨 번호를 입력해 주세요.";
     private static final String BONUS_NUMBER_INFO = "보너스 번호를 입력해주세요.";
     private static final String REQUEST_NUMBER_OF_LOTTO_INFO = "수동으로 구매할 로또 수를 입력해 주세요.";
-    private static final String REQUEST_LOTTO_NUMBERS_INFO = "수동으로 구매할 번호를 입력해 주세요.";
 
-    private Input() {
-    }
+    private final Scanner scanner = new Scanner(System.in);
 
-    public static int getInputMoney() {
+    public int getInputMoney() {
         System.out.println(REQUEST_MONET_INFO);
         int money = scanner.nextInt();
         try {
@@ -31,15 +29,18 @@ public class Input {
         return money;
     }
 
-    public static int getBonusNumber() {
+    public int getBonusNumber() {
         System.out.println(BONUS_NUMBER_INFO);
-        int bonusNumber = scanner.nextInt();
-        scanner.nextLine();
-        return bonusNumber;
+        try {
+            return Validator.validateStringToInteger(scanner.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getBonusNumber();
+        }
     }
 
-    public static List<Integer> getLottoNumbers() throws IllegalArgumentException {
-        System.out.println(REQUEST_LOTTO_NUMBERS_INFO);
+    public List<Integer> getLottoNumbers(String message) throws IllegalArgumentException {
+        System.out.println(message);
         return Arrays.stream(scanner.nextLine().split(",")).map(String::trim)
             .mapToInt(Integer::parseInt)
             .sorted()
@@ -47,12 +48,7 @@ public class Input {
             .collect(Collectors.toList());
     }
 
-    public static List<Integer> getLuckyNumbers() {
-        System.out.println(LUCKY_NUMBERS_INFO);
-        return getLottoNumbers();
-    }
-
-    public static int getInputNumbOfLottos(int inputMoney) {
+    public int getInputNumbOfLottos(int inputMoney) {
         System.out.println(REQUEST_NUMBER_OF_LOTTO_INFO);
         int numOfLotto = scanner.nextInt();
         try {

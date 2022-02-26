@@ -9,10 +9,14 @@ public class LottoGame {
 
     private final LottoBundle lottoBundle;
     private final LottoMatcher lottoMatcher;
+    private final Input input;
+    private final Output output;
 
     public LottoGame() {
         this.lottoBundle = new LottoBundle();
         this.lottoMatcher = new LottoMatcher();
+        this.input = new Input();
+        this.output = new Output();
     }
 
     public void start() {
@@ -23,7 +27,7 @@ public class LottoGame {
     }
 
     private void getLottos() {
-        int inputMoney = Input.getInputMoney();
+        int inputMoney = input.getInputMoney();
         int numOfMaunalLottos = getManualLottoBundle(inputMoney);
         int numOfAutoLottos = inputMoney / Lotto.PRICE - numOfMaunalLottos;
         try {
@@ -32,11 +36,11 @@ public class LottoGame {
             System.out.println(e.getMessage());
             getLottos();
         }
-        Output.printLottoNum(lottoBundle.getLottoBundle(), numOfMaunalLottos);
+        output.printLottoNum(lottoBundle.getLottoBundle(), numOfMaunalLottos);
     }
 
     private int getManualLottoBundle(int inputMoney) {
-        int numOfManualLottos = Input.getInputNumbOfLottos(inputMoney);
+        int numOfManualLottos = input.getInputNumbOfLottos(inputMoney);
         if (numOfManualLottos != 0) {
             getManualLottoNumbers(numOfManualLottos);
         }
@@ -51,7 +55,7 @@ public class LottoGame {
 
     private void buyManualLotto() {
         try {
-            List<Integer> lottoNumbers = Input.getLottoNumbers();
+            List<Integer> lottoNumbers = input.getLottoNumbers(Input.REQUEST_LOTTO_NUMBERS_INFO);
             lottoBundle.buyLotto(lottoNumbers);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -60,8 +64,8 @@ public class LottoGame {
     }
 
     private LuckyLotto setLuckyNumbers() {
-        List<Integer> luckyNumbers = Input.getLuckyNumbers();
-        int bonusNumber = Input.getBonusNumber();
+        List<Integer> luckyNumbers = input.getLottoNumbers(Input.LUCKY_NUMBERS_INFO);
+        int bonusNumber = input.getBonusNumber();
         try {
             return new LuckyLotto(luckyNumbers, bonusNumber);
         } catch (IllegalArgumentException e) {
@@ -77,6 +81,6 @@ public class LottoGame {
 
     private void printResult() {
         Map<Rank, Integer> rankResult = lottoMatcher.getRankResult();
-        Output.printResult(rankResult, lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos()));
+        output.printResult(rankResult, lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos()));
     }
 }
