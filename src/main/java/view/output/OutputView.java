@@ -4,28 +4,12 @@ import domain.lotto.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
     public static void printLottoTickets(LottoTickets lottoTickets) {
-        List<LottoTicket> tickets = lottoTickets.getLottoTickets();
-        System.out.printf("%d개를 구매했습니다.\n", tickets.size());
-        System.out.println(makeLottoTicketsString(tickets));
+        System.out.println(lottoTickets);
         System.out.println();
-    }
-
-    private static String makeLottoTicketsString(List<LottoTicket> tickets) {
-        return tickets.stream()
-                .map(OutputView::makeLottoTicketString)
-                .collect(Collectors.joining("\n"));
-    }
-
-    private static String makeLottoTicketString(LottoTicket lottoTicket) {
-        return lottoTicket.getLottoNumbers().stream()
-                .mapToInt(LottoNumber::getNumber)
-                .mapToObj(String::valueOf)
-                .collect(Collectors.joining(", ", "[", "]"));
     }
 
     public static void printLottoGameResults(LottoGameResults lottoGameResults) {
@@ -41,5 +25,11 @@ public class OutputView {
                     .sorted(Comparator.comparing(Rank::getReward))
                     .map(rank -> String.format("%s - %d개", rank, lottoGameResults.getRankCountOf(rank)))
                     .collect(Collectors.joining("\n"));
+    }
+
+    public static void printLottoTicketCounts(long countOfManualLottoTicket, long countOfRandomLottoTicket) {
+        System.out.printf("수동으로 %d장, 자동으로 %d개를 구매했습니다.\n",
+                countOfManualLottoTicket,
+                countOfRandomLottoTicket);
     }
 }

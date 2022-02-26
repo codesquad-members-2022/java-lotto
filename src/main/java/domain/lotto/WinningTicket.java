@@ -4,17 +4,17 @@ import java.util.Set;
 
 public class WinningTicket {
 
-    private final Set<LottoNumber> winningNumbers;
+    private final LottoTicket winningLottoTicket;
     private final LottoNumber bonusNumber;
 
-    public WinningTicket(Set<LottoNumber> winningNumbers, LottoNumber bonusNumber) {
-        validateDuplicateLottoNumber(winningNumbers, bonusNumber);
-        this.winningNumbers = winningNumbers;
+    public WinningTicket(LottoTicket winningLottoTicket, LottoNumber bonusNumber) {
+        validateDuplicateLottoNumber(winningLottoTicket, bonusNumber);
+        this.winningLottoTicket = winningLottoTicket;
         this.bonusNumber = bonusNumber;
     }
 
-    private void validateDuplicateLottoNumber(Set<LottoNumber> winningNumbers, LottoNumber bonusNumber) {
-        if (winningNumbers.contains(bonusNumber)) {
+    private void validateDuplicateLottoNumber(LottoTicket winningLottoTicket, LottoNumber bonusNumber) {
+        if (winningLottoTicket.contains(bonusNumber)) {
             throw new IllegalArgumentException(String.format("보너스 번호 %d가 당첨번호와 중복됩니다.", bonusNumber.getNumber()));
         }
     }
@@ -26,12 +26,13 @@ public class WinningTicket {
     }
 
     private boolean isMatchBonus(LottoTicket lottoTicket) {
-        return winningNumbers.contains(bonusNumber);
+        Set<LottoNumber> lottoNumbers = lottoTicket.getLottoNumbers();
+        return lottoNumbers.contains(bonusNumber);
     }
 
     private int calculateMatchCount(LottoTicket lottoTicket) {
         return (int) lottoTicket.getLottoNumbers().stream()
-                .filter(winningNumbers::contains)
+                .filter(winningLottoTicket::contains)
                 .count();
     }
 }

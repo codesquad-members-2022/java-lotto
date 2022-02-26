@@ -6,13 +6,13 @@ public enum Rank {
     THIRD(5, 1_500_000L),
     FOURTH(4, 50_000L),
     FIFTH(3, 5_000L),
-    FAILED(-1, 0L);
+    FAILED(0, 0L);
 
     private final int countOfMatch;
     private final long reward;
 
-    Rank(int contOfMatch, long reward) {
-        this.countOfMatch = contOfMatch;
+    Rank(int countOfMatch, long reward) {
+        this.countOfMatch = countOfMatch;
         this.reward = reward;
     }
 
