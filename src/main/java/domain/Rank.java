@@ -1,36 +1,40 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum Rank {
-    rank1(2000000000, 6),
-    rank2(1500000, 5),
-    rank3(50000, 4),
-    rank4(5000, 3),
-    noRank(0, 0);
+    RANK1(2_000_000_000, 6, false),
+    RANK2(30_000_000, 5, true),
+    RANK3(1_500_000, 5, false),
+    RANK4(50_000, 4, false),
+    rank5(5_000, 3, false),
+    NO_RANK(0, 0, false);
 
     private int prize;
-    private int match;
+    private int matchedCount;
+    private boolean containsBonus;
 
-    Rank(int prize, int match) {
+    Rank(int prize, int match, boolean containsBonus) {
         this.prize = prize;
-        this.match = match;
+        this.matchedCount = match;
+        this.containsBonus = containsBonus;
     }
 
     public int getPrize() {
         return prize;
     }
 
-    public int getMatch() {
-        return match;
+    public int getMatchedCount() {
+        return matchedCount;
     }
 
-    public static Rank getMatchedRank(int match) {
-        for (Rank rank : values()) {
-            if (rank.getMatch() == match) {
-                return rank;
-            }
+    public static Rank getMatchedRank(int matchedCount, boolean containsBonus) {
+        if (matchedCount == 5) {
+            return (containsBonus) ? RANK2 : RANK3;
         }
-        return noRank;
+        return Arrays.stream(Rank.values())
+            .filter(r -> r.getMatchedCount() == matchedCount)
+            .findAny()
+            .orElse(Rank.NO_RANK);
     }
-
-
 }

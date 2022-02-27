@@ -1,43 +1,49 @@
 package view;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
+import exception.LottoIllegalInputException;
 
 public class InputView {
 
     private static final String PROMPT = "> ";
     private static final String PROMPT_MONEY = "구입금액을 입력해 주세요.";
-    private static final String PROMPT_NOT_NUMBER = "숫자를 입력해 주세요.";
     private static final String PROMPT_ANSWER = "당첨 번호를 입력해 주세요.";
+    private static final String PROMPT_BONUS_NUMBER = "보너스 볼을 입력해 주세요.";
     private static final Scanner sc = new Scanner(System.in);
+    private static final InputValidator validator = InputValidator.getInstance();
 
-    public int getMoneyInput()  {
+    public int getMoneyInput() {
         System.out.println(PROMPT_MONEY);
         System.out.print(PROMPT);
-        String temp;
-        while (!isValid(temp = sc.nextLine())) {
-            System.out.println(PROMPT_NOT_NUMBER);
-            System.out.print(PROMPT);
+        try {
+            return validator.validatePositiveInteger(sc.nextLine());
+        } catch (LottoIllegalInputException e) {
+            System.out.println(e.getMessage());
+            return getMoneyInput();
         }
-        return Integer.parseInt(temp);
     }
 
-    public List<Integer> getAnswerInput() {
+    public List<Integer> getWinningNumberInput() {
         System.out.println(PROMPT_ANSWER);
         System.out.print(PROMPT);
-        String[] answer = sc.nextLine().replace(" ", "").split(",");
-        // TODO: 입력 예외 처리(숫자인지, 개수 6개인지, 로또번호 범위(1~45) 내인지)
-        return Arrays.stream(answer)
-            .map(Integer::parseInt)
-            .collect(Collectors.toList());
+        try {
+            return validator.validateWinningNumber(sc.nextLine());
+        } catch (LottoIllegalInputException e) {
+            System.out.println(e.getMessage());
+            return getWinningNumberInput();
+        }
     }
 
-    private boolean isValid(String input) {
-        if (input.matches("\\d+")) {
-            return true;
+    public int getBonusNumberInput(List<Integer> winningNumber) {
+        System.out.println(PROMPT_BONUS_NUMBER);
+        System.out.print(PROMPT);
+        try {
+            return validator.validateBonusNumber(winningNumber, sc.nextLine());
+        } catch (LottoIllegalInputException e) {
+            System.out.println(e.getMessage());
+            return getBonusNumberInput(winningNumber);
         }
-        return false;
     }
 }

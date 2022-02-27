@@ -1,11 +1,13 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import domain.Lotto;
-import domain.LottoShop;
-import domain.Rank;
+import domain.LottoGenerator;
+import domain.PurchasedLotteries;
+import domain.Result;
+import domain.WinningNumbers;
 import view.InputView;
 import view.OutputView;
 
@@ -13,21 +15,35 @@ public class LottoController {
 
     private InputView inputView;
     private OutputView outputView;
-    private LottoShop lottoShop;
 
-    public LottoController(InputView inputView, OutputView outputView, LottoShop lottoShop) {
+    public LottoController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.lottoShop = lottoShop;
     }
 
     public void runLotto() {
-        int userMoney = inputView.getMoneyInput();
-        List<Lotto> purchasedLotteries = lottoShop.order(userMoney);
-        outputView.printLotteries(purchasedLotteries);
-        List<Integer> answers = inputView.getAnswerInput();
-        Map<Rank, Integer> result = lottoShop.getResult(purchasedLotteries,answers);
-        outputView.printStatistics(result, userMoney);
+        PurchasedLotteries purchasedLotteries = purchase();
+        outputView.printPurchasedLotteries(purchasedLotteries);
 
+        WinningNumbers winningNumbers =  draw();
+
+        Result result = purchasedLotteries.getResult(winningNumbers);
+        outputView.printStatistics(result, purchasedLotteries.getProfitRate(winningNumbers));
+    }
+
+    private PurchasedLotteries purchase() {
+        int userMoney = inputView.getMoneyInput();
+        List<Lotto> lotteries = new ArrayList<>();
+        int lottoCount = userMoney / Lotto.PRICE;
+        for (int i = 0; i < lottoCount; i++) {
+            lotteries.add(LottoGenerator.generate());
+        }
+        return new PurchasedLotteries(lotteries);
+    }
+
+    private WinningNumbers draw() {
+        List<Integer> winningNumberInput = inputView.getWinningNumberInput();
+        int bonusNumberInput = inputView.getBonusNumberInput(winningNumberInput);
+        return new WinningNumbers(winningNumberInput, bonusNumberInput);
     }
 }
