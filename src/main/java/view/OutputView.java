@@ -9,7 +9,8 @@ public class OutputView {
         results = input;
     }
 
-    private OutputView() {}
+    private OutputView() {
+    }
 
     public static void showResult() {
         System.out.println("당첨 통계");
