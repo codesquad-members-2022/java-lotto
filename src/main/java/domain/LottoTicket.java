@@ -39,10 +39,7 @@ public class LottoTicket {
     }
 
     private boolean check(LottoNumber numberOfIndex, LottoNumber myNumber) {
-        if (myNumber.equals(numberOfIndex)) {
-            return true;
-        }
-        return false;
+        return myNumber.equals(numberOfIndex);
     }
 
     public void showLottoNumbers() {
