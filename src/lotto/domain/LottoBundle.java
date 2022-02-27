@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LottoBundle {
@@ -18,7 +19,7 @@ public class LottoBundle {
     }
 
     public List<Lotto> getLottoBundle() {
-        return lottoBundle;
+        return Collections.unmodifiableList(lottoBundle);
     }
 
     public int getNumberOfLottos() {
