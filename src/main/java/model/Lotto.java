@@ -16,9 +16,9 @@ public class Lotto {
     }
 
     public int countCollectNumber(String[] winNumbers) {
-        return (int) Arrays.stream(winNumbers)
-                .map(Integer::parseInt)
-                .filter(numbers::contains).count();
+        return (int)Arrays.stream(winNumbers)
+            .map(Integer::parseInt)
+            .filter(numbers::contains).count();
     }
 
     public boolean hasBonusNumber(String bonusNumber) {

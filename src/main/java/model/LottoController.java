@@ -1,113 +1,147 @@
 package model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+import utils.InputValidator;
 import view.InputView;
 import view.OutputView;
 
 public class LottoController {
     private static final int LOTTO_PRICE = 1000;
-    private static final int MAX_NUMBER_COUNT = 6;
-    private static final int MIN_WINNING_NUMBER = 3;
-    private static final int MIN_NUMBER = 1;
-    private static final int MAX_NUMBER = 45;
-    private static final int BONUS_COUNT = 7;
-    private static final int BONUS_TARGET_COUNT = 5;
-
-    private final List<Integer> range = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
-        .boxed()
-        .collect(Collectors.toList());
-
-    private final List<Lotto> lottoList;
-    private final Map<Integer, Integer> map;
+    private final LottoRepository repository;
     private int price;
 
-    public LottoController(List<Lotto> lottoList) {
-        this.lottoList = lottoList;
-        this.map = new LinkedHashMap<>();
-        initMap();
-    }
-
-    private void initMap() {
-        map.put(3, 0);
-        map.put(4, 0);
-        map.put(5, 0);
-        map.put(BONUS_COUNT, 0);
-        map.put(6, 0);
+    public LottoController() {
+        this.repository = new LottoRepository(new ArrayList<>());
     }
 
     public void buildLotto() {
-        price = Integer.parseInt(InputView.requestPrice());
+        OutputView.requestPrice();
+        requestTotalAmount();
         int count = price / LOTTO_PRICE;
-
-        while (lottoList.size() != count) {
-            Set<Integer> numbers = makeRandomNumberSet();
-            checkOverLap(new ArrayList<>(numbers));
-        }
-        OutputView.printPurchaseCount(count, lottoList);
+        int manualLottoEach = numberOfTheLottoByManual(count);
+        makeManualLotto(manualLottoEach);
+        makeRandomLotto(count);
+        OutputView.printPurchaseCount(count, manualLottoEach, repository.getLottoList());
     }
 
-    private Set<Integer> makeRandomNumberSet() {
-        Set<Integer> numbers = new HashSet<>();
-        while (numbers.size() != MAX_NUMBER_COUNT) {
-            Collections.shuffle(range);
-            numbers.add(range.get(0));
+    /**
+     * 전체 요금 입력
+     */
+    private void requestTotalAmount() {
+        while (true) {
+            price = Integer.parseInt(InputView.requestPrice());
+            try {
+                InputValidator.validatePriceUnit(price);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
         }
-        return numbers;
     }
 
+    /**
+     * 수동으로 만들 로또 수를 입력받아, 구매 가능한 수인지 검증
+     * @param count
+     * @return
+     */
+    private int numberOfTheLottoByManual(int count) {
+        int manualLottoEach;
+        OutputView.requestManual();
+        while (true) {
+            manualLottoEach = Integer.parseInt(InputView.requestManualCount());
+            try {
+                InputValidator.validateAvailablePurchase(manualLottoEach, count);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
+        }
+        return manualLottoEach;
+    }
+
+    /**
+     * manualLottoEach만큼 수동 로또를 만들기
+     * @param count
+     */
+    private void makeManualLotto(int count) {
+        if (count != 0) {
+            LottoMaker manualLottoMaker = LottoMakerFactory.getLottoMaker("manual");
+            OutputView.requestManualLottoNumber();
+            createManualLottoByNumber(count, manualLottoMaker);
+        }
+    }
+
+    /**
+     * count만큼 자동 로또 만들기
+     * @param count
+     */
+    private void makeRandomLotto(int count) {
+        while (repository.getLottoList().size() != count) {
+            LottoMaker autoLottoMaker = LottoMakerFactory.getLottoMaker("auto");
+            List<Integer> autoLotto = autoLottoMaker.createLotto();
+            checkOverLap(autoLotto);
+        }
+    }
+
+    /**
+     * count만큼 반복하며 랜덤 로또 리스트를 만들고, overlap 체크를 요청
+     * @param count
+     * @param manualLottoMaker
+     */
+    private void createManualLottoByNumber(int count, LottoMaker manualLottoMaker) {
+        for (int i = 0; i < count; i++) {
+            List<Integer> randomLotto = manualLottoMaker.createLotto();
+            checkOverLap(randomLotto);
+        }
+    }
+
+    /**
+     * repository에 list(로또 번호)가 오버랩되는지 확인 요청
+     * @param lists
+     */
     private void checkOverLap(List<Integer> lists) {
-        int size = (int)lottoList.stream()
-            .filter(l -> l.sameList(lists)).count();
-        sortingNumber(lists, size);
+        repository.checkOverLap(lists);
     }
 
-    private void sortingNumber(List<Integer> lists, int size) {
-        if (size == 0) {
-            Collections.sort(lists);
-            lottoList.add(new Lotto(lists));
-        }
-    }
-
+    /**
+     * 사용자로부터 당첨번호와 보너스 번호를 받아 당첨자 체크 수행
+     */
     public void checkWinNumber() {
-        String winNumber = InputView.requestWinNumber();
-        String[] winNumbers = winNumber.split(", ");
-        String bonusNumber = InputView.requestBonusNumber();
-        for (Lotto lotto : lottoList) {
-            countMatchLotto(winNumbers, lotto, bonusNumber);
-        }
-        rateOfReturn();
-        InputView.ScannerClose();
+        OutputView.requestWinNumber();
+        String[] winNumbers = requestWinNumber();
+        String bonusNumber = requestBonusNumber();
+        repository.checkWinNumber(winNumbers, bonusNumber, price);
+        InputView.scannerClose();
     }
 
-    private void countMatchLotto(String[] winNumbers, Lotto lotto, String bonusNumber) {
-        int tempCount = lotto.countCollectNumber(winNumbers);
-        if (tempCount == BONUS_TARGET_COUNT && lotto.hasBonusNumber(bonusNumber)) {
-            map.put(BONUS_COUNT, map.get(BONUS_COUNT) + 1);
-            return;
+    private String[] requestWinNumber() {
+        String winNumber;
+        while (true) {
+            winNumber = InputView.requestWinNumber();
+            try {
+                InputValidator.validateNumberOfLotto(winNumber);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
         }
-        if (tempCount >= MIN_WINNING_NUMBER) {
-            map.put(tempCount, map.get(tempCount) + 1);
-        }
+        return winNumber.split(", ");
     }
 
-    private void rateOfReturn() {
-        int revenue = 0;
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            revenue += CollectCalculator.getCalculator(entry.getKey(), entry.getValue());
+    private String requestBonusNumber() {
+        String bonusNumber;
+        OutputView.requestBonusNumber();
+        while (true) {
+            bonusNumber = InputView.requestBonusNumber();
+            try {
+                InputValidator.validateRangeAboutSingleNumber(bonusNumber);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printSentence(e.getMessage());
+            }
         }
-        double temp = (double)(revenue - price) / (price) * 100;
-        DecimalFormat df = new DecimalFormat("0.00");
-        String result = df.format(temp);
-        OutputView.printResult(map, result);
+        return bonusNumber;
     }
 }
