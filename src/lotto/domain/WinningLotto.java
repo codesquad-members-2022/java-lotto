@@ -1,6 +1,7 @@
 package lotto.domain;
 
-import static lotto.validate.Validator.isValidWinningNumber;
+import static lotto.validate.Validator.isContainBonusNumber;
+import static lotto.validate.Validator.isValidLottoNumbers;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,20 +9,21 @@ import java.util.List;
 public class WinningLotto {
 
     private final List<LottoNumber> winningNumbers;
-    private final int bonusNumber;
+    private final LottoNumber bonusNumber;
 
-    public WinningLotto(List<LottoNumber> luckyNumbers, int bonusNumber)
+    public WinningLotto(List<LottoNumber> winningNumbers, int bonusNumber)
         throws IllegalArgumentException {
-        isValidWinningNumber(luckyNumbers, bonusNumber);
-        this.winningNumbers = luckyNumbers;
-        this.bonusNumber = bonusNumber;
+        isValidLottoNumbers(winningNumbers);
+        isContainBonusNumber(winningNumbers, bonusNumber);
+        this.winningNumbers = winningNumbers;
+        this.bonusNumber = new LottoNumber(bonusNumber);
     }
 
     public List<LottoNumber> getNumbers() {
         return Collections.unmodifiableList(winningNumbers);
     }
 
-    public int getBonusNumber() {
+    public LottoNumber getBonusNumber() {
         return bonusNumber;
     }
 }

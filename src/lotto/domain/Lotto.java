@@ -34,7 +34,7 @@ public class Lotto {
         return new Lotto(lottoNumbers);
     }
 
-    public boolean hasBonusNumber(int bonusNumber) {
+    public boolean hasBonusNumber(LottoNumber bonusNumber) {
         return numbers.contains(bonusNumber);
     }
 

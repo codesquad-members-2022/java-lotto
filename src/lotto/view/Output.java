@@ -9,7 +9,7 @@ import lotto.domain.Rank;
 
 public class Output {
 
-    private static final StringBuilder sb = new StringBuilder();
+    private final StringBuilder sb = new StringBuilder();
 
     public void printLottoNum(List<Lotto> lotteries, int numOfMaunalLottos) {
         int numOfAutoLottos = lotteries.size() - numOfMaunalLottos;

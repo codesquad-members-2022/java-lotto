@@ -81,7 +81,7 @@ public class LottoGame {
 
     private void printResult() {
         Map<Rank, Integer> rankResult = lottoMatcher.getRankResult();
-        output.printResult(rankResult,
-            lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos()));
+        double earningRate = lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos());
+        output.printResult(rankResult, earningRate);
     }
 }

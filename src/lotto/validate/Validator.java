@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import lotto.domain.Lotto;
 import lotto.domain.LottoNumber;
+import lotto.domain.WinningLotto;
 
 public class Validator {
 
@@ -20,13 +21,6 @@ public class Validator {
         validateDuplication(lottoNumbers);
     }
 
-	public static void isValidWinningNumber(List<LottoNumber> lottoNumbers, int bonusNumber) {
-        isValidLottoNumbers(lottoNumbers);
-        if (lottoNumbers.contains(new LottoNumber(bonusNumber))) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_FOR_LOTTO_BONUS_DUPLICATION);
-        }
-    }
-
 	private static void validateDuplication(List<LottoNumber> lottoNumbers) {
 		Set<LottoNumber> lottoSet = new HashSet<>(lottoNumbers);
         if (lottoSet.size() != Lotto.NUM_OF_LOTTO_NUMBER) {
@@ -37,6 +31,12 @@ public class Validator {
 	private static void validateLength(List<LottoNumber> lottoNumbers) {
         if (lottoNumbers.size() != Lotto.NUM_OF_LOTTO_NUMBER) {
             throw new IllegalArgumentException(ERROR_MESSAGE_FOR_LOTTO_NUMBERS_LENGTH);
+        }
+    }
+
+    public static void isContainBonusNumber(List<LottoNumber> winningNumbers, int bonusNumber) {
+        if (winningNumbers.contains(new LottoNumber(bonusNumber))) {
+            throw new IllegalArgumentException("보너스 번호 중복 불가");
         }
     }
 
