@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import domain.Lotto;
 
-class InputValidator {
+public class InputValidator {
 
     private static final InputValidator validator = new InputValidator();
 
@@ -18,7 +18,7 @@ class InputValidator {
         return validator;
     }
 
-    int validateInteger(String input) throws IllegalArgumentException {
+    public int validateInteger(String input) throws IllegalArgumentException {
         int integer = 0;
         try {
             integer = Integer.parseInt(input);
@@ -35,7 +35,7 @@ class InputValidator {
         throw new IllegalArgumentException("int 범위 내로 입력해주세요.");
     }
 
-    int validatePositiveInteger(String input) throws IllegalArgumentException {
+    public int validatePositiveInteger(String input) throws IllegalArgumentException {
         int number = validateInteger(input);
         if (number < 1) {
             throw new IllegalArgumentException("양수를 입력해 주세요.");
@@ -43,7 +43,7 @@ class InputValidator {
         return number;
     }
 
-    List<Integer> validateWinningNumber(String input) throws IllegalArgumentException {
+    public List<Integer> validateWinningNumber(String input) throws IllegalArgumentException {
         String[] split = input.split(",");
         Set<Integer> numberSet = Arrays.stream(split)
             .map(String::trim)
@@ -57,7 +57,7 @@ class InputValidator {
         return List.copyOf(numberSet);
     }
 
-    int validateLottoNumber(int input) throws IllegalArgumentException {
+    public int validateLottoNumber(int input) throws IllegalArgumentException {
         if (input < Lotto.MIN_LOTTO_NUMBER || input > Lotto.MAX_LOTTO_NUMBER) {
             throw new IllegalArgumentException(Lotto.MIN_LOTTO_NUMBER
                 + "~"
@@ -67,7 +67,7 @@ class InputValidator {
         return input;
     }
 
-    int validateBonusNumber(List<Integer> winningNumbers, String input) throws
+    public int validateBonusNumber(List<Integer> winningNumbers, String input) throws
         IllegalArgumentException {
         int number = validator.validateInteger(input);
         int bonusNumber = validator.validateLottoNumber(number);
