@@ -1,16 +1,16 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class LottoTicket {
     private static final int NORMAL_TICKET_SIZE = 6;
     private static final String LOTTO_NUMBER_ERROR_MESSAGE = "로또 숫자는 6개가 필요합니다.";
-    private final ArrayList<LottoNumber> lottoNumbers;
+    private final List<LottoNumber> lottoNumbers;
 
-    public LottoTicket(ArrayList<LottoNumber> lottoNumbers) {
+    public LottoTicket(List<LottoNumber> lottoNumbers) {
         if (!isValidTicketSize(lottoNumbers)) {
             throw new IllegalArgumentException(LOTTO_NUMBER_ERROR_MESSAGE);
         }
@@ -22,7 +22,7 @@ public class LottoTicket {
         return lottoNumbers.size();
     }
 
-    private boolean isValidTicketSize(ArrayList<LottoNumber> lottoNumbers) {
+    private boolean isValidTicketSize(List<LottoNumber> lottoNumbers) {
         return lottoNumbers.size() == NORMAL_TICKET_SIZE;
     }
 
