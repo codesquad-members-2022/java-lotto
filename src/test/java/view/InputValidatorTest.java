@@ -17,19 +17,19 @@ class InputValidatorTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"a", "ab"})
-    @DisplayName("빈문자 또는 문자가 입력되면 \"숫자를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
+    @DisplayName("빈문자 또는 문자가 입력되면 \"숫자를 입력해주세요.\"라는 메세지를 담은 LottoIllegalInputException을 던진다.")
     void validateInteger_InvalidString(String input) {
         assertThatThrownBy(() -> iv.validateInteger(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("숫자를 입력해주세요.");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {Integer.MAX_VALUE + "111"})
-    @DisplayName("입력값이 정수 범위를 벗어나면 \"int 범위 내로 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
+    @DisplayName("입력값이 정수 범위를 벗어나면 \"int 범위 내로 입력해주세요.\"라는 메세지를 담은 LottoIllegalInputException을 던진다.")
     void validateInteger_OutOfIntegerRange(String input) {
         assertThatThrownBy(() -> iv.validateInteger(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("int 범위 내로 입력해주세요.");
     }
 
@@ -42,10 +42,10 @@ class InputValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"-2", "0"})
-    @DisplayName("입력값이 양수범위를 벗어나면 \"양수를 입력해 주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
+    @DisplayName("입력값이 양수범위를 벗어나면 \"양수를 입력해 주세요.\"라는 메세지를 담은 LottoIllegalInputException을 던진다.")
     void validatePositiveInteger_NegativeInput(String input) {
         assertThatThrownBy(() -> iv.validatePositiveInteger(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("양수를 입력해 주세요.");
     }
 
@@ -58,20 +58,20 @@ class InputValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"1, 2, 3, 4, 5", "1, 2, 3, 4, 5, 6, 7"})
-    @DisplayName("입력 값이 6개가 아니면 \"중복 없는 6개의 번호를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
+    @DisplayName("입력 값이 6개가 아니면 \"중복 없는 6개의 번호를 입력해주세요.\"라는 메세지를 담은 LottoIllegalInputException을 던진다.")
     void validateWinningNumber_InvalidSize(String input) {
         assertThatThrownBy(() -> iv.validateWinningNumber(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("중복 없는 6개의 번호를 입력해주세요.");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"1, 2, 2, 3, 4, 5"})
-    @DisplayName("입력 값 중에 중복 값이 있으면 \"중복 없는 6개의 번호를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을"
+    @DisplayName("입력 값 중에 중복 값이 있으면 \"중복 없는 6개의 번호를 입력해주세요.\"라는 메세지를 담은 LottoIllegalInputException을"
         + " 던진다.")
     void validateWinningNumber_DuplicateInput(String input) {
         assertThatThrownBy(() -> iv.validateWinningNumber(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("중복 없는 6개의 번호를 입력해주세요.");
     }
 
@@ -84,11 +84,11 @@ class InputValidatorTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 46})
-    @DisplayName("입력 값이 로또 범위를 벗어나면 \"1~45 내의 숫자를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 "
+    @DisplayName("입력 값이 로또 범위를 벗어나면 \"1~45 내의 숫자를 입력해주세요.\"라는 메세지를 담은 LottoIllegalInputException을 "
         + "던진다.")
     void validateLottoNumber_OutOfLottoRange(int input) {
         assertThatThrownBy(() -> iv.validateLottoNumber(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("1~45 내의 숫자를 입력해주세요.");
     }
 
@@ -104,7 +104,7 @@ class InputValidatorTest {
     void validateBonusNumber_DuplicateInput() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         assertThatThrownBy(() -> iv.validateBonusNumber(winningNumbers, "6"))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("중복되지 않는 값을 입력해주세요.");
     }
 

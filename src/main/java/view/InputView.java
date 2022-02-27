@@ -3,6 +3,8 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
+import exception.LottoIllegalInputException;
+
 public class InputView {
 
     private static final String PROMPT = "> ";
@@ -17,7 +19,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validatePositiveInteger(sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getMoneyInput();
         }
@@ -28,7 +30,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validateWinningNumber(sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getWinningNumberInput();
         }
@@ -39,7 +41,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validateBonusNumber(winningNumber, sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getBonusNumberInput(winningNumber);
         }
