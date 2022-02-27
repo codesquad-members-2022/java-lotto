@@ -42,7 +42,7 @@ public class LottoTicket {
     }
 
     private int check(LottoNumber numberOfIndex, LottoNumber myNumber) {
-        if (myNumber.isSameNumber(numberOfIndex)) {
+        if (myNumber.equals(numberOfIndex)) {
             return 1;
         }
         return 0;
@@ -57,7 +57,7 @@ public class LottoTicket {
     }
 
     private boolean matchBonusNumber(LottoNumber bonusNumber, LottoNumber lottoNumber) {
-        return lottoNumber.isSameNumber(bonusNumber);
+        return lottoNumber.equals(bonusNumber);
     }
 
     @Override
