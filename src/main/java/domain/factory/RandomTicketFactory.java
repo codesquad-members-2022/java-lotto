@@ -3,10 +3,7 @@ package domain.factory;
 import domain.LottoNumber;
 import domain.LottoTicket;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class RandomTicketFactory implements TicketFactory {
     private static final int NORMAL_TICKET_SIZE = 6;
@@ -19,7 +16,7 @@ public class RandomTicketFactory implements TicketFactory {
     }
 
     @Override
-    public LottoTicket generateTicket(ArrayList<LottoNumber> lottoNumbers) {
+    public LottoTicket generateTicket(List<LottoNumber> lottoNumbers) {
         Set<LottoNumber> lottoNumberSet = new HashSet<>();
         while (lottoNumberSet.size() < NORMAL_TICKET_SIZE) {
             lottoNumberSet.add(new LottoNumber(randomRangeInt(LOWER_BOUND_NUMBER, UPPER_BOUND_NUMBER)));

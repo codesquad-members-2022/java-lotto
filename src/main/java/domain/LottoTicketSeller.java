@@ -2,16 +2,16 @@ package domain;
 
 import domain.factory.TicketFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class LottoTicketSeller {
-    private TicketFactory ticketFactory;
+    private final TicketFactory ticketFactory;
 
     public LottoTicketSeller(TicketFactory ticketFactory) {
         this.ticketFactory = ticketFactory;
     }
 
-    public LottoTicket exchangeTicket(ArrayList<LottoNumber> numbers) {
+    public LottoTicket exchangeTicket(List<LottoNumber> numbers) {
         return ticketFactory.generateTicket(numbers);
     }
 }

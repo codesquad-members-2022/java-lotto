@@ -3,8 +3,8 @@ package domain.factory;
 import domain.LottoNumber;
 import domain.LottoTicket;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TicketFactory {
-    LottoTicket generateTicket(ArrayList<LottoNumber> lottoNumbers);
+    LottoTicket generateTicket(List<LottoNumber> lottoNumbers);
 }
