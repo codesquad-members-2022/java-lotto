@@ -4,9 +4,9 @@
 
 ## step 03 review 반영
 - [ ] seller 스스로 money를 확인한 후, 티켓을 판매할 수 계산하기
-- [ ] LottoNumber에 equals 활용하기
-- [ ] LottoTicket에 check 메서드 boolean 반환으로 변경해보기
-- [ ] checkWinningNumber() 내부 stream으로 개선하기
+- [x] LottoNumber에 equals 활용하기
+- [x] LottoTicket에 check 메서드 boolean 반환으로 변경해보기
+- [x] checkWinningNumber() 내부 stream으로 개선하기
 - [ ] makeResult 의 반환값을 int[]에서 다른것으로 변경해 보기
 
 ## STEP 03 TO-DO List

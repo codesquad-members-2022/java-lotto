@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class LottoTicket {
     private static final int NORMAL_TICKET_SIZE = 6;
@@ -26,26 +27,22 @@ public class LottoTicket {
     }
 
     public int countWinningNumber(WinningNumbers winningNumbers) {
-        int count = 0;
-        for (LottoNumber lottoNumber : lottoNumbers) {
-            count += checkWinningNumber(winningNumbers, lottoNumber);
-        }
-        return count;
+        return lottoNumbers.stream()
+                .mapToInt(lottoNumber -> checkWinningNumber(winningNumbers, lottoNumber))
+                .sum();
     }
 
     private int checkWinningNumber(WinningNumbers winningNumbers, LottoNumber myNumber) {
-        int result = 0;
-        for (int i = 0; i < winningNumbers.getSize(); i++) {
-            result += check(winningNumbers.getNumberOfIndex(i), myNumber);
-        }
-        return result;
+        return (int) IntStream.range(0, winningNumbers.getSize())
+                .filter(i -> check(winningNumbers.getNumberOfIndex(i), myNumber))
+                .count();
     }
 
-    private int check(LottoNumber numberOfIndex, LottoNumber myNumber) {
+    private boolean check(LottoNumber numberOfIndex, LottoNumber myNumber) {
         if (myNumber.equals(numberOfIndex)) {
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
 
     public void showLottoNumbers() {
