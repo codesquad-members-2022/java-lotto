@@ -2,6 +2,7 @@ package view;
 
 import static org.assertj.core.api.Assertions.*;
 
+import exception.LottoIllegalInputException;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +21,7 @@ class InputValidatorTest {
     @DisplayName("빈문자 또는 문자가 입력되면 \"숫자를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
     void validateInteger_InvalidString(String input) {
         assertThatThrownBy(() -> iv.validateInteger(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("숫자를 입력해주세요.");
     }
 
@@ -29,7 +30,7 @@ class InputValidatorTest {
     @DisplayName("입력값이 정수 범위를 벗어나면 \"int 범위 내로 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
     void validateInteger_OutOfIntegerRange(String input) {
         assertThatThrownBy(() -> iv.validateInteger(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("int 범위 내로 입력해주세요.");
     }
 
@@ -45,7 +46,7 @@ class InputValidatorTest {
     @DisplayName("입력값이 양수범위를 벗어나면 \"양수를 입력해 주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
     void validatePositiveInteger_NegativeInput(String input) {
         assertThatThrownBy(() -> iv.validatePositiveInteger(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("양수를 입력해 주세요.");
     }
 
@@ -61,7 +62,7 @@ class InputValidatorTest {
     @DisplayName("입력 값이 6개가 아니면 \"중복 없는 6개의 번호를 입력해주세요.\"라는 메세지를 담은 IllegalArgumentException을 던진다.")
     void validateWinningNumber_InvalidSize(String input) {
         assertThatThrownBy(() -> iv.validateLottoNumbers(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("중복 없는 6개의 번호를 입력해주세요.");
     }
 
@@ -71,7 +72,7 @@ class InputValidatorTest {
         + " 던진다.")
     void validateWinningNumber_DuplicateInput(String input) {
         assertThatThrownBy(() -> iv.validateLottoNumbers(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("중복 없는 6개의 번호를 입력해주세요.");
     }
 
@@ -88,7 +89,7 @@ class InputValidatorTest {
         + "던진다.")
     void validateLottoNumber_OutOfLottoRange(int input) {
         assertThatThrownBy(() -> iv.validateLottoNumber(input))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("1~45 내의 숫자를 입력해주세요.");
     }
 
@@ -104,7 +105,7 @@ class InputValidatorTest {
     void validateBonusNumber_DuplicateInput() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         assertThatThrownBy(() -> iv.validateBonusNumber(winningNumbers, "6"))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("중복되지 않는 값을 입력해주세요.");
     }
 
@@ -120,7 +121,7 @@ class InputValidatorTest {
         + "던진다.")
     void validateManualLottoCount_OutOfRange() {
         assertThatThrownBy(() -> iv.validateManualLottoCount(14000, "15"))
-            .isInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(LottoIllegalInputException.class)
             .hasMessage("구매한 로또 개수 내에서 입력해 주세요.");
     }
 

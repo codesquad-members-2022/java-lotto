@@ -1,5 +1,6 @@
 package view;
 
+import exception.LottoIllegalInputException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -7,7 +8,7 @@ import java.util.stream.Collectors;
 
 import domain.Lotto.Lotto;
 
-class InputValidator {
+public class InputValidator {
 
     private static final InputValidator validator = new InputValidator();
 
@@ -18,39 +19,41 @@ class InputValidator {
         return validator;
     }
 
-    int validateInteger(String input) throws IllegalArgumentException {
+    public int validateInteger(String input) throws LottoIllegalInputException {
+        int integer = 0;
         try {
-            return Integer.parseInt(input);
+            integer = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw subDivideNumberFormatException(input);
+            subDivideNumberFormatException(input);
         }
+        return integer;
     }
 
-    private IllegalArgumentException subDivideNumberFormatException(String input) {
+    private void subDivideNumberFormatException(String input) throws LottoIllegalInputException {
         if (input == null || !input.matches("\\d+")) {
-            return new IllegalArgumentException("숫자를 입력해주세요.");
+            throw new LottoIllegalInputException("숫자를 입력해주세요.");
         }
-        return new IllegalArgumentException("int 범위 내로 입력해주세요.");
+        throw new LottoIllegalInputException("int 범위 내로 입력해주세요.");
     }
 
-    int validatePositiveInteger(String input) throws IllegalArgumentException {
+    public int validatePositiveInteger(String input) throws LottoIllegalInputException {
         int number = validateInteger(input);
         if (number < 1) {
-            throw new IllegalArgumentException("양수를 입력해 주세요.");
+            throw new LottoIllegalInputException("양수를 입력해 주세요.");
         }
         return number;
     }
 
-    int validateManualLottoCount(int userMoney, String input) throws IllegalArgumentException {
+    public int validateManualLottoCount(int userMoney, String input) throws LottoIllegalInputException {
         int count = validatePositiveInteger(input);
         int purchasableCount = userMoney / Lotto.PRICE;
         if (count > purchasableCount) {
-            throw new IllegalArgumentException("구매한 로또 개수 내에서 입력해 주세요.");
+            throw new LottoIllegalInputException("구매한 로또 개수 내에서 입력해 주세요.");
         }
         return count;
     }
 
-    List<Integer> validateLottoNumbers(String input) throws IllegalArgumentException {
+    public List<Integer> validateLottoNumbers(String input) throws LottoIllegalInputException {
         String[] split = input.split(",");
         Set<Integer> numberSet = Arrays.stream(split)
             .map(String::trim)
@@ -58,15 +61,15 @@ class InputValidator {
             .map(this::validateLottoNumber)
             .collect(Collectors.toSet());
         if (numberSet.size() != Lotto.LOTTO_NUMBER_COUNT) {
-            throw new IllegalArgumentException(
+            throw new LottoIllegalInputException(
                 "중복 없는 " + Lotto.LOTTO_NUMBER_COUNT + "개의 번호를 입력해주세요.");
         }
         return List.copyOf(numberSet);
     }
 
-    int validateLottoNumber(int input) throws IllegalArgumentException {
+    public int validateLottoNumber(int input) throws LottoIllegalInputException {
         if (input < Lotto.MIN_LOTTO_NUMBER || input > Lotto.MAX_LOTTO_NUMBER) {
-            throw new IllegalArgumentException(Lotto.MIN_LOTTO_NUMBER
+            throw new LottoIllegalInputException(Lotto.MIN_LOTTO_NUMBER
                 + "~"
                 + Lotto.MAX_LOTTO_NUMBER
                 + " 내의 숫자를 입력해주세요.");
@@ -74,14 +77,14 @@ class InputValidator {
         return input;
     }
 
-    int validateBonusNumber(List<Integer> winningNumbers, String input) throws
-        IllegalArgumentException {
+    public int validateBonusNumber(List<Integer> winningNumbers, String input) throws
+        LottoIllegalInputException {
         int number = validator.validateInteger(input);
         int bonusNumber = validator.validateLottoNumber(number);
         boolean isDuplicate = winningNumbers.stream()
             .anyMatch(n -> n == bonusNumber);
         if (isDuplicate) {
-            throw new IllegalArgumentException("중복되지 않는 값을 입력해주세요.");
+            throw new LottoIllegalInputException("중복되지 않는 값을 입력해주세요.");
         }
         return bonusNumber;
     }

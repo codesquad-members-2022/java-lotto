@@ -1,5 +1,6 @@
 package view;
 
+import exception.LottoIllegalInputException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +26,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validatePositiveInteger(sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getMoneyInput();
         }
@@ -36,7 +37,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validateLottoNumbers(sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getWinningNumbersInput();
         }
@@ -51,7 +52,7 @@ public class InputView {
                 manualNumbersList.add(validator.validateLottoNumbers(sc.nextLine()));
             }
             return manualNumbersList;
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getManualNumbersInput(manualLottoCount);
         }
@@ -62,7 +63,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validateBonusNumber(winningNumber, sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getBonusNumberInput(winningNumber);
         }
@@ -73,7 +74,7 @@ public class InputView {
         System.out.print(PROMPT);
         try {
             return validator.validateManualLottoCount(userMoney, sc.nextLine());
-        } catch (IllegalArgumentException e) {
+        } catch (LottoIllegalInputException e) {
             System.out.println(e.getMessage());
             return getManualLottoCountInput(userMoney);
         }
