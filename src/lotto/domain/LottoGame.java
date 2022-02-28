@@ -58,7 +58,7 @@ public class LottoGame {
     private List<LottoTicket> getManualLottoTickets(int manualTicketCount) {
         int[][] numbers = inputView.getManualLottoNumbers(manualTicketCount);
         return Stream.of(numbers)
-                .map(LottoFactory::issueLottoTicketWithSelectNumbers)
+                .map(LottoTicket::withManualNumbers)
                 .collect(Collectors.toList());
     }
 
@@ -69,7 +69,7 @@ public class LottoGame {
 
     private WinningNumber getWinningNumber() {
         return repeatSupplierUntilSuccessful(
-                () -> LottoFactory.selectWinningNumber(inputView.getWinningNumber(), inputView.getBonusNumber()));
+                () -> WinningNumber.withManualNumbers(inputView.getWinningNumber(), inputView.getBonusNumber()));
     }
 
     private <T> T repeatSupplierUntilSuccessful(Supplier<T> supplier) {

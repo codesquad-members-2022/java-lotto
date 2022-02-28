@@ -34,7 +34,7 @@ public class LottoBundle {
 
     public void fillWithRandomLottoTickets() {
         for (int i = manualTicketCount; i < size; i++){
-            lottoTickets.add(LottoFactory.issueLottoTicketWithRandomNumbers());
+            lottoTickets.add(LottoTicket.withRandomNumbers());
         }
     }
 

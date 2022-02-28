@@ -8,6 +8,14 @@ public class LottoTicket {
         this.lottoNumbers = lottoNumbers;
     }
 
+    public static LottoTicket withRandomNumbers() {
+        return new LottoTicket(LottoNumberPool.getLottoNumbers());
+    }
+
+    public static LottoTicket withManualNumbers(int[] numbers) {
+        return new LottoTicket(new LottoNumbers(numbers));
+    }
+
     public boolean contains(LottoNumber lottoNumber) {
         return lottoNumbers.contains(lottoNumber);
     }

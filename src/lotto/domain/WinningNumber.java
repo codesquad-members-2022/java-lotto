@@ -10,6 +10,10 @@ public class WinningNumber {
         this.bonusNumber = bonusNumber;
     }
 
+    public static WinningNumber withManualNumbers(int[] numbers, int bonusNumber) {
+        return new WinningNumber(new LottoNumbers(numbers), new LottoNumber(bonusNumber));
+    }
+
     public PrizeDivision evaluateTicket(LottoTicket lottoTicket) {
         return PrizeDivision.getWhichDivision(matchNumbers(lottoTicket), matchBonusNumber(lottoTicket));
     }
