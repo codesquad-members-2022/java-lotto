@@ -85,7 +85,7 @@ public class LottoGame {
     private <T> T trySupplier(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (Exception e) {
+        } catch (InvalidLottoNumberException e) {
             outputView.printMessage(e.getMessage());
         }
 

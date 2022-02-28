@@ -35,10 +35,14 @@ public class LottoNumbers {
     }
 
     private List<LottoNumber> parseNumbers(int[] numbers) {
-        return Arrays.stream(numbers)
-                .sorted()
-                .mapToObj(LottoNumber::new)
-                .collect(Collectors.toUnmodifiableList());
+        try {
+            return Arrays.stream(numbers)
+                    .sorted()
+                    .mapToObj(LottoNumber::new)
+                    .collect(Collectors.toUnmodifiableList());
+        } catch (InvalidLottoNumberException e) {
+            throw new InvalidLottoNumberException(e, numbers);
+        }
     }
 
     private void validateLength(List<LottoNumber> lottoNumberList) {
@@ -57,13 +61,14 @@ public class LottoNumbers {
 
     private void validateLength(int[] numbers) {
         if (numbers.length != LOTTO_NUMBER_COUNT) {
-            throw new IllegalArgumentException(String.format("로또 번호는 %d개의 숫자가 필요합니다.", LOTTO_NUMBER_COUNT));
+            throw new WrongSizedLottoNumberException(
+                    String.format("로또 번호는 %d개의 숫자로 이루어져야 합니다.", LOTTO_NUMBER_COUNT), numbers);
         }
     }
 
     private void validateNoDuplicate(int[] numbers) {
         if (hasDuplicate(numbers)) {
-            throw new IllegalArgumentException("로또 번호는 각각 달라야 합니다.");
+            throw new DuplicateLottoNumberException(numbers);
         }
     }
 
