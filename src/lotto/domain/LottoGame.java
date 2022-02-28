@@ -1,97 +1,87 @@
 package lotto.domain;
 
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import lotto.view.Input;
 import lotto.view.Output;
 
 public class LottoGame {
 
-    private final Lottos lottos = new Lottos();
-    private final Map<Lotto, Integer> numOfMatchingResult = new HashMap<>();
-    private Map<Rank, Integer> rankResult;
-    private LuckyLotto luckyLotto;
+    private final LottoBundle lottoBundle;
+    private final LottoMatcher lottoMatcher;
+    private final Input input;
+    private final Output output;
+
+    public LottoGame() {
+        this.lottoBundle = new LottoBundle();
+        this.lottoMatcher = new LottoMatcher();
+        this.input = new Input();
+        this.output = new Output();
+    }
 
     public void start() {
-        List<Lotto> buyedLottos = lottos.buyLotto(Input.getInputMoney());
-        Output.printLottoNum(buyedLottos);
-        setLuckyNumbers();
-        getResult(buyedLottos);
-        matchRank();
+        getLottos();
+        WinningLotto winningLotto = setWinningNumbers();
+        getResult(lottoBundle.getLottoBundle(), winningLotto);
         printResult();
     }
 
-
-    private void setLuckyNumbers() {
-        int[] luckyNumbers = Input.getLuckyNumbers();
-        int bonusNumber = Input.getBonusNumber();
-        luckyLotto = new LuckyLotto(luckyNumbers, bonusNumber);
-    }
-
-    private double getEarningRate(int numOfLottos) {
-        int total = getTotalEarning(rankResult);
-        int pay = numOfLottos * Lotto.PRICE;
-        return
-            ((total - pay) / (double) pay) * 100;
-    }
-
-    private int getTotalEarning(Map<Rank, Integer> rankResult) {
-        int total = 0;
-        for (Rank rank : rankResult.keySet()) {
-            total += rankResult.get(rank) * rank.getWinningMoney();
+    private void getLottos() {
+        int inputMoney = input.getInputMoney();
+        int numOfMaunalLottos = getManualLottoBundle(inputMoney);
+        int numOfAutoLottos = inputMoney / Lotto.PRICE - numOfMaunalLottos;
+        try {
+            lottoBundle.buyLotto(numOfAutoLottos);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            getLottos();
         }
-        return total;
+        output.printLottoNum(lottoBundle.getLottoBundle(), numOfMaunalLottos);
     }
 
-    private void getResult(List<Lotto> buyedLottos) {
-        for (Lotto lotto : buyedLottos) {
-            int count = matchWithLuckyNumber(lotto);
-            numOfMatchingResult.put(lotto, count);
+    private int getManualLottoBundle(int inputMoney) {
+        int numOfManualLottos = input.getInputNumbOfLottos(inputMoney);
+        if (numOfManualLottos != 0) {
+            getManualLottoNumbers(numOfManualLottos);
+        }
+        return numOfManualLottos;
+    }
+
+    private void getManualLottoNumbers(int numOfManualLottos) {
+        for (int i = 0; i < numOfManualLottos; i++) {
+            buyManualLotto();
         }
     }
 
-    private int matchWithLuckyNumber(Lotto lotto) {
-        int count = 0;
-        for (int luckyNumber : luckyLotto.getNumbers()) {
-            count = getNumOfMatch(lotto, count, luckyNumber);
-        }
-        return count;
-    }
-
-    private int getNumOfMatch(Lotto lotto, int count, int luckyNumber) {
-        if (lotto.getNumbers().contains(luckyNumber)) {
-            count++;
-        }
-        return count;
-    }
-
-    private void matchRank() {
-        initRankResult();
-        for (Lotto lotto : numOfMatchingResult.keySet()) {
-            boolean isMatchBonusNumber = lotto.getNumbers().contains(luckyLotto.getBonusNumber());
-            Rank rank = Rank.create(numOfMatchingResult.get(lotto), isMatchBonusNumber);
-            putOnlyWinningLottery(rank);
+    private void buyManualLotto() {
+        try {
+            List<LottoNumber> lottoNumbers = input.getLottoNumbers(Input.REQUEST_LOTTO_NUMBERS_INFO);
+            lottoBundle.buyLotto(lottoNumbers);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            buyManualLotto();
         }
     }
 
-    private void putOnlyWinningLottery(Rank rank) {
-        if (!Objects.isNull(rank)) {
-            rankResult.put(rank, rankResult.get(rank) + 1);
+    private WinningLotto setWinningNumbers() {
+        List<LottoNumber> luckyNumbers = input.getLottoNumbers(Input.WINNING_NUMBERS_INFO);
+        int bonusNumber = input.getBonusNumber();
+        try {
+            return new WinningLotto(luckyNumbers, bonusNumber);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return setWinningNumbers();
         }
     }
 
-    private void initRankResult() {
-        rankResult = new EnumMap<>(Rank.class);
-        Rank[] values = Rank.values();
-        for (Rank value : values) {
-            rankResult.put(value, 0);
-        }
+    private void getResult(List<Lotto> buyedLottos, WinningLotto winningLotto) {
+        lottoMatcher.getResult(buyedLottos, winningLotto);
+        lottoMatcher.matchRank(winningLotto);
     }
 
     private void printResult() {
-        Output.printResult(rankResult, getEarningRate(numOfMatchingResult.size()));
+        Map<Rank, Integer> rankResult = lottoMatcher.getRankResult();
+        double earningRate = lottoMatcher.getEarningRate(lottoBundle.getNumberOfLottos());
+        output.printResult(rankResult, earningRate);
     }
 }
