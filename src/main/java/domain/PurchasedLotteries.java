@@ -2,6 +2,8 @@ package domain;
 
 import java.util.List;
 
+import domain.Lotto.Lotto;
+
 public class PurchasedLotteries {
 
     private final List<Lotto> purchasedLotteries;
@@ -15,7 +17,7 @@ public class PurchasedLotteries {
     }
 
     public int getTotalInvestment() {
-        return Lotto.PRICE * count();
+        return Lotto.PRICE * countAllLotto();
     }
 
     public int getTotalPrize(WinningNumbers winningNumbers) {
@@ -29,8 +31,14 @@ public class PurchasedLotteries {
             * 100;
     }
 
-    public int count() {
+    public int countAllLotto() {
         return purchasedLotteries.size();
+    }
+
+    public int countTypeOf(Class<? extends Lotto> lottoType) {
+        return (int)purchasedLotteries.stream()
+            .filter(lottoType::isInstance)
+            .count();
     }
 
     public List<Lotto> get() {

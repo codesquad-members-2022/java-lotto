@@ -1,8 +1,11 @@
-package domain;
+package domain.Lotto;
 
 import java.util.List;
 
-public class Lotto {
+import domain.Rank;
+import domain.WinningNumbers;
+
+public abstract class Lotto {
 
     public static final int PRICE = 1_000;
     public static final int LOTTO_NUMBER_COUNT = 6;

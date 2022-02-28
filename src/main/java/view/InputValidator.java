@@ -1,12 +1,12 @@
 package view;
 
+import exception.LottoIllegalInputException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import domain.Lotto;
-import exception.LottoIllegalInputException;
+import domain.Lotto.Lotto;
 
 public class InputValidator {
 
@@ -15,7 +15,7 @@ public class InputValidator {
     private InputValidator() {
     }
 
-    static InputValidator getInstance() {
+    public static InputValidator getInstance() {
         return validator;
     }
 
@@ -29,7 +29,7 @@ public class InputValidator {
         return integer;
     }
 
-    private void subDivideNumberFormatException(String input) throws LottoIllegalInputException{
+    private void subDivideNumberFormatException(String input) throws LottoIllegalInputException {
         if (input == null || !input.matches("\\d+")) {
             throw new LottoIllegalInputException("숫자를 입력해주세요.");
         }
@@ -44,7 +44,16 @@ public class InputValidator {
         return number;
     }
 
-    public List<Integer> validateWinningNumber(String input) throws LottoIllegalInputException {
+    public int validateManualLottoCount(int userMoney, String input) throws LottoIllegalInputException {
+        int count = validatePositiveInteger(input);
+        int purchasableCount = userMoney / Lotto.PRICE;
+        if (count > purchasableCount) {
+            throw new LottoIllegalInputException("구매한 로또 개수 내에서 입력해 주세요.");
+        }
+        return count;
+    }
+
+    public List<Integer> validateLottoNumbers(String input) throws LottoIllegalInputException {
         String[] split = input.split(",");
         Set<Integer> numberSet = Arrays.stream(split)
             .map(String::trim)

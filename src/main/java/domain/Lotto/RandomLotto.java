@@ -1,11 +1,11 @@
-package domain;
+package domain.Lotto;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LottoGenerator {
+public class RandomLotto extends Lotto {
 
     private static final List<Integer> allNumbers;
 
@@ -15,12 +15,13 @@ public class LottoGenerator {
             .collect(Collectors.toList());
     }
 
-    private LottoGenerator() {
+    private RandomLotto(List<Integer> lottoNumbers) {
+        super(lottoNumbers);
     }
 
-    public static Lotto generate() {
+    public static RandomLotto generate() {
         Collections.shuffle(allNumbers);
         List<Integer> randomNumbers = List.copyOf(allNumbers.subList(0, 6));
-        return new Lotto(randomNumbers);
+        return new RandomLotto(randomNumbers);
     }
 }
