@@ -21,3 +21,17 @@
 - [x] 예외가 발생하는 부분에 대해 자바 Exception을 적용해 예외처리한다.
 - [x] 사용자가 입력한 값에 대한 예외 처리를 철저히 한다.
 - [x] 상속과 인터페이스를 통해 구현을 간결히 할 수 없는지 고민해 본다.
+
+## 4단계 - 웹 UI 적용
+
+- [ ] 스프링은 사용하지 않는다.
+
+### 구현과정
+
+- dependency: com.sparkjava:spark-core:2.9.3
+  - `SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder"` 에러 발생
+  - 서버 자체는 띄워지나 `Defaulting to no-operation (NOP) logger implementation` 메시지가 출력된다
+- dependency: org.slf4j:slf4j-simple:1.7.36
+  - `SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder"` 에러가 해결된다
+  - 참고: spark-core 2.9.3 버전에 포함된 SLF4J는 slf4j-api 1.7.25 버전이다. 
+  
