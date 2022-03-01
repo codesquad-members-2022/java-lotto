@@ -20,6 +20,10 @@ public class LottoTicket {
         return lottoNumbers.contains(lottoNumber);
     }
 
+    public String getNumbers() {
+        return lottoNumbers.toString();
+    }
+
     @Override
     public String toString() {
         return lottoNumbers.toString();

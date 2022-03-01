@@ -1,6 +1,8 @@
 package lotto.domain;
 
 public class WinningNumber {
+    public static final String INPUT_FIELD_NAME = "winningNumber";
+    public static final String BONUS_INPUT_FIELD_NAME = "bonusNumber";
     private final LottoNumbers winningNumbers;
     private final LottoNumber bonusNumber;
 

@@ -6,6 +6,7 @@ import java.util.List;
 public class LottoBundle {
     private final int size;
     private int manualTicketCount;
+
     private final List<LottoTicket> lottoTickets = new ArrayList<>();
 
     public LottoBundle(int size) {
@@ -36,6 +37,10 @@ public class LottoBundle {
         for (int i = manualTicketCount; i < size; i++){
             lottoTickets.add(LottoTicket.withRandomNumbers());
         }
+    }
+
+    public List<LottoTicket> getLottoTickets() {
+        return new ArrayList<>(lottoTickets);
     }
 
     public int count() {

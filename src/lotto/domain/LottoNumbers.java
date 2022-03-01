@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 public class LottoNumbers {
     public static final int LOTTO_NUMBER_COUNT = 6;
+    public static final String INPUT_FIELD_NAME = "lottoNumbers_";
     private final List<LottoNumber> lottoNumberList;
 
     public LottoNumbers(List<LottoNumber> lottoNumberList) {

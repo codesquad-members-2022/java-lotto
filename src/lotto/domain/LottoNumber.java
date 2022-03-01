@@ -29,7 +29,7 @@ public class LottoNumber {
 
     @Override
     public String toString() {
-        return String.valueOf(number);
+        return String.format("%2d", number);
     }
 
     private void validateRange(int number) {
