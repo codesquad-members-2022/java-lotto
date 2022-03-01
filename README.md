@@ -24,7 +24,9 @@
 
 ## 4단계 - 웹 UI 적용
 
+- [ ] 콘솔 UI 대신 웹 UI를 적용한다.
 - [ ] 스프링은 사용하지 않는다.
+  - 대신 SparkJava를 사용한다. 
 
 ### 구현과정
 
@@ -33,5 +35,6 @@
   - 서버 자체는 띄워지나 `Defaulting to no-operation (NOP) logger implementation` 메시지가 출력된다
 - dependency: org.slf4j:slf4j-simple:1.7.36
   - `SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder"` 에러가 해결된다
-  - 참고: spark-core 2.9.3 버전에 포함된 SLF4J는 slf4j-api 1.7.25 버전이다. 
+  - 참고: spark-core 2.9.3 버전에 포함된 SLF4J는 slf4j-api 1.7.25 버전이다.
+- IDEA 프로젝트에서 작업 시 /main/resources 폴더를 만들 때 모듈 설정에서 resource 폴더로 속성이 지정되어 있지 않으면 제대로 인식하지 못한다.  
   
