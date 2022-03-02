@@ -18,7 +18,7 @@ public class LottoCashier {
         this.lottoTicketManager = LottoTicketManager.createWithTotalAmountAndCustomTicketCount(amount, customLottoCount);
     }
 
-    public static LottoCashier receiveOrderAndCreate() {
+    public static LottoCashier createWithReceiveOrder() {
         int amount = InputView.readAmount();
         int customLottoCount = InputView.readCustomLottoCount(getLottoCount(amount));
 

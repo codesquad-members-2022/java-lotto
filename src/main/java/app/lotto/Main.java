@@ -1,12 +1,11 @@
 package app.lotto;
 
 import app.lotto.domain.*;
-import app.lotto.view.InputView;
 
 public class Main {
 
     public static void main(String[] args) {
-        LottoCashier lottoCashier = LottoCashier.receiveOrderAndCreate();
+        LottoCashier lottoCashier = LottoCashier.createWithReceiveOrder();
         lottoCashier.showAllLottoTickets();
 
         WinningLottoNumbers winningLottoNumbers = WinningLottoNumbers.readWinningNumbersAndCreate();
