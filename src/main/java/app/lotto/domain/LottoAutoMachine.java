@@ -11,7 +11,7 @@ public class LottoAutoMachine {
     private static final int LOTTO_MAX_NUMBER = 45;
     private static final int LOTTO_NUMBER_COUNT = 6;
 
-    public static List<LottoTicket> getAllAutoLottoNumbers(int autoLottoCount) {
+    public List<LottoTicket> getAllAutoLottoNumbers(int autoLottoCount) {
         List<LottoTicket> allAutoLottoNumbers = new ArrayList<>();
 
         for (int i = 0; i < autoLottoCount; i++) {
@@ -22,13 +22,13 @@ public class LottoAutoMachine {
         return allAutoLottoNumbers;
     }
 
-    private static LottoTicket getAutoLottoNumbers() {
+    private LottoTicket getAutoLottoNumbers() {
         List<Integer> lottoNumbers = getLottoNumbers();
         Collections.shuffle(lottoNumbers);
         return new LottoTicket(lottoNumbers.subList(0, LOTTO_NUMBER_COUNT));
     }
 
-    private static List<Integer> getLottoNumbers() {
+    private List<Integer> getLottoNumbers() {
         return IntStream.rangeClosed(LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER)
                 .boxed()
                 .collect(Collectors.toList());

@@ -14,6 +14,7 @@ public class LottoTicketManager {
     private final int autoTicketCount;
     private final List<LottoTicket> customLottoTickets = new ArrayList<>();
     private final List<LottoTicket> autoLottoTickets = new ArrayList<>();
+    private final LottoAutoMachine autoMachine = new LottoAutoMachine();
 
     private LottoTicketManager(int customTicketCount, int autoTicketCount) {
         this.customTicketCount = customTicketCount;
@@ -47,6 +48,6 @@ public class LottoTicketManager {
     }
 
     private void createAutoLottoTickets() {
-        this.autoLottoTickets.addAll(LottoAutoMachine.getAllAutoLottoNumbers(autoTicketCount));
+        this.autoLottoTickets.addAll(autoMachine.getAllAutoLottoNumbers(autoTicketCount));
     }
 }
