@@ -13,63 +13,117 @@ import java.util.List;
 
 public class LottoController {
 
-    public static final int PRICE_PER_LOTTO = 1000;
-
     private final ScanView scanView;
     private final PrintView printView;
+
     private List<LottoTicket> lottos;
 
+    private int purchaseAmount;
+    private int purchaseCount;
+    private int manualPurchaseCount;
+    private Map<Rank, Integer> rankResult;
+    private long amountOfWinningMoney;
+    private WinningNumber winningNumbers;
+
     public LottoController(ScanView scanView, PrintView printView) {
+        this.lottos = new ArrayList<>();
         this.scanView = scanView;
         this.printView = printView;
     }
 
-    public void initLottos() {
-        this.lottos = new ArrayList<>();
-        int purchaseAmount = scanView.getPurchaseAmount();
-        int purchaseCount = purchaseAmount / PRICE_PER_LOTTO;
+    public void playGame() {
+        initLottos();
+        printLottoResult();
+    }
 
-        for (int i = 0; i < purchaseCount; ++i) {
+    private void initLottos() {
+        setPurchaseAmount();
+        setPurchaseCount();
+        setManualPurchaseCount();
+
+        setManualLottoTickets();
+        setAutoLottoTickets();
+
+        printAllLottoTickets();
+
+        setWinningNumbers();
+        setRankResultMap();
+        setAmountOfWinningMoney();
+    }
+
+    private void setPurchaseAmount() {
+        purchaseAmount = scanView.getPurchaseAmount();
+    }
+
+    private void setPurchaseCount() {
+        purchaseCount = purchaseAmount / LottoTicket.PRICE;
+    }
+
+    private void setManualPurchaseCount() {
+        manualPurchaseCount = scanView.getManualPurchaseCount(purchaseCount);
+    }
+
+
+    private void setManualLottoTickets() {
+        if (manualPurchaseCount == 0) {
+            return;
+        }
+        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
+        for (int i = 0; i < manualPurchaseCount; i++) {
+            createManualLottoTicket();
+        }
+    }
+
+    private void createManualLottoTicket() {
+        try {
+            System.out.print("[" + lottos.size() + "] : ");
+            lottos.add(new LottoTicket(scanView.getNumbers()));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            createManualLottoTicket();
+        }
+    }
+
+    private void setAutoLottoTickets() {
+        for (int i = 0; i < purchaseCount - manualPurchaseCount; ++i) {
             lottos.add(new LottoTicket());
         }
     }
 
-    public void playGame() {
-        initLottos();
-        printGame();
-        printLottoResult();
-    }
 
     private void printLottoResult() {
-        WinningNumber winningNumbers = new WinningNumber(scanView.getWinningNumber(),
-            scanView.getBonusNumber());
-        Map<Rank, Integer> rankResult = getRankResultMap(winningNumbers);
-        printView.printResult(rankResult, lottos.size() * PRICE_PER_LOTTO,
-            getAmountOfWinningMoney(rankResult));
+        printView.printResult(rankResult, purchaseAmount, amountOfWinningMoney);
     }
 
-    private Map<Rank, Integer> getRankResultMap(WinningNumber winningNumbers) {
-        Map<Rank, Integer> rankResult = new HashMap<>();
+    private void setRankResultMap() {
+        rankResult = new HashMap<>();
         for (int i = 0; i < lottos.size(); i++) {
             Rank r = lottos.get(i).getResult(winningNumbers);
             int count = rankResult.getOrDefault(r, 0);
             rankResult.put(r, count + 1);
         }
-        return rankResult;
     }
 
-    private int getAmountOfWinningMoney(Map<Rank, Integer> rankResult) {
-        int winningMoney = 0;
+    private void setAmountOfWinningMoney() {
         for (Map.Entry<Rank, Integer> entry : rankResult.entrySet()) {
             Rank rank = entry.getKey();
             int count = entry.getValue();
-            winningMoney += rank.getWinningMoney() * count;
+            amountOfWinningMoney += (long)rank.getWinningMoney() * count;
         }
-        return winningMoney;
     }
 
-    public void printGame() {
-        printView.printLottos(lottos);
+    private void setWinningNumbers() {
+        try {
+            winningNumbers = new WinningNumber(scanView.getWinningNumber(),
+                scanView.getBonusNumber());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            setWinningNumbers();
+        }
+    }
+
+    private void printAllLottoTickets() {
+        printView.printLottos(lottos, purchaseCount, manualPurchaseCount);
     }
 
 }

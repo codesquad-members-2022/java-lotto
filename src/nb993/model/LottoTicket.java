@@ -3,10 +3,13 @@ package nb993.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import nb993.util.LottoUtil;
 
 public class LottoTicket {
 
-    private static final int LOTTO_NUMBERS_SIZE = 6;
+    public static final int PRICE = 1000;
+
+    public static final int LOTTO_NUMBERS_SIZE = 6;
 
     private final List<Integer> lottoNumbers;
 
@@ -17,6 +20,13 @@ public class LottoTicket {
         }
         Collections.shuffle(possibleNumbers);
         lottoNumbers = new ArrayList<>(possibleNumbers.subList(0, LOTTO_NUMBERS_SIZE));
+        Collections.sort(lottoNumbers);
+    }
+
+    public LottoTicket(List<Integer> numbers) {
+        LottoUtil.validate(numbers);
+        Collections.sort(numbers);
+        lottoNumbers = numbers;
     }
 
     public String toString() {
@@ -24,25 +34,21 @@ public class LottoTicket {
     }
 
     public Rank getResult(WinningNumber winningNumber) {
-        int correctNum = getCorrectNum(winningNumber);
-        boolean hasBonus = hasBonus(winningNumber);
+        int correctCount = getCorrectCount(winningNumber);
+        boolean hasBonus = hasBonusNumber(winningNumber);
 
-        return Rank.valueOf(correctNum, hasBonus);
+        return Rank.valueOf(correctCount, hasBonus);
     }
 
-    private boolean hasBonus(WinningNumber winningNumber) {
-        if (lottoNumbers.contains(winningNumber.getBonusNumber())) {
-            return true;
-        }
-
-        return false;
+    private boolean hasBonusNumber(WinningNumber winningNumber) {
+        return lottoNumbers.contains(winningNumber.getBonusNumber());
     }
 
-    private int getCorrectNum(WinningNumber winningNumber) {
-        int correctNum = 0;
+    private int getCorrectCount(WinningNumber winningNumber) {
+        int correctCount = 0;
         for (int i = 0; i < lottoNumbers.size(); i++) {
-            correctNum += lottoNumbers.contains(winningNumber.getNumber(i)) ? 1 : 0;
+            correctCount += lottoNumbers.contains(winningNumber.getNumber(i)) ? 1 : 0;
         }
-        return correctNum;
+        return correctCount;
     }
 }

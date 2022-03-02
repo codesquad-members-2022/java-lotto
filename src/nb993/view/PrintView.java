@@ -9,16 +9,17 @@ import nb993.model.Rank;
 
 public class PrintView {
 
-    public void printLottos(List<LottoTicket> lottos) {
-        System.out.println(lottos.size() + "개를 구매했습니다.");
+    public void printLottos(List<LottoTicket> lottos, int purchaseCount, int manualPurchaseCount) {
+        System.out.println("수동으로 " + manualPurchaseCount + "장, 자동으로 "
+            + (purchaseCount - manualPurchaseCount) + "개를 구매했습니다.");
 
         for (int i = 0; i < lottos.size(); i++) {
             System.out.println(lottos.get(i));
         }
     }
 
-    public void printResult(Map<Rank, Integer> rankResult, int purchaseAmount, int resultAmount) {
-        System.out.println("당첨통계");
+    public void printResult(Map<Rank, Integer> rankResult, int purchaseAmount, long resultAmount) {
+        System.out.println("\n당첨통계");
         System.out.println("-----------");
 
         List<Rank> ranks = Arrays.stream(Rank.values())
