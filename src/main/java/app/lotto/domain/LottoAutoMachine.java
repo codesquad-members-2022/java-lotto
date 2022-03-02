@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LottoAutoMachine {
-
-    private static final int LOTTO_PRICE = 1000;
     private static final int LOTTO_MIN_NUMBER = 1;
     private static final int LOTTO_MAX_NUMBER = 45;
     private static final int LOTTO_NUMBER_COUNT = 6;
@@ -22,10 +20,6 @@ public class LottoAutoMachine {
         }
 
         return allAutoLottoNumbers;
-    }
-
-    public static int getLottoCount(int amount) {
-        return amount / LOTTO_PRICE;
     }
 
     private static LottoTicket getAutoLottoNumbers() {

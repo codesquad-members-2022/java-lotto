@@ -8,6 +8,8 @@ import java.util.List;
 
 public class LottoCashier {
 
+    private static final int LOTTO_PRICE = 1000;
+
     private final LottoTicketManager lottoTicketManager;
     private final int amount;
 
@@ -18,9 +20,13 @@ public class LottoCashier {
 
     public static LottoCashier receiveOrderAndCreate() {
         int amount = InputView.readAmount();
-        int customLottoCount = InputView.readCustomLottoCount(LottoAutoMachine.getLottoCount(amount));
+        int customLottoCount = InputView.readCustomLottoCount(getLottoCount(amount));
 
         return new LottoCashier(amount, customLottoCount);
+    }
+
+    private static int getLottoCount(int amount) {
+        return amount / LOTTO_PRICE;
     }
 
     public int getAmount() {
