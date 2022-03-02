@@ -1,43 +1,19 @@
 package app.lotto;
 
-import app.lotto.domain.LottoController;
-import app.lotto.domain.LottoGame;
-import app.lotto.domain.LottoTicket;
-import app.lotto.view.InputView;
-import app.lotto.view.LottoResult;
-import app.lotto.view.OutputView;
-
-import java.util.List;
+import app.lotto.domain.*;
 
 public class Main {
 
     public static void main(String[] args) {
+        LottoCashier lottoCashier = LottoCashier.createWithReceiveOrder();
+        lottoCashier.showAllLottoTickets();
 
-        int amount = InputView.readAmount();
-        List<LottoTicket> allShuffledNumbers = purchaseLotto(amount);
+        WinningLottoNumbers winningLottoNumbers = WinningLottoNumbers.readWinningNumbersAndCreate();
+        System.out.println();
 
-        List<Integer> winningNumbers = InputView.readWinningNumbers();
-        int bonusNumber = InputView.readBonusNumber();
+        LottoGameDto lottoGameDto = new LottoGameDto(lottoCashier.getAllLottoTickets(), winningLottoNumbers);
 
-        printLottoGameResult(amount, allShuffledNumbers, winningNumbers, bonusNumber);
-    }
-
-    private static void printLottoGameResult(int amount, List<LottoTicket> allShuffledNumbers, List<Integer> winningNumbers, int bonusNumber) {
-        List<LottoResult> lottoResults = LottoGame.processLottoGame(allShuffledNumbers, winningNumbers, bonusNumber);
-        long totalProfit = LottoGame.getTotalProfit(lottoResults);
-
-        OutputView.printWinStatistics(lottoResults);
-        double result = (totalProfit - amount) / (double) amount * 100.0;
-        OutputView.printTotalProfit(result);
-    }
-
-    private static List<LottoTicket> purchaseLotto(int amount) {
-        OutputView.printLottoCount(LottoController.getLottoCount(amount));
-
-        List<LottoTicket> allShuffledNumbers = LottoController.getAllShuffledNumbers(amount);
-
-        OutputView.printAllSuffledNumbers(allShuffledNumbers);
-
-        return allShuffledNumbers;
+        LottoGame lottoGame = LottoGame.createWithLottoGameDtoAndAmount(lottoGameDto, lottoCashier.getAmount());
+        lottoGame.printLottoGameResult();
     }
 }

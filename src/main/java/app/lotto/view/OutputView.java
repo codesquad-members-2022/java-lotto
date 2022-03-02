@@ -1,19 +1,19 @@
 package app.lotto.view;
 
 import app.lotto.domain.LottoPrize;
+import app.lotto.domain.LottoResult;
 import app.lotto.domain.LottoTicket;
 
 import java.util.List;
 
 public class OutputView {
 
-    public static void printLottoCount(int lottoCount) {
-        System.out.printf("%d개를 구매했습니다.\n", lottoCount);
+    public static void printLottoCount(int customLottoCount, int lottoCount) {
+        System.out.printf("수동으로 %d장, 자동으로 %d장을 구매했습니다.\n", customLottoCount, lottoCount);
     }
 
-    public static void printAllSuffledNumbers(List<LottoTicket> allShuffledNumbers) {
+    public static void printAllLottoNumbers(List<LottoTicket> allShuffledNumbers) {
         for (LottoTicket shuffledNumbers : allShuffledNumbers) {
-            shuffledNumbers.sort();
             System.out.println(shuffledNumbers);
         }
     }

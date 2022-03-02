@@ -1,6 +1,4 @@
-package app.lotto.view;
-
-import app.lotto.domain.LottoPrize;
+package app.lotto.domain;
 
 public class LottoResult {
 
