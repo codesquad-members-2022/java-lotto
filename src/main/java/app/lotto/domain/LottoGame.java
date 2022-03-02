@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class LottoGame {
 
+    private final PrizeResultCalculator calculator = new PrizeResultCalculator();
     private final LottoGameDto lottoGameDto;
     private final int amount;
 
@@ -30,7 +31,7 @@ public class LottoGame {
     }
 
     private List<LottoResult> processLottoGame(LottoGameDto lottoGameDto) {
-        Map<LottoPrize, Integer> statistics = PrizeCounter.getStatistics(lottoGameDto);
+        Map<LottoPrize, Integer> statistics = calculator.getStatistics(lottoGameDto);
         return getLottoResults(statistics);
     }
 
