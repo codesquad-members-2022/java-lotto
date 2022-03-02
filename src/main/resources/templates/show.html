@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<style>
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #eee;
+}
+</style>
+
+<style>
+.pre-scrollable {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.table {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.form-show {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.form-show .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.submit-button{
+	margin-top: 10px;
+}
+</style>
+</head>
+<body onload="createWinningNumberField()">
+<form class="form-show" method="post" action="/matchLotto">
+	<div class="form-show-div form-group">
+		<p style="color: darkred">{{errorMessage}}</p>
+		<p id="winningNumberField"></p>
+	</div>
+	<div class="form-show-div form-group">
+    	<label for="bonusNumber">2등 보너스 볼</label>
+    	<input type="number" id="bonusNumber" name="bonusNumber"
+			   value="{{lottoMin}}" min="{{lottoMin}}" max="{{lottoMax}}"
+			   style="width: 3em" required autofocus>
+  	</div>
+	<div class="submit-button">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">당첨 번호</button>
+	</div>
+</form>
+<pre class="pre-scrollable">
+	<h4 class="text-center"><{{lottosSize}}개를 구매 하셨습니다></h4>
+	<table class="table">
+		<thead>
+			<th></th>
+			<th class="text-center">로또 번호</th>
+		</thead>
+		<tbody>
+		{{#lottos}}
+		<tr>
+			<th>{{@index_1}}</th>
+			<td>{{numbers}}</td>
+		</tr>
+		{{/lottos}}
+		</tbody>
+	</table>
+</pre>
+<script>
+	function createWinningNumberField() {
+		const length = "{{lottoLength}}";
+
+		let label = document.createElement("label");
+		label.innerHTML = "지난 주 당첨 번호";
+		label.setAttribute("for", "{{winningNumbersFieldName}}");
+		document.getElementById("winningNumberField").appendChild(label);
+		document.getElementById("winningNumberField").innerHTML += "<br>";
+
+		for (let i = 0; i < length; i++) {
+			let number = document.createElement("input");
+			number.setAttribute("type", "number");
+			number.setAttribute("value", "{{lottoMin}}");
+			number.setAttribute("min", "{{lottoMin}}");
+			number.setAttribute("max", "{{lottoMax}}");
+			number.setAttribute("id", "{{winningNumbersFieldName}}");
+			number.setAttribute("name", "{{winningNumbersFieldName}}");
+			number.setAttribute("style", "width: 3em; display: inline");
+			number.required = true;
+			number.autofocus = true;
+			document.getElementById("winningNumberField").appendChild(number);
+		}
+		document.getElementById("winningNumberField").innerHTML += "<br>";
+	}
+</script>
+</body>
+</html>

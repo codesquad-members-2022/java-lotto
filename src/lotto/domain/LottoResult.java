@@ -1,7 +1,9 @@
 package lotto.domain;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -22,11 +24,17 @@ public class LottoResult {
         return result;
     }
 
+    public List<String> getMessage() {
+        return Stream.of(PrizeDivision.values())
+                .map(d -> d.toString() + String.format(" - %d장", getWinnerCount(d)))
+                .collect(Collectors.toList());
+    }
+
     public int getWinnerCount(PrizeDivision division) {
         return winnersPerPrize.getOrDefault(division, 0);
     }
 
-    public double getProfitRate() {
+    public double getTotalRateOfReturn() {
         int sum = Stream.of(PrizeDivision.values())
                 .map(d -> d.getPrizeValue() * winnersPerPrize.getOrDefault(d, 0))
                 .reduce(0, Math::addExact);

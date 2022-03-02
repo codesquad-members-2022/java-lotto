@@ -29,7 +29,7 @@ public class LottoNumber {
 
     @Override
     public String toString() {
-        return String.valueOf(number);
+        return String.format("%2d", number);
     }
 
     private void validateRange(int number) {
@@ -39,14 +39,15 @@ public class LottoNumber {
 
     private void validateMaximum(int number) {
         if (number > MAXIMUM_NUMBER) {
-            throw new IllegalArgumentException(String.format("로또 번호는 %d보다 작아야 합니다.", MAXIMUM_NUMBER));
+            throw new LottoNumberOutOfRangeException(
+                    String.format("로또 번호는 %d보다 작아야 합니다.", MAXIMUM_NUMBER), number);
         }
     }
 
     private void validateMinimum(int number) {
         if (number < MINIMUM_NUMBER) {
-            throw new IllegalArgumentException(String.format("로또 번호는 %d보다 커야 합니다.", MINIMUM_NUMBER));
+            throw new LottoNumberOutOfRangeException(
+                    String.format("로또 번호는 %d보다 커야 합니다.", MINIMUM_NUMBER), number);
         }
     }
-
 }

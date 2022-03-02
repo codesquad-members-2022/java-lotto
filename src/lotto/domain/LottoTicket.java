@@ -1,17 +1,27 @@
 package lotto.domain;
 
-import java.util.List;
-
 public class LottoTicket {
     public static final int PRICE = 1000;
-    private final List<LottoNumber> lottoNumbers;
+    private final LottoNumbers lottoNumbers;
 
-    public LottoTicket(List<LottoNumber> lottoNumbers) {
+    public LottoTicket(LottoNumbers lottoNumbers) {
         this.lottoNumbers = lottoNumbers;
+    }
+
+    public static LottoTicket withRandomNumbers() {
+        return new LottoTicket(LottoNumberPool.getLottoNumbers());
+    }
+
+    public static LottoTicket withManualNumbers(int[] numbers) {
+        return new LottoTicket(new LottoNumbers(numbers));
     }
 
     public boolean contains(LottoNumber lottoNumber) {
         return lottoNumbers.contains(lottoNumber);
+    }
+
+    public String getNumbers() {
+        return lottoNumbers.toString();
     }
 
     @Override

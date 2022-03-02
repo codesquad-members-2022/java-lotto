@@ -14,3 +14,27 @@
 
 - [x] 2등을 위해 추가 번호를 하나 더 추첨한 다. 당첨 통계에 2등도 추가해야 한다.
 - [x] enum을 적용해 프로그래밍을 구현한다.
+
+## 3단계 - 수동구매 기능 추가
+
+- [x] 입력한 금액, 자동 생성 숫자, 수동 생성 번호를 입력하도록 해야 한다.
+- [x] 예외가 발생하는 부분에 대해 자바 Exception을 적용해 예외처리한다.
+- [x] 사용자가 입력한 값에 대한 예외 처리를 철저히 한다.
+- [x] 상속과 인터페이스를 통해 구현을 간결히 할 수 없는지 고민해 본다.
+
+## 4단계 - 웹 UI 적용
+
+- [x] 콘솔 UI 대신 웹 UI를 적용한다.
+- [x] 스프링은 사용하지 않는다.
+  - 대신 SparkJava를 사용한다. 
+
+### 구현과정
+
+- dependency: com.sparkjava:spark-core:2.9.3
+  - `SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder"` 에러 발생
+  - 서버 자체는 띄워지나 `Defaulting to no-operation (NOP) logger implementation` 메시지가 출력된다
+- dependency: org.slf4j:slf4j-simple:1.7.36
+  - `SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder"` 에러가 해결된다
+  - 참고: spark-core 2.9.3 버전에 포함된 SLF4J는 slf4j-api 1.7.25 버전이다.
+- IDEA 프로젝트에서 작업 시 /main/resources 폴더를 만들 때 모듈 설정에서 resource 폴더로 속성이 지정되어 있지 않으면 제대로 인식하지 못한다.  
+  

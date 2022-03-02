@@ -1,14 +1,19 @@
 package lotto.domain;
 
-import java.util.List;
-
 public class WinningNumber {
-    private final List<LottoNumber> winningNumbers;
+    public static final String INPUT_FIELD_NAME = "winningNumber";
+    public static final String BONUS_INPUT_FIELD_NAME = "bonusNumber";
+    private final LottoNumbers winningNumbers;
     private final LottoNumber bonusNumber;
 
-    public WinningNumber(List<LottoNumber> winningNumbers, LottoNumber bonusNumber) {
+    public WinningNumber(LottoNumbers winningNumbers, LottoNumber bonusNumber) {
+        validateDistinctBonusNumber(winningNumbers, bonusNumber);
         this.winningNumbers = winningNumbers;
         this.bonusNumber = bonusNumber;
+    }
+
+    public static WinningNumber withManualNumbers(int[] numbers, int bonusNumber) {
+        return new WinningNumber(new LottoNumbers(numbers), new LottoNumber(bonusNumber));
     }
 
     public PrizeDivision evaluateTicket(LottoTicket lottoTicket) {
@@ -24,5 +29,11 @@ public class WinningNumber {
 
     private boolean matchBonusNumber(LottoTicket lottoTicket) {
         return lottoTicket.contains(bonusNumber);
+    }
+
+    private void validateDistinctBonusNumber(LottoNumbers winningNumbers, LottoNumber bonusNumber) {
+        if (winningNumbers.contains(bonusNumber)) {
+            throw new IllegalArgumentException("보너스 번호는 다른 로또 번호와 중복되지 않아야 합니다.");
+        }
     }
 }

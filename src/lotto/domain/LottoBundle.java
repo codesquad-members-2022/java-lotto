@@ -5,26 +5,54 @@ import java.util.List;
 
 public class LottoBundle {
     private final int size;
+    private int manualTicketCount;
 
     private final List<LottoTicket> lottoTickets = new ArrayList<>();
 
     public LottoBundle(int size) {
-        validatePositiveInt(size);
+        validateBundleSize(size);
         this.size = size;
     }
 
     public static LottoBundle createByCashValue(int cashValue) {
-        return new LottoBundle(cashValue / LottoTicket.PRICE);
+        int size = Math.max(cashValue / LottoTicket.PRICE, 0);
+        return new LottoBundle(size);
+    }
+
+    public void addManualLottoTicket(LottoTicket lottoTicket) {
+        if (manualTicketCount >= size) {
+            throw new IndexOutOfBoundsException("수동 복권을 더 발행할 수 없습니다.");
+        }
+        lottoTickets.add(lottoTicket);
+        manualTicketCount++;
+    }
+
+    public void addManualLottoTickets(List<LottoTicket> lottoTicketList) {
+        for (LottoTicket lottoTicket : lottoTicketList) {
+            addManualLottoTicket(lottoTicket);
+        }
     }
 
     public void fillWithRandomLottoTickets() {
-        for (int i = 0; i < size; i++){
-            lottoTickets.add(LottoFactory.issueLottoTicketWithRandomNumbers());
+        for (int i = manualTicketCount; i < size; i++){
+            lottoTickets.add(LottoTicket.withRandomNumbers());
         }
+    }
+
+    public List<LottoTicket> getLottoTickets() {
+        return new ArrayList<>(lottoTickets);
     }
 
     public int count() {
         return size;
+    }
+
+    public int getManualTicketCount() {
+        return manualTicketCount;
+    }
+
+    public int getAutoTicketCount() {
+        return size - manualTicketCount;
     }
 
     public LottoTicket getTicket(int index) {
@@ -35,9 +63,9 @@ public class LottoBundle {
         return size * LottoTicket.PRICE;
     }
 
-    private void validatePositiveInt(int paidAmount) {
-        if (paidAmount <= 0) {
-            throw new IllegalArgumentException("돈의 금액은 양의 정수여야 합니다.");
+    private void validateBundleSize(int size) {
+        if (size < 1) {
+            throw new IllegalArgumentException("적어도 한 장은 사야 합니다.");
         }
     }
 }
