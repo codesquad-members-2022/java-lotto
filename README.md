@@ -2,6 +2,9 @@
 
 마스터즈 멤버스 2022 로또 게임 프로젝트(산토리, Shine)
 
+![image](https://user-images.githubusercontent.com/60593969/188308262-fb56ae1c-25a1-41d6-abde-ee1c8177c937.png)
+
+
 ## step 03 review 반영
 - [x] LottoNumber에 equals 활용하기
 - [x] LottoTicket에 check 메서드 boolean 반환으로 변경해보기
